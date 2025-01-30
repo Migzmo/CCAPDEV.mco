@@ -4,6 +4,7 @@
     <title>LaSapp</title>
     <link rel="stylesheet" href="css/directory.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet"> 
+    <script src = "javascript/web.js"></script>
 </head>
 <body>
     <div class="headbox">     
@@ -23,5 +24,22 @@
         <input type="text" placeholder="Looking for something?">
         </div>
     </div>
+    <div class ="categories" id="slider">
+        <div class ="category-buttons">
+            <button class="button" onclick="prevCateg()">Prev</button>
+        </div>
+        <div class="category"><img src = "CSS\images\american.png"></div>
+        <div class="category"> <img src = "CSS\images\asian.png"></div>
+        <div class ="category"> <img src = "CSS\images\cafe.png"></div>
+        <div class ="category"> <img src = "CSS\images\fastfood.png"></div>
+        <div class ="category" > <img src = "CSS\images\japanese.png"></div>
+        <div class ="category" > <img src = "CSS\images\chinese.png"></div>
+        <div class ="category" > <img src = "CSS\images\korean.png"></div> 
+
+        <div class ="category-buttons">
+            <button class="button" onclick="nextCateg()">Next</button>
+        </div>      
+    </div>
+    
 </body>
 </html>
