@@ -1,154 +1,118 @@
-.appName{
-/*Logo*/
-
-
-width: 351px;
-height: 134px;
-
-font-family: 'Baloo';
-font-style: normal;
-font-weight: 400;
-font-size: 90px;
-line-height: 50px;
-
-color: #2E7D32;
-
-
-}
-/*The Login Stuff*/
-.nav {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    line-height: 10px;
-    gap : 50px;
-    z-index: 3;
+* {
+    text-decoration: none;
 }
 
-
-.nav h2 {
-    width: 213px;
-    height: 57px;
-    margin: 0 10px; 
-    font-family: 'Baloo';
-    font-size: 40px; 
-    color: #2E7D32; 
+html, body {
+    margin: 0;
+    background-color: #FFFFEF;
 }
-/*DashBoard*/
-.headbox {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
+
+.navbar {
     background: #FFFFEF;
-    border: 2.5px solid #E0E0CE;
-    height: 180px;
-    margin-top :-10px;
-    margin-left :-10px;
-    z-index: 2;
-}
-body{
-    /* Rectangle 1 From Figma */
-
-position: absolute;
-width: 100%;
-height: 100%;
-
-background: #FEFFE6;
-}
-
-.searchbarwrapper{
-    /*Div Wrapper for the searchbar*/
-    position: relative;
+    padding-right: 90px;
+    padding-left: 90px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-top: 200px;
-    z-index: 1;
+    justify-content: space-between;
 }
-.pictureflag {
-    /*The flag image wrapper*/
-    position: absolute; 
-    top: -200px; 
-    left: 0; 
-    right:100px;
-    width: 1650px;
-    height: 225px; 
-    z-index: 0; 
+
+.logo a {
+    font-family: 'Baloo';
+    font-size: 35px;
+    color: #2E7D32;
+}
+
+.dashboard li {
+    list-style: none;
+    display: inline-block;
+}
+
+/* Apply margin only to list items that are not the last child */
+.dashboard li:not(:last-child) {
+    margin-right: 150px; 
+}
+
+li a {
+    font-family: 'Funnel Display';
+    font-weight: bold;
+    color:#2E7D32;
+    font-size: 18px;
+    margin-right: 25px;
     
 }
 
-.pictureflag img{
-    /*The flag image*/
-    width:100%;
-    height : 100%;
+.my_cover {
+    width: 100%;
+    height: 180px;
     object-fit: cover;
-    display: block;
+}
+
+.container {
+    width: 100%;
+    height: 180px;
+    position: relative;
+}
+
+.search {
+    position: absolute;
+    top: 100%; /* Adjust as needed */
+    left: 50%; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    width: 100%; /* Adjust as needed */
+    max-width: 800px; /* Adjust as needed */
+    background-color: white; /* Optional: Add background color to the search bar */
+    border-radius: 28px; /* Optional: Add border radius for rounded corners */
+    padding: 10px; /* Optional: Add padding inside the search bar */
+    border: 1px solid black; /* Add border with desired width, style, and color */
+}
+
+.material-symbols-outlined.search-icon {
+    padding-left: 10px;
+    font-size: 30px; /* Adjust as needed */
+    margin-right: 20px; /* Adjust as needed */
+    padding-left: 20px;
 }
 
 .searchbar {
-     /*Search bar box*/
-    display: flex;
-    justify-content: center; 
+    flex: 1;
     padding: 10px;
-    box-sizing: border-box;
-    width : 100%;
-    height: 100%;
-    max-width: 1080px; 
-    max-height: 69px;
-    background: rgba(255, 255, 255, 0.937255);
-    border: 1px solid #000000;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    z-index: 2;
+    font-size: 16px;
+    font-family: 'Lexend', sans-serif;
+    border: none; /* Remove default border */
+    outline: none; /* Remove default outline */
+    width: 700px;
 }
 
-
-.searchbar input {
-    /*Search bar input*/
-    width: 100%;
-    padding: 10px;
-    font-size: 1.2em;
-    border: 0px solid #ccc;
-    border-radius: 5px;
-}
-.categry-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px; /* Adjust gap as needed */
-}
-
-.categories{
+/* Categories */
+.categories {
     position : relative;
-    bottom: 300px;
-    height: 100%;
+    top: 55px;
     display:flex;
     justify-content: center;
     align-items: center;
-    gap: 100px;
-    width: 100%;
-    
+    gap: 60px;
 }
-.category{
-    box-sizing: border-box;
-    width: 100px; /* Set equal width and height */
-    height: 100px; /* Set equal width and height */
+
+.category {
+    width: 80px; /* Set equal width and height */
+    height: 80px; /* Set equal width and height */
     display: flex;
     justify-content: center;
     align-items: center;
-
-    border: 1px solid #000000;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border: 2px solid #000;
+    background-color: white;
     border-radius: 50%;
     overflow: hidden;
-
 }
 
-.category img{
+.category img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    
+    border-radius: 50%;
 }
+
