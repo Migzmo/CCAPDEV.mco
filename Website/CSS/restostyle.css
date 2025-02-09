@@ -13,17 +13,31 @@ html, body {
     width: 100%;
     background-color: #fdfbe8; 
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: row; /* Stack elements vertically */
+    justify-content: space-between;
     padding: 10px 40px;
+    align-items: center;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    justify-items: center;
+}
+
+.navbar-container{
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .logo{
     font-family: 'Baloo';
     font-size: 50px;
     color: #2E7D32;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.navbar img{
+    border-radius: 15px;
+    border: black solid;
 }
 
 /* Navigation Links */
@@ -33,9 +47,7 @@ html, body {
     list-style: none;
     display: flex;
     gap: 40px;
-    float: right;
-    margin-top: -50px;
-    margin-right: 80px;
+    margin-left: 320%;
 }
 
 .navbar a {
@@ -69,7 +81,7 @@ html, body {
     cursor: pointer;
     transition: background-color 0.2s ease;
     float: right;
-    margin-right: 15px;
+    margin-right: 20px;
 }
 
 .oval-button:hover {
@@ -109,7 +121,7 @@ html, body {
     font-size: 170%;
     font-family: 'baloo';
     margin-left: auto;
-    margin-right: 0%;
+    margin-right: -8%;
 }
 
 .main{
@@ -166,7 +178,7 @@ html, body {
     margin-top: 3%;
     background-color: #f9fef8;
     width: 100%;
-    height: auto;
+    height: 500px;
     border-radius: 15px;
     padding-bottom: 2%;
     border: black solid 0.5px;
@@ -176,7 +188,8 @@ html, body {
     display: flex;           /* This makes the items inside flex container */
     align-items: center;     /* Vertically center items */
     justify-content: space-between; 
-    width: 100%;                      
+    width: 100%;     
+    border-bottom: 3px solid rgb(202, 204, 206);                 
 }
 
 .reviews h1 {
@@ -200,4 +213,30 @@ html, body {
     font-family: 'baloo bhai 2';
     border-bottom: 1px solid rgb(202, 204, 206); 
     padding-bottom: 2%;
+}
+
+/*Scrollable segment for reviews*/
+.scroll-div {
+    width: 98.4%;
+    height: 360px;
+    overflow-y: auto; 
+    padding: 10px;
+}
+
+.scroll-obj {
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+}
+
+footer{
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+}
+
+footer img{
+    margin: 1%;
+    border: black solid;
+    border-radius: 15px;
 }
