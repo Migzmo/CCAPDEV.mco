@@ -33,13 +33,16 @@
 }
 
 /* Navigation Links */
+.options{
+    margin-left: auto;
+    margin-right: 7%;
+}
 .navbar ul {
     font-family: 'Baloo';
     font-size: 20px;
     list-style: none;
     display: flex;
     gap: 40px;
-    margin-left: 350%;
 
 }
 
@@ -47,13 +50,19 @@
     list-style: none;
     text-decoration: none;
     font-weight: bold;
-    color: #3b6024;
+    color:#2E7D32;
     text-transform: uppercase;
 }
 
 .navbar a:hover{
     color: #087c2fca;
     text-decoration: underline;
+}
+
+.info{
+    margin-top: 8%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 /* Footer */
