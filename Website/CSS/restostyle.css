@@ -290,3 +290,9 @@ footer{
     transform: scale(1.2);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
+
+#logoImg:hover {
+    transform: scale(1.1); /* Adjusted scale value */
+    transition: 0.5s;
+    border-radius: 50%;
+}
