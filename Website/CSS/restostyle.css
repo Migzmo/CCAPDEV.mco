@@ -92,7 +92,7 @@ html, body {
 .classheader {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Pushes elements apart */
+    justify-content: space-between; 
     width: 100%;
     margin-top: 0%;
 }
@@ -101,7 +101,7 @@ html, body {
     border: none;
     background: none;
     padding: 0;
-    cursor: pointer; /* Makes it clear it's clickable */
+    cursor: pointer; 
 }
 
 .head-container{
@@ -193,8 +193,8 @@ html, body {
 }
 
 .review1 {
-    display: flex;           /* This makes the items inside flex container */
-    align-items: center;     /* Vertically center items */
+    display: flex;          
+    align-items: center;    
     justify-content: space-between; 
     width: 100%;     
     border-bottom: 3px solid rgb(202, 204, 206);                 
@@ -261,8 +261,32 @@ footer{
     padding: 10px 40px;
 }
 
-footer img{
+#footerLogo{
     margin: 1%;
     border: black solid;
     border-radius: 15px;
+}
+
+.footerIcon{
+    margin-left: auto;
+    margin-right: 3%;
+}
+
+#footerFacebook{
+    margin-right: 15px;
+    border-radius: 10px;
+}
+
+#footerFacebook:hover{
+    transform: scale(1.2);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#footerIG{
+    border-radius: 10px;
+}
+
+#footerIG:hover{
+    transform: scale(1.2);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
