@@ -8,14 +8,18 @@ html, body {
 }
 
 .navbar {
-    background: #FFFFEF;
-    padding-right: 90px;
-    padding-left: 90px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fdfbe8;
     display: flex;
-    align-items: center;
+    flex-direction: row;
     justify-content: space-between;
+    padding: 10px 40px;
+    align-items: center;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
 }
 
 .logo a {
@@ -300,4 +304,22 @@ font-family: 'Lexend', sans-serif;
     position:absolute;
     top:0;
     right: 0;
+}
+
+#filter {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    float: right;
+}
+.dashboard li button{
+    font-family: 'Baloo';
+    font-weight: bold;
+    color:#2E7D32;
+    font-size: 18px;
+    margin-right: 25px;
+    background-color: #FFFFEF;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
