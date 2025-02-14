@@ -185,7 +185,7 @@ text-shadow: 0px 3px 4px rgba(129, 199, 132, 0.75);
 
 font-family: 'Baloo+2';
 font-style: normal;
-font-weight: 200;
+font-weight: 400;
 font-size: 18px;
 line-height: 35px;
 margin-top: -40px;
@@ -226,8 +226,8 @@ font-family: 'Lexend', sans-serif;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 30px;
-    margin-top: 10px;
+    gap: 31.5px;
+    margin-top: 5px;
 }
 .category-container{
     display: flex;
@@ -239,8 +239,11 @@ font-family: 'Lexend', sans-serif;
 }
 .category-name h3{
     font-family: 'Baloo+2';
-    font-size: 20px;
+    font-size: 15px;
+    font-weight: 500;
     color: black;
+    font-family: 'Lexend', sans-serif;
+
 }
 .category-name{
     width: 90px;
@@ -250,6 +253,7 @@ font-family: 'Lexend', sans-serif;
     text-align: center;
     overflow: hidden;
     margin-right:2px;
+    
 }
 
 .restaurants h2 {
