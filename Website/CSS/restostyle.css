@@ -47,7 +47,8 @@ html, body {
     list-style: none;
     display: flex;
     gap: 40px;
-    margin-left: 315%;
+    margin-left: 350%;
+
 }
 
 .navbar a {
