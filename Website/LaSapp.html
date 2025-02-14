@@ -39,9 +39,18 @@
         </ul>
     </nav>
 
+    <div id="backdrop"></div>
     <div id="loginframe">
         <div class="loginframe-content">
-            <div id="loginframe_left"></div>
+            <div id="loginframe_left">
+                <h2>Log in or sign up now!</h2>
+                <div class="button-container">
+                    <button class="signin-button"><span id="mail-logo"></span>Continue with Email</button>
+                    <button class="login-button"><span id="google-logo"></span>Login with DLSU Email</button>
+                </div>
+                <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
+                <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="">DLSU Student Handbook</a> and/or <a href="">Privacy Policy</a> of LaSapp.</p>
+            </div>
             <div id="loginframe_right">
                 <button id="closeLogin" onclick="togglePopup()">&times</button>
             </div>
