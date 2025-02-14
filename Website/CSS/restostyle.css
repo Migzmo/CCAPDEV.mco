@@ -18,7 +18,7 @@ html, body {
     padding: 10px 40px;
     align-items: center;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 10000;
 }
 
 .navbar-container{
@@ -286,7 +286,12 @@ footer{
     margin-right: 15px;
     border-radius: 10px;
 }
-
+.review-popup-container{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    
+  }
 #footerFacebook:hover{
     transform: scale(1.2);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
@@ -302,7 +307,7 @@ footer{
 }
 
 #logoImg:hover {
-    transform: scale(1.1); /* Adjusted scale value */
+    transform: scale(1.1); 
     transition: 0.5s;
     border-radius: 50%;
 }
@@ -359,3 +364,54 @@ footer{
   background-color: #298e46;
   box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }
+.review-box{
+ 
+    position:relative;
+    width: 1000px;
+    height: 500px;
+    background: #F0F4FF;
+    border-radius: 50px;
+    margin-top:35%;
+
+}
+
+.review-box p{
+    font-family: 'Baloo';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 46px;
+    color: #000000;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+.review-box h3{
+    font-family: 'Baloo';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 46px;
+    color: #000000;
+    margin-left: 5%;
+    
+}
+
+.review-area textarea{
+    position: relative;
+    width: 95%;
+    height: 200px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left:20px;
+    
+}
+.review-button{
+    float: right;
+    margin-right: 3%;
+}
+.popover-button{
+    margin-left:100px;
+}
+    
