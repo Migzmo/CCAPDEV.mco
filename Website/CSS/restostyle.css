@@ -257,9 +257,18 @@ html, body {
 }
 
 .scroll-obj {
+    
     color: black;
     font-family: 'Courier New', Courier, monospace;
     font-size: 20px;
+}
+.scroll-obj h2{
+    display:flex;
+    justify-content: space-between;
+}
+
+.like{
+    text-align: right;
 }
 
 /* Footer */
@@ -412,7 +421,7 @@ footer{
     margin-right: 3%;
 }
 .popover-button{
-    margin-left:100px;
+    margin-left:100 px;
 }
 .scroll-div a{
     text-decoration: none;
