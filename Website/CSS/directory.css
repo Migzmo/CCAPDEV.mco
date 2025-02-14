@@ -144,6 +144,10 @@ height: 429px;
 
     
 }
+.restaurants:hover{
+    transform: scale(1.1);
+    transition: 0.5s;
+}
 .resto-text{
 position: relative;
 width: 300px;
