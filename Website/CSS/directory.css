@@ -98,8 +98,8 @@ li a {
 }
 
 .category {
-    width: 80px; /* Set equal width and height */
-    height: 80px; /* Set equal width and height */
+    width: 90px; /* Set equal width and height */
+    height: 90px; /* Set equal width and height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,6 +144,7 @@ height: 429px;
 
     
 }
+
 .restaurants:hover{
     transform: scale(1.1);
     transition: 0.5s;
@@ -192,4 +193,61 @@ margin-left:10px;
 color: #000000;
 
 
+}
+
+.button img{
+    height :10%;
+    width:10%;
+    object-fit: cover;
+    color:#2E7D32;
+
+}
+#left{
+    transform:scaleX(-1);
+}
+.button
+{   
+    border:none;
+    background:none;
+    outline:none;
+    margin:auto;
+}
+
+.category-row1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+.category-row2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 10px;
+}
+.category-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+.category-name h3{
+    font-family: 'Baloo+2';
+    font-size: 20px;
+    color: black;
+}
+.category-name{
+    width: 90px; /* Set equal width and height */
+    height: 90px; /* Set equal width and height */
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    margin-right:2px;
 }
