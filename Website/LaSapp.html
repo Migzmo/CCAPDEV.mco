@@ -35,9 +35,17 @@
         <ul class="dashboard">
             <li><a href="#">DIRECTORY</a></li>
             <li><a href="#">INDECISIVE?</a></li>
-            <li><a href="#">LOGIN</a></li>
+            <!--Create popup after clicking login-->
+            <li><button onclick="togglePopup()">LOGIN</button></li>
         </ul>
     </nav>
+
+    <div id="loginPopup">
+        <div class="popup-content">
+            <!-- Login form goes here -->
+            <button onclick="togglePopup()">Close</button>
+        </div>
+    </div>
 
     <div class="container">
         <div>
@@ -146,5 +154,7 @@
             
         </div>
     </div>
+
+    <script src='JavaScript/directoryScript.js'></script>
 </body>
 </html>

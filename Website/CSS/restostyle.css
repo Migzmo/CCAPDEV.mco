@@ -414,6 +414,11 @@ footer{
 .popover-button{
     margin-left:100px;
 }
+.scroll-div a{
+    text-decoration: none;
+    color: #2E7D32;
+}  
+
     
 /* CSS */
 .review-button {
