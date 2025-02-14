@@ -35,15 +35,16 @@
         <ul class="dashboard">
             <li><a href="#">DIRECTORY</a></li>
             <li><a href="#">INDECISIVE?</a></li>
-            <!--Create popup after clicking login-->
             <li><button onclick="togglePopup()">LOGIN</button></li>
         </ul>
     </nav>
 
-    <div id="loginPopup">
-        <div class="popup-content">
-            <!-- Login form goes here -->
-            <button onclick="togglePopup()">Close</button>
+    <div id="loginframe">
+        <div class="loginframe-content">
+            <div id="loginframe_left"></div>
+            <div id="loginframe_right">
+                <button id="closeLogin" onclick="togglePopup()">&times</button>
+            </div>
         </div>
     </div>
 

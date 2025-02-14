@@ -1,5 +1,5 @@
 function togglePopup() {
-    const popup = document.getElementById('loginPopup');
+    const popup = document.getElementById('loginframe');
     const isHidden = (popup.style.display === 'none');
     popup.style.display = isHidden ? 'block' : 'none';
 

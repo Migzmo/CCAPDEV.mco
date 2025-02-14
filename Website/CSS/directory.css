@@ -260,20 +260,44 @@ font-family: 'Lexend', sans-serif;
     font-size: 23px;
 }
 
-#loginPopup {
+#loginframe {
     display: none;
     position: fixed;
-    margin: auto;
-    background-color: rgba(0,0,0,0.5);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    border-radius: 40px;
 }
 
-#loginPopup .popup-content {
-    position: fixed;
-    margin: 14.5% 12% 14.5% 12%;
-    padding: 20px;
-    width: 1452px;
-    height:761px;
-    background-color: #fff;
-    z-index: 1001;
+.loginframe-content{
+    display: flex;
+    height:100%;
+    border-radius: 40px;
+}
+
+#loginframe_left{
+    flex:685;
+    width:100%;
+    height:100%;
+    z-index: 1002;
+    background-color: #CDDECB;
+}
+
+#loginframe_right{
+    background-image:url('images/login.png');
+    background-size: cover;
+    flex:767;
+    width:100%;
+    height: 100%;
+    z-index: 1002;
+}
+
+#closeLogin{
+    position:absolute;
+    top:0;
+    right: 0;
 }
