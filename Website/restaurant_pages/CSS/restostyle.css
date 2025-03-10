@@ -495,3 +495,20 @@ footer{
 .review1 p {
     font-size: 30px;
 }
+
+.btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 60px;
+}
+
+.heart {
+    color: gray; 
+    transition: color 0.3s ease;
+}
+
+.heart.liked {
+    color: red; 
+}

@@ -17,6 +17,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Lexend:wght@100..900&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     </head>
     <body>
         <!-- Navigation Bar -->
@@ -45,8 +47,8 @@
 
                 <!-- Header -->
                 <div class="classheader">
-                    <button id="heart">
-                        <img src="CSS/RestoImages/heart.png" alt="Like" width="80" height="80">
+                    <button onclick="toggleHeart()" id="btnh1" class="btn">
+                        <i id="heartIcon" class="fa-solid fa-heart heart"></i>
                     </button>
                     <div class="head-container">
                         <h1>Mang Inasal - Taft Ave</h1>  
@@ -171,6 +173,18 @@
             </div>
         </footer>
 
-        <script src="javascript/RestoInfo.js"></script>
+        <script src="/javascript/RestoInfo.js"></script>
+        <script>
+            function toggleHeart() {
+                const heartIcon = document.getElementById("heartIcon");
+                heartIcon.classList.toggle("liked");
+
+                if (heartIcon.classList.contains("liked")) {
+                    heartIcon.style.color = "red";
+                } else {
+                    heartIcon.style.color = "gray";
+                }
+            }
+        </script>
     </body>
 </html>
