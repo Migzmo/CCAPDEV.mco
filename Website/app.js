@@ -197,6 +197,66 @@ app.get('/api/users/:id', async (req, res) => {
   }
 });
 
+// Add profile update endpoint
+app.post('/api/users/update-profile', async (req, res) => {
+  try {
+    console.log('Update profile request received:', req.body);
+    const userId = req.body.userId;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: 'User ID is required'
+      });
+    }
+
+    // Find the account to update
+    const account = await Account.findOne({ acc_id: parseInt(userId) });
+
+    if (!account) {
+      return res.status(404).json({
+        success: false,
+        message: 'Account not found'
+      });
+    }
+
+    // Update account fields
+    if (req.body.username) account.acc_name = req.body.username;
+    if (req.body.username) account.acc_username = req.body.username; // Update both name fields
+    if (req.body.bio) account.acc_bio = req.body.bio;
+
+    // Update password if provided
+    if (req.body.password && req.body.password.trim() !== '') {
+      account.acc_password = req.body.password;
+    }
+
+    // Handle profile picture upload
+    if (req.files && req.files.profile_pic) {
+      const profilePic = req.files.profile_pic;
+      const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
+      const uploadPath = path.join(__dirname, 'public/images/profiles', fileName);
+
+      await profilePic.mv(uploadPath);
+      account.profile_pic = `/images/profiles/${fileName}`;
+    }
+
+    // Save the updated account
+    await account.save();
+
+    res.json({
+      success: true,
+      message: 'Profile updated successfully'
+    });
+  } catch (error) {
+    console.error('Profile update error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating profile',
+      error: error.message
+    });
+  }
+});
+
 app.post('/api/auth/register', async (req, res) => {
     try {
         console.log('Register route accessed', req.body);
@@ -314,7 +374,65 @@ app.get('/profile/:id', async function (req, res) {
     }
 });
 
+// Add profile update endpoint
+app.post('/api/users/update-profile', async (req, res) => {
+  try {
+    console.log('Update profile request received:', req.body);
+    const userId = req.body.userId;
 
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: 'User ID is required'
+      });
+    }
+
+    // Find the account to update
+    const account = await Account.findOne({ acc_id: parseInt(userId) });
+
+    if (!account) {
+      return res.status(404).json({
+        success: false,
+        message: 'Account not found'
+      });
+    }
+
+    // Update account fields
+    if (req.body.username) account.acc_name = req.body.username;
+    if (req.body.username) account.acc_username = req.body.username; // Update both name fields
+    if (req.body.bio) account.acc_bio = req.body.bio;
+
+    // Update password if provided
+    if (req.body.password && req.body.password.trim() !== '') {
+      account.acc_password = req.body.password;
+    }
+
+    // Handle profile picture upload
+    if (req.files && req.files.profile_pic) {
+      const profilePic = req.files.profile_pic;
+      const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
+      const uploadPath = path.join(__dirname, 'public/images/profiles', fileName);
+
+      await profilePic.mv(uploadPath);
+      account.profile_pic = `/images/profiles/${fileName}`;
+    }
+
+    // Save the updated account
+    await account.save();
+
+    res.json({
+      success: true,
+      message: 'Profile updated successfully'
+    });
+  } catch (error) {
+    console.error('Profile update error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating profile',
+      error: error.message
+    });
+  }
+});
 
 app.post('/', async (req, res) => {
     try {
