@@ -2,8 +2,40 @@
     {
         "review_id": 0,
         "account_id": 0,
-        "resto_id": 0,
+        "resto_id": 2,
         "rating": 5,
         "review": "the birria was insane, honestly!"
+    },
+
+
+
+    {
+        "review_id": 1,
+        "account_id": 1,
+        "resto_id": 2,
+        "rating": 5,
+        "review": "Dynamic Review actually works?"
+    },
+
+    {
+        "review_id": 2,
+        "account_id": 1,
+        "resto_id": 2,
+        "rating": 5,
+        "review": "Will?"
+    },
+    {
+        "review_id": 3,
+        "account_id": 1,
+        "resto_id": 2,
+        "rating": 5,
+        "review": "This?"
+    },
+    {
+        "review_id": 4,
+        "account_id": 1,
+        "resto_id": 2,
+        "rating": 5,
+        "review": "Scroll?"
     }
 ]

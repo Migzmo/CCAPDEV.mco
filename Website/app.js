@@ -1,6 +1,28 @@
+/*
+Developers:
+1. Bon Aquino 
+2. Adler Strebel
+3. Karl Matthew Dela Cruz
+4. Jose Miguel Espinosa
+
+last edited: 14/03/2025 
+To be done:
+di ko alam HAHAHHAHAHA
+*/
+/****************************************************************************************************************************************************************************/
+//This Section is Responsible for initializing the Database and importing the sample data, as well as initializing all needed modules.
+
 //For Initializing mongoose
 const mongoose = require('mongoose');
 const fs = require('fs');
+
+//For Initializing express
+const express = require('express');
+const path = require('path');
+const app = express();
+
+
+//For importing sample data to MONGO DB
 let impErr1= false;
 let impErr2= false;
 let impErr3= false;
@@ -63,10 +85,7 @@ mongoose.connect('mongodb://localhost/lasappDB')
   })
   .catch(err => console.error('Connection error:', err));
 
-//For Initializing express
-const express = require('express');
-const path = require('path');
-const app = express();
+
 
 // Initialize our Reviews
 const { Account, Cuisine, Restaurant, Review } = require("./database/models/lasappDB");
@@ -79,31 +98,9 @@ app.use(express.static(__dirname));
 var hbs = require('hbs')
 app.set('view engine','hbs');
 
-// Serve the list of restaurants as JSON
+/****************************************************************************************************************************************************************************/
+//This Section is responsible for routing and rendering the pages
 
-// Dynamic route to serve restaurant pages
-/*
-const restoList = [
-    { id: 1, name: "El Poco", file: "RestoElPoco.html" },
-    { id: 2, name: "Jollibee", file: "RestoJollibee.html" },
-    { id: 3, name: "Mang Inasal", file: "RestoMangInasal.html" },
-    { id: 4, name: "McDonald's", file: "Restomcdowebp.html" },
-    { id: 5, name: "Pho Mahal", file: "RestoPhoMahal.html" }
-];
-app.get('/restaurant_pages', function (req, res) {
-    res.json(restoList);
-});
-
-app.get("/restaurant/:file", (req, res) => {
-    const fileName = req.params.file;
-    const filePath = path.join(__dirname, "html", fileName);
-  
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        res.status(404).send("Restaurant page not found.");
-      }
-    });
-});*/
 
 // Render restaurant page using Handlebars
 app.get('/restaurant/:id', async function (req, res) {
@@ -116,6 +113,18 @@ app.get('/restaurant/:id', async function (req, res) {
       }else{
           console.log("Sucessfully found restaurant");
       }
+      //this will get the reviews for the restaurant and also populate the account_id field with user data
+      var reviews = await Review.find({resto_id: restaurantId}).populate({
+        path: 'account_id',
+        localField: 'account_id',
+        foreignField: 'acc_id',
+        model: 'Account'}).exec();
+      if(!reviews){
+          console.log("No reviews found");
+      }else{
+        console.log(`Found ${reviews.length} reviews`);
+      }
+      //This will render restaurant handlbar 
       res.render('restaurant', {
           restaurant: {
               name: restaurant.resto_name,
@@ -128,12 +137,16 @@ app.get('/restaurant/:id', async function (req, res) {
               payment: restaurant.resto_payment,
               perks: restaurant.resto_perks.split(', ')
           },
+          reviews:reviews
       });
   } catch (err) {
       console.error(err); // Log the error details to the console
       res.status(500).send('Server Error');
   }
 });
+
+
+//render profile page using handlebars this will fetch data in mongo db 
 app.get('/profile/:id', async function (req, res) {
     try{
         const accountId = parseInt(req.params.id, 10);
@@ -158,6 +171,8 @@ app.get('/profile/:id', async function (req, res) {
         res.status(500).send('Server Error');
     }
 });
+
+
 //This blocks access to the database for now idk yet
 app.use('/database', function (req, res, next) {
     res.status(403).send('Access denied');
@@ -172,3 +187,5 @@ app.get('/', function (req, res) {
 app.listen(3000, function () {
     console.log('Node server is running on http://localhost:3000');
 });
+
+/****************************************************************************************************************************************************************************/

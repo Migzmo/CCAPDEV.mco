@@ -1,12 +1,20 @@
 [
-    {
-      "acc_id": 0,
-      "acc_name": "Jose Miguel Espinosa",
-      "acc_username": "@jm_espnosa74",
-      "acc_bio": "",
-      "saved_restos": [
-      ],
-      "saved_reviews": [],
-      "profile_pic": "/views/CSS/ProfileImages/profile_sample.jpg"
-    }
-  ]
+  {
+    "acc_id": 0,
+    "acc_name": "Jose Miguel Espinosa",
+    "acc_username": "@jm_espnosa74",
+    "acc_bio": "",
+    "saved_restos": [],
+    "saved_reviews": [0],
+    "profile_pic": "/views/CSS/ProfileImages/profile_sample.jpg"
+  },
+  {
+    "acc_id": 1,
+    "acc_name": "Karl Matthew Dela Cruz",
+    "acc_username": "@kmdc",
+    "acc_bio": "I love backend",
+    "saved_restos": [],
+    "saved_reviews": [1],
+    "profile_pic": "/views/CSS/ProfileImages/profile_sample_two.jpg"
+  }
+]

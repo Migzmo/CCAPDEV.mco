@@ -105,57 +105,24 @@
 
                 </div>    
                 
-                <!-- HardCoded Comments -->
+                <!-- Scrollable Reviews -->
                 <div>
                     <div class="scroll-div"> 
+                        <!-- Feed Reviews -->
+                        {{#each reviews}}
                         <div class="scroll-obj">   
-                            
                             <h2>
-                                
-                                <a href="/profile/0">
-                                <img src="CSS/ProfileImages/profile_sample.jpg" alt="Profile" class="profile-pic"> Jose Miguel Espinosa
+                                <a href="/profile/{{this.account_id.acc_id}}">
+                                <img src={{this.account_id.profile_pic}} alt="Profile" class="profile-pic"> 
+                                {{this.account_id.acc_name}}
                                 </a>
-                                <img class="like" src = "CSS/images/upanddownlike.png" alt="Like" class="like">
+                                <img class="like" src="/views/CSS/images/upanddownlike.png" alt="Like" class="like">
                             </h2>
-                            <p>The Quesabirria was topnotch!</p>
-                            
+                            <p>{{this.review}}</p>
                         </div>
-                        <div class="scroll-obj">
-                            <h2>
-                                <a href = "profile_two.html">
-                                <img src="CSS/ProfileImages/profile_sample_two.jpg" alt="Profile" class="profile-pic"> Karl Matthew Dela Cruz
-                                </a>
-                                <img class="like" src = "CSS/images/upanddownlike.png" alt="Like" class="like">
-                            </h2>
-                            <p>I loved their horchata!</p>
-                        </div>
-                        <div class="scroll-obj">
-                            <h2>
-                                <a href = "profile_three.html">
-                                <img src="CSS/ProfileImages/profile_sample_three.jpg" alt="Profile" class="profile-pic"> Bon Aquino
-                                </a>
-                                <img class="like" src = "CSS/images/upanddownlike.png" alt="Like" class="like">
-                            </h2>
-                            <p>Ano halo niyo ng tacos</p>
-                        </div>
-                        <div class="scroll-obj">
-                            <h2>
-                                <a href = "profile_four.html">
-                                <img src="CSS/ProfileImages/profile_sample_four.jpg" alt="Profile" class="profile-pic"> Adler Strebel
-                                </a>
-                                <img class="like" src = "CSS/images/upanddownlike.png" alt="Like" class="like">
-                            </h2>
-                            <p>Mexican! Mexican! Mexican! 🫡😂😈</p>
-                        </div>
-                        <div class="scroll-obj">
-                            <h2>
-                                <a href = "profile_five.html">
-                                <img src="CSS/ProfileImages/profile_sample_five.jpg" alt="Lebrons's Profile" class="profile-pic"> Superman
-                                </a>
-                                <img class="like" src = "CSS/images/upanddownlike.png" alt="Like" class="like">
-                            </h2>
-                            <p>🙅🙅‍♂️🙅‍♀️this is a sample text</p>
-                        </div>
+                        {{/each}}
+                        
+                      
                     </div>
                 </div>
             </div>      

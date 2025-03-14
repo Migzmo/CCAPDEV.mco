@@ -11,7 +11,7 @@ const reviewSchema = new mongoose.Schema({
 const Review = mongoose.model('Review', reviewSchema);
 // Restaurant Schema
 const restaurantSchema = new mongoose.Schema({
-  resto_id: { type: Number, unique: true, required: true },
+  resto_id: { type: Number, required: true },//im not sure about this being non unique
   resto_name: { type: String,unique:true, required: true },
   resto_address: { type: String, required: true }, // Corrected field name
   resto_time: { type: String },
@@ -22,7 +22,7 @@ const restaurantSchema = new mongoose.Schema({
   resto_img: { type: String }, 
   resto_owner_id: { type: Number, ref: 'Account' },
   cuisine_id: { type: Number, ref: 'Cuisine' },
-  resto_reviews: [reviewSchema]
+  resto_reviews: [{type:Number,ref: 'Review'}]
 });
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
@@ -32,8 +32,8 @@ const accountSchema = new mongoose.Schema({
   acc_name: { type: String, required: true },
   acc_username: { type: String, unique: true, required: true },
   acc_bio: { type: String },
-  saved_restos: [restaurantSchema], 
-  saved_reviews:[reviewSchema],
+  saved_restos: [{ type: Number, ref: 'Restaurant',default: [] }], // Simple array of IDs
+  saved_reviews: [{ type: Number, ref: 'Review',default: [] }],
   profile_pic: { type: String } // Image URL
 });
 
