@@ -18,6 +18,7 @@ const fs = require('fs');
 
 //For Initializing express
 const express = require('express');
+const fileUpload = require('express-fileupload')
 const path = require('path');
 const app = express();
 
@@ -218,6 +219,78 @@ app.get('/profile/:id', async function (req, res) {
         console.error(err);
         res.status(500).send('Server Error');
     }
+});
+
+
+app.post('/', async (req, res) => {
+  try {
+      console.log("Received restaurant data:", req.body);
+      
+      // Find highest existing resto_id
+      const highestRestaurant = await Restaurant.findOne().sort('-resto_id');
+      const newRestoId = highestRestaurant ? highestRestaurant.resto_id + 1 : 1;
+      
+      // Get cuisine ID or create new cuisine
+      let cuisineId = 1; // Default cuisine ID
+      if (req.body.cuisine_name) {
+          const cuisine = await Cuisine.findOne({ cuisine_name: req.body.cuisine_name });
+          if (cuisine) {
+              cuisineId = cuisine.cuisine_id;
+          } else {
+              // Create new cuisine if it doesn't exist
+              const highestCuisine = await Cuisine.findOne().sort('-cuisine_id');
+              const newCuisineId = highestCuisine ? highestCuisine.cuisine_id + 1 : 1;
+              
+              const newCuisine = new Cuisine({
+                  cuisine_id: newCuisineId,
+                  cuisine_name: req.body.cuisine_name
+              });
+              await newCuisine.save();
+              cuisineId = newCuisineId;
+          }
+      }
+      let imagePath = '/views/CSS/RestoImages/default-restaurant.jpg'; // Default image
+      
+      if (req.files && req.files.image) {
+          const image = req.files.image;
+          const fileName = `restaurant_${newRestoId}_${Date.now()}${path.extname(image.name)}`;
+          
+          // Move the file to the destination folder
+          await image.mv(path.join(imageDir, fileName));
+          
+          // Set the image path for database storage
+          imagePath = `/views/CSS/RestoImages/${fileName}`;
+      }
+      
+      // Create new restaurant with all required fields
+      const newRestaurant = new Restaurant({
+          resto_id: newRestoId,
+          resto_name: req.body.name || '',
+          resto_address: req.body.address || '',
+          resto_time: req.body.time || '',
+          resto_phone: req.body.phoneNumber || '',
+          resto_email: req.body.email || '',
+          resto_payment: req.body.payment || '',
+          resto_perks: req.body.perks || 'None',
+          cuisine_id: cuisineId,
+          resto_img: req.body.image || '/views/CSS/RestoImages/default-restaurant.jpg',
+          resto_owner_id: 0 // Default owner ID
+      });
+      
+      console.log("Saving restaurant:", newRestaurant);
+      await newRestaurant.save();
+      
+      res.status(201).json({
+          message: 'Restaurant added successfully',
+          resto_id: newRestoId
+      });
+  } catch (error) {
+      console.error('Error adding restaurant:', error);
+      res.status(500).json({ 
+          message: 'Failed to add restaurant',
+          error: error.message
+      });
+  }
 });
 
 app.use((err, req, res, next) => {
