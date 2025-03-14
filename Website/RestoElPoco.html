@@ -134,11 +134,29 @@
             </div>
         </div>
 
+        <div id="deleteConfirmPopup">
+            <div class="deleteConfirm-content">
+                <div class="deleteConfirm-header">
+                    <h2>Confirm Deletion</h2>
+                </div>
+                <div class="deleteConfirm-body">
+                    <p>Are you sure you want to delete this restaurant?</p>
+                    <p class="warning-text">This action cannot be undone.</p>
+                    
+                    <div class="confirm-buttons">
+                        <button class="cancel-delete-btn" onclick="toggleDeleteConfirm()">Cancel</button>
+                        <button class="confirm-delete-btn">Yes, Delete</button>
+                    </div>
+                </div>
+                <button id="closeDeleteConfirm" onclick="toggleDeleteConfirm()">&times;</button>
+            </div>
+        </div>
+
         <!-- Restaurant Information -->
         <div class="info">
                 <!-- Replace the buttons container including the inline style block with: -->
                 <div class="buttons-container">
-                    <button class="oval-button-review delete-btn">Delete</button>
+                    <button class="oval-button-review delete-btn" onclick="toggleDeleteConfirm()">Delete</button>
                     <button class="oval-button-review edit-btn" onclick="togglePopupCreateResto()">Edit</button>
                     <a href="LaSapp.html">
                         <button class="oval-button-review">Back</button>

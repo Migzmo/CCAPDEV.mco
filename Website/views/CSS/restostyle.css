@@ -556,10 +556,11 @@ footer{
 
 .wrapper {
     padding: 20px;
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: auto;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+    background-color: #CDDECB; /* Ensure background color matches parent */
 }
 
 /* Custom scrollbar styling */
@@ -734,14 +735,13 @@ form .input-box input {
 .createResto-content {
     display: flex;
     flex-direction: column;
-    padding: 0; /* Remove padding from container */
+    padding: 0;
     background-color: #CDDECB;
     border: none;
-    height: calc(100% - 80px); /* Adjust height to account for header */
+    height: calc(100% - 50px); /* Changed from 80px to match header height exactly */
     position: relative;
-    overflow: hidden; /* Hide overflow */
+    overflow: hidden;
 }
-
 
 
 #closeCreateResto {
@@ -759,10 +759,104 @@ form .input-box input {
     height: 50px;
     background: #FFFFFF;
     text-align: center;
+    border-bottom: 1px solid black; /* Add thin black border */
 }
 
 .createResto-header h2 {
     position: relative;
     top: 10px;
     font-family: 'Lexend', sans-serif;
+}
+
+/* DELETE RESTO CSS*/
+/* Delete Confirmation Popup Styling */
+#deleteConfirmPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.deleteConfirm-header {
+    background-color: #f44336;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.deleteConfirm-header h2 {
+    margin: 0;
+    font-family: 'Lexend', sans-serif;
+    font-size: 24px;
+}
+
+.deleteConfirm-body {
+    padding: 25px;
+    text-align: center;
+    font-family: 'Lexend', sans-serif;
+}
+
+.deleteConfirm-body p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.warning-text {
+    color: #f44336;
+    font-weight: bold;
+    font-size: 14px !important;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.cancel-delete-btn, .confirm-delete-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cancel-delete-btn {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.cancel-delete-btn:hover {
+    background-color: #bdbdbd;
+}
+
+.confirm-delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+#closeDeleteConfirm {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
 }

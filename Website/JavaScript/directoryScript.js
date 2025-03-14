@@ -111,3 +111,20 @@ function togglePopupCreateResto() {
     }
 }
 
+// delete resto button
+function toggleDeleteConfirm() {
+    const popup = document.getElementById('deleteConfirmPopup');
+    const backdrop = document.getElementById('backdrop');
+    const isHidden = (popup.style.display === 'none' || popup.style.display === '');
+    
+    popup.style.display = isHidden ? 'block' : 'none';
+    backdrop.style.display = isHidden ? 'block' : 'none';
+
+    if (isHidden) {
+        document.body.style.pointerEvents = 'none';
+        popup.style.pointerEvents = 'auto';
+        backdrop.style.pointerEvents = 'auto';
+    } else {
+        document.body.style.pointerEvents = 'auto';
+    }
+}

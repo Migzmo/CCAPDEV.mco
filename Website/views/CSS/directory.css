@@ -695,13 +695,14 @@ font-family: 'Lexend', sans-serif;
 .createResto-content {
     display: flex;
     flex-direction: column;
-    padding: 0; /* Remove padding from container */
+    padding: 0;
     background-color: #CDDECB;
     border: none;
-    height: calc(100% - 80px); /* Adjust height to account for header */
+    height: calc(100% - 50px); /* Changed from 80px to match header height exactly */
     position: relative;
-    overflow: hidden; /* Hide overflow */
+    overflow: hidden;
 }
+
 
 
 
@@ -720,6 +721,7 @@ font-family: 'Lexend', sans-serif;
     height: 50px;
     background: #FFFFFF;
     text-align: center;
+    border-bottom: 1px solid black; /* Add thin black border */
 }
 
 .createResto-header h2 {
@@ -732,10 +734,11 @@ font-family: 'Lexend', sans-serif;
 
 .wrapper {
     padding: 20px;
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: auto;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+    background-color: #CDDECB; /* Ensure background color matches parent */
 }
 
 /* Custom scrollbar styling */
