@@ -197,25 +197,37 @@ html, body {
     background-color: #f9fef8;
     width: 100%;
     height: 500px;
-    border-radius: 15px;
+    border-radius: 20px;
     padding-bottom: 2%;
-    border: black solid 0.5px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Prevent content from spilling out */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
 .review1 {
     display: flex;          
     align-items: center;    
     justify-content: space-between; 
-    width: 100%;     
-    border-bottom: 3px solid rgb(202, 204, 206);                 
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #f0f7ee;
+    border-radius: 20px 20px 0 0;
+    border-bottom: 2px solid #e0e9dd;
+    box-sizing: border-box; /* Include padding in width calculation */        
 }
 
 .reviews h1 {
-    margin-left: 3%;
-    padding: 0; 
+    margin: 0;
+    padding: 0;
     color: #2E7D32;
-    font-family: 'baloo';
-    font-size:40px;
+    font-family: 'Lexend';
+    font-size: 36px;
+    font-weight: bold;
+    display: block;
+    background-color: transparent;
+    border-radius: 0;
+    border-bottom: none;
 }
 
 .reviews h2{
@@ -250,21 +262,123 @@ html, body {
 
 /*Scrollable segment for reviews*/
 .scroll-div {
-    width: 98.4%;
+    width: 100%;
     height: 360px;
-    overflow-y: auto; 
-    padding: 10px;
+    overflow-y: auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.scroll-obj p {
+    margin: 0;
+    padding: 5px 0 10px 0; /* Remove left padding */
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    border-bottom: none;
 }
 
 .scroll-obj {
-    
-    color: black;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
+    margin: 15px 20px; /* Match horizontal padding of review1 */
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
 }
+
+.scroll-obj:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
 .scroll-obj h2{
-    display:flex;
-    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    padding-left: 0; /* Remove any left padding */
+    margin-left: 0;  /* Remove any left margin */
+}
+
+/* Improved profile image */
+.scroll-obj .profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e8f5e9;
+    margin-right: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Add rating stars visualization (placeholder for future implementation) */
+.review-rating {
+    margin-bottom: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-left: 0; /* Align stars to the left */
+    padding-left: 0; /* Remove any left padding */
+}
+
+/* User link styling */
+.scroll-div a {
+    text-decoration: none;
+    color: #2E7D32;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    padding-left: 0; /* Remove any left padding */
+    margin-left: 0;  /* Remove any left margin */
+}
+
+.scroll-div a:hover {
+    color: #1b5e20;
+}
+
+/* Improved button styling */
+.button-3 {
+    appearance: none;
+    background-color: #2ea44f;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 10px 20px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+
+
+.review-date {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #888;
+    text-align: right;
+    font-style: italic;
 }
 
 .like{
@@ -455,6 +569,13 @@ footer{
   white-space: nowrap;
   top: 10px;
   right: 10px;
+}
+
+.reviews > div:nth-child(3) {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .button-3:focus:not(:focus-visible):not(.focus-visible) {

@@ -107,6 +107,133 @@ mongoose.connect('mongodb://localhost/lasappDB', {
   .catch(err => console.error('Connection error:', err));
 
 //auth routes
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        console.log('Register route accessed', req.body);
+        // Generate unique account ID
+        const lastAccount = await Account.findOne().sort({ acc_id: -1 });
+        const newAccId = lastAccount ? lastAccount.acc_id + 1 : 1;
+
+        // Create new account
+        const newAccount = new Account({
+            acc_id: newAccId,
+            acc_name: req.body.username,
+            acc_username: req.body.username,
+            acc_bio: req.body.description || '',
+            profile_pic: req.body.profilePic || '',
+            saved_restos: [],
+            saved_reviews: []
+        });
+
+        await newAccount.save();
+        res.status(201).json({
+            success: true,
+            message: 'Account created successfully',
+            userId: newAccount.acc_id // Return user ID
+        });
+    } catch (error) {
+        console.error('Registration error:', error);
+        // Handle duplicate username error
+        if (error.code === 11000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Username already exists'
+            });
+        }
+        res.status(500).json({
+            success: false,
+            message: 'Error creating account',
+            error: error.message
+        });
+    }
+});
+
+app.put('/api/submitupdate', async (req, res) => {
+  try {
+    console.log("Received Update Request:", req.body);
+
+    // Check if resto_id is provided
+    if (!req.body.resto_id) {
+      return res.status(400).json({ success: false, message: "resto_id is required" });
+    }
+
+    const restaurantId = parseInt(req.body.resto_id, 10);
+
+    // Create properly mapped update object that matches your schema
+    const updateData = {
+      resto_name: req.body.name,
+      resto_address: req.body.address,
+      resto_time: req.body.time,
+      resto_phone: req.body.phoneNumber,
+      resto_email: req.body.email,
+      resto_payment: req.body.payment,
+      resto_perks: req.body.perks
+    };
+
+    // Handle image upload if present
+    if (req.files && req.files.image) {
+      const image = req.files.image;
+      const fileName = `restaurant_${restaurantId}_${Date.now()}${path.extname(image.name)}`;
+
+      // Create destination path
+      const filePath = path.join(__dirname, 'public/images/restaurants', fileName);
+
+      try {
+        // Move the file to the destination
+        await image.mv(filePath);
+
+        // Set the image path for database update
+        updateData.resto_img = `/images/restaurants/${fileName}`;
+        console.log("Image updated to:", updateData.resto_img);
+
+        // Optional: Delete the old image file to save space
+        // This requires finding the current restaurant first
+        const currentRestaurant = await Restaurant.findOne({ resto_id: restaurantId });
+        /*if (currentRestaurant && currentRestaurant.resto_img) {
+          const oldPath = path.join(__dirname, currentRestaurant.resto_img.replace(/^\//, ''));
+          // Only delete if it's not the default image
+          if (fs.existsSync(oldPath) && !oldPath.includes('default-restaurant.jpg')) {
+            fs.unlinkSync(oldPath);
+            console.log("Deleted old image:", oldPath);
+          }
+        }*/
+      } catch (imageError) {
+        console.error("Error processing image:", imageError);
+        // Continue with update even if image processing fails
+      }
+    }
+
+    console.log("Mapped update data:", updateData);
+
+    // Rest of your code for cuisine handling...
+    if (req.body.cuisine_name) {
+      // Find or create cuisine
+      // ...existing code...
+    }
+
+    const restaurant = await Restaurant.findOneAndUpdate(
+      { resto_id: restaurantId },
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!restaurant) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Restaurant updated successfully',
+      restaurant,
+      resto_id: restaurantId
+    });
+  } catch (error) {
+    console.error('Error updating restaurant:', error);
+    res.status(500).json({ success: false, message: 'Failed to update restaurant', error: error.message });
+  }
+});
+
+
 app.post('/api/auth/login', async (req, res) => {
   try {
     console.log('Login route accessed', req.body);
@@ -115,7 +242,8 @@ app.post('/api/auth/login', async (req, res) => {
     // Find the account by username
     const account = await Account.findOne({ acc_username: username });
 
-    // Check if account exists
+    // In a real app, you'd check password hashes
+    // For this demo, we're checking if the account exists
     if (!account) {
       return res.status(401).json({
         success: false,
@@ -148,6 +276,7 @@ app.post('/api/auth/login', async (req, res) => {
     });
   }
 });
+
 // Initialize our Reviews
 const { Account, Cuisine, Restaurant, Review } = require("./database/models/lasappDB");
 
@@ -165,9 +294,17 @@ app.set('view engine','hbs');
 // Root route to render the homepage
 app.get('/', async function(req, res) {
   try {
-    const restaurants = await Restaurant.find({isAlive: true});
-    res.render('LaSapp', { restaurants });
-  } catch (err) {
+    const restaurants = await Restaurant.find({isAlive:true});
+    
+    if (restaurants.length === 0) { // Fix: Check if array is empty
+      return res.status(404).send('No restaurants found');
+    }
+
+    console.log("Successfully found restaurants:", restaurants);
+    
+    res.render('LaSapp', { restaurants: restaurants });
+
+  } catch (err) { // Fix: Catch error correctly
     console.error('Error fetching restaurants:', err);
     res.status(500).send('Server Error');
   }
@@ -305,6 +442,39 @@ app.post('/api/auth/register', async (req, res) => {
 });
 
 // Render restaurant page using Handlebars
+app.delete('/api/restaurant/:id', async (req, res) => {
+  try {
+    const restaurantId = parseInt(req.params.id, 10);
+
+    if (isNaN(restaurantId)) {
+      return res.status(400).json({ success: false, message: 'Invalid restaurant ID' });
+    }
+
+    // Soft delete by setting isAlive to false
+    const restaurant = await Restaurant.findOneAndUpdate(
+      { resto_id: restaurantId },
+      { isAlive: false },
+      { new: true }
+    );
+
+    if (!restaurant) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Restaurant deleted successfully'
+    });
+  } catch (error) {
+    console.error('Error deleting restaurant:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete restaurant',
+      error: error.message
+    });
+  }
+});
+
 app.get('/restaurant/:id', async function (req, res) {
   try {
       const restaurantId = parseInt(req.params.id, 10); // Convert the ID to an integer //10 might cause issue check later
@@ -329,6 +499,7 @@ app.get('/restaurant/:id', async function (req, res) {
       //This will render restaurant handlbar
       res.render('restaurant', {
           restaurant: {
+              id: restaurant.resto_id,
               name: restaurant.resto_name,
               location: restaurant.resto_address,
               image: restaurant.resto_img,
@@ -519,6 +690,8 @@ app.use((err, req, res, next) => {
         error: err.message
     });
 });
+// Replace your root route with this improved version
+
 
 //This blocks access to the database for now idk yet
 app.use('/database', function (req, res, next) {
