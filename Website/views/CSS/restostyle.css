@@ -863,83 +863,106 @@ form .input-box input {
 
 /* CSS FOR REVIEWS*/
 /* Add to your restostyle.css file */
-.rating-container {
-    margin: 15px 20px;
-    display: flex;
-    align-items: center;
-    font-family: 'Lexend', sans-serif;
+
+/* Add these styles at the end of the file */
+
+/* Review Modal Styling */
+#reviewModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.rating-container p {
-    margin: 0 10px 0 0;
-    font-size: 16px;
-    font-weight: 500;
+.reviewModal-header {
+    height: 50px;
+    background: #FFFFFF;
+    text-align: center;
+    border-bottom: 1px solid black;
+    display: flex;         /* Add flexbox display */
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Center vertically */
+}
+
+.reviewModal-header h2 {
+    margin: 0;
+    font-family: 'Lexend', sans-serif;
+    position: static;      /* Remove relative positioning */
+}
+
+.reviewModal-content {
+    background-color: #CDDECB;
+    position: relative;
+    height: calc(100% - 50px);
+}
+
+#closeReviewModal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
     border: none;
-    padding: 0;
+    font-size: 24px;
+    color: black;
+    cursor: pointer;
+}
+
+.rating-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.rating-container label {
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    margin-right: 15px;
 }
 
 .star-rating {
     display: inline-flex;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .star {
-    color: #ccc;
+    color: black;          /* Change from #DDD to black */
     font-size: 30px;
     cursor: pointer;
-    transition: color 0.2s ease;
-    margin: 0 2px;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    transition: color 0.2s;
 }
 
 .star:hover,
 .star.active {
-    color: #ffb400;
+    color: #FFD700;
 }
 
-.rating-text {
-    font-size: 14px;
-    color: #666;
-    padding-top: 5px;
-}
-
-.review-controls {
-    display: flex;
-    justify-content: flex-end; /* Change from space-between to flex-end */
-    align-items: center;
-    margin: 15px 20px;
-}
-
-.attachment-control {
-    display: flex;
-    align-items: center;
-}
-
-.custom-file-upload {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.custom-file-upload span {
-    margin-left: 5px;
+#rating-text {
     font-family: 'Lexend', sans-serif;
-    color: #2E7D32;
     font-size: 14px;
+    color: #555;
 }
 
-#file-upload {
-    display: none;
-}
-
-.review-button {
-    margin: 0;
-    position: static;
-}
-
-.review-area textarea {
-    margin: 0 20px;
-    width: calc(95% - 20px);
+.input-box textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    font-size: 16px;
+    font-family: 'Lexend', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
     resize: vertical;
-    font-family: 'Lexend', sans-serif;
+}
+
+/* Make the submit button right-aligned */
+.reviewModal-content .button-section {
+    justify-content: flex-end;
 }

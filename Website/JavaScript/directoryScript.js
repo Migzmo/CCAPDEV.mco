@@ -131,46 +131,45 @@ function toggleDeleteConfirm() {
 
 // rating functionality
 // Add this to your RestoInfo.js file or create a new script tag at the bottom of your HTML
-document.addEventListener('DOMContentLoaded', function() {
-    const stars = document.querySelectorAll('.star');
-    const ratingText = document.querySelector('.rating-text');
-    let currentRating = 0;
+/* filepath: a:\DLSU - Second Year\Term 2\CCAPDEV\CCAPDEV.mco\Website\javascript\RestoInfo.js */
+// Add these functions to the file
 
+// Function to toggle the review modal
+function toggleReviewModal() {
+    const backdrop = document.getElementById('backdrop');
+    const reviewModal = document.getElementById('reviewModal');
+    
+    if (reviewModal.style.display === 'block') {
+        reviewModal.style.display = 'none';
+        backdrop.style.display = 'none';
+    } else {
+        reviewModal.style.display = 'block';
+        backdrop.style.display = 'block';
+    }
+}
+
+// Initialize star rating functionality when the document loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Star rating functionality
+    const stars = document.querySelectorAll('.star');
+    const ratingText = document.getElementById('rating-text');
+    
     stars.forEach(star => {
         star.addEventListener('click', function() {
-            const rating = parseInt(this.getAttribute('data-rating'));
-            currentRating = rating;
+            const value = this.getAttribute('data-value');
+            ratingText.textContent = `${value} out of 5`;
             
-            // Update rating text
-            ratingText.textContent = `${rating} out of 5`;
-            
-            // Update star colors
+            // Reset all stars
             stars.forEach(s => {
-                const starRating = parseInt(s.getAttribute('data-rating'));
-                if (starRating <= rating) {
+                s.classList.remove('active');
+            });
+            
+            // Activate clicked star and all before it
+            stars.forEach(s => {
+                if (s.getAttribute('data-value') <= value) {
                     s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
                 }
             });
-        });
-        
-        // Hover effects
-        star.addEventListener('mouseover', function() {
-            const rating = parseInt(this.getAttribute('data-rating'));
-            
-            stars.forEach(s => {
-                const starRating = parseInt(s.getAttribute('data-rating'));
-                if (starRating <= rating) {
-                    s.classList.add('hover');
-                } else {
-                    s.classList.remove('hover');
-                }
-            });
-        });
-        
-        star.addEventListener('mouseout', function() {
-            stars.forEach(s => s.classList.remove('hover'));
         });
     });
 });

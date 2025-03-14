@@ -203,38 +203,64 @@
 
             <!-- Reviews -->
             <div class="reviews">
-                <div class="review1">
-                    <h1> Reviews</h1>
-                    <div class="review-box" popover id="myheader">
-                        <h3>El Poco Cantina</h3>
-                        
-                        <!-- Star Rating System -->
-                        <div class="rating-container">
-                            <p>Your Rating:</p>
-                            <div class="star-rating">
-                                <span class="star" data-rating="1">&#9733;</span>
-                                <span class="star" data-rating="2">&#9733;</span>
-                                <span class="star" data-rating="3">&#9733;</span>
-                                <span class="star" data-rating="4">&#9733;</span>
-                                <span class="star" data-rating="5">&#9733;</span>
-                            </div>
-                            <span class="rating-text">0 out of 5</span>
-                        </div>
-                        
-                        <div class="review-area">
-                            <textarea name="review" id="review" placeholder="Write your review here..."></textarea>
-                        </div>
-                        
-                        <div class="review-controls">
-                            <button class="review-button">Submit Review</button>
-                        </div>
-                    </div>
-                    <input type="button" popovertarget="myheader" value="Make a Review" class="button-3">
-                    
-                    <button class="button-3">Edit a Review</button>
-                    <button class="button-3">Delete a Review</button>
-                </div>
+            <div class="review1">
+                <h1> Reviews</h1>
+
+                <button class="button-3" onclick="toggleReviewModal()">Make a Review</button>
                 
+                <button class="button-3">Edit a Review</button>
+                <button class="button-3">Delete a Review</button>
+            </div>
+            
+
+            <div id="reviewModal">
+                <div class="reviewModal-header">
+                    <h2>Write a Review</h2>
+                </div>
+                <div class="reviewModal-content">
+                    <div class="wrapper">
+                        <form action="#" method="post">
+                            <!-- Restaurant Name -->
+                            <div class="form-section">
+                                <h4>El Poco Cantina</h4>
+                                
+                                <!-- Rating Section -->
+                                <div class="rating-container">
+                                    <label>Your Rating:</label>
+                                    <div class="star-rating">
+                                        <span class="star" data-value="1">★</span>
+                                        <span class="star" data-value="2">★</span>
+                                        <span class="star" data-value="3">★</span>
+                                        <span class="star" data-value="4">★</span>
+                                        <span class="star" data-value="5">★</span>
+                                    </div>
+                                    <span id="rating-text">0 out of 5</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Review Content -->
+                            <div class="form-section">
+                                <div class="input-box">
+                                    <label for="review-content">Your Review</label>
+                                    <textarea id="review-content" placeholder="Share your experience with this restaurant..." required></textarea>
+                                </div>
+                            </div>
+            
+                            <!-- Button Section -->
+                            <div class="button-section">
+                                <div class="input-box button">
+                                    <input type="submit" value="Submit Review">
+                                </div>
+                                <div class="input-box button secondary">
+                                    <input type="button" value="Cancel" onclick="toggleReviewModal()">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <button id="closeReviewModal" onclick="toggleReviewModal()">&times;</button>
+                </div>
+            </div>
+
                 <!-- HardCoded Comments -->
                 <div>
                     <div class="scroll-div"> 
