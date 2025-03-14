@@ -37,12 +37,6 @@ let impErr2= false;
 let impErr3= false;
 let impErr4= false;
 
-app.use(fileUpload({
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-  useTempFiles: true,
-  tempFileDir: '/tmp/'
-}));
-
 mongoose.connect('mongodb://localhost/lasappDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -101,7 +95,39 @@ mongoose.connect('mongodb://localhost/lasappDB', {
     } 
   })
   .catch(err => console.error('Connection error:', err));
-
+// Add this route to handle restaurant deletion (soft delete)
+app.delete('/api/restaurant/:id', async (req, res) => {
+  try {
+    const restaurantId = parseInt(req.params.id, 10);
+    
+    if (isNaN(restaurantId)) {
+      return res.status(400).json({ success: false, message: 'Invalid restaurant ID' });
+    }
+    
+    // Soft delete by setting isAlive to false
+    const restaurant = await Restaurant.findOneAndUpdate(
+      { resto_id: restaurantId },
+      { isAlive: false },
+      { new: true }
+    );
+    
+    if (!restaurant) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+    
+    res.status(200).json({ 
+      success: true, 
+      message: 'Restaurant deleted successfully' 
+    });
+  } catch (error) {
+    console.error('Error deleting restaurant:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to delete restaurant', 
+      error: error.message 
+    });
+  }
+});
 //auth routes
 app.post('/api/auth/register', async (req, res) => {
     try {
@@ -144,6 +170,8 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
+<<<<<<< Updated upstream
+=======
 app.put('/api/submitupdate', async (req, res) => {
   try {
     console.log("Received Update Request:", req.body);
@@ -230,6 +258,7 @@ app.put('/api/submitupdate', async (req, res) => {
 });
 
 
+>>>>>>> Stashed changes
 app.post('/api/auth/login', async (req, res) => {
   try {
     console.log('Login route accessed', req.body);
@@ -320,7 +349,6 @@ app.get('/restaurant/:id', async function (req, res) {
       //This will render restaurant handlbar 
       res.render('restaurant', {
           restaurant: {
-              id: restaurant.resto_id,
               name: restaurant.resto_name,
               location: restaurant.resto_address,
               image: restaurant.resto_img,
@@ -487,6 +515,11 @@ app.use((err, req, res, next) => {
 });
 // Replace your root route with this improved version
 
+app.use(fileUpload({
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
 
 //This blocks access to the database for now idk yet
 app.use('/database', function (req, res, next) {

@@ -4,10 +4,8 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>LaSapp</title>
-        <link rel="stylesheet" href="/views/restohbsstyle.css"/>
-        <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet"> 
-        <script src = "javascript/web.js"></script>
-        <img src="/views/CSS/RestoImages/logo.png" id="logoImg" alt="logo" height="70" width="70">
+        <link rel="stylesheet" href="views/css/restostyle.css">
+        <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -17,29 +15,27 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Lexend:wght@100..900&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     </head>
     <body>
         <!-- Navigation Bar -->
         <header class="navbar">
             <!-- First Header -->
             <div class="navbar-container">
-                <a href="/" id = "logoImg">
-                <img src="/views/CSS/RestoImages/logo.png" alt="Logo" width="70" height="70">
+                <a href="LaSapp.html" id = "logoImg">
+                <img src="views/CSS/RestoImages/logo.png" alt="Logo" width="70" height="70">
                 </a>
                     <div class="logo">LaSapp</div>
                 
                 
                 <div class="options">
                     <ul>
-                        <li><a href="/">DIRECTORY</a></li>
-                        <li><a href="#">ACCOUNT</a></li>
+                        <li><a href="LaSapp.html">DIRECTORY</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-                <div id="backdrop"></div>
+
+        <div id="backdrop"></div>
         <div id="createRestoFrame">
             <div class="createResto-header">
                 <h2>Edit Restaurant</h2>
@@ -149,54 +145,57 @@
                     
                     <div class="confirm-buttons">
                         <button class="cancel-delete-btn" onclick="toggleDeleteConfirm()">Cancel</button>
-                        <button class="confirm-delete-btn" onclick="deleteRestaurant()">Yes, Delete</button>
+                        <button class="confirm-delete-btn">Yes, Delete</button>
                     </div>
                 </div>
                 <button id="closeDeleteConfirm" onclick="toggleDeleteConfirm()">&times;</button>
             </div>
         </div>
+
         <!-- Restaurant Information -->
         <div class="info">
-                <!-- Exit Button -->
+                <!-- Replace the buttons container including the inline style block with: -->
                 <div class="buttons-container">
                     <button class="oval-button-review delete-btn" onclick="toggleDeleteConfirm()">Delete</button>
                     <button class="oval-button-review edit-btn" onclick="togglePopupCreateResto()">Edit</button>
-                    <a href="/">
+                    <a href="LaSapp.html">
                         <button class="oval-button-review">Back</button>
                     </a>
                 </div>
+
                 <!-- Header -->
                 <div class="classheader">
-                    <button onclick="toggleHeart()" id="btnh1" class="btn">
-                        <i id="heartIcon" class="fa-solid fa-heart heart"></i>
+                    <button id="heart">
+                        <img src="views/CSS/RestoImages/heart.png" alt="Like" width="80" height="80">
                     </button>
                     <div class="head-container">
-                        <h1>{{restaurant.name}}</h1>  
-                        <p>N/A</p> 
+                        <h1>El Poco Cantina - Estrada St.</h1>  
+                        <p>Fast Food, American</p> 
                     </div>
-                </div>       
+                </div>
+                
             <!-- Main body-->
             <div class="main">
-                <img src={{restaurant.image}} alt={{restaurant.name}}>
+                <img src="views/CSS/RestoImages/elpococantina.png" alt="El Poco Cantina">
                 <div class="information">
                     <h1>About:</h1>
                     <h2>📍 Address: </h2>
-                    <p>{{restaurant.address}}</p>
+                    <p>945 Estrada St, Malate, Manila, 1004 Metro Manila</p>
                     <h2>⏰ Time: </h2>
-                    <p>{{restaurant.time}}</p>
+                    <p>10:00 AM - 10:30 PM</p>
                     <h2>📱 Phone #: </h2>
-                    <p>{{restaurant.phone}}</p>
+                    <p>09209800945</p>
                     <h2>📥 Email: </h2>
-                    <p>{{restaurant.email}}</p>
+                    <p>n/a</p>
                     <h2>💸 Payment Method: </h2>
                     <p>Cash, GCash, Debit Card</p>
                     <br>
 
                     <h1>Perks:</h1>
                     <ul>
-                        {{#each restaurant.perks}}
-                        <li>{{this}}</li>
-                        {{/each}}
+                        <li>Air Conditioned</li>
+                        <li>Good Food</li>
+                        <li>Staff is very accomodating and lively!</li>
                     </ul>
                 
                 </div>
@@ -260,32 +259,59 @@
                     </div>
                     <button id="closeReviewModal" onclick="toggleReviewModal()">&times;</button>
                 </div>
-            </div>   
-                
-                <!-- Scrollable Reviews -->
+            </div>
+
+                <!-- HardCoded Comments -->
                 <div>
                     <div class="scroll-div"> 
-                        <!-- Feed Reviews -->
-                        {{#each reviews}}
                         <div class="scroll-obj">   
+                            
                             <h2>
-                                <a href="/profile/{{this.account_id.acc_id}}">
-                                <img src={{this.account_id.profile_pic}} alt="Profile" class="profile-pic"> 
-                                {{this.account_id.acc_name}}
+                                
+                                <a href="profile.html">
+                                <img src="views/CSS/ProfileImages/profile_sample.jpg" alt="Profile" class="profile-pic"> Jose Miguel Espinosa
                                 </a>
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
                             </h2>
+                            <p>The Quesabirria was topnotch!</p>
                             
-                            <!-- Add star rating visualization (display actual rating when available) -->
-                            <div class="review-rating">
-                                ★★★★☆ <!-- Replace with dynamic stars based on rating -->
-                            </div>
-                            
-                            <p>{{this.review}}</p>
-                            
-                            <!-- Add timestamp (use actual timestamp when available) -->
-                            <span class="review-date">Posted on {{#if this.date}}{{this.date}}{{else}}April 15, 2023{{/if}}</span>
                         </div>
-                        {{/each}}
+                        <div class="scroll-obj">
+                            <h2>
+                                <a href = "profile_two.html">
+                                <img src="views/CSS/ProfileImages/profile_sample_two.jpg" alt="Profile" class="profile-pic"> Karl Matthew Dela Cruz
+                                </a>
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
+                            </h2>
+                            <p>I loved their horchata!</p>
+                        </div>
+                        <div class="scroll-obj">
+                            <h2>
+                                <a href = "profile_three.html">
+                                <img src="views/CSS/ProfileImages/profile_sample_three.jpg" alt="Profile" class="profile-pic"> Bon Aquino
+                                </a>
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
+                            </h2>
+                            <p>Ano halo niyo ng tacos</p>
+                        </div>
+                        <div class="scroll-obj">
+                            <h2>
+                                <a href = "profile_four.html">
+                                <img src="views/CSS/ProfileImages/profile_sample_four.jpg" alt="Profile" class="profile-pic"> Adler Strebel
+                                </a>
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
+                            </h2>
+                            <p>Mexican! Mexican! Mexican! 🫡😂😈</p>
+                        </div>
+                        <div class="scroll-obj">
+                            <h2>
+                                <a href = "profile_five.html">
+                                <img src="views/CSS/ProfileImages/profile_sample_five.jpg" alt="Lebrons's Profile" class="profile-pic"> Superman
+                                </a>
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
+                            </h2>
+                            <p>🙅🙅‍♂️🙅‍♀️this is a sample text</p>
+                        </div>
                     </div>
                 </div>
             </div>      
@@ -293,36 +319,22 @@
 
         <!-- Footer -->
         <footer>
-            <img src="/views/CSS/RestoImages/logo.png" id="footerLogo" alt="logo" height="70" width="70">
+            <img src="views/CSS/RestoImages/logo.png" id="footerLogo" alt="logo" height="70" width="70">
             <div class="logo">LaSapp</div>
 
             <div class="footerIcon">
                 <a href="https://www.facebook.com" target="_blank">
-                    <img src="/views/CSS/RestoImages/icons/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
+                    <img src="views/CSS/RestoImages/icons/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
                 </a>
                 <a href="https://www.instagram.com" target="_blank">
-                    <img src="/views/CSS/RestoImages/icons/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
+                    <img src="views/CSS/RestoImages/icons/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
                 </a>
             </div>
         </footer>
 
-        <script src="/javascript/RestoInfo.js"></script>
-        <script>
-            function toggleHeart() {
-                const heartIcon = document.getElementById("heartIcon");
-                heartIcon.classList.toggle("liked");
-
-                if (heartIcon.classList.contains("liked")) {
-                    heartIcon.style.color = "red";
-                } else {
-                    heartIcon.style.color = "gray";
-                }
-            }
-        </script>
-       <script src='/JavaScript/directoryScript.js'></script>
-
-        <script src='/JavaScript/updateResto.js'></script>
-        <script src='/JavaScript/deleteResto.js'></script>
+        <script src = "javascript/web.js"></script>
+        <script src="javascript/RestoInfo.js"></script>
+        <script src = "javascript/directoryScript.js"></script>
 
     </body>
 </html>
