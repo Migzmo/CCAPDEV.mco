@@ -282,9 +282,7 @@ app.get('/', async function (req, res) {
   try {
     const restaurants = await Restaurant.find({isAlive:true});
     
-    if (restaurants.length === 0) { // Fix: Check if array is empty
-      return res.status(404).send('No restaurants found');
-    }
+    
 
     console.log("Successfully found restaurants:", restaurants);
     
