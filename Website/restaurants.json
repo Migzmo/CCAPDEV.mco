@@ -10,6 +10,7 @@
       "resto_perks": "Good Food, Great Ambiance",
       "resto_img": "/views/CSS/RestoImages/elpococantina.png",
       "resto_owner_id":0,
-      "cuisine_id": 7
+      "cuisine_id": 7,
+      "isAlive": true
     }
 ]

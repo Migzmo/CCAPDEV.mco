@@ -1,30 +1,39 @@
 [
     {
       "cuisine_id": 0,
-      "cuisine_name": "American"
+      "cuisine_name": "American",
+      "isAlive": true
     },
     {
       "cuisine_id": 1,
       "cuisine_name": "Asian"
+      ,
+      "isAlive": true
     },
     {
       "cuisine_id": 2,
       "cuisine_name": "Cafe"
+      ,
+      "isAlive": true
     },
     {
       "cuisine_id": 3,
-      "cuisine_name": "Fastfood"
+      "cuisine_name": "Fastfood",
+      "isAlive": true
     },
     {
       "cuisine_id": 4,
-      "cuisine_name": "Japanese"
+      "cuisine_name": "Japanese",
+      "isAlive": true
     },
     {
       "cuisine_id": 5,
-      "cuisine_name": "Chinese"
+      "cuisine_name": "Chinese",
+      "isAlive": true
     },
     {
       "cuisine_id": 6,
-      "cuisine_name": "Korean"
+      "cuisine_name": "Korean",
+      "isAlive": true
     }
   ]
