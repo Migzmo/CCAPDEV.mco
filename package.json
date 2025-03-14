@@ -1,0 +1,24 @@
+{
+  "name": "ccapdev.mco",
+  "version": "1.0.0",
+  "description": "LaSapp is a web application that provides a directory of restaurants. Users can view restaurant information, leave reviews, and navigate through different restaurant pages.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Migzmo/CCAPDEV.mco.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Migzmo/CCAPDEV.mco/issues"
+  },
+  "homepage": "https://github.com/Migzmo/CCAPDEV.mco#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
+  }
+}
