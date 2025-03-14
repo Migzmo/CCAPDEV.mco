@@ -185,14 +185,14 @@ app.put('/api/submitupdate', async (req, res) => {
         // Optional: Delete the old image file to save space
         // This requires finding the current restaurant first
         const currentRestaurant = await Restaurant.findOne({ resto_id: restaurantId });
-        if (currentRestaurant && currentRestaurant.resto_img) {
+        /*if (currentRestaurant && currentRestaurant.resto_img) {
           const oldPath = path.join(__dirname, currentRestaurant.resto_img.replace(/^\//, ''));
           // Only delete if it's not the default image
           if (fs.existsSync(oldPath) && !oldPath.includes('default-restaurant.jpg')) {
             fs.unlinkSync(oldPath);
             console.log("Deleted old image:", oldPath);
           }
-        }
+        }*/
       } catch (imageError) {
         console.error("Error processing image:", imageError);
         // Continue with update even if image processing fails
@@ -339,6 +339,38 @@ app.get('/restaurant/:id', async function (req, res) {
   }
 });
 
+app.delete('/api/restaurant/:id', async (req, res) => {
+  try {
+    const restaurantId = parseInt(req.params.id, 10);
+    
+    if (isNaN(restaurantId)) {
+      return res.status(400).json({ success: false, message: 'Invalid restaurant ID' });
+    }
+    
+    // Soft delete by setting isAlive to false
+    const restaurant = await Restaurant.findOneAndUpdate(
+      { resto_id: restaurantId },
+      { isAlive: false },
+      { new: true }
+    );
+    
+    if (!restaurant) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+    
+    res.status(200).json({ 
+      success: true, 
+      message: 'Restaurant deleted successfully' 
+    });
+  } catch (error) {
+    console.error('Error deleting restaurant:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to delete restaurant', 
+      error: error.message 
+    });
+  }
+});
 
 //render profile page using handlebars this will fetch data in mongo db 
 app.get('/profile/:id', async function (req, res) {
