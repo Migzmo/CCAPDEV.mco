@@ -35,34 +35,115 @@
             </div>
         </header>
 
+        <div id="backdrop"></div>
+        <div id="createRestoFrame">
+            <div class="createResto-header">
+                <h2>Add Restaurant</h2>
+            </div>
+            <div class="createResto-content">
+                <div class="wrapper">
+                    <form action="#" method="post">
+                        <!-- Basic Information -->
+                        <div class="form-section">
+                            <h4>Basic Information</h4>
+                            <div class="input-box">
+                                <label for="resto-name">Restaurant Name</label>
+                                <input type="text" id="resto-name" placeholder="Enter restaurant name" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Address Section -->
+                        <div class="form-section">
+                            <h4>Location</h4>
+                            <div class="input-box">
+                                <label for="address1">Address Line 1</label>
+                                <input type="text" id="address1" placeholder="Street address" required>
+                            </div>
+                            <div class="input-box">
+                                <label for="address2">Address Line 2</label>
+                                <input type="text" id="address2" placeholder="Building, floor, etc. (optional)">
+                            </div>
+                        </div>
+                        
+                        <!-- Operating Hours -->
+                        <div class="form-section">
+                            <h4>Operating Hours</h4>
+                            <div class="input-box time-input">
+                                <label for="opening-time">Opening Time</label>
+                                <input type="time" id="opening-time" required>
+                            </div>
+                            <div class="input-box time-input">
+                                <label for="closing-time">Closing Time</label>
+                                <input type="time" id="closing-time" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Information -->
+                        <div class="form-section">
+                            <h4>Contact Information</h4>
+                            <div class="input-box">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="Phone number" required>
+                            </div>
+                            <div class="input-box">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="Email address" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Information -->
+                        <div class="form-section">
+                            <h4>Additional Information</h4>
+                            <div class="input-box">
+                                <label for="payment">Payment Methods</label>
+                                <input type="text" id="payment" placeholder="Cash, Credit Card, GCash, etc." required>
+                            </div>
+                            <div class="input-box">
+                                <label for="perks">Perks</label>
+                                <input type="text" id="perks" placeholder="Wi-Fi, Parking, etc." required>
+                            </div>
+                            <div class="input-box">
+                                <label for="cuisine">Cuisine</label>
+                                <input type="text" id="cuisine" placeholder="Filipino, Italian, Japanese, etc." required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4>Reference Image</h4>
+                            <div class="input-box image-upload">
+                                <label for="restaurant-images">Upload Reference Photo</label>
+                                <input type="file" id="restaurant-images" accept="image/*">
+                            </div>
+                        </div>
+
+
+                        <!-- Button Section stays inside the scrollable area but will be styled to stand out -->
+                        <div class="button-section">
+                            <div class="input-box button">
+                                <input type="submit" value="Add Restaurant">
+                            </div>
+                            <div class="input-box button secondary">
+                                <input type="button" value="Cancel" onclick="togglePopupCreateResto()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        
+
+                <button id="closeCreateResto" onclick="togglePopupCreateResto()">&times</button>
+            </div>
+        </div>
+
         <!-- Restaurant Information -->
         <div class="info">
-                <!-- Buttons Container -->
+                <!-- Replace the buttons container including the inline style block with: -->
                 <div class="buttons-container">
+                    <button class="oval-button-review delete-btn">Delete</button>
+                    <button class="oval-button-review edit-btn" onclick="togglePopupCreateResto()">Edit</button>
                     <a href="LaSapp.html">
                         <button class="oval-button-review">Back</button>
                     </a>
-                    <button class="oval-button-review edit-btn">Edit</button>
-                    <button class="oval-button-review delete-btn">Delete</button>
                 </div>
-
-                <style>
-                    .buttons-container {
-                        display: flex !important;
-                        flex-direction: row !important;
-                        align-items: center !important;
-                        gap: 10px !important;
-                        margin-bottom: 20px !important;
-                    }
-                    
-                    .buttons-container button {
-                        margin: 0 5px 0 0 !important;
-                    }
-                    
-                    .buttons-container a {
-                        display: inline-block !important;
-                    }
-                </style>
 
                 <!-- Header -->
                 <div class="classheader">
