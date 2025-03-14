@@ -217,14 +217,15 @@ font-family: 'Lexend', sans-serif;
     margin:auto;
 }
 
-.category-row1{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    margin-top: 50px;
-}
+/*.category-row1{*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    gap: 30px;*/
+/*    margin-top: 50px;*/
+/*}*/
+
 .category-row2{
     display: flex;
     flex-direction: row;
@@ -233,6 +234,39 @@ font-family: 'Lexend', sans-serif;
     gap: 31.5px;
     margin-top: 5px;
 }
+
+.category-row1 {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: #fdfbee; /* Light background like in the image */
+    padding: 20px;
+}
+
+.category-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.category-btn img {
+    width: 80px;  /* Adjust size as needed */
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid black;
+    object-fit: cover;
+    background-color: white; /* Ensures circular background is white */
+    padding: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.category-btn:hover img {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
 .category-container{
     display: flex;
     flex-direction: column;
@@ -440,7 +474,7 @@ font-family: 'Lexend', sans-serif;
 }
 
 #mail-logo{
-    background-image: url('images/mail.png');
+    background-image: url('images/Mail.png');
     width: 20px; /* Adjust size as needed */
     height: 20px; /* Adjust size as needed */
     background-size: contain;

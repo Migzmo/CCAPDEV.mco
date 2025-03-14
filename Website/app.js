@@ -21,6 +21,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //For importing sample data to MONGO DB
 let impErr1= false;
@@ -28,8 +32,10 @@ let impErr2= false;
 let impErr3= false;
 let impErr4= false;
 
-mongoose.connect('mongodb://localhost/lasappDB')
-  .then(async () => {
+mongoose.connect('mongodb://localhost/lasappDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(async () => {
     console.log('Connected to MongoDB');
     
     try {
@@ -85,7 +91,49 @@ mongoose.connect('mongodb://localhost/lasappDB')
   })
   .catch(err => console.error('Connection error:', err));
 
+//auth routes
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        console.log('Register route accessed', req.body);
+        // Generate unique account ID
+        const lastAccount = await Account.findOne().sort({ acc_id: -1 });
+        const newAccId = lastAccount ? lastAccount.acc_id + 1 : 1;
 
+        // Create new account
+        const newAccount = new Account({
+            acc_id: newAccId,
+            acc_name: req.body.username,
+            acc_username: req.body.username,
+            acc_bio: req.body.description || '',
+            profile_pic: req.body.profilePic || '',
+            saved_restos: [],
+            saved_reviews: []
+        });
+
+        await newAccount.save();
+        res.status(201).json({
+            success: true,
+            message: 'Account created successfully'
+        });
+    } catch (error) {
+        console.error('Registration error:', error);
+        // Handle duplicate username error
+        if (error.code === 11000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Username already exists'
+            });
+        }
+        res.status(500).json({
+            success: false,
+            message: 'Error creating account',
+            error: error.message
+        });
+    }
+});
+
+// Your existing routes for restaurant and profile pages
+// ...
 
 // Initialize our Reviews
 const { Account, Cuisine, Restaurant, Review } = require("./database/models/lasappDB");
@@ -172,6 +220,14 @@ app.get('/profile/:id', async function (req, res) {
     }
 });
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        message: 'Server error',
+        error: err.message
+    });
+});
 
 //This blocks access to the database for now idk yet
 app.use('/database', function (req, res, next) {

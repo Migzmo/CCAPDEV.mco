@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>LaSapp</title>
-    <link rel="stylesheet" href="css/directory.css">
+    <link rel="stylesheet" href="./public/CSS/directory.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,31 +87,38 @@
         <div class="registerframe-content">
             <div id="registerframe_left">
                 <h2 id="create-account">Create Your Account</h2>
-                <div class="form-group">
+                <form id="registration-form" class="form-container">
+                    <div class="form-group">
                         <input type="text" id="username" placeholder="Username" required>
                     </div>
-                    <div class="form-group">
+
+                    <div class = "form-group">
                         <input type="password" id="password" placeholder="Password" required>
                     </div>
-                    <div class="form-group">
+
+                    <div class = "form-group">
                         <br/><br/><br/>
                         <label for="avatar" class="instruction">Profile Picture</label>
                         <input type="file" id="avatar" accept="image/*">
                     </div>
-                    <div class="form-group account-type">
+
+                    <div class = "form-group account-type">
                         <label class="instruction">Account Type:</label>
                         <div class="radio-group">
-                            <input type="radio" id="user" name="accountType" value="User" checked>
+                            <input type="radio" id="userRadio" name="accountType" value="User" checked>
                             <label for="user" class="instruction">User</label>
-                            <input type="radio" id="business-owner" name="accountType" value="business-owner">
+                            <input type="radio" id="ownerRadio" name="accountType" value="business-owner">
                             <label for="business-owner" class="instruction">Business Owner</label>
                         </div>
                     </div>
-                    <div class="form-group">
+
+                    <div class = "form-group">
                         <textarea id="description" placeholder="Short description (optional)"></textarea>
                     </div>
+
                     <button type="submit" class="register-button">Create Account</button>
                 </form>
+
                 <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
             </div>
             <div id="registerframe_right">
@@ -122,13 +129,13 @@
 
     <div class="container">
         <div>
-            <img class="my_cover" src="CSS\images\foodflag.jpg" alt="Description of Image">
+            <img class="my_cover" src="./public/CSS/images/foodflag.jpg" alt="Description of Image">
         </div>
         <form>
             <div class = "searchbar">
                 <!-- Search icon -->
                 <div class="material-symbols-outlined search-icon search">search
-                    <img id="filter" src="CSS/images/filter_icon.png" alt="filter">
+                    <img id="filter" src="public/CSS/images/filter_icon.png" alt="filter">
                 </div>
                 
                 <!-- Search input field -->
@@ -142,20 +149,35 @@
     <div class ="categories" id="slider">
         <!-- Previous Button -->
         <div class ="category-buttons">
-            <button class="button" onclick="prevCateg()"><img id = "left"src ="CSS/images/left.png"></button>
+            <button class="button" onclick="prevCateg()"><img id = "left"src ="public/CSS/images/left.png"></button>
         </div>
 
         <!-- Food Categories -->
         <div class="caterogy-container">
         <div class="category-row1">
-            <div class="category"><img src = "CSS\images\Category - American.png"></div>
-            <div class="category"> <img src = "CSS\images\Category - Asian.png"></div>
-            <div class ="category"> <img src = "CSS\images\Category - Cafe.png"></div>
-            <div class ="category"> <img src = "CSS\images\Category - Fastfood.png"></div>
-            <div class ="category" > <img src = "CSS\images\Category - Japanese.png"></div>
-            <div class ="category" > <img src = "CSS\images\Category - Chinese.png"></div>
-            <div class ="category" > <img src = "CSS\images\Category - Korean.png"></div> 
+            <button class="category-btn" data-category="American">
+                <img src="public/CSS/images/Category - American.png" alt="American">
+            </button>
+            <button class="category-btn" data-category="Asian">
+                <img src="public/CSS/images/Category - Asian.png" alt="American">
+            </button>
+            <button class="category-btn" data-category="Cafe">
+                <img src="public/CSS/images/Category - Cafe.png" alt="American">
+            </button>
+            <button class="category-btn" data-category="Fastfood">
+                <img src="public/CSS/images/Category - Fastfood.png" alt="American">
+            </button>
+            <button class="category-btn" data-category="Japanese">
+                <img src="public/CSS/images/Category - Japanese.png" alt="American">
+            </button>
+            <button class="category-btn" data-category="Chinese">
+                <img src="public/CSS/images/Category - Chinese.png" alt="American">
+            </button>
+            <button class="category-btn" data-category="Korean">
+                <img src="public/CSS/images/Category - Korean.png" alt="American">
+            </button>
         </div>
+
         <div class="category-row2">
             <div class="category-name"> <h3>American</h3></div>
             <div class="category-name"> <h3>Asian</h3></div>
@@ -166,71 +188,76 @@
             <div class ="category-name" > <h3>Korean</h3></div>
         </div>
         </div>
-        
+
+        <div id="restaurantContainer">
+            <!-- Restaurants will be dynamically inserted here -->
+        </div>
+
+        <div id="restaurant-list"></div>
 
         <!-- After Button-->
         <div class ="category-buttons">
-            <button class="button" onclick="nextCateg()"><img src ="CSS/images/right.png"></button>
+            <button class="button" onclick="nextCateg()"><img src ="./public/CSS/images/right.png"></button>
         </div>      
     </div>
-    <div class = "resto-box-wrappers">
-        <div class="restaurants" id = "mcdo">
-            <a href="Restomcdowebp.html">
-            <img class = "resto-img" src = "CSS/RestoImages/mcdo.png">
-            <div class="filler"></div>
-            <div class = "resto-text">
-                <h2 class="resto-title">Mcdonalds ⭐</h2>
-                <h3 class="resto-category">Fast Food, American</h3>
-            </div>
-            </a>
-        </div>
-        <div class="restaurants" id = "jollibee">
-            <a href="RestoJollibee.html">
-            <img class = "resto-img" src = "CSS/RestoImages/Jolibee.webp">
-            <div class ="filler"></div>
-            <div class = "resto-text">
-                <h2 class="resto-title">Jollibee ⭐</h2>
-                <h3 class="resto-category">Fast Food, Filipino</h3>
-            </div>
-            </a>
-            
-        </div>
-        <div class="restaurants" id = "elpococantina">
-            <a href="RestoElPoco.html">
-            <img class = "resto-img" src = "CSS/RestoImages/elpococantina.png">
-            <div class ="filler"></div>
-            <div class = "resto-text">
-                <h2 class="resto-title">El Poco Cantina ⭐</h2>
-                <h3 class="resto-category">Casual Dining, Mexican</h3>
-            </div>
-            </a>
-            
-        </div>
-        <div class="restaurants" id = "Mang Inasal">
-            <a href="RestoMangInasal.html">
-            <img class = "resto-img" src = "CSS/RestoImages/manginasalwebp.png">
-            <div class ="filler"></div>
-            <div class = "resto-text">
-                <h2 class="resto-title">Mang Inasal</h2>
-                <h3 class="resto-category">Fast Food, Filipino</h3>
-            </div>
-            </a>
-            
-        </div>
-        <div class="restaurants" id = "Pho Mahal">
-            <a href="RestoPhoMahal.html">
-            <img class = "resto-img" src = "CSS/RestoImages/phomahalwebp.png">
-            <div class ="filler"></div>
-            <div class = "resto-text">
-                <h2 class="resto-title">Pho Mahal</h2>
-                <h3 class="resto-category">Casual Dining, Vietnamese</h3>
-            </div>
-            </a>
-            
-        </div>
+<!--    <div class = "resto-box-wrappers">-->
+<!--        <div class="restaurants" id = "mcdo">-->
+<!--            <a href="Restomcdowebp.html">-->
+<!--            <img class = "resto-img" src = "public/CSS/RestoImages/mcdo.png">-->
+<!--            <div class="filler"></div>-->
+<!--            <div class = "resto-text">-->
+<!--                <h2 class="resto-title">Mcdonalds ⭐</h2>-->
+<!--                <h3 class="resto-category">Fast Food, American</h3>-->
+<!--            </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="restaurants" id = "jollibee">-->
+<!--            <a href="RestoJollibee.html">-->
+<!--            <img class = "resto-img" src = "public/CSS/RestoImages/Jolibee.webp">-->
+<!--            <div class ="filler"></div>-->
+<!--            <div class = "resto-text">-->
+<!--                <h2 class="resto-title">Jollibee ⭐</h2>-->
+<!--                <h3 class="resto-category">Fast Food, Filipino</h3>-->
+<!--            </div>-->
+<!--            </a>-->
+<!--            -->
+<!--        </div>-->
+<!--        <div class="restaurants" id = "elpococantina">-->
+<!--            <a href="RestoElPoco.html">-->
+<!--            <img class = "resto-img" src = "public/CSS/RestoImages/elpococantina.png">-->
+<!--            <div class ="filler"></div>-->
+<!--            <div class = "resto-text">-->
+<!--                <h2 class="resto-title">El Poco Cantina ⭐</h2>-->
+<!--                <h3 class="resto-category">Casual Dining, Mexican</h3>-->
+<!--            </div>-->
+<!--            </a>-->
+<!--            -->
+<!--        </div>-->
+<!--        <div class="restaurants" id = "Mang Inasal">-->
+<!--            <a href="RestoMangInasal.html">-->
+<!--            <img class = "resto-img" src = "public/CSS/RestoImages/manginasalwebp.png">-->
+<!--            <div class ="filler"></div>-->
+<!--            <div class = "resto-text">-->
+<!--                <h2 class="resto-title">Mang Inasal</h2>-->
+<!--                <h3 class="resto-category">Fast Food, Filipino</h3>-->
+<!--            </div>-->
+<!--            </a>-->
+<!--            -->
+<!--        </div>-->
+<!--        <div class="restaurants" id = "Pho Mahal">-->
+<!--            <a href="RestoPhoMahal.html">-->
+<!--            <img class = "resto-img" src = "public/CSS/RestoImages/phomahalwebp.png">-->
+<!--            <div class ="filler"></div>-->
+<!--            <div class = "resto-text">-->
+<!--                <h2 class="resto-title">Pho Mahal</h2>-->
+<!--                <h3 class="resto-category">Casual Dining, Vietnamese</h3>-->
+<!--            </div>-->
+<!--            </a>-->
+<!--            -->
+<!--        </div>-->
     </div>
 
-    <script src = "javascript/web.js"></script>
-    <script src='JavaScript/directoryScript.js'></script>
+    <script src="./public/JavaScript/web.js"></script>
+    <script src="./public/JavaScript/directoryScript.js"></script>
 </body>
 </html>
