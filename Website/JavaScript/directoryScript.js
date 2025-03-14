@@ -110,3 +110,4 @@ function togglePopupCreateResto() {
         document.body.style.pointerEvents = 'auto';
     }
 }
+
