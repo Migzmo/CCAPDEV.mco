@@ -4,7 +4,8 @@
         "account_id": 0,
         "resto_id": 2,
         "rating": 5,
-        "review": "the birria was insane, honestly!"
+        "review": "the birria was insane, honestly!",
+        "isAlive": true
     },
 
 
@@ -14,7 +15,8 @@
         "account_id": 1,
         "resto_id": 2,
         "rating": 5,
-        "review": "Dynamic Review actually works?"
+        "review": "Dynamic Review actually works?",
+        "isAlive": true
     },
 
     {
@@ -22,20 +24,23 @@
         "account_id": 1,
         "resto_id": 2,
         "rating": 5,
-        "review": "Will?"
+        "review": "Will?",
+        "isAlive": true
     },
     {
         "review_id": 3,
         "account_id": 1,
         "resto_id": 2,
         "rating": 5,
-        "review": "This?"
+        "review": "This?",
+        "isAlive": true
     },
     {
         "review_id": 4,
         "account_id": 1,
         "resto_id": 2,
         "rating": 5,
-        "review": "Scroll?"
+        "review": "Scroll?",
+        "isAlive": true
     }
 ]
