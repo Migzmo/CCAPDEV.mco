@@ -61,23 +61,23 @@ li a {
 
 .search {
     position: absolute;
-    top: 100%; /* Adjust as needed */
-    left: 50%; /* Adjust as needed */
+    top: 100%; 
+    left: 50%; 
     transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
-    width: 100%; /* Adjust as needed */
-    max-width: 800px; /* Adjust as needed */
-    background-color: white; /* Optional: Add background color to the search bar */
-    border-radius: 28px; /* Optional: Add border radius for rounded corners */
-    padding: 10px; /* Optional: Add padding inside the search bar */
-    border: 1px solid black; /* Add border with desired width, style, and color */
+    width: 100%;
+    max-width: 800px; 
+    background-color: white;
+    border-radius: 28px; 
+    padding: 10px; 
+    border: 1px solid black;
 }
 
 .material-symbols-outlined.search-icon {
     padding-left: 10px;
-    font-size: 30px; /* Adjust as needed */
-    margin-right: 20px; /* Adjust as needed */
+    font-size: 30px; 
+    margin-right: 20px;
     padding-left: 20px;
 }
 
@@ -152,7 +152,7 @@ align-items: center;
 justify-content: center;
 margin:auto -25px;
 margin-left: 20px;
-width: 350.93px; /* 350.93px*/
+width: 350.93px; 
 height: 429px;
 
     
@@ -225,15 +225,6 @@ font-family: 'Lexend', sans-serif;
     margin:auto;
 }
 
-/*.category-row1{*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    gap: 30px;*/
-/*    margin-top: 50px;*/
-/*}*/
-
 .category-row2{
     display: flex;
     flex-direction: row;
@@ -247,7 +238,7 @@ font-family: 'Lexend', sans-serif;
     display: flex;
     justify-content: center;
     gap: 25px;
-    background-color: transparent; /* Light background like in the image */
+    background-color: transparent; 
     padding: 20px;
 }
 
@@ -467,7 +458,7 @@ font-family: 'Lexend', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Space between icon and text */
+    gap: 10px; 
     margin-left: 50px;
     margin-right:50px;
 }
@@ -483,16 +474,16 @@ font-family: 'Lexend', sans-serif;
 
 #mail-logo{
     background-image: url('images/Mail.png');
-    width: 20px; /* Adjust size as needed */
-    height: 20px; /* Adjust size as needed */
+    width: 20px; 
+    height: 20px; 
     background-size: contain;
     background-repeat: no-repeat;
 }
 
 #google-logo {
     background-image: url('images/google-logo.png');
-    width: 30px; /* Adjust size as needed */
-    height: 30px; /* Adjust size as needed */
+    width: 30px;
+    height: 30px; 
     margin-top:10px;
     margin-left: 10px;
     padding-left:-30px;
@@ -558,8 +549,8 @@ font-family: 'Lexend', sans-serif;
     right: 10px;
     background: none;
     border: none;
-    font-size: 24px; /* Adjust the size as needed */
-    color: white; /* Adjust the color as needed */
+    font-size: 24px; 
+    color: white; 
     cursor: pointer;
 }
 
@@ -723,7 +714,7 @@ font-family: 'Lexend', sans-serif;
     background-color: white;
     z-index: 1000;
     border-radius: 40px;
-    overflow: hidden; /* Ensure child elements do not overflow the rounded corners */
+    overflow: hidden; 
 }
 
 .createResto-content {
@@ -732,7 +723,7 @@ font-family: 'Lexend', sans-serif;
     padding: 0;
     background-color: #CDDECB;
     border: none;
-    height: calc(100% - 50px); /* Changed from 80px to match header height exactly */
+    height: calc(100% - 50px); 
     position: relative;
     overflow: hidden;
 }
@@ -746,8 +737,8 @@ font-family: 'Lexend', sans-serif;
     right: 10px;
     background: none;
     border: none;
-    font-size: 24px; /* Adjust the size as needed */
-    color: black; /* Adjust the color as needed */
+    font-size: 24px;
+    color: black; 
     cursor: pointer;
 }
 
@@ -755,7 +746,7 @@ font-family: 'Lexend', sans-serif;
     height: 50px;
     background: #FFFFFF;
     text-align: center;
-    border-bottom: 1px solid black; /* Add thin black border */
+    border-bottom: 1px solid black; 
 }
 
 .createResto-header h2 {
@@ -772,7 +763,7 @@ font-family: 'Lexend', sans-serif;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    background-color: #CDDECB; /* Ensure background color matches parent */
+    background-color: #CDDECB; 
 }
 
 /* Custom scrollbar styling */
@@ -794,10 +785,9 @@ font-family: 'Lexend', sans-serif;
     background: #5EB762;
 }
 
-/* Fix input box positioning */
 .wrapper form .input-box {
-    margin-left: 0; /* Remove the left margin */
-    padding: 0 20px; /* Add padding instead */
+    margin-left: 0; 
+    padding: 0 20px; 
 }
 
 /* Form section styling */
@@ -859,7 +849,7 @@ form .input-box input {
     border-radius: 8px;
     border: 1px solid #ccc;
     margin-bottom: 12px;
-    color: black; /* Explicitly set text color to black */
+    color: black; 
 }
 
 
@@ -899,8 +889,8 @@ form .input-box input {
     color: black;
     margin-bottom: 15px;
     padding-left: 20px;
-    font-size: 20px; /* Increase font size from default */
-    font-weight: 600; /* Make slightly bolder */
+    font-size: 20px; 
+    font-weight: 600; 
 }
 
 /* Ensure placeholder text is a lighter shade but still readable */
@@ -908,9 +898,8 @@ form .input-box input {
     color: #757575;
 }
 
-/* DASDASDA*/
-/* Style for single image upload */
 
+/* Style for single image upload */
 .input-box.image-upload input[type="file"] {
     padding: 10px;
     border: 1px dashed #81C784;
