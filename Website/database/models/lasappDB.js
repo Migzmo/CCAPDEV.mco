@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // Review Schema
 const reviewSchema = new mongoose.Schema({
   review_id: { type: Number, unique: true, required: true },
-  account_id: { type: Number, ref: 'Account', required: true },
+  account_id: { type: Number, ref: 'Account' ,default:0},
   resto_id: { type: Number, ref: 'Restaurant', required: true },
   rating: { type: Number, required: true },
   review: { type: String, required: true },
@@ -22,7 +22,7 @@ const restaurantSchema = new mongoose.Schema({
   resto_perks: { type: String },
   resto_img: { type: String }, 
   resto_owner_id: { type: Number, ref: 'Account' },
-  cuisine_id: { type: Number, ref: 'Cuisine' },
+  cuisine_id: { type: String },
   resto_reviews: [{type:Number,ref: 'Review'}],
   isAlive: { type: Boolean, default: true }
 });

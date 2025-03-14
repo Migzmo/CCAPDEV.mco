@@ -25,21 +25,11 @@ const imagesDir = path.join(__dirname, 'public/images/restaurants');
 if (!fs.existsSync(imagesDir)) {
     fs.mkdirSync(imagesDir, { recursive: true });
 }
-const profilesDir = path.join(__dirname, 'public/images/profiles');
-if (!fs.existsSync(profilesDir)) {
-  fs.mkdirSync(profilesDir, { recursive: true });
-}
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(fileUpload({
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-    useTempFiles: true,
-    tempFileDir: '/tmp/'
-}));
 
 //For importing sample data to MONGO DB
 let impErr1= false;
@@ -47,12 +37,18 @@ let impErr2= false;
 let impErr3= false;
 let impErr4= false;
 
+app.use(fileUpload({
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
+
 mongoose.connect('mongodb://localhost/lasappDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(async () => {
     console.log('Connected to MongoDB');
-
+    
     try {
       // Import Accounts
       if (fs.existsSync('accounts.json')) {
@@ -60,11 +56,11 @@ mongoose.connect('mongodb://localhost/lasappDB', {
         await Account.deleteMany({});
         await Account.insertMany(accountData);
         console.log('Account data imported successfully');
-
+        
       }else{
         impErr1= true;
       }
-
+      
       // Import Cuisines
       if (fs.existsSync('cuisines.json')) {
         const cuisineData = JSON.parse(fs.readFileSync('cuisines.json', 'utf8'));
@@ -74,7 +70,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       }else{
         impErr2= true;
       }
-
+      
       // Import Restaurants
       if (fs.existsSync('restaurants.json')) {
         const restaurantData = JSON.parse(fs.readFileSync('restaurants.json', 'utf8'));
@@ -84,7 +80,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       }else{
         impErr3= true;
       }
-
+      
       // Import Reviews
       if (fs.existsSync('reviews.json')) {
         const reviewData = JSON.parse(fs.readFileSync('reviews.json', 'utf8'));
@@ -99,10 +95,10 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       }else{
         console.log('All data imported successfully!');
       }
-
+      
     } catch (err) {
       console.error('Import error:', err);
-    }
+    } 
   })
   .catch(err => console.error('Connection error:', err));
 
@@ -158,7 +154,7 @@ app.put('/api/submitupdate', async (req, res) => {
     }
 
     const restaurantId = parseInt(req.body.resto_id, 10);
-
+    
     // Create properly mapped update object that matches your schema
     const updateData = {
       resto_name: req.body.name,
@@ -169,25 +165,24 @@ app.put('/api/submitupdate', async (req, res) => {
       resto_payment: req.body.payment,
       resto_perks: req.body.perks
     };
-
+    
     // Handle image upload if present
     if (req.files && req.files.image) {
       const image = req.files.image;
       const fileName = `restaurant_${restaurantId}_${Date.now()}${path.extname(image.name)}`;
-
+      
       // Create destination path
       const filePath = path.join(__dirname, 'public/images/restaurants', fileName);
-
+      
       try {
-        // Move the file to the destination
+        
         await image.mv(filePath);
-
+        
         // Set the image path for database update
         updateData.resto_img = `/images/restaurants/${fileName}`;
         console.log("Image updated to:", updateData.resto_img);
-
-        // Optional: Delete the old image file to save space
-        // This requires finding the current restaurant first
+        
+        
         const currentRestaurant = await Restaurant.findOne({ resto_id: restaurantId });
         /*if (currentRestaurant && currentRestaurant.resto_img) {
           const oldPath = path.join(__dirname, currentRestaurant.resto_img.replace(/^\//, ''));
@@ -202,13 +197,12 @@ app.put('/api/submitupdate', async (req, res) => {
         // Continue with update even if image processing fails
       }
     }
-
+    
     console.log("Mapped update data:", updateData);
-
-    // Rest of your code for cuisine handling...
+    
+   
     if (req.body.cuisine_name) {
-      // Find or create cuisine
-      // ...existing code...
+      
     }
 
     const restaurant = await Restaurant.findOneAndUpdate(
@@ -242,8 +236,7 @@ app.post('/api/auth/login', async (req, res) => {
     // Find the account by username
     const account = await Account.findOne({ acc_username: username });
 
-    // In a real app, you'd check password hashes
-    // For this demo, we're checking if the account exists
+    
     if (!account) {
       return res.status(401).json({
         success: false,
@@ -251,21 +244,12 @@ app.post('/api/auth/login', async (req, res) => {
       });
     }
 
-    // Check password (in a real app, you should use bcrypt to compare hashed passwords)
-    if (account.acc_password !== password) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid username or password'
-      });
-    }
-
-    // Password is correct, return success
+    
     res.status(200).json({
       success: true,
       message: 'Login successful',
       userId: account.acc_id,
-      username: account.acc_username,
-      accountType: account.acc_type
+      username: account.acc_username
     });
   } catch (error) {
     console.error('Login error:', error);
@@ -290,15 +274,11 @@ app.set('view engine','hbs');
 
 /****************************************************************************************************************************************************************************/
 //This Section is responsible for routing and rendering the pages
-// User profile routes
-// Root route to render the homepage
-app.get('/', async function(req, res) {
+app.get('/', async function (req, res) {
   try {
     const restaurants = await Restaurant.find({isAlive:true});
     
-    if (restaurants.length === 0) { // Fix: Check if array is empty
-      return res.status(404).send('No restaurants found');
-    }
+    
 
     console.log("Successfully found restaurants:", restaurants);
     
@@ -309,168 +289,98 @@ app.get('/', async function(req, res) {
     res.status(500).send('Server Error');
   }
 });
-
-// User profile endpoints
-app.get('/api/users/:id', async (req, res) => {
+// Render restaurant page using Handlebars
+// Replace your current /api/addreview endpoint with this
+app.post('/api/addreview', async (req, res) => {
   try {
-    const userId = parseInt(req.params.id);
-    const account = await Account.findOne({ acc_id: userId });
-
-    if (!account) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+    // Get data from request
+    const { resto_id, rating, review } = req.body;
+    
+    // Validate data
+    if (!resto_id || !rating || !review) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Missing required fields" 
+      });
     }
-
-    res.json({
-      acc_id: account.acc_id,
-      acc_name: account.acc_name,
-      acc_username: account.acc_username,
-      acc_bio: account.acc_bio,
-      profile_pic: account.profile_pic,
-      acc_type: account.acc_type
+    
+    
+    const accountId = 1; // Use a valid account ID that exists in your database
+    
+    // Create new review ID
+    const highestReview = await Review.findOne().sort('-review_id');
+    const newReviewId = highestReview ? highestReview.review_id + 1 : 1;
+    
+    // Create new review
+    const newReview = new Review({
+      review_id: newReviewId,
+      account_id: accountId, // Using default account for now
+      resto_id: parseInt(resto_id, 10),
+      rating: parseInt(rating, 10),
+      review: review,
+      isAlive: true
     });
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
-});
-
-// Add profile update endpoint
-app.post('/api/users/update-profile', async (req, res) => {
-  try {
-    console.log('Update profile request received:', req.body);
-    const userId = req.body.userId;
-
-    if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: 'User ID is required'
-      });
+    
+    // Save the review
+    await newReview.save();
+    console.log("Review saved:", newReview);
+    
+    
+    try {
+      await Restaurant.findOneAndUpdate(
+        { resto_id: parseInt(resto_id, 10) },
+        { $push: { resto_reviews: newReviewId } }
+      );
+    } catch (updateError) {
+      console.error("Error updating restaurant with review:", updateError);
+      // Continue anyway since review is saved
     }
-
-    // Find the account to update
-    const account = await Account.findOne({ acc_id: parseInt(userId) });
-
-    if (!account) {
-      return res.status(404).json({
-        success: false,
-        message: 'Account not found'
-      });
-    }
-
-    // Update account fields
-    if (req.body.username) account.acc_name = req.body.username;
-    if (req.body.username) account.acc_username = req.body.username; // Update both name fields
-    if (req.body.bio) account.acc_bio = req.body.bio;
-
-    // Update password if provided
-    if (req.body.password && req.body.password.trim() !== '') {
-      account.acc_password = req.body.password;
-    }
-
-    // Handle profile picture upload
-    if (req.files && req.files.profile_pic) {
-      const profilePic = req.files.profile_pic;
-      const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
-      const uploadPath = path.join(__dirname, 'public/images/profiles', fileName);
-
-      await profilePic.mv(uploadPath);
-      account.profile_pic = `/images/profiles/${fileName}`;
-    }
-
-    // Save the updated account
-    await account.save();
-
-    res.json({
+    
+    // Return success
+    res.status(201).json({
       success: true,
-      message: 'Profile updated successfully'
+      message: "Review added successfully",
+      review_id: newReviewId
     });
   } catch (error) {
-    console.error('Profile update error:', error);
+    console.error('Error adding review:', error);
     res.status(500).json({
       success: false,
-      message: 'Error updating profile',
+      message: "Failed to add review",
       error: error.message
     });
   }
 });
 
-app.post('/api/auth/register', async (req, res) => {
-    try {
-        console.log('Register route accessed', req.body);
-        // Generate unique account ID
-        const lastAccount = await Account.findOne().sort({ acc_id: -1 });
-        const newAccId = lastAccount ? lastAccount.acc_id + 1 : 1;
-
-        // Create new account
-        const newAccount = new Account({
-            acc_id: newAccId,
-            acc_name: req.body.username,
-            acc_username: req.body.username,
-            acc_bio: req.body.description || '',
-            profile_pic: req.body.profilePic || '',
-            saved_restos: [],
-            saved_reviews: [],
-            acc_password: req.body.password,
-            acc_type: req.body.accountType || 'user'
-        });
-
-        await newAccount.save();
-
-        // Return login information similar to login endpoint
-        res.status(201).json({
-            success: true,
-            message: 'Account created successfully',
-            userId: newAccount.acc_id,
-            username: newAccount.acc_username,
-            accountType: newAccount.acc_type
-        });
-    } catch (error) {
-        console.error('Registration error:', error);
-        // Handle duplicate username error
-        if (error.code === 11000) {
-            return res.status(400).json({
-                success: false,
-                message: 'Username already exists'
-            });
-        }
-        res.status(500).json({
-            success: false,
-            message: 'Error creating account',
-            error: error.message
-        });
-    }
-});
-
-// Render restaurant page using Handlebars
 app.delete('/api/restaurant/:id', async (req, res) => {
   try {
     const restaurantId = parseInt(req.params.id, 10);
-
+    
     if (isNaN(restaurantId)) {
       return res.status(400).json({ success: false, message: 'Invalid restaurant ID' });
     }
-
+    
     // Soft delete by setting isAlive to false
     const restaurant = await Restaurant.findOneAndUpdate(
       { resto_id: restaurantId },
       { isAlive: false },
       { new: true }
     );
-
+    
     if (!restaurant) {
       return res.status(404).json({ success: false, message: 'Restaurant not found' });
     }
-
-    res.status(200).json({
-      success: true,
-      message: 'Restaurant deleted successfully'
+    
+    res.status(200).json({ 
+      success: true, 
+      message: 'Restaurant deleted successfully' 
     });
   } catch (error) {
     console.error('Error deleting restaurant:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to delete restaurant',
-      error: error.message
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to delete restaurant', 
+      error: error.message 
     });
   }
 });
@@ -496,7 +406,7 @@ app.get('/restaurant/:id', async function (req, res) {
       }else{
         console.log(`Found ${reviews.length} reviews`);
       }
-      //This will render restaurant handlbar
+      //This will render restaurant handlbar 
       res.render('restaurant', {
           restaurant: {
               id: restaurant.resto_id,
@@ -508,7 +418,8 @@ app.get('/restaurant/:id', async function (req, res) {
               phone: restaurant.resto_phone,
               email: restaurant.resto_email,
               payment: restaurant.resto_payment,
-              perks: restaurant.resto_perks.split(', ')
+              perks: restaurant.resto_perks.split(', '),
+              cuisine: restaurant.cuisine_id 
           },
           reviews:reviews
       });
@@ -529,7 +440,7 @@ app.get('/profile/:id', async function (req, res) {
             return res.status(404).send('Account not found');
     }else{
         console.log("Sucessfully found account");
-
+        
     }
     res.render('Profile', {
         account: {
@@ -545,65 +456,7 @@ app.get('/profile/:id', async function (req, res) {
     }
 });
 
-// Add profile update endpoint
-app.post('/api/users/update-profile', async (req, res) => {
-  try {
-    console.log('Update profile request received:', req.body);
-    const userId = req.body.userId;
 
-    if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: 'User ID is required'
-      });
-    }
-
-    // Find the account to update
-    const account = await Account.findOne({ acc_id: parseInt(userId) });
-
-    if (!account) {
-      return res.status(404).json({
-        success: false,
-        message: 'Account not found'
-      });
-    }
-
-    // Update account fields
-    if (req.body.username) account.acc_name = req.body.username;
-    if (req.body.username) account.acc_username = req.body.username; // Update both name fields
-    if (req.body.bio) account.acc_bio = req.body.bio;
-
-    // Update password if provided
-    if (req.body.password && req.body.password.trim() !== '') {
-      account.acc_password = req.body.password;
-    }
-
-    // Handle profile picture upload
-    if (req.files && req.files.profile_pic) {
-      const profilePic = req.files.profile_pic;
-      const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
-      const uploadPath = path.join(__dirname, 'public/images/profiles', fileName);
-
-      await profilePic.mv(uploadPath);
-      account.profile_pic = `/images/profiles/${fileName}`;
-    }
-
-    // Save the updated account
-    await account.save();
-
-    res.json({
-      success: true,
-      message: 'Profile updated successfully'
-    });
-  } catch (error) {
-    console.error('Profile update error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error updating profile',
-      error: error.message
-    });
-  }
-});
 
 app.post('/', async (req, res) => {
     try {
@@ -613,7 +466,7 @@ app.post('/', async (req, res) => {
         const highestRestaurant = await Restaurant.findOne().sort('-resto_id');
         const newRestoId = highestRestaurant ? highestRestaurant.resto_id + 1 : 1;
 
-        // Handle cuisine
+        /*// Handle cuisine
         let cuisineId = 1;
         if (req.body.cuisine) {
             const cuisine = await Cuisine.findOne({ cuisine_name: req.body.cuisine });
@@ -630,27 +483,37 @@ app.post('/', async (req, res) => {
                 await newCuisine.save();
                 cuisineId = newCuisineId;
             }
-        }
+        }*/
 
         // Default image path
         let imagePath = '/views/CSS/RestoImages/default-restaurant.jpg';
 
         // Handle image upload if present
+        // Handle image upload if present
         if (req.files && req.files.image) {
-            const image = req.files.image;
-            const fileName = `restaurant_${newRestoId}_${Date.now()}${path.extname(image.name)}`;
-
-            // Create destination path
-            const filePath = path.join(__dirname, 'public/images/restaurants', fileName);
-
-            // Move the file to the destination
-            await image.mv(filePath);
-
-            // Set the image path for database storage - relative path for serving
-            imagePath = `/images/restaurants/${fileName}`;
+          const image = req.files.image;
+          // Use newRestoId instead of restaurantId
+          const fileName = `restaurant_${newRestoId}_${Date.now()}${path.extname(image.name)}`;
+          
+          // Create destination path
+          const filePath = path.join(__dirname, 'public/images/restaurants', fileName);
+          
+          try {
+              // Move the uploaded file to the destination
+              await image.mv(filePath);
+              
+              // Set the image path for the new restaurant
+              // Update imagePath instead of using undefined updateData variable
+              imagePath = `/images/restaurants/${fileName}`;
+              console.log("Image path set to:", imagePath);
+              
+          } catch (imageError) {
+              console.error("Error processing image:", imageError);
+              // Continue with default image if upload fails
+          }
         }
 
-        // Create new restaurant with image path
+        
         const newRestaurant = new Restaurant({
             resto_id: newRestoId,
             resto_name: req.body.name || '',
@@ -660,7 +523,7 @@ app.post('/', async (req, res) => {
             resto_email: req.body.email || '',
             resto_payment: req.body.payment || '',
             resto_perks: req.body.perks || 'None',
-            cuisine_id: cuisineId,
+            cuisine_id: req.body.cuisine_id || '',
             resto_img: imagePath,
             resto_owner_id: 0 // Default value
         });
@@ -690,7 +553,7 @@ app.use((err, req, res, next) => {
         error: err.message
     });
 });
-// Replace your root route with this improved version
+
 
 
 //This blocks access to the database for now idk yet

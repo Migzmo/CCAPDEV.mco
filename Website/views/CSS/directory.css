@@ -673,90 +673,6 @@ font-family: 'Lexend', sans-serif;
     font-family: 'Lexend', sans-serif;
 }
 
-#editProfileFrame {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%;
-    height: 70%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    border-radius: 40px;
-    overflow: hidden;
-}
-
-.editProfile-content {
-    display: flex;
-    height: 100%;
-}
-
-#editProfile_left {
-    flex: 1;
-    background-color: #CDDECB;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
-    padding: 30px;
-    overflow-y: auto;
-}
-
-#editProfile_right {
-    flex: 1;
-    background-image: url('images/login.png');
-    background-size: cover;
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
-}
-
-#edit-profile-title {
-    font-family: 'Baloo';
-    font-size: 24px;
-    color: black;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#edit-profile-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 80%;
-    margin: 0 auto;
-}
-
-#edit-bio {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    font-family: 'Lexend', sans-serif;
-    background-color: #DDF0DE;
-    resize: vertical;
-}
-
-#profile-pic-preview {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    margin-top: 10px;
-    background-size: cover;
-    background-position: center;
-}
-
-#closeEditProfile {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-}
-
 #closeRegister {
     position: absolute;
     top: 10px;
@@ -766,24 +682,6 @@ font-family: 'Lexend', sans-serif;
     font-size: 24px;
     color: white;
     cursor: pointer;
-}
-
-.user-dropdown {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.user-dropdown a {
-  font-family: 'Lexend', sans-serif;
-  color: black;
-  text-decoration: none;
-  padding: 5px 10px;
-}
-
-.user-dropdown a:hover {
-  background-color: #DDF0DE;
-  border-radius: 3px;
 }
 
 #filter {

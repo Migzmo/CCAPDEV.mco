@@ -173,7 +173,7 @@
                     </button>
                     <div class="head-container">
                         <h1>{{restaurant.name}}</h1>  
-                        <p>N/A</p> 
+                        <p>{{restaurant.cuisine}}</p> 
                     </div>
                 </div>       
             <!-- Main body-->
@@ -221,7 +221,7 @@
                 </div>
                 <div class="reviewModal-content">
                     <div class="wrapper">
-                        <form action="#" method="post">
+                        <form action="/api/addreview" name = "create-review" method="post">
                             <!-- Restaurant Name -->
                             <div class="form-section">
                                 <h4>El Poco Cantina</h4>
@@ -251,7 +251,7 @@
                             <!-- Button Section -->
                             <div class="button-section">
                                 <div class="input-box button">
-                                    <input type="submit" value="Submit Review">
+                                    <input type="submit" id = 'submitReview' value="Submit Review">
                                 </div>
                                 <div class="input-box button secondary">
                                     <input type="button" value="Cancel" onclick="toggleReviewModal()">
@@ -284,7 +284,7 @@
                             <p>{{this.review}}</p>
                             
                             <!-- Add timestamp (use actual timestamp when available) -->
-                            <span class="review-date">Posted on {{#if this.date}}{{this.date}}{{else}}April 15, 2023{{/if}}</span>
+                            <span class="review-date">Posted on {{#if this.date}}{{this.date}}{{else}}{{/if}}</span>
                         </div>
                         {{/each}}
                     </div>
@@ -323,5 +323,6 @@
        <script src='/JavaScript/directoryScript.js'></script>
         <script src='/JavaScript/updateResto.js'></script>
         <script src='/JavaScript/deleteResto.js'></script>
+        <script src='/JavaScript/addReview.js'></script>
     </body>
 </html>

@@ -39,56 +39,11 @@
 
         <div class="profile_header">
             <img src={{account.image}} alt="Profile">
-            <h1>{{account.name}}</h1>
+            <h1>{{account.name}}</h1> 
             <h4>{{account.username}}</h4>
-            <p>{{account.bio}}</p>
-            <button class="edit-profile-button" onclick="toggleEditProfileFrame()">Edit Profile</button>
+            <p>{{account.accbio}}.</p>
+            <button class="button-4" role="button">Edit Profile</button>
         </div>
-
-        <!-- Add this edit profile form to your profile.hbs -->
-        <div id="editProfileFrame" style="display: none;">
-            <div class="editProfile-content">
-                <div id="editProfile_left">
-                    <h2 id="edit-profile-title">Edit Your Profile</h2>
-                    <form id="edit-profile-form" enctype="multipart/form-data">
-                        <input type="hidden" name="userId" value="{{account.acc_id}}">
-
-                        <div class="form-group">
-                            <label for="edit-username">Name</label>
-                            <input type="text" id="edit-username" name="username" value="{{account.name}}" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-password">Password</label>
-                            <input type="password" id="edit-password" name="password" placeholder="Change your password">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-bio">Bio</label>
-                            <textarea id="edit-bio" name="bio">{{account.bio}}</textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-profile-pic">Profile Picture</label>
-                            <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*">
-                            <div id="profile-pic-preview" style="background-image: url('{{account.image}}')"></div>
-                        </div>
-
-                        <div class="button-section">
-                            <div class="input-box button">
-                                <input type="submit" value="Save Changes">
-                            </div>
-                            <div class="input-box button secondary">
-                                <input type="button" value="Cancel" onclick="toggleEditProfileFrame()">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <button id="closeEditProfile" onclick="toggleEditProfileFrame()">&times;</button>
-            </div>
-        </div>
-
-        <div id="backdrop" style="display: none;"></div>
 
         <div class="reviews">
             <h2>{{account.name}}'s' Reviews:</h2>
@@ -97,66 +52,5 @@
         </div>
             
         <script src="javascript/RestoInfo.js"></script>
-        <script>
-        function toggleEditProfileFrame() {
-            const editProfileFrame = document.getElementById('editProfileFrame');
-            const backdrop = document.getElementById('backdrop');
-
-            editProfileFrame.style.display = editProfileFrame.style.display === 'none' || !editProfileFrame.style.display ? 'block' : 'none';
-            backdrop.style.display = backdrop.style.display === 'none' || !backdrop.style.display ? 'block' : 'none';
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const editProfileForm = document.getElementById('edit-profile-form');
-            const profilePicInput = document.getElementById('edit-profile-pic');
-
-            // Preview profile picture when selected
-            if (profilePicInput) {
-                profilePicInput.addEventListener('change', function() {
-                    const file = this.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            document.getElementById('profile-pic-preview').style.backgroundImage = `url('${e.target.result}')`;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-
-            // Handle form submission
-            if (editProfileForm) {
-                editProfileForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    const formData = new FormData(this);
-
-                    // Debug logging
-                    console.log('Form data being sent:');
-                    for (let pair of formData.entries()) {
-                        console.log(pair[0] + ': ' + pair[1]);
-                    }
-
-                    fetch('/api/users/update-profile', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('Profile updated successfully!');
-                            window.location.reload(); // Reload the page to see changes
-                        } else {
-                            alert(data.message || 'Update failed');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error updating profile:', error);
-                        alert('Failed to update profile. Please try again.');
-                    });
-                });
-            }
-        });
-        </script>
     </body>
 </html>

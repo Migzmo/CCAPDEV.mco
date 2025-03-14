@@ -104,7 +104,7 @@
                     <div class = "form-group account-type">
                         <label class="instruction">Account Type:</label>
                         <div class="radio-group">
-                            <input type="radio" id="user" name="accountType" value="user" checked>
+                            <input type="radio" id="user" name="accountType" value="User" checked>
                             <label for="user" class="instruction">User</label>
                             <input type="radio" id="business-owner" name="accountType" value="business-owner">
                             <label for="business-owner" class="instruction">Business Owner</label>
@@ -126,48 +126,6 @@
         </div>
     </div>
 
-    <div id="editProfileFrame" style="display: none;">
-        <div class="editProfile-content">
-            <div id="editProfile_left">
-                <h2 id="edit-profile-title">Edit Your Profile</h2>
-                <form id="edit-profile-form" enctype="multipart/form-data">
-                    <input type="hidden" name="userId" value="{{account.acc_id}}">
-                    <div class="form-group">
-                        <label for="edit-username">Name</label>
-                        <input type="text" id="edit-username" name="username" placeholder="Your name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-password">Password</label>
-                        <input type="password" id="edit-password" name="password" placeholder="Change your password">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-bio">Bio</label>
-                        <textarea id="edit-bio" name="bio" placeholder="Tell us about yourself"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-profile-pic">Profile Picture</label>
-                        <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*">
-                        <div id="profile-pic-preview"></div>
-                    </div>
-
-                    <div class="button-section">
-                        <div class="input-box button">
-                            <input type="submit" value="Save Changes">
-                        </div>
-                        <div class="input-box button secondary">
-                            <input type="button" value="Cancel" onclick="toggleEditProfileFrame()">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div id="editProfile_right"></div>
-            <button id="closeEditProfile" onclick="toggleEditProfileFrame()">&times;</button>
-        </div>
-    </div>
-
     <div id="backdrop"></div>
     <div id="createRestoFrame">
         <div class="createResto-header">
@@ -175,7 +133,7 @@
         </div>
         <div class="createResto-content">
             <div class="wrapper">
-                <form name="restoForm" action="#" method="post" enctype="multipart/form-data">
+                <form name="restoForm" action="/" method="post" enctype="multipart/form-data">
                     <!-- Basic Information -->
                     <div class="form-section">
                         <h4>Basic Information</h4>
@@ -245,7 +203,7 @@
                         <h4>Reference Image</h4>
                         <div class="input-box image-upload">
                             <label for="restaurant-images">Upload Reference Photo</label>
-                            <input type="file" id="restaurant-images" name="image" accept="image/*">
+                            <input type="file" name="image" id="restaurant-image">
                         </div>
                     </div>
 

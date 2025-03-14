@@ -15,7 +15,8 @@ LaSapp is a web application that provides a directory of restaurants. Users can 
 5. npm install the following :
     express 
     mongoose
+    express-fileupload
     ex: npm install express
 6. node app.js
-7. Once it says succesfull you can now run Lasapp.html by accessing localhost:3000
+7. Once it says succesfull you can now run Lasapp by accessing localhost:3000
 
