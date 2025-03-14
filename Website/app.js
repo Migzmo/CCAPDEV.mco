@@ -186,8 +186,23 @@ app.set('view engine','hbs');
 
 /****************************************************************************************************************************************************************************/
 //This Section is responsible for routing and rendering the pages
+app.get('/', async function (req, res) {
+  try {
+    const restaurants = await Restaurant.find({});
+    
+    if (restaurants.length === 0) { // Fix: Check if array is empty
+      return res.status(404).send('No restaurants found');
+    }
 
+    console.log("Successfully found restaurants:", restaurants);
+    
+    res.render('LaSapp', { restaurants: restaurants });
 
+  } catch (err) { // Fix: Catch error correctly
+    console.error('Error fetching restaurants:', err);
+    res.status(500).send('Server Error');
+  }
+});
 // Render restaurant page using Handlebars
 app.get('/restaurant/:id', async function (req, res) {
   try {
@@ -257,6 +272,7 @@ app.get('/profile/:id', async function (req, res) {
         res.status(500).send('Server Error');
     }
 });
+
 
 
 app.post('/', async (req, res) => {
@@ -344,6 +360,7 @@ app.use((err, req, res, next) => {
         error: err.message
     });
 });
+// Replace your root route with this improved version
 
 app.use(fileUpload({
     limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
@@ -355,11 +372,11 @@ app.use(fileUpload({
 app.use('/database', function (req, res, next) {
     res.status(403).send('Access denied');
 });
-
+/*
 // Directs to Lasapp homepage
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'Lasapp.html'));
-});
+    res.sendFile(path.join(__dirname, 'Lasapp.hbs'));
+});*/
 
 // Start server
 app.listen(3000, function () {
