@@ -46,8 +46,9 @@
             </div>
             <div class="createResto-content">
                 <div class="wrapper">
-                    <form action="#" method="post">
+                    <form name="restoForm" action="/api/submitupdate" method="post" enctype="multipart/form-data">
                         <!-- Basic Information -->
+                        <input type="hidden" id="hidden-id" name="resto_id" value="{{restaurant.id}}">
                         <div class="form-section">
                             <h4>Basic Information</h4>
                             <div class="input-box">
@@ -116,7 +117,7 @@
                             <h4>Reference Image</h4>
                             <div class="input-box image-upload">
                                 <label for="restaurant-images">Upload Reference Photo</label>
-                                <input type="file" id="restaurant-images" accept="image/*">
+                               <input type="file" id="restaurant-images" name="image" accept="image/*">
                             </div>
                         </div>
 
@@ -124,7 +125,7 @@
                         <!-- Button Section stays inside the scrollable area but will be styled to stand out -->
                         <div class="button-section">
                             <div class="input-box button">
-                                <input type="submit" value="Add Restaurant">
+                                <input type="submit" id="updateSub" value="Update Restaurant">
                             </div>
                             <div class="input-box button secondary">
                                 <input type="button" value="Cancel" onclick="togglePopupCreateResto()">
@@ -320,6 +321,6 @@
             }
         </script>
        <script src='/JavaScript/directoryScript.js'></script>
-        
+        <script src='/JavaScript/updateResto.js'></script>
     </body>
 </html>
