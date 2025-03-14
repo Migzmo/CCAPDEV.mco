@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>LaSapp</title>
-        <link rel="stylesheet" href="css/restostyle.css">
+        <link rel="stylesheet" href="views/css/restostyle.css">
         <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,10 +37,32 @@
 
         <!-- Restaurant Information -->
         <div class="info">
-                <!-- Exit Button -->
-                <a href="LaSapp.html">
-                    <button class="oval-button-review">Back</button>
-                </a>
+                <!-- Buttons Container -->
+                <div class="buttons-container">
+                    <a href="LaSapp.html">
+                        <button class="oval-button-review">Back</button>
+                    </a>
+                    <button class="oval-button-review edit-btn">Edit</button>
+                    <button class="oval-button-review delete-btn">Delete</button>
+                </div>
+
+                <style>
+                    .buttons-container {
+                        display: flex !important;
+                        flex-direction: row !important;
+                        align-items: center !important;
+                        gap: 10px !important;
+                        margin-bottom: 20px !important;
+                    }
+                    
+                    .buttons-container button {
+                        margin: 0 5px 0 0 !important;
+                    }
+                    
+                    .buttons-container a {
+                        display: inline-block !important;
+                    }
+                </style>
 
                 <!-- Header -->
                 <div class="classheader">

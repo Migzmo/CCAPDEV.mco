@@ -82,7 +82,7 @@ html, body {
     border-radius: 50px; 
     cursor: pointer;
     transition: background-color 0.2s ease;
-    margin-left: 95%;
+    margin-left: 0; /* Remove the large left margin */
 }
 
 .oval-button-review:hover {
@@ -511,4 +511,42 @@ footer{
 
 .heart.liked {
     color: red; 
+}
+
+/* BUTTONS STUFF FOR EDIT DELETE */
+.buttons-container {
+    display: flex;
+    flex-direction: row;  /* Explicitly set to row */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;  /* Ensure container takes full width */
+}
+
+/* Make sure buttons have consistent styling */
+.buttons-container button {
+    margin: 0;  /* Remove any default margins */
+}
+
+/* Fix for the button inside an anchor tag */
+.buttons-container a {
+    display: inline-block;  /* Treat the anchor as an inline block */
+    margin: 0;
+    padding: 0;
+}
+
+.edit-btn {
+    background-color: #2196F3;
+}
+
+.edit-btn:hover {
+    background-color: #0b7dda;
+}
+
+.delete-btn {
+    background-color: #f44336;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
 }
