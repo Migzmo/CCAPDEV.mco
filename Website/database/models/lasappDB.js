@@ -5,7 +5,8 @@ const reviewSchema = new mongoose.Schema({
   account_id: { type: Number, ref: 'Account', required: true },
   resto_id: { type: Number, ref: 'Restaurant', required: true },
   rating: { type: Number, required: true },
-  review: { type: String, required: true }
+  review: { type: String, required: true },
+  isAlive: { type: Boolean, default: true }
 });
 
 const Review = mongoose.model('Review', reviewSchema);
@@ -22,7 +23,8 @@ const restaurantSchema = new mongoose.Schema({
   resto_img: { type: String }, 
   resto_owner_id: { type: Number, ref: 'Account' },
   cuisine_id: { type: Number, ref: 'Cuisine' },
-  resto_reviews: [{type:Number,ref: 'Review'}]
+  resto_reviews: [{type:Number,ref: 'Review'}],
+  isAlive: { type: Boolean, default: true }
 });
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
@@ -34,7 +36,11 @@ const accountSchema = new mongoose.Schema({
   acc_bio: { type: String },
   saved_restos: [{ type: Number, ref: 'Restaurant',default: [] }], // Simple array of IDs
   saved_reviews: [{ type: Number, ref: 'Review',default: [] }],
-  profile_pic: { type: String } // Image URL
+  profile_pic: { type: String }, // Image URL
+  isAlive: { type: Boolean, default: true },
+  acc_type:{type:String, enum:['admin','user','business-owner'],default:'user'},
+  acc_password:{type:String,required:true}
+  
 });
 
 const Account = mongoose.model('Account', accountSchema);
@@ -42,7 +48,8 @@ const Account = mongoose.model('Account', accountSchema);
 // Cuisine Schema
 const cuisineSchema = new mongoose.Schema({
   cuisine_id: { type: Number, unique: true, required: true },
-  cuisine_name: { type: String, required: true }
+  cuisine_name: { type: String, required: true },
+  isAlive: { type: Boolean, default: true }
 });
 
 const Cuisine = mongoose.model('Cuisine', cuisineSchema);

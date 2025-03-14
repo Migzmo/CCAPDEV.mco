@@ -6,7 +6,9 @@
     "acc_bio": "",
     "saved_restos": [],
     "saved_reviews": [0],
-    "profile_pic": "/views/CSS/ProfileImages/profile_sample.jpg"
+    "profile_pic": "/views/CSS/ProfileImages/profile_sample.jpg",
+    "isAlive": true,
+    "acc_password": "password"
   },
   {
     "acc_id": 1,
@@ -15,6 +17,8 @@
     "acc_bio": "I love backend",
     "saved_restos": [],
     "saved_reviews": [1],
-    "profile_pic": "/views/CSS/ProfileImages/profile_sample_two.jpg"
+    "profile_pic": "/views/CSS/ProfileImages/profile_sample_two.jpg",
+    "isAlive": true,
+    "acc_password": "password"
   }
 ]

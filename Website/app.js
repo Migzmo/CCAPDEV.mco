@@ -188,7 +188,7 @@ app.set('view engine','hbs');
 //This Section is responsible for routing and rendering the pages
 app.get('/', async function (req, res) {
   try {
-    const restaurants = await Restaurant.find({});
+    const restaurants = await Restaurant.find({isAlive:true});
     
     if (restaurants.length === 0) { // Fix: Check if array is empty
       return res.status(404).send('No restaurants found');
@@ -208,14 +208,14 @@ app.get('/restaurant/:id', async function (req, res) {
   try {
       const restaurantId = parseInt(req.params.id, 10); // Convert the ID to an integer //10 might cause issue check later
       console.log(`Restaurant ID: ${restaurantId}`); // Print the ID to the console
-      const restaurant = await Restaurant.findOne({resto_id: restaurantId });
+      const restaurant = await Restaurant.findOne({resto_id: restaurantId, isAlive:true});
       if (!restaurant) {
           return res.status(404).send('Restaurant not found');
       }else{
           console.log("Sucessfully found restaurant");
       }
       //this will get the reviews for the restaurant and also populate the account_id field with user data
-      var reviews = await Review.find({resto_id: restaurantId}).populate({
+      var reviews = await Review.find({resto_id: restaurantId,isAlive:true}).populate({
         path: 'account_id',
         localField: 'account_id',
         foreignField: 'acc_id',
