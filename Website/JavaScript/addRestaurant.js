@@ -11,13 +11,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Send form with files using fetch
                         fetch('/', {
                             method: 'POST',
-                            body: formData // Don't set Content-Type header - fetch sets it with boundary
+                            body: formData
                         })
                         .then(response => {
-                            if (!response.ok) throw new Error('Server error');
+                            console.log("Response status:", response.status);
+                            if (!response.ok) {
+                                response.text().then(text => console.error("Server error details:", text));
+                                throw new Error('Server error');
+                            }
                             return response.json();
                         })
                         .then(data => {
+                            console.log("Success response:", data);
                             alert('Restaurant added successfully!');
                             if (typeof togglePopupCreateResto === 'function') {
                                 togglePopupCreateResto();
