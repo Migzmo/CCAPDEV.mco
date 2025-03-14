@@ -870,3 +870,14 @@ form .input-box input {
 .wrapper form .input-box input::placeholder {
     color: #757575;
 }
+
+/* DASDASDA*/
+/* Style for single image upload */
+
+.input-box.image-upload input[type="file"] {
+    padding: 10px;
+    border: 1px dashed #81C784;
+    border-radius: 8px;
+    background-color: #f8fff8;
+    cursor: pointer;
+}
