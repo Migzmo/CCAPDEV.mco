@@ -95,7 +95,39 @@ mongoose.connect('mongodb://localhost/lasappDB', {
     } 
   })
   .catch(err => console.error('Connection error:', err));
-
+// Add this route to handle restaurant deletion (soft delete)
+app.delete('/api/restaurant/:id', async (req, res) => {
+  try {
+    const restaurantId = parseInt(req.params.id, 10);
+    
+    if (isNaN(restaurantId)) {
+      return res.status(400).json({ success: false, message: 'Invalid restaurant ID' });
+    }
+    
+    // Soft delete by setting isAlive to false
+    const restaurant = await Restaurant.findOneAndUpdate(
+      { resto_id: restaurantId },
+      { isAlive: false },
+      { new: true }
+    );
+    
+    if (!restaurant) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+    
+    res.status(200).json({ 
+      success: true, 
+      message: 'Restaurant deleted successfully' 
+    });
+  } catch (error) {
+    console.error('Error deleting restaurant:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to delete restaurant', 
+      error: error.message 
+    });
+  }
+});
 //auth routes
 app.post('/api/auth/register', async (req, res) => {
     try {
@@ -138,6 +170,95 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
+<<<<<<< Updated upstream
+=======
+app.put('/api/submitupdate', async (req, res) => {
+  try {
+    console.log("Received Update Request:", req.body);
+
+    // Check if resto_id is provided
+    if (!req.body.resto_id) {
+      return res.status(400).json({ success: false, message: "resto_id is required" });
+    }
+
+    const restaurantId = parseInt(req.body.resto_id, 10);
+    
+    // Create properly mapped update object that matches your schema
+    const updateData = {
+      resto_name: req.body.name,
+      resto_address: req.body.address,
+      resto_time: req.body.time,
+      resto_phone: req.body.phoneNumber,
+      resto_email: req.body.email,
+      resto_payment: req.body.payment,
+      resto_perks: req.body.perks
+    };
+    
+    // Handle image upload if present
+    if (req.files && req.files.image) {
+      const image = req.files.image;
+      const fileName = `restaurant_${restaurantId}_${Date.now()}${path.extname(image.name)}`;
+      
+      // Create destination path
+      const filePath = path.join(__dirname, 'public/images/restaurants', fileName);
+      
+      try {
+        // Move the file to the destination
+        await image.mv(filePath);
+        
+        // Set the image path for database update
+        updateData.resto_img = `/images/restaurants/${fileName}`;
+        console.log("Image updated to:", updateData.resto_img);
+        
+        // Optional: Delete the old image file to save space
+        // This requires finding the current restaurant first
+        const currentRestaurant = await Restaurant.findOne({ resto_id: restaurantId });
+        /*if (currentRestaurant && currentRestaurant.resto_img) {
+          const oldPath = path.join(__dirname, currentRestaurant.resto_img.replace(/^\//, ''));
+          // Only delete if it's not the default image
+          if (fs.existsSync(oldPath) && !oldPath.includes('default-restaurant.jpg')) {
+            fs.unlinkSync(oldPath);
+            console.log("Deleted old image:", oldPath);
+          }
+        }*/
+      } catch (imageError) {
+        console.error("Error processing image:", imageError);
+        // Continue with update even if image processing fails
+      }
+    }
+    
+    console.log("Mapped update data:", updateData);
+    
+    // Rest of your code for cuisine handling...
+    if (req.body.cuisine_name) {
+      // Find or create cuisine
+      // ...existing code...
+    }
+
+    const restaurant = await Restaurant.findOneAndUpdate(
+      { resto_id: restaurantId },
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!restaurant) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Restaurant updated successfully',
+      restaurant,
+      resto_id: restaurantId
+    });
+  } catch (error) {
+    console.error('Error updating restaurant:', error);
+    res.status(500).json({ success: false, message: 'Failed to update restaurant', error: error.message });
+  }
+});
+
+
+>>>>>>> Stashed changes
 app.post('/api/auth/login', async (req, res) => {
   try {
     console.log('Login route accessed', req.body);
