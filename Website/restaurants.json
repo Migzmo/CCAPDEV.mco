@@ -1,0 +1,15 @@
+[
+    {
+      "resto_id": 2,
+      "resto_name": "El Poco Cantina",
+      "resto_address": "Taft, Manila",
+      "resto_time": "10AM - 7PM",
+      "resto_phone": "09195395825",
+      "resto_email": "el_poco_cantina@gmail.com",
+      "resto_payment": "Cash, Visa, Mastercard",
+      "resto_perks": "Good Food, Great Ambiance",
+      "resto_img": "/views/CSS/RestoImages/elpococantina.png",
+      "resto_owner_id":0,
+      "cuisine_id": 7
+    }
+]

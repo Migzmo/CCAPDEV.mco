@@ -1,0 +1,30 @@
+[
+    {
+      "cuisine_id": 0,
+      "cuisine_name": "American"
+    },
+    {
+      "cuisine_id": 1,
+      "cuisine_name": "Asian"
+    },
+    {
+      "cuisine_id": 2,
+      "cuisine_name": "Cafe"
+    },
+    {
+      "cuisine_id": 3,
+      "cuisine_name": "Fastfood"
+    },
+    {
+      "cuisine_id": 4,
+      "cuisine_name": "Japanese"
+    },
+    {
+      "cuisine_id": 5,
+      "cuisine_name": "Chinese"
+    },
+    {
+      "cuisine_id": 6,
+      "cuisine_name": "Korean"
+    }
+  ]
