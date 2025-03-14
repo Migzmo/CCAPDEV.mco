@@ -5,7 +5,7 @@ const accountSchema = new mongoose.Schema({
   acc_id: { type: Number, unique: true, required: true },
   acc_name: { type: String, required: true },
   acc_username: { type: String, unique: true, required: true },
-  saved_restos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }], // Array of references
+  saved_restos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }], 
   profile_pic: { type: String } // Image URL
 });
 
@@ -22,14 +22,14 @@ const Cuisine = mongoose.model('Cuisine', cuisineSchema);
 // Restaurant Schema
 const restaurantSchema = new mongoose.Schema({
   resto_id: { type: Number, unique: true, required: true },
-  resto_name: { type: String, required: true },
+  resto_name: { type: String,unique:true, required: true },
   resto_address: { type: String, required: true }, // Corrected field name
   resto_time: { type: String },
   resto_phone: { type: String },
   resto_email: { type: String },
   resto_payment: { type: String },
   resto_perks: { type: String },
-  resto_img: { type: String }, // Image URL
+  resto_img: { type: String }, 
   resto_owner_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Account' },
   cuisine_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Cuisine' }
 });
