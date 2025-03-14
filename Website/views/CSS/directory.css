@@ -246,8 +246,8 @@ font-family: 'Lexend', sans-serif;
 .category-row1 {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    background-color: #fdfbee; /* Light background like in the image */
+    gap: 25px;
+    background-color: transparent; /* Light background like in the image */
     padding: 20px;
 }
 
@@ -261,18 +261,18 @@ font-family: 'Lexend', sans-serif;
 }
 
 .category-btn img {
-    width: 80px;  /* Adjust size as needed */
+    width: 80px;
     height: 80px;
     border-radius: 50%;
     border: 2px solid black;
     object-fit: cover;
-    background-color: white; /* Ensures circular background is white */
+    background-color: white;
     padding: 5px;
     transition: transform 0.2s ease-in-out;
 }
 
 .category-btn:hover img {
-    transform: scale(1.1); /* Slight zoom effect on hover */
+    transform: scale(1.1);
 }
 
 .category-container{

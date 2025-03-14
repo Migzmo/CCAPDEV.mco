@@ -35,11 +35,9 @@
         <ul class="dashboard">
             <li><a href="#">DIRECTORY</a></li>
             <li><a href="#">INDECISIVE?</a></li>
-            <li><button onclick="togglePopup()">LOGIN</button></li>
+            <li><button onclick="togglePopup()" id="loginButton">LOGIN</button></li>
         </ul>
     </nav>
-
-    <div id="backdrop"></div>
 
     <div id="loginframe">
         <div class="loginframe-content">
@@ -88,18 +86,22 @@
         <div class="registerframe-content">
             <div id="registerframe_left">
                 <h2 id="create-account">Create Your Account</h2>
-                <div class="form-group">
+                <form id="registration-form" class="form-container">
+                    <div class="form-group">
                         <input type="text" id="username" placeholder="Username" required>
                     </div>
-                    <div class="form-group">
+
+                    <div class = "form-group">
                         <input type="password" id="password" placeholder="Password" required>
                     </div>
-                    <div class="form-group">
+
+                    <div class = "form-group">
                         <br/><br/><br/>
                         <label for="avatar" class="instruction">Profile Picture</label>
                         <input type="file" id="avatar" accept="image/*">
                     </div>
-                    <div class="form-group account-type">
+
+                    <div class = "form-group account-type">
                         <label class="instruction">Account Type:</label>
                         <div class="radio-group">
                             <input type="radio" id="user" name="accountType" value="User" checked>
@@ -108,11 +110,14 @@
                             <label for="business-owner" class="instruction">Business Owner</label>
                         </div>
                     </div>
-                    <div class="form-group">
+
+                    <div class = "form-group">
                         <textarea id="description" placeholder="Short description (optional)"></textarea>
                     </div>
+
                     <button type="submit" class="register-button">Create Account</button>
                 </form>
+
                 <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
             </div>
             <div id="registerframe_right">
@@ -128,7 +133,7 @@
         </div>
         <div class="createResto-content">
             <div class="wrapper">
-                <form name="restoForm" action="#" method="post">
+                <form name="restoForm" action="#" method="post" enctype="multipart/form-data">
                     <!-- Basic Information -->
                     <div class="form-section">
                         <h4>Basic Information</h4>
@@ -245,26 +250,41 @@
     <div class ="categories" id="slider">
         <!-- Food Categories -->
         <div class="caterogy-container">
-        <div class="category-row1">
-            <div class="category"><img src = "views\CSS\images\Category - American.png"></div>
-            <div class="category"> <img src = "views\CSS\images\Category - Asian.png"></div>
-            <div class ="category"> <img src = "views\CSS\images\Category - Cafe.png"></div>
-            <div class ="category" > <img src = "views\CSS\images\Category - Chinese.png"></div>
-            <div class ="category"> <img src = "views\CSS\images\Category - Fastfood.png"></div>
-            <div class ="category" > <img src = "views\CSS\images\Category - Japanese.png"></div>
-            <div class ="category" > <img src = "views\CSS\images\Category - Korean.png"></div> 
-            <div class ="category" > <img src = "views\CSS\images\Category - Mexican.png"></div> 
-        </div>
-        <div class="category-row2">
-            <div class="category-name"> <h3>American</h3></div>
-            <div class="category-name"> <h3>Asian</h3></div>
-            <div class ="category-name"> <h3>Cafe</h3></div>
-            <div class ="category-name" > <h3>Chinese</h3></div>
-            <div class ="category-name"> <h3>Fastfood</h3></div>
-            <div class ="category-name" > <h3>Japanese</h3></div>
-            <div class ="category-name" > <h3>Korean</h3></div>
-            <div class ="category-name" > <h3>Mexican</h3></div>
-        </div>
+            <div class="category-row1">
+                <button class="category-btn" data-category="American">
+                    <img src="views/CSS/images/Category - American.png" alt="American">
+                    <div class="category-name"> <h3>American</h3></div>
+                </button>
+                <button class="category-btn" data-category="Asian">
+                    <img src="views/CSS/images/Category - Asian.png" alt="">
+                    <div class="category-name"> <h3>Asian</h3></div>
+                </button>
+
+                <button class="category-btn" data-category="Cafe">
+                    <img src="views/CSS/images/Category - Cafe.png" alt="">
+                    <div class="category-name"> <h3>Cafe</h3></div>
+                </button>
+
+                <button class="category-btn" data-category="Fastfood">
+                    <img src="views/CSS/images/Category - Fastfood.png" alt="">
+                    <div class="category-name"> <h3>Fastfood</h3></div>
+                </button>
+
+                <button class="category-btn" data-category="Japanese">
+                    <img src="views/CSS/images/Category - Japanese.png" alt="">
+                    <div class="category-name"> <h3>Japanese</h3></div>
+                </button>
+
+                <button class="category-btn" data-category="Chinese">
+                    <img src="views/CSS/images/Category - Chinese.png" alt="">
+                    <div class="category-name"> <h3>Chinese</h3></div>
+                </button>
+
+                <button class="category-btn" data-category="Korean">
+                    <img src="views/CSS/images/Category - Korean.png" alt="">
+                    <div class="category-name"> <h3>Korean</h3></div>
+                </button>
+            </div>
         </div>
           
     </div>
