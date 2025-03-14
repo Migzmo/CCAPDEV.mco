@@ -4,9 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>LaSapp</title>
-    <link rel="stylesheet" href="CSS/directory.css">
-    <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet"> 
-    <script src = "javascript/web.js"></script>
+    <link rel="stylesheet" href="css/directory.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,13 +39,14 @@
     </nav>
 
     <div id="backdrop"></div>
+
     <div id="loginframe">
         <div class="loginframe-content">
             <div id="loginframe_left">
                 <h2>Log in or sign up now!</h2>
                 <div class="button-container">
-                    <button class="signin-button"><span id="mail-logo"></span>Continue with Email</button>
-                    <button class="login-button"><span id="google-logo"></span>Login with DLSU Email</button>
+                    <button class="signin-button"><span id="mail-logo"></span>Continue with Account</button>
+                    <button class="login-button"><span id="google-logo"></span>Login with Gmail</button>
                 </div>
                 <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
                 <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="">DLSU Student Handbook</a> and/or <a href="">Privacy Policy</a> of LaSapp.</p>
@@ -57,9 +57,72 @@
         </div>
     </div>
 
+    <div id="signinframe">
+        <div class="signinframe-content">
+            <div id="signinframe_left">
+                <h2 id="h2-signin">Sign in</h2>
+                <form class="signin-form">
+                    <div class="form-group">
+                        <input type="text" id="signin-username" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signin-password" placeholder="Password" required>
+                    </div>
+
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <button type="submit" class="signin-submit-button">Sign in</button>
+                </form>
+                <p class="back-to-login">Need an account? <button id="backToOptions">Go back</button></p>
+            </div>
+            <div id="signinframe_right">
+                <button id="closeSignin">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerframe">
+        <div class="registerframe-content">
+            <div id="registerframe_left">
+                <h2 id="create-account">Create Your Account</h2>
+                <div class="form-group">
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <br/><br/><br/>
+                        <label for="avatar" class="instruction">Profile Picture</label>
+                        <input type="file" id="avatar" accept="image/*">
+                    </div>
+                    <div class="form-group account-type">
+                        <label class="instruction">Account Type:</label>
+                        <div class="radio-group">
+                            <input type="radio" id="user" name="accountType" value="User" checked>
+                            <label for="user" class="instruction">User</label>
+                            <input type="radio" id="business-owner" name="accountType" value="business-owner">
+                            <label for="business-owner" class="instruction">Business Owner</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="description" placeholder="Short description (optional)"></textarea>
+                    </div>
+                    <button type="submit" class="register-button">Create Account</button>
+                </form>
+                <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
+            </div>
+            <div id="registerframe_right">
+                <button id="closeRegister">&times;</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div>
-            <img class="my_cover" src="CSS/images/foodflag.jpg" alt="Description of Image">
+            <img class="my_cover" src="CSS\images\foodflag.jpg" alt="Description of Image">
         </div>
         <form>
             <div class = "searchbar">
@@ -112,54 +175,54 @@
     </div>
     <div class = "resto-box-wrappers">
         <div class="restaurants" id = "mcdo">
-            <a href="/restaurant/0">
-            <img class = "resto-img" src = "views/CSS/RestoImages/mcdo.png">
+            <a href="Restomcdowebp.html">
+            <img class = "resto-img" src = "CSS/RestoImages/mcdo.png">
             <div class="filler"></div>
             <div class = "resto-text">
-                <h2 class="resto-title">Mcdonalds | 4.9 ⭐</h2>
+                <h2 class="resto-title">Mcdonalds ⭐</h2>
                 <h3 class="resto-category">Fast Food, American</h3>
             </div>
             </a>
         </div>
         <div class="restaurants" id = "jollibee">
-            <a href="/restaurant/1">
-            <img class = "resto-img" src = "views/CSS/RestoImages/Jolibee.webp">
+            <a href="RestoJollibee.html">
+            <img class = "resto-img" src = "CSS/RestoImages/Jolibee.webp">
             <div class ="filler"></div>
             <div class = "resto-text">
-                <h2 class="resto-title">Jollibee | 4.8 ⭐</h2>
+                <h2 class="resto-title">Jollibee ⭐</h2>
                 <h3 class="resto-category">Fast Food, Filipino</h3>
             </div>
             </a>
             
         </div>
         <div class="restaurants" id = "elpococantina">
-            <a href="/restaurant/2">
-            <img class = "resto-img" src = "views/CSS/RestoImages/elpococantina.png">
+            <a href="RestoElPoco.html">
+            <img class = "resto-img" src = "CSS/RestoImages/elpococantina.png">
             <div class ="filler"></div>
             <div class = "resto-text">
-                <h2 class="resto-title">El Poco Cantina | 5.0 ⭐</h2>
+                <h2 class="resto-title">El Poco Cantina ⭐</h2>
                 <h3 class="resto-category">Casual Dining, Mexican</h3>
             </div>
             </a>
             
         </div>
         <div class="restaurants" id = "Mang Inasal">
-            <a href="/restaurant/3">
-            <img class = "resto-img" src = "views/CSS/RestoImages/manginasalwebp.png">
+            <a href="RestoMangInasal.html">
+            <img class = "resto-img" src = "CSS/RestoImages/manginasalwebp.png">
             <div class ="filler"></div>
             <div class = "resto-text">
-                <h2 class="resto-title">Mang Inasal | 4.7 ⭐</h2>
+                <h2 class="resto-title">Mang Inasal</h2>
                 <h3 class="resto-category">Fast Food, Filipino</h3>
             </div>
             </a>
             
         </div>
         <div class="restaurants" id = "Pho Mahal">
-            <a href="/restaurant/4">
-            <img class = "resto-img" src = "views/CSS/RestoImages/phomahalwebp.png">
+            <a href="RestoPhoMahal.html">
+            <img class = "resto-img" src = "CSS/RestoImages/phomahalwebp.png">
             <div class ="filler"></div>
             <div class = "resto-text">
-                <h2 class="resto-title">Pho Mahal | 5.0 ⭐</h2>
+                <h2 class="resto-title">Pho Mahal</h2>
                 <h3 class="resto-category">Casual Dining, Vietnamese</h3>
             </div>
             </a>
@@ -167,6 +230,7 @@
         </div>
     </div>
 
+    <script src = "javascript/web.js"></script>
     <script src='JavaScript/directoryScript.js'></script>
 </body>
 </html>
