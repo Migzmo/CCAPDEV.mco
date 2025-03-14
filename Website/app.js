@@ -25,11 +25,21 @@ const imagesDir = path.join(__dirname, 'public/images/restaurants');
 if (!fs.existsSync(imagesDir)) {
     fs.mkdirSync(imagesDir, { recursive: true });
 }
+const profilesDir = path.join(__dirname, 'public/images/profiles');
+if (!fs.existsSync(profilesDir)) {
+  fs.mkdirSync(profilesDir, { recursive: true });
+}
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(fileUpload({
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
 
 //For importing sample data to MONGO DB
 let impErr1= false;
@@ -42,7 +52,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
     useUnifiedTopology: true
 }).then(async () => {
     console.log('Connected to MongoDB');
-    
+
     try {
       // Import Accounts
       if (fs.existsSync('accounts.json')) {
@@ -50,11 +60,11 @@ mongoose.connect('mongodb://localhost/lasappDB', {
         await Account.deleteMany({});
         await Account.insertMany(accountData);
         console.log('Account data imported successfully');
-        
+
       }else{
         impErr1= true;
       }
-      
+
       // Import Cuisines
       if (fs.existsSync('cuisines.json')) {
         const cuisineData = JSON.parse(fs.readFileSync('cuisines.json', 'utf8'));
@@ -64,7 +74,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       }else{
         impErr2= true;
       }
-      
+
       // Import Restaurants
       if (fs.existsSync('restaurants.json')) {
         const restaurantData = JSON.parse(fs.readFileSync('restaurants.json', 'utf8'));
@@ -74,7 +84,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       }else{
         impErr3= true;
       }
-      
+
       // Import Reviews
       if (fs.existsSync('reviews.json')) {
         const reviewData = JSON.parse(fs.readFileSync('reviews.json', 'utf8'));
@@ -89,14 +99,104 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       }else{
         console.log('All data imported successfully!');
       }
-      
+
     } catch (err) {
       console.error('Import error:', err);
-    } 
+    }
   })
   .catch(err => console.error('Connection error:', err));
 
 //auth routes
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    console.log('Login route accessed', req.body);
+    const { username, password } = req.body;
+
+    // Find the account by username
+    const account = await Account.findOne({ acc_username: username });
+
+    // Check if account exists
+    if (!account) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid username or password'
+      });
+    }
+
+    // Check password (in a real app, you should use bcrypt to compare hashed passwords)
+    if (account.acc_password !== password) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid username or password'
+      });
+    }
+
+    // Password is correct, return success
+    res.status(200).json({
+      success: true,
+      message: 'Login successful',
+      userId: account.acc_id,
+      username: account.acc_username,
+      accountType: account.acc_type
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error during login',
+      error: error.message
+    });
+  }
+});
+// Initialize our Reviews
+const { Account, Cuisine, Restaurant, Review } = require("./database/models/lasappDB");
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(__dirname));
+
+var hbs = require('hbs')
+app.set('view engine','hbs');
+
+/****************************************************************************************************************************************************************************/
+//This Section is responsible for routing and rendering the pages
+// User profile routes
+// Root route to render the homepage
+app.get('/', async function(req, res) {
+  try {
+    const restaurants = await Restaurant.find({isAlive: true});
+    res.render('LaSapp', { restaurants });
+  } catch (err) {
+    console.error('Error fetching restaurants:', err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// User profile endpoints
+app.get('/api/users/:id', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const account = await Account.findOne({ acc_id: userId });
+
+    if (!account) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({
+      acc_id: account.acc_id,
+      acc_name: account.acc_name,
+      acc_username: account.acc_username,
+      acc_bio: account.acc_bio,
+      profile_pic: account.profile_pic,
+      acc_type: account.acc_type
+    });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
 app.post('/api/auth/register', async (req, res) => {
     try {
         console.log('Register route accessed', req.body);
@@ -112,14 +212,20 @@ app.post('/api/auth/register', async (req, res) => {
             acc_bio: req.body.description || '',
             profile_pic: req.body.profilePic || '',
             saved_restos: [],
-            saved_reviews: []
+            saved_reviews: [],
+            acc_password: req.body.password,
+            acc_type: req.body.accountType || 'user'
         });
 
         await newAccount.save();
+
+        // Return login information similar to login endpoint
         res.status(201).json({
             success: true,
             message: 'Account created successfully',
-            userId: newAccount.acc_id // Return user ID
+            userId: newAccount.acc_id,
+            username: newAccount.acc_username,
+            accountType: newAccount.acc_type
         });
     } catch (error) {
         console.error('Registration error:', error);
@@ -138,71 +244,6 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
-app.post('/api/auth/login', async (req, res) => {
-  try {
-    console.log('Login route accessed', req.body);
-    const { username, password } = req.body;
-
-    // Find the account by username
-    const account = await Account.findOne({ acc_username: username });
-
-    // In a real app, you'd check password hashes
-    // For this demo, we're checking if the account exists
-    if (!account) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid username or password'
-      });
-    }
-
-    // In a real app, validate password here
-    // For now, we're just returning success
-    res.status(200).json({
-      success: true,
-      message: 'Login successful',
-      userId: account.acc_id,
-      username: account.acc_username
-    });
-  } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error during login',
-      error: error.message
-    });
-  }
-});
-
-// Initialize our Reviews
-const { Account, Cuisine, Restaurant, Review } = require("./database/models/lasappDB");
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(express.static(__dirname));
-
-var hbs = require('hbs')
-app.set('view engine','hbs');
-
-/****************************************************************************************************************************************************************************/
-//This Section is responsible for routing and rendering the pages
-app.get('/', async function (req, res) {
-  try {
-    const restaurants = await Restaurant.find({isAlive:true});
-    
-    if (restaurants.length === 0) { // Fix: Check if array is empty
-      return res.status(404).send('No restaurants found');
-    }
-
-    console.log("Successfully found restaurants:", restaurants);
-    
-    res.render('LaSapp', { restaurants: restaurants });
-
-  } catch (err) { // Fix: Catch error correctly
-    console.error('Error fetching restaurants:', err);
-    res.status(500).send('Server Error');
-  }
-});
 // Render restaurant page using Handlebars
 app.get('/restaurant/:id', async function (req, res) {
   try {
@@ -225,7 +266,7 @@ app.get('/restaurant/:id', async function (req, res) {
       }else{
         console.log(`Found ${reviews.length} reviews`);
       }
-      //This will render restaurant handlbar 
+      //This will render restaurant handlbar
       res.render('restaurant', {
           restaurant: {
               name: restaurant.resto_name,
@@ -257,7 +298,7 @@ app.get('/profile/:id', async function (req, res) {
             return res.status(404).send('Account not found');
     }else{
         console.log("Sucessfully found account");
-        
+
     }
     res.render('Profile', {
         account: {
@@ -360,13 +401,6 @@ app.use((err, req, res, next) => {
         error: err.message
     });
 });
-// Replace your root route with this improved version
-
-app.use(fileUpload({
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-    useTempFiles: true,
-    tempFileDir: '/tmp/'
-}));
 
 //This blocks access to the database for now idk yet
 app.use('/database', function (req, res, next) {
