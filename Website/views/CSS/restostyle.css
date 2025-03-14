@@ -82,7 +82,7 @@ html, body {
     border-radius: 50px; 
     cursor: pointer;
     transition: background-color 0.2s ease;
-    margin-left: 95%;
+    margin-left: 0; /* Remove the large left margin */
 }
 
 .oval-button-review:hover {
@@ -511,4 +511,352 @@ footer{
 
 .heart.liked {
     color: red; 
+}
+
+/* BUTTONS STUFF FOR EDIT DELETE */
+.buttons-container {
+    display: flex;
+    flex-direction: row;  /* Explicitly set to row */
+    align-items: center;
+    justify-content: flex-end;  /* Add this line to align buttons to the right */
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;  /* Ensure container takes full width */
+}
+
+/* Make sure buttons have consistent styling */
+.buttons-container button {
+    margin: 0;  /* Remove any default margins */
+}
+
+/* Fix for the button inside an anchor tag */
+.buttons-container a {
+    display: inline-block;  /* Treat the anchor as an inline block */
+    margin: 0;
+    padding: 0;
+}
+
+.edit-btn {
+    background-color: #2196F3;
+}
+
+.edit-btn:hover {
+    background-color: #0b7dda;
+}
+
+.delete-btn {
+    background-color: #f44336;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* CSS FOR FORMS*/ 
+
+.wrapper {
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #CDDECB; /* Ensure background color matches parent */
+}
+
+/* Custom scrollbar styling */
+.wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+    background: #81C784;
+    border-radius: 4px;
+}
+
+.wrapper::-webkit-scrollbar-thumb:hover {
+    background: #5EB762;
+}
+
+/* Fix input box positioning */
+.wrapper form .input-box {
+    margin-left: 0; /* Remove the left margin */
+    padding: 0 20px; /* Add padding instead */
+}
+
+/* Form section styling */
+.form-section {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-section h4 {
+    font-family: 'Lexend', sans-serif;
+    color: black;
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+/* Fix button section to appear at the bottom */
+.button-section {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.input-box.button input {
+    background: #5EB762;
+    width: 100%;
+}
+
+.input-box.button.secondary input {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.input-box.button input:hover {
+    background: #4CAF50;
+}
+
+.input-box.button.secondary input:hover {
+    background: #bdbdbd;
+}
+
+/* Adjust form input width */
+form .input-box input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Form input styling - make fields bigger */
+.wrapper form .input-box input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 45px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 12px;
+    color: black; /* Explicitly set text color to black */
+}
+
+
+.wrapper form .input-box label {
+    display: block;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 8px;
+    margin-top: 5px;
+}
+
+/* Adjust time inputs specifically */
+.wrapper form .input-box.time-input input {
+    height: 45px;
+}
+
+/* Add more spacing between form sections */
+.form-section {
+    margin-bottom: 25px;
+}
+
+/* Make submit and cancel buttons larger */
+.button-section .input-box.button input,
+.button-section .input-box.button.secondary input {
+    height: 50px;
+    font-size: 18px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+/* Make form section headings larger */
+.form-section h4 {
+    font-family: 'Lexend', sans-serif;
+    color: black;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    font-size: 20px; /* Increase font size from default */
+    font-weight: 600; /* Make slightly bolder */
+}
+
+/* Ensure placeholder text is a lighter shade but still readable */
+.wrapper form .input-box input::placeholder {
+    color: #757575;
+}
+
+/* DASDASDA*/
+/* Style for single image upload */
+
+.input-box.image-upload input[type="file"] {
+    padding: 10px;
+    border: 1px dashed #81C784;
+    border-radius: 8px;
+    background-color: #f8fff8;
+    cursor: pointer;
+}
+
+#backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#createRestoFrame {
+    display: none;
+    position: fixed;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 80%;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 40px;
+    overflow: hidden; /* Ensure child elements do not overflow the rounded corners */
+}
+
+.createResto-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: #CDDECB;
+    border: none;
+    height: calc(100% - 50px); /* Changed from 80px to match header height exactly */
+    position: relative;
+    overflow: hidden;
+}
+
+
+#closeCreateResto {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px; /* Adjust the size as needed */
+    color: black; /* Adjust the color as needed */
+    cursor: pointer;
+}
+
+.createResto-header {
+    height: 50px;
+    background: #FFFFFF;
+    text-align: center;
+    border-bottom: 1px solid black; /* Add thin black border */
+}
+
+.createResto-header h2 {
+    position: relative;
+    top: 10px;
+    font-family: 'Lexend', sans-serif;
+}
+
+/* DELETE RESTO CSS*/
+/* Delete Confirmation Popup Styling */
+#deleteConfirmPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.deleteConfirm-header {
+    background-color: #f44336;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.deleteConfirm-header h2 {
+    margin: 0;
+    font-family: 'Lexend', sans-serif;
+    font-size: 24px;
+}
+
+.deleteConfirm-body {
+    padding: 25px;
+    text-align: center;
+    font-family: 'Lexend', sans-serif;
+}
+
+.deleteConfirm-body p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.warning-text {
+    color: #f44336;
+    font-weight: bold;
+    font-size: 14px !important;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.cancel-delete-btn, .confirm-delete-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cancel-delete-btn {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.cancel-delete-btn:hover {
+    background-color: #bdbdbd;
+}
+
+.confirm-delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+#closeDeleteConfirm {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
 }

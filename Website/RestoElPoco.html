@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>LaSapp</title>
-        <link rel="stylesheet" href="css/restostyle.css">
+        <link rel="stylesheet" href="views/css/restostyle.css">
         <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
             <!-- First Header -->
             <div class="navbar-container">
                 <a href="LaSapp.html" id = "logoImg">
-                <img src="public/CSS/RestoImages/logo.png" alt="Logo" width="70" height="70">
+                <img src="views/CSS/RestoImages/logo.png" alt="Logo" width="70" height="70">
                 </a>
                     <div class="logo">LaSapp</div>
                 
@@ -35,17 +35,138 @@
             </div>
         </header>
 
+        <div id="backdrop"></div>
+        <div id="createRestoFrame">
+            <div class="createResto-header">
+                <h2>Edit Restaurant</h2>
+            </div>
+            <div class="createResto-content">
+                <div class="wrapper">
+                    <form action="#" method="post">
+                        <!-- Basic Information -->
+                        <div class="form-section">
+                            <h4>Basic Information</h4>
+                            <div class="input-box">
+                                <label for="resto-name">Restaurant Name</label>
+                                <input type="text" id="resto-name" placeholder="Enter restaurant name" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Address Section -->
+                        <div class="form-section">
+                            <h4>Location</h4>
+                            <div class="input-box">
+                                <label for="address1">Address Line 1</label>
+                                <input type="text" id="address1" placeholder="Street address" required>
+                            </div>
+                            <div class="input-box">
+                                <label for="address2">Address Line 2</label>
+                                <input type="text" id="address2" placeholder="Building, floor, etc. (optional)">
+                            </div>
+                        </div>
+                        
+                        <!-- Operating Hours -->
+                        <div class="form-section">
+                            <h4>Operating Hours</h4>
+                            <div class="input-box time-input">
+                                <label for="opening-time">Opening Time</label>
+                                <input type="time" id="opening-time" required>
+                            </div>
+                            <div class="input-box time-input">
+                                <label for="closing-time">Closing Time</label>
+                                <input type="time" id="closing-time" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Information -->
+                        <div class="form-section">
+                            <h4>Contact Information</h4>
+                            <div class="input-box">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="Phone number" required>
+                            </div>
+                            <div class="input-box">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="Email address" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Information -->
+                        <div class="form-section">
+                            <h4>Additional Information</h4>
+                            <div class="input-box">
+                                <label for="payment">Payment Methods</label>
+                                <input type="text" id="payment" placeholder="Cash, Credit Card, GCash, etc." required>
+                            </div>
+                            <div class="input-box">
+                                <label for="perks">Perks</label>
+                                <input type="text" id="perks" placeholder="Wi-Fi, Parking, etc." required>
+                            </div>
+                            <div class="input-box">
+                                <label for="cuisine">Cuisine</label>
+                                <input type="text" id="cuisine" placeholder="Filipino, Italian, Japanese, etc." required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4>Reference Image</h4>
+                            <div class="input-box image-upload">
+                                <label for="restaurant-images">Upload Reference Photo</label>
+                                <input type="file" id="restaurant-images" accept="image/*">
+                            </div>
+                        </div>
+
+
+                        <!-- Button Section stays inside the scrollable area but will be styled to stand out -->
+                        <div class="button-section">
+                            <div class="input-box button">
+                                <input type="submit" value="Add Restaurant">
+                            </div>
+                            <div class="input-box button secondary">
+                                <input type="button" value="Cancel" onclick="togglePopupCreateResto()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        
+
+                <button id="closeCreateResto" onclick="togglePopupCreateResto()">&times</button>
+            </div>
+        </div>
+
+        <div id="deleteConfirmPopup">
+            <div class="deleteConfirm-content">
+                <div class="deleteConfirm-header">
+                    <h2>Confirm Deletion</h2>
+                </div>
+                <div class="deleteConfirm-body">
+                    <p>Are you sure you want to delete this restaurant?</p>
+                    <p class="warning-text">This action cannot be undone.</p>
+                    
+                    <div class="confirm-buttons">
+                        <button class="cancel-delete-btn" onclick="toggleDeleteConfirm()">Cancel</button>
+                        <button class="confirm-delete-btn">Yes, Delete</button>
+                    </div>
+                </div>
+                <button id="closeDeleteConfirm" onclick="toggleDeleteConfirm()">&times;</button>
+            </div>
+        </div>
+
         <!-- Restaurant Information -->
         <div class="info">
-                <!-- Exit Button -->
-                <a href="LaSapp.html">
-                    <button class="oval-button-review">Back</button>
-                </a>
+                <!-- Replace the buttons container including the inline style block with: -->
+                <div class="buttons-container">
+                    <button class="oval-button-review delete-btn" onclick="toggleDeleteConfirm()">Delete</button>
+                    <button class="oval-button-review edit-btn" onclick="togglePopupCreateResto()">Edit</button>
+                    <a href="LaSapp.html">
+                        <button class="oval-button-review">Back</button>
+                    </a>
+                </div>
 
                 <!-- Header -->
                 <div class="classheader">
                     <button id="heart">
-                        <img src="public/CSS/RestoImages/heart.png" alt="Like" width="80" height="80">
+                        <img src="views/CSS/RestoImages/heart.png" alt="Like" width="80" height="80">
                     </button>
                     <div class="head-container">
                         <h1>El Poco Cantina - Estrada St.</h1>  
@@ -55,7 +176,7 @@
                 
             <!-- Main body-->
             <div class="main">
-                <img src="public/CSS/RestoImages/elpococantina.png" alt="El Poco Cantina">
+                <img src="views/CSS/RestoImages/elpococantina.png" alt="El Poco Cantina">
                 <div class="information">
                     <h1>About:</h1>
                     <h2>📍 Address: </h2>
@@ -90,7 +211,7 @@
                     <div class="review-area">
                         <textarea name="review" id="review" placeholder="Write your review here..."></textarea>
                     </div>
-                    <img id="clip" src="public/CSS/images/attachment_icon.png" alt="clip">
+                    <img id="clip" src="views/CSS/images/attachment_icon.png" alt="clip">
                     <button class="review-button">Submit</button>
                     </div>
                     <input type="button" popovertarget="myheader" value="Make a Review" class=" button-3">
@@ -108,9 +229,9 @@
                             <h2>
                                 
                                 <a href="profile.html">
-                                <img src="public/CSS/ProfileImages/profile_sample.jpg" alt="Profile" class="profile-pic"> Jose Miguel Espinosa
+                                <img src="views/CSS/ProfileImages/profile_sample.jpg" alt="Profile" class="profile-pic"> Jose Miguel Espinosa
                                 </a>
-                                <img class="like" src = "public/CSS/images/upanddownlike.png" alt="Like" class="like">
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
                             </h2>
                             <p>The Quesabirria was topnotch!</p>
                             
@@ -118,36 +239,36 @@
                         <div class="scroll-obj">
                             <h2>
                                 <a href = "profile_two.html">
-                                <img src="public/CSS/ProfileImages/profile_sample_two.jpg" alt="Profile" class="profile-pic"> Karl Matthew Dela Cruz
+                                <img src="views/CSS/ProfileImages/profile_sample_two.jpg" alt="Profile" class="profile-pic"> Karl Matthew Dela Cruz
                                 </a>
-                                <img class="like" src = "public/CSS/images/upanddownlike.png" alt="Like" class="like">
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
                             </h2>
                             <p>I loved their horchata!</p>
                         </div>
                         <div class="scroll-obj">
                             <h2>
                                 <a href = "profile_three.html">
-                                <img src="public/CSS/ProfileImages/profile_sample_three.jpg" alt="Profile" class="profile-pic"> Bon Aquino
+                                <img src="views/CSS/ProfileImages/profile_sample_three.jpg" alt="Profile" class="profile-pic"> Bon Aquino
                                 </a>
-                                <img class="like" src = "public/CSS/images/upanddownlike.png" alt="Like" class="like">
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
                             </h2>
                             <p>Ano halo niyo ng tacos</p>
                         </div>
                         <div class="scroll-obj">
                             <h2>
                                 <a href = "profile_four.html">
-                                <img src="public/CSS/ProfileImages/profile_sample_four.jpg" alt="Profile" class="profile-pic"> Adler Strebel
+                                <img src="views/CSS/ProfileImages/profile_sample_four.jpg" alt="Profile" class="profile-pic"> Adler Strebel
                                 </a>
-                                <img class="like" src = "public/CSS/images/upanddownlike.png" alt="Like" class="like">
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
                             </h2>
                             <p>Mexican! Mexican! Mexican! 🫡😂😈</p>
                         </div>
                         <div class="scroll-obj">
                             <h2>
                                 <a href = "profile_five.html">
-                                <img src="public/CSS/ProfileImages/profile_sample_five.jpg" alt="Lebrons's Profile" class="profile-pic"> Superman
+                                <img src="views/CSS/ProfileImages/profile_sample_five.jpg" alt="Lebrons's Profile" class="profile-pic"> Superman
                                 </a>
-                                <img class="like" src = "public/CSS/images/upanddownlike.png" alt="Like" class="like">
+                                <img class="like" src = "views/CSS/images/upanddownlike.png" alt="Like" class="like">
                             </h2>
                             <p>🙅🙅‍♂️🙅‍♀️this is a sample text</p>
                         </div>
@@ -158,15 +279,15 @@
 
         <!-- Footer -->
         <footer>
-            <img src="public/CSS/RestoImages/logo.png" id="footerLogo" alt="logo" height="70" width="70">
+            <img src="views/CSS/RestoImages/logo.png" id="footerLogo" alt="logo" height="70" width="70">
             <div class="logo">LaSapp</div>
 
             <div class="footerIcon">
                 <a href="https://www.facebook.com" target="_blank">
-                    <img src="public/CSS/RestoImages/icons/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
+                    <img src="views/CSS/RestoImages/icons/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
                 </a>
                 <a href="https://www.instagram.com" target="_blank">
-                    <img src="public/CSS/RestoImages/icons/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
+                    <img src="views/CSS/RestoImages/icons/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
                 </a>
             </div>
         </footer>

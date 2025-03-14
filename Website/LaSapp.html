@@ -4,8 +4,9 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>LaSapp</title>
-    <link rel="stylesheet" href="./public/CSS/directory.css">
-    <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="views/CSS/directory.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet"> 
+    <script src = "javascript/web.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,38 +88,31 @@
         <div class="registerframe-content">
             <div id="registerframe_left">
                 <h2 id="create-account">Create Your Account</h2>
-                <form id="registration-form" class="form-container">
-                    <div class="form-group">
+                <div class="form-group">
                         <input type="text" id="username" placeholder="Username" required>
                     </div>
-
-                    <div class = "form-group">
+                    <div class="form-group">
                         <input type="password" id="password" placeholder="Password" required>
                     </div>
-
-                    <div class = "form-group">
+                    <div class="form-group">
                         <br/><br/><br/>
                         <label for="avatar" class="instruction">Profile Picture</label>
                         <input type="file" id="avatar" accept="image/*">
                     </div>
-
-                    <div class = "form-group account-type">
+                    <div class="form-group account-type">
                         <label class="instruction">Account Type:</label>
                         <div class="radio-group">
-                            <input type="radio" id="userRadio" name="accountType" value="User" checked>
+                            <input type="radio" id="user" name="accountType" value="User" checked>
                             <label for="user" class="instruction">User</label>
-                            <input type="radio" id="ownerRadio" name="accountType" value="business-owner">
+                            <input type="radio" id="business-owner" name="accountType" value="business-owner">
                             <label for="business-owner" class="instruction">Business Owner</label>
                         </div>
                     </div>
-
-                    <div class = "form-group">
+                    <div class="form-group">
                         <textarea id="description" placeholder="Short description (optional)"></textarea>
                     </div>
-
                     <button type="submit" class="register-button">Create Account</button>
                 </form>
-
                 <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
             </div>
             <div id="registerframe_right">
@@ -127,15 +121,117 @@
         </div>
     </div>
 
+    <div id="backdrop"></div>
+    <div id="createRestoFrame">
+        <div class="createResto-header">
+            <h2>Add Restaurant</h2>
+        </div>
+        <div class="createResto-content">
+            <div class="wrapper">
+                <form action="#" method="post">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4>Basic Information</h4>
+                        <div class="input-box">
+                            <label for="resto-name">Restaurant Name</label>
+                            <input type="text" id="resto-name" placeholder="Enter restaurant name" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Address Section -->
+                    <div class="form-section">
+                        <h4>Location</h4>
+                        <div class="input-box">
+                            <label for="address1">Address Line 1</label>
+                            <input type="text" id="address1" placeholder="Street address" required>
+                        </div>
+                        <div class="input-box">
+                            <label for="address2">Address Line 2</label>
+                            <input type="text" id="address2" placeholder="Building, floor, etc. (optional)">
+                        </div>
+                    </div>
+                    
+                    <!-- Operating Hours -->
+                    <div class="form-section">
+                        <h4>Operating Hours</h4>
+                        <div class="input-box time-input">
+                            <label for="opening-time">Opening Time</label>
+                            <input type="time" id="opening-time" required>
+                        </div>
+                        <div class="input-box time-input">
+                            <label for="closing-time">Closing Time</label>
+                            <input type="time" id="closing-time" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div class="form-section">
+                        <h4>Contact Information</h4>
+                        <div class="input-box">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="Phone number" required>
+                        </div>
+                        <div class="input-box">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Email address" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information -->
+                    <div class="form-section">
+                        <h4>Additional Information</h4>
+                        <div class="input-box">
+                            <label for="payment">Payment Methods</label>
+                            <input type="text" id="payment" placeholder="Cash, Credit Card, GCash, etc." required>
+                        </div>
+                        <div class="input-box">
+                            <label for="perks">Perks</label>
+                            <input type="text" id="perks" placeholder="Wi-Fi, Parking, etc." required>
+                        </div>
+                        <div class="input-box">
+                            <label for="cuisine">Cuisine</label>
+                            <input type="text" id="cuisine" placeholder="Filipino, Italian, Japanese, etc." required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4>Reference Image</h4>
+                        <div class="input-box image-upload">
+                            <label for="restaurant-images">Upload Reference Photo</label>
+                            <input type="file" id="restaurant-images" accept="image/*">
+                        </div>
+                    </div>
+
+
+                    <!-- Button Section stays inside the scrollable area but will be styled to stand out -->
+                    <div class="button-section">
+                        <div class="input-box button">
+                            <input type="submit" value="Add Restaurant">
+                        </div>
+                        <div class="input-box button secondary">
+                            <input type="button" value="Cancel" onclick="togglePopupCreateResto()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+       
+
+            <button id="closeCreateResto" onclick="togglePopupCreateResto()">&times</button>
+        </div>
+    </div>
+    
+
+    
+
     <div class="container">
         <div>
-            <img class="my_cover" src="./public/CSS/images/foodflag.jpg" alt="Description of Image">
+            <img class="my_cover" src="views/CSS/images/foodflag.jpg" alt="Description of Image">
         </div>
         <form>
             <div class = "searchbar">
                 <!-- Search icon -->
                 <div class="material-symbols-outlined search-icon search">search
-                    <img id="filter" src="public/CSS/images/filter_icon.png" alt="filter">
+                    <img id="filter" src="views/CSS/images/filter_icon.png" alt="filter">
                 </div>
                 
                 <!-- Search input field -->
@@ -149,115 +245,107 @@
     <div class ="categories" id="slider">
         <!-- Previous Button -->
         <div class ="category-buttons">
-            <button class="button" onclick="prevCateg()"><img id = "left"src ="public/CSS/images/left.png"></button>
+            <button class="button" onclick="prevCateg()"><img id = "left"src ="views/CSS/images/left.png"></button>
         </div>
 
         <!-- Food Categories -->
         <div class="caterogy-container">
         <div class="category-row1">
-            <button class="category-btn" data-category="American">
-                <img src="public/CSS/images/Category - American.png" alt="American">
-            </button>
-            <button class="category-btn" data-category="Asian">
-                <img src="public/CSS/images/Category - Asian.png" alt="American">
-            </button>
-            <button class="category-btn" data-category="Cafe">
-                <img src="public/CSS/images/Category - Cafe.png" alt="American">
-            </button>
-            <button class="category-btn" data-category="Fastfood">
-                <img src="public/CSS/images/Category - Fastfood.png" alt="American">
-            </button>
-            <button class="category-btn" data-category="Japanese">
-                <img src="public/CSS/images/Category - Japanese.png" alt="American">
-            </button>
-            <button class="category-btn" data-category="Chinese">
-                <img src="public/CSS/images/Category - Chinese.png" alt="American">
-            </button>
-            <button class="category-btn" data-category="Korean">
-                <img src="public/CSS/images/Category - Korean.png" alt="American">
-            </button>
+            <div class="category"><img src = "views\CSS\images\Category - American.png"></div>
+            <div class="category"> <img src = "views\CSS\images\Category - Asian.png"></div>
+            <div class ="category"> <img src = "views\CSS\images\Category - Cafe.png"></div>
+            <div class ="category" > <img src = "views\CSS\images\Category - Chinese.png"></div>
+            <div class ="category"> <img src = "views\CSS\images\Category - Fastfood.png"></div>
+            <div class ="category" > <img src = "views\CSS\images\Category - Japanese.png"></div>
+            <div class ="category" > <img src = "views\CSS\images\Category - Korean.png"></div> 
+            <div class ="category" > <img src = "views\CSS\images\Category - Mexican.png"></div> 
         </div>
-
         <div class="category-row2">
             <div class="category-name"> <h3>American</h3></div>
             <div class="category-name"> <h3>Asian</h3></div>
             <div class ="category-name"> <h3>Cafe</h3></div>
+            <div class ="category-name" > <h3>Chinese</h3></div>
             <div class ="category-name"> <h3>Fastfood</h3></div>
             <div class ="category-name" > <h3>Japanese</h3></div>
-            <div class ="category-name" > <h3>Chinese</h3></div>
             <div class ="category-name" > <h3>Korean</h3></div>
+            <div class ="category-name" > <h3>Mexican</h3></div>
         </div>
         </div>
-
-        <div id="restaurantContainer">
-            <!-- Restaurants will be dynamically inserted here -->
-        </div>
-
-        <div id="restaurant-list"></div>
+        
 
         <!-- After Button-->
         <div class ="category-buttons">
-            <button class="button" onclick="nextCateg()"><img src ="./public/CSS/images/right.png"></button>
+            <button class="button" onclick="nextCateg()"><img src ="views/CSS/images/right.png"></button>
         </div>      
     </div>
-<!--    <div class = "resto-box-wrappers">-->
-<!--        <div class="restaurants" id = "mcdo">-->
-<!--            <a href="Restomcdowebp.html">-->
-<!--            <img class = "resto-img" src = "public/CSS/RestoImages/mcdo.png">-->
-<!--            <div class="filler"></div>-->
-<!--            <div class = "resto-text">-->
-<!--                <h2 class="resto-title">Mcdonalds ⭐</h2>-->
-<!--                <h3 class="resto-category">Fast Food, American</h3>-->
-<!--            </div>-->
-<!--            </a>-->
-<!--        </div>-->
-<!--        <div class="restaurants" id = "jollibee">-->
-<!--            <a href="RestoJollibee.html">-->
-<!--            <img class = "resto-img" src = "public/CSS/RestoImages/Jolibee.webp">-->
-<!--            <div class ="filler"></div>-->
-<!--            <div class = "resto-text">-->
-<!--                <h2 class="resto-title">Jollibee ⭐</h2>-->
-<!--                <h3 class="resto-category">Fast Food, Filipino</h3>-->
-<!--            </div>-->
-<!--            </a>-->
-<!--            -->
-<!--        </div>-->
-<!--        <div class="restaurants" id = "elpococantina">-->
-<!--            <a href="RestoElPoco.html">-->
-<!--            <img class = "resto-img" src = "public/CSS/RestoImages/elpococantina.png">-->
-<!--            <div class ="filler"></div>-->
-<!--            <div class = "resto-text">-->
-<!--                <h2 class="resto-title">El Poco Cantina ⭐</h2>-->
-<!--                <h3 class="resto-category">Casual Dining, Mexican</h3>-->
-<!--            </div>-->
-<!--            </a>-->
-<!--            -->
-<!--        </div>-->
-<!--        <div class="restaurants" id = "Mang Inasal">-->
-<!--            <a href="RestoMangInasal.html">-->
-<!--            <img class = "resto-img" src = "public/CSS/RestoImages/manginasalwebp.png">-->
-<!--            <div class ="filler"></div>-->
-<!--            <div class = "resto-text">-->
-<!--                <h2 class="resto-title">Mang Inasal</h2>-->
-<!--                <h3 class="resto-category">Fast Food, Filipino</h3>-->
-<!--            </div>-->
-<!--            </a>-->
-<!--            -->
-<!--        </div>-->
-<!--        <div class="restaurants" id = "Pho Mahal">-->
-<!--            <a href="RestoPhoMahal.html">-->
-<!--            <img class = "resto-img" src = "public/CSS/RestoImages/phomahalwebp.png">-->
-<!--            <div class ="filler"></div>-->
-<!--            <div class = "resto-text">-->
-<!--                <h2 class="resto-title">Pho Mahal</h2>-->
-<!--                <h3 class="resto-category">Casual Dining, Vietnamese</h3>-->
-<!--            </div>-->
-<!--            </a>-->
-<!--            -->
-<!--        </div>-->
+    <div class = "resto-box-wrappers">
+
+        <div class="restaurants">
+            <a href="#" onclick="togglePopupCreateResto()">
+                <div>
+                    <img class="add-resto" src="views/CSS/images/Misc - Add Resto Icon.png">
+                    <button id="" style="display: none;"></button>  
+                </div>
+            </a>
+        </div>
+
+        <div class="restaurants" id = "mcdo">
+            <a href="Restomcdowebp.html">
+            <img class = "resto-img" src = "views/CSS/RestoImages/mcdo.png">
+            <div class="filler"></div>
+            <div class = "resto-text">
+                <h2 class="resto-title">Mcdonalds ⭐</h2>
+                <h3 class="resto-category">Fast Food, American</h3>
+            </div>
+            </a>
+        </div>
+        <div class="restaurants" id = "jollibee">
+            <a href="RestoJollibee.html">
+            <img class = "resto-img" src = "views/CSS/RestoImages/Jolibee.webp">
+            <div class ="filler"></div>
+            <div class = "resto-text">
+                <h2 class="resto-title">Jollibee ⭐</h2>
+                <h3 class="resto-category">Fast Food, Filipino</h3>
+            </div>
+            </a>
+            
+        </div>
+        <div class="restaurants" id = "elpococantina">
+            <a href="RestoElPoco.html">
+            <img class = "resto-img" src = "views/CSS/RestoImages/elpococantina.png">
+            <div class ="filler"></div>
+            <div class = "resto-text">
+                <h2 class="resto-title">El Poco Cantina ⭐</h2>
+                <h3 class="resto-category">Casual Dining, Mexican</h3>
+            </div>
+            </a>
+            
+        </div>
+        <div class="restaurants" id = "Mang Inasal">
+            <a href="RestoMangInasal.html">
+            <img class = "resto-img" src = "views/CSS/RestoImages/manginasalwebp.png">
+            <div class ="filler"></div>
+            <div class = "resto-text">
+                <h2 class="resto-title">Mang Inasal</h2>
+                <h3 class="resto-category">Fast Food, Filipino</h3>
+            </div>
+            </a>
+            
+        </div>
+        <div class="restaurants" id = "Pho Mahal">
+            <a href="RestoPhoMahal.html">
+            <img class = "resto-img" src = "views/CSS/RestoImages/phomahalwebp.png">
+            <div class ="filler"></div>
+            <div class = "resto-text">
+                <h2 class="resto-title">Pho Mahal</h2>
+                <h3 class="resto-category">Casual Dining, Vietnamese</h3>
+            </div>
+            </a>
+            
+        </div>
     </div>
 
-    <script src="./public/JavaScript/web.js"></script>
-    <script src="./public/JavaScript/directoryScript.js"></script>
+    <script src = "javascript/web.js"></script>
+    <script src='JavaScript/directoryScript.js'></script>
 </body>
 </html>
