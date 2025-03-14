@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <form action="/submit-post" method="post" 
+    enctype="multipart/form-data">
+        Title: <br> <input name="title" type="text" /> <br />
+        Description: <br> <input name="description" type="text" /> <br />
+        Content: <br> <textarea name="content" rows="10" cols="30">
+        </textarea> <br />
+        <input type="file" name="image"/> <br /> 
+        <input type="submit" />
+    </form>
+    <br>
+    <a href="/content">View posts made!</a>
+</body>
+</html>

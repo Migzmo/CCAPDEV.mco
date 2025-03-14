@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Sample DB Page</title>
+    </head>
+
+    <body>
+        {{#each posts}}
+            ID: {{this.id}} <br>
+            Title: {{this.title}} <br>
+            Description: {{this.description}} <br>
+            Content: {{this.content}} <br>
+            <img src='{{this.image}}' height="240px" width="240px"/>
+            <br>
+        {{/each}}
+    </body>
+</html>
