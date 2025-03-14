@@ -21,6 +21,10 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const app = express();
+const imagesDir = path.join(__dirname, 'public/images/restaurants');
+if (!fs.existsSync(imagesDir)) {
+    fs.mkdirSync(imagesDir, { recursive: true });
+}
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -346,12 +350,6 @@ app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/'
 }));
-
-const fs = require('fs');
-const imagesDir = path.join(__dirname, 'public/images/restaurants');
-if (!fs.existsSync(imagesDir)) {
-    fs.mkdirSync(imagesDir, { recursive: true });
-}
 
 //This blocks access to the database for now idk yet
 app.use('/database', function (req, res, next) {
