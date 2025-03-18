@@ -285,6 +285,12 @@
                             
                             <!-- Add timestamp (use actual timestamp when available) -->
                             <span class="review-date">Posted on {{#if this.date}}{{this.date}}{{else}}{{/if}}</span>
+                            
+                            <!-- ADD FORMS FOR THIS -->
+                            <div class="input-box button">
+                                    <input type="hidden" id="hidden-review_id" name="review_id" value="{{this.review_id}}">
+                                    <button type ="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review">Edit</button>
+                            </div>
                         </div>
                         {{/each}}
                     </div>
@@ -324,5 +330,6 @@
         <script src='/JavaScript/updateResto.js'></script>
         <script src='/JavaScript/deleteResto.js'></script>
         <script src='/JavaScript/addReview.js'></script>
+        <script src='/JavaScript/editReview.js'></script>
     </body>
 </html>

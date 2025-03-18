@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Find the delete confirmation button
+    
     const deleteButton = document.querySelector('.confirm-delete-btn');
     
     if (deleteButton) {
         deleteButton.addEventListener('click', function() {
-            // Get restaurant ID - try multiple sources
+            
             let restaurantId;
             
-            // Method 1: Try hidden input
+           
             const hiddenInput = document.getElementById('hidden-id');
             if (hiddenInput && hiddenInput.value) {
                 restaurantId = hiddenInput.value;
             } 
-            // Method 2: Try URL path
+            
             else {
                 const pathSegments = window.location.pathname.split('/');
                 restaurantId = pathSegments[pathSegments.length - 1];
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 alert('Restaurant deleted successfully');
-                // Redirect to homepage
+                
                 window.location.href = '/';
             })
             .catch(error => {
