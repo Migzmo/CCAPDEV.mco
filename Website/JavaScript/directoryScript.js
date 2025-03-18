@@ -103,48 +103,82 @@
     // Function to handle user dropdown
     function toggleUserDropdown(userBtn) {
         const existingDropdown = document.querySelector('.user-dropdown');
-  
+    
+        // Remove existing dropdown if it exists
         if (existingDropdown) {
-          existingDropdown.remove();
-          return;
+            existingDropdown.remove();
+            return;
         }
-  
+    
+        // Get current user data from localStorage
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            console.error('No user data found');
+            return;
+        }
+    
+        // Create dropdown menu
         const menu = document.createElement('div');
         menu.className = 'user-dropdown';
         menu.innerHTML = `
-          <a href="/profile/${currentUser.userId}">View Profile</a>
-          <a href="#" id="editProfileBtn">Edit Profile</a>
-          <a href="#" id="logoutBtn">Logout</a>
+            <a href="/profile/${currentUser.userId}">View Profile</a>
+            <a href="#" id="editProfileBtn">Edit Profile</a>
+            <a href="#" id="logoutBtn">Logout</a>
         `;
-  
-        // Position the dropdown
+    
+        // Get positioning information
         const rect = userBtn.getBoundingClientRect();
-        menu.style.position = 'absolute';
-        menu.style.top = `${rect.bottom}px`;
-        menu.style.right = '40px';
+        const navbar = document.querySelector('.navbar');
+        const navbarHeight = navbar.offsetHeight;
+    
+        // Apply styles for positioning with overlap - align with button
+        menu.style.position = 'fixed'; // Use fixed positioning
+        menu.style.top = `${navbarHeight - 10}px`; // Create 10px overlap with navbar
+        
+        // Position from the left to align with button
+        menu.style.left = `${rect.left}px`;
+        menu.style.width = `${rect.width}px`; // Match button width
+        
+        // Styling
         menu.style.backgroundColor = '#FFFFFF';
         menu.style.border = '1px solid #DDF0DE';
+        menu.style.borderTop = '3px solid #2E7D32'; // Green top border for visual connection
         menu.style.borderRadius = '5px';
         menu.style.padding = '10px';
         menu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
-        menu.style.zIndex = '1001';
-  
+        menu.style.zIndex = '10001'; // Make sure it's above navbar (which is 10000)
+    
+        // Append to document
         document.body.appendChild(menu);
-  
+    
         // Add event listeners
         document.getElementById('editProfileBtn').addEventListener('click', function() {
-          toggleEditProfileFrame();
+            toggleEditProfileFrame();
+            menu.remove(); // Remove dropdown after clicking
         });
-  
+    
         document.getElementById('logoutBtn').addEventListener('click', function() {
-          localStorage.removeItem('currentUser');
-          location.reload();
+            localStorage.removeItem('currentUser');
+            location.reload();
         });
-    }  
+    
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function closeDropdown(e) {
+            if (!menu.contains(e.target) && e.target !== userBtn) {
+                menu.remove();
+                document.removeEventListener('click', closeDropdown);
+            }
+        });
+    
+        // Update dropdown position on window resize
+        window.addEventListener('resize', function updatePosition() {
+            const updatedRect = userBtn.getBoundingClientRect();
+            menu.style.left = `${updatedRect.left}px`;
+            menu.style.width = `${updatedRect.width}px`;
+        });
+    }
   
-      // Also add to login success handlers
-  
+    // login success - helper function 
     function updateUIAfterLogin() {
         const userBtn = document.getElementById('loginButton');
         userBtn.textContent = 'USER PROFILE';
@@ -268,11 +302,38 @@
         }
     }
 
+    // Improved function to check if user is logged in
     function checkUserLoggedIn() {
-        const currentUser = localStorage.getItem('currentUser');
-        if (currentUser) {
-          document.getElementById('loginButton').textContent = 'USER PROFILE';
+        const currentUserString = localStorage.getItem('currentUser');
+        if (currentUserString) {
+            try {
+                const currentUser = JSON.parse(currentUserString);
+                if (currentUser && currentUser.userId) {
+                    // Valid user data exists
+                    updateUIAfterLogin();
+                    return;
+                }
+            } catch (e) {
+                console.error("Error parsing user data:", e);
+            }
         }
+        
+        // If we reach here, either there's no user data or it's invalid
+        resetLoginButton();
+    }
+    
+    // Helper function to reset the login button
+    function resetLoginButton() {
+        const userBtn = document.getElementById('loginButton');
+        userBtn.textContent = 'LOGIN';
+        userBtn.setAttribute('onclick', 'togglePopup()');
+        
+        // Remove any existing event listeners
+        const newBtn = userBtn.cloneNode(true);
+        userBtn.parentNode.replaceChild(newBtn, userBtn);
+        
+        // Clear any invalid data
+        localStorage.removeItem('currentUser');
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -398,10 +459,7 @@
         document.body.style.pointerEvents = 'none';
         signinFrame.style.pointerEvents = 'auto';
         backdrop.style.pointerEvents = 'auto';
-    });
-
-// Toggle Edit Profile modal
- 
+    }); 
 
 // Toggle Edit Profile modal
 function toggleEditProfileFrame() {
