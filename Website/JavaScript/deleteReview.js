@@ -1,32 +1,87 @@
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM loaded, looking for delete buttons");
+// document.addEventListener("DOMContentLoaded", function() {
+//     document.querySelectorAll(".delete-review").forEach(button => {
+//         button.addEventListener("click", async function() {
+//             const reviewID = this.getAttribute("data-id");
+//             const confirmation = confirm("Are you sure you want to archive this review?");
+
+//             if (!confirmation) return;
+
+//             try {
+//                 const response = await fetch(`/api/archivereview/${reviewID}`, {
+//                     method: "PUT",
+//                     headers: { "Content-Type": "application/json" },
+//                     body: JSON.stringify({ isAlive: false })
+//                 });
+
+//                 if (response.ok) {
+//                     alert("Review archived successfully.");
+//                     this.closest(".scroll-obj").remove(); 
+//                 } else {
+//                     const errorData = await response.json();
+//                     throw new Error(errorData.message || "Server error");
+//                 }
+//             } catch (error) {
+//                 console.error("Error archiving review:", error);
+//                 alert("Failed to archive the review! " + error.message);
+//             }
+//         });
+//     });
+// });
+
+document.addEventListener("DOMContentLoaded", function() {
+    let currentReviewId = null;
+    const deletePopup = document.getElementById("deleteReviewConfirmPopup");
+    const backdrop = document.getElementById("backdrop");
     
-    document.querySelector(".delete-review").forEach(button =>{
-        button.addEventListener("click", async function(){ 
-            const reviewID = this.getAttribute("data-id");
-            const confirmation = confirm ("Are you sure you want to delete this review?");
-
-            if(!confirmation) return;
-            
-            try{
-                const response = await fetch('/api/deletereview/${reviewId', {
-                    method: "DELETE",
-                    headers: { "Content-Type": "application/json" }
-                });
-
-                if (response.ok) {
-                    console.log("Review deleted successfully.");
-                    alert("Review deleted successfully.");
-                    this.closest(".scroll-obj").remove(); 
-                } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || "Server error");
-                }
-            } catch (error){
-                console.error("Error deleting the review: ", error);
-                alert("Failed to delete the review!  D:" + error.message);
-            }
-            
+    // Show/hide delete confirmation popup
+    function toggleDeleteReviewPopup(show) {
+        deletePopup.style.display = show ? "block" : "none";
+        backdrop.style.display = show ? "block" : "none";
+    }
+    
+    // Add event listeners for delete buttons in reviews
+    document.querySelectorAll(".delete-review").forEach(button => {
+        button.addEventListener("click", function() {
+            currentReviewId = this.getAttribute("data-id");
+            toggleDeleteReviewPopup(true);
         });
+    });
+    
+    // Close popup when clicking the X button
+    document.getElementById("closeDeleteReviewConfirm").addEventListener("click", function() {
+        toggleDeleteReviewPopup(false);
+    });
+    
+    // Cancel button closes popup
+    document.getElementById("cancelDeleteReview").addEventListener("click", function() {
+        toggleDeleteReviewPopup(false);
+    });
+    
+    // Confirm delete button
+    document.getElementById("confirmDeleteReview").addEventListener("click", async function() {
+        if (!currentReviewId) return;
+        
+        try {
+            const response = await fetch(`/api/archivereview/${currentReviewId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ isAlive: false })
+            });
+
+            if (response.ok) {
+                // Find and remove the review from the DOM
+                const reviewElement = document.querySelector(`.delete-review[data-id="${currentReviewId}"]`).closest(".scroll-obj");
+                reviewElement.remove();
+                toggleDeleteReviewPopup(false);
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Server error");
+            }
+        } catch (error) {
+            console.error("Error archiving review:", error);
+            alert("Failed to archive the review! " + error.message);
+        } finally {
+            toggleDeleteReviewPopup(false);
+        }
     });
 });

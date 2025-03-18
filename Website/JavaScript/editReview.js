@@ -100,3 +100,75 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("Form with name 'edit-review' not found!");
     }
 });
+
+// Function to toggle the edit review modal visibility
+function toggleEditReviewModal() {
+    const modal = document.getElementById('editReviewModal');
+    const backdrop = document.getElementById('backdrop');
+    
+    if (modal.style.display === 'block') {
+        modal.style.display = 'none';
+        backdrop.style.display = 'none';
+    } else {
+        modal.style.display = 'block';
+        backdrop.style.display = 'block';
+    }
+}
+
+// Function to open edit review modal with existing review data
+function openEditReview(reviewId) {
+    console.log("Opening edit for review:", reviewId);
+    
+    // Find the review element
+    const reviewElement = document.querySelector(`#Edit-Review-${reviewId}`).closest('.scroll-obj');
+    
+    // Get the review text
+    const reviewText = reviewElement.querySelector('p').textContent;
+    
+    // Set the review ID in the hidden input
+    document.getElementById('edit-review-id').value = reviewId;
+    
+    // Set the review content in textarea
+    document.getElementById('edit-review-content').value = reviewText;
+    
+    // Show the modal and backdrop
+    document.getElementById('editReviewModal').style.display = 'block';
+    document.getElementById('backdrop').style.display = 'block';
+}
+
+// Initialize star rating when document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle star rating in the edit modal
+    const editStars = document.querySelectorAll('#edit-star-rating .star');
+    
+    editStars.forEach(star => {
+        star.addEventListener('click', function() {
+            const value = parseInt(this.getAttribute('data-value'));
+            
+            // Clear all stars first
+            editStars.forEach(s => s.classList.remove('active'));
+            
+            // Then set active stars up to the clicked one
+            editStars.forEach(s => {
+                if (parseInt(s.getAttribute('data-value')) <= value) {
+                    s.classList.add('active');
+                }
+            });
+            
+            // Update rating text
+            document.getElementById('edit-rating-text').textContent = value + ' out of 5';
+            
+            // Add hidden rating input field if it doesn't exist
+            let ratingInput = document.querySelector('form[name="edit-review"] input[name="rating"]');
+            if (!ratingInput) {
+                ratingInput = document.createElement('input');
+                ratingInput.type = 'hidden';
+                ratingInput.name = 'rating';
+                document.forms['edit-review'].appendChild(ratingInput);
+            }
+            
+            // Set the rating value
+            ratingInput.value = value;
+        });
+    });
+});

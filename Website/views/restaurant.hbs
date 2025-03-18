@@ -156,6 +156,23 @@
                 <button id="closeDeleteConfirm" onclick="toggleDeleteConfirm()">&times;</button>
             </div>
         </div>
+
+        <div id="deleteReviewConfirmPopup">
+            <div class="deleteConfirm-header">
+                <h2>Delete Review</h2>
+                <button id="closeDeleteReviewConfirm">&times;</button>
+            </div>
+            <div class="deleteConfirm-body">
+                <p>Are you sure you want to delete this review?</p>
+                <p class="warning-text">This action cannot be undone.</p>
+                <div class="confirm-buttons">
+                    <button class="cancel-delete-btn" id="cancelDeleteReview">Cancel</button>
+                    <button class="confirm-delete-btn" id="confirmDeleteReview">Delete</button>
+                </div>
+            </div>
+        </div>
+
+
         <!-- Restaurant Information -->
         <div class="info">
                 <!-- Exit Button -->
@@ -209,9 +226,7 @@
                 <h1> Reviews</h1>
 
                 <button class="button-3" onclick="toggleReviewModal()">Make a Review</button>
-                
-                <button class="button-3">Edit a Review</button>
-                <button class="button-3">Delete a Review</button>
+            
             </div>
             
 
@@ -261,13 +276,66 @@
                     </div>
                     <button id="closeReviewModal" onclick="toggleReviewModal()">&times;</button>
                 </div>
-            </div>   
-                
+            </div> 
+
+            <div id="editReviewModal">
+                <div class="reviewModal-header">
+                    <h2>Edit Review</h2>
+                </div>
+                <div class="reviewModal-content">
+                    <div class="wrapper">
+                        <form action="/api/editreview" name="edit-review" method="post">
+                            <!-- Restaurant Name -->
+                            <div class="form-section">
+                                <h4>{{restaurant.name}}</h4>
+                                
+                                <!-- Rating Section -->
+                                <div class="rating-container">
+                                    <label>Your Rating:</label>
+                                    <div class="star-rating" id="edit-star-rating">
+                                        <span class="star" data-value="1">★</span>
+                                        <span class="star" data-value="2">★</span>
+                                        <span class="star" data-value="3">★</span>
+                                        <span class="star" data-value="4">★</span>
+                                        <span class="star" data-value="5">★</span>
+                                    </div>
+                                    <span id="edit-rating-text">0 out of 5</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Review Content -->
+                            <div class="form-section">
+                                <div class="input-box">
+                                    <label for="edit-review-content">Your Review</label>
+                                    <textarea id="edit-review-content" name="review" placeholder="Share your experience with this restaurant..." required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Hidden input for review ID -->
+                            <input type="hidden" id="edit-review-id" name="review_id" value="">
+                    
+                            <!-- Button Section -->
+                            <div class="button-section">
+                                <div class="input-box button">
+                                    <input type="submit" id="submitEditReview" value="Update Review">
+                                </div>
+                                <div class="input-box button secondary">
+                                    <input type="button" value="Cancel" onclick="toggleEditReviewModal()">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <button id="closeEditReviewModal" onclick="toggleEditReviewModal()">&times;</button>
+                </div>
+            </div>
+                    
                 <!-- Scrollable Reviews -->
                 <div>
                     <div class="scroll-div"> 
                         <!-- Feed Reviews -->
                         {{#each reviews}}
+
+                        <!-- Will only display the reviews if isAlive = true -->
                         <div class="scroll-obj">   
                             <h2>
                                 <a href="/profile/{{this.account_id.acc_id}}">
@@ -291,7 +359,7 @@
                             <!-- ADD FORMS FOR THIS -->
                             <div class="input-box button">
                                     <input type="hidden" id="hidden-review_id" name="review_id" value="{{this.review_id}}">
-                                    <button type ="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review">Edit</button>
+                                    <button type="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review" onclick="openEditReview({{this.review_id}})">Edit</button>
                             </div>
                         </div>
                         {{/each}}
