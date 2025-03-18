@@ -23,25 +23,28 @@ const path = require('path');
 const app = express();
 const imagesDir = path.join(__dirname, 'public/images/restaurants');
 if (!fs.existsSync(imagesDir)) {
-    fs.mkdirSync(imagesDir, { recursive: true });
+  fs.mkdirSync(imagesDir, { recursive: true });
+}
+const profilesDir = path.join(__dirname, 'public/images/profiles');
+if (!fs.existsSync(profilesDir)) { 
+  fs.mkdirSync(profilesDir, { recursive: true }); 
 }
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload({ 
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit - TODO: Adjust as needed
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
 
 //For importing sample data to MONGO DB
 let impErr1= false;
 let impErr2= false;
 let impErr3= false;
 let impErr4= false;
-
-app.use(fileUpload({
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-  useTempFiles: true,
-  tempFileDir: '/tmp/'
-}));
 
 mongoose.connect('mongodb://localhost/lasappDB', {
     useNewUrlParser: true,
@@ -103,57 +106,15 @@ mongoose.connect('mongodb://localhost/lasappDB', {
   .catch(err => console.error('Connection error:', err));
 
 //auth routes
-app.post('/api/auth/register', async (req, res) => {
-    try {
-        console.log('Register route accessed', req.body);
-        // Generate unique account ID
-        const lastAccount = await Account.findOne().sort({ acc_id: -1 });
-        const newAccId = lastAccount ? lastAccount.acc_id + 1 : 1;
-
-        // Create new account
-        const newAccount = new Account({
-            acc_id: newAccId,
-            acc_name: req.body.username,
-            acc_username: req.body.username,
-            acc_bio: req.body.description || '',
-            profile_pic: req.body.profilePic || '',
-            saved_restos: [],
-            saved_reviews: []
-        });
-
-        await newAccount.save();
-        res.status(201).json({
-            success: true,
-            message: 'Account created successfully',
-            userId: newAccount.acc_id // Return user ID
-        });
-    } catch (error) {
-        console.error('Registration error:', error);
-        // Handle duplicate username error
-        if (error.code === 11000) {
-            return res.status(400).json({
-                success: false,
-                message: 'Username already exists'
-            });
-        }
-        res.status(500).json({
-            success: false,
-            message: 'Error creating account',
-            error: error.message
-        });
-    }
-});
 
 app.put('/api/submitupdate', async (req, res) => {
   try {
     console.log("Received Update Request:", req.body);
-
-    // Check if resto_id is provided
+  // Check if resto_id is provided
     if (!req.body.resto_id) {
       return res.status(400).json({ success: false, message: "resto_id is required" });
     }
-
-    const restaurantId = parseInt(req.body.resto_id, 10);
+  const restaurantId = parseInt(req.body.resto_id, 10);
     
     // Create properly mapped update object that matches your schema
     const updateData = {
@@ -204,18 +165,15 @@ app.put('/api/submitupdate', async (req, res) => {
     if (req.body.cuisine_name) {
       
     }
-
-    const restaurant = await Restaurant.findOneAndUpdate(
+  const restaurant = await Restaurant.findOneAndUpdate(
       { resto_id: restaurantId },
       { $set: updateData },
       { new: true }
     );
-
-    if (!restaurant) {
+  if (!restaurant) {
       return res.status(404).json({ success: false, message: 'Restaurant not found' });
     }
-
-    res.status(200).json({
+  res.status(200).json({
       success: true,
       message: 'Restaurant updated successfully',
       restaurant,
@@ -227,29 +185,32 @@ app.put('/api/submitupdate', async (req, res) => {
   }
 });
 
-
 app.post('/api/auth/login', async (req, res) => {
   try {
     console.log('Login route accessed', req.body);
     const { username, password } = req.body;
-
-    // Find the account by username
+  // Find the account by username
     const account = await Account.findOne({ acc_username: username });
-
-    
+  
     if (!account) {
       return res.status(401).json({
         success: false,
         message: 'Invalid username or password'
       });
     }
-
-    
+  if (account.acc_password !== password) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid username or password'
+      }); 
+    }
+  
     res.status(200).json({
       success: true,
       message: 'Login successful',
       userId: account.acc_id,
-      username: account.acc_username
+      username: account.acc_username,
+      accountType: account.acc_type
     });
   } catch (error) {
     console.error('Login error:', error);
@@ -277,20 +238,130 @@ app.set('view engine','hbs');
 app.get('/', async function (req, res) {
   try {
     const restaurants = await Restaurant.find({isAlive:true});
-    
-    
-
     console.log("Successfully found restaurants:", restaurants);
-    
     res.render('LaSapp', { restaurants: restaurants });
-
   } catch (err) { // Fix: Catch error correctly
     console.error('Error fetching restaurants:', err);
     res.status(500).send('Server Error');
   }
 });
+
+app.get('/api/users/:id', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const account = await Account.findOne({ acc_id: userId });
+  if (!account) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+  res.json({
+      acc_id: account.acc_id,
+      acc_name: account.acc_name,
+      acc_username: account.acc_username,
+      acc_bio: account.acc_bio,
+      profile_pic: account.profile_pic,
+      acc_type: account.acc_type
+    });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        console.log('Register route accessed', req.body);
+        // Generate unique account ID
+        const lastAccount = await Account.findOne().sort({ acc_id: -1 });
+        const newAccId = lastAccount ? lastAccount.acc_id + 1 : 1;
+        // Create new account
+        const newAccount = new Account({
+            acc_id: newAccId,
+            acc_name: req.body.username,
+            acc_username: req.body.username,
+            acc_bio: req.body.description || '',
+            profile_pic: req.body.profilePic || '',
+            saved_restos: [],
+            saved_reviews: [],
+            acc_password: req.body.password,
+            acc_type: req.body.accountType || 'user'
+        });
+        await newAccount.save();
+        // Return login information similar to login endpoint
+        res.status(201).json({
+            success: true,
+            message: 'Account created successfully',
+            userId: newAccount.acc_id,
+            username: newAccount.acc_username,
+            accountType: newAccount.acc_type
+        });
+    } catch (error) {
+        console.error('Registration error:', error);
+        // Handle duplicate username error
+        if (error.code === 11000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Username already exists' 
+            }); 
+        }
+        res.status(500).json({
+            success: false,
+            message: 'Error creating account',
+            error: error.message
+        });
+    }
+});
+
+app.post('/api/users/update-profile', async (req, res) => {
+try {
+    console.log('Update profile request received:', req.body);
+    const userId = req.body.userId;
+  if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: 'User ID is required'
+      });
+    }
+  // Find the account to update
+    const account = await Account.findOne({ acc_id: parseInt(userId) });
+  if (!account) {
+      return res.status(404).json({
+        success: false,
+        message: 'Account not found'
+      });
+    }
+  // Update account fields
+    if (req.body.username) account.acc_name = req.body.username;
+    if (req.body.username) account.acc_username = req.body.username; // Update both name fields
+    if (req.body.bio) account.acc_bio = req.body.bio;
+  // Update password if provided
+    if (req.body.password && req.body.password.trim() !== '') {
+      account.acc_password = req.body.password;
+    }
+  // Handle profile picture upload
+    if (req.files && req.files.profile_pic) {
+      const profilePic = req.files.profile_pic;
+      const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
+      const uploadPath = path.join(__dirname, 'public/images/profiles', fileName);
+    await profilePic.mv(uploadPath);
+      account.profile_pic = `/images/profiles/${fileName}`;
+    }
+  // Save the updated account
+    await account.save();
+  res.json({
+      success: true,
+      message: 'Profile updated successfully'
+    });
+  } catch (error) {
+    console.error('Profile update error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating profile',
+      error: error.message
+    });
+  }
+});
+
 // Render restaurant page using Handlebars
-// Replace your current /api/addreview endpoint with this
 app.post('/api/addreview', async (req, res) => {
   try {
     // Get data from request
@@ -305,7 +376,7 @@ app.post('/api/addreview', async (req, res) => {
     }
     
     
-    const accountId = 1; // Use a valid account ID that exists in your database
+    const accountId = 1; // Use a valid account ID that exists in database
     
     // Create new review ID
     const highestReview = await Review.findOne().sort('-review_id');
@@ -456,17 +527,74 @@ app.get('/profile/:id', async function (req, res) {
     }
 });
 
+app.post('/api/users/update-profile', async (req, res) => {
+try {
+  console.log('Update profile request received:', req.body);
+  const userId = req.body.userId;
 
+  if (!userId) {
+  return res.status(400).json({
+    success: false,
+    message: 'User ID is required'
+  });
+}
+
+  // Find the account to update
+const account = await Account.findOne({ acc_id: parseInt(userId) });
+
+  if (!account) {
+  return res.status(404).json({
+    success: false,
+    message: 'Account not found'
+  });
+}
+
+  // Update account fields
+if (req.body.username) account.acc_name = req.body.username;
+if (req.body.username) account.acc_username = req.body.username; // Update both name fields
+if (req.body.bio) account.acc_bio = req.body.bio;
+
+  // Update password if provided
+if (req.body.password && req.body.password.trim() !== '') {
+  account.acc_password = req.body.password;
+}
+  // Handle profile picture upload
+if (req.files && req.files.profile_pic) {
+  const profilePic = req.files.profile_pic;
+  const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
+  const uploadPath = path.join(__dirname, 'public/images/profiles', fileName);
+  
+  await profilePic.mv(uploadPath);
+  account.profile_pic = `/images/profiles/${fileName}`;
+}
+
+  // Save the updated account
+await account.save();
+
+  res.json({
+  success: true,
+  message: 'Profile updated successfully'
+});
+
+  } catch (error) {
+console.error('Profile update error:', error);
+res.status(500).json({
+  success: false,
+  message: 'Error updating profile',
+  error: error.message
+});
+
+  }
+
+});
 
 app.post('/', async (req, res) => {
     try {
         console.log("Received restaurant submission");
-
-        // Find highest existing resto_id
+      // Find highest existing resto_id
         const highestRestaurant = await Restaurant.findOne().sort('-resto_id');
         const newRestoId = highestRestaurant ? highestRestaurant.resto_id + 1 : 1;
-
-        /*// Handle cuisine
+      /*// Handle cuisine
         let cuisineId = 1;
         if (req.body.cuisine) {
             const cuisine = await Cuisine.findOne({ cuisine_name: req.body.cuisine });
@@ -475,8 +603,7 @@ app.post('/', async (req, res) => {
             } else {
                 const highestCuisine = await Cuisine.findOne().sort('-cuisine_id');
                 const newCuisineId = highestCuisine ? highestCuisine.cuisine_id + 1 : 1;
-
-                const newCuisine = new Cuisine({
+              const newCuisine = new Cuisine({
                     cuisine_id: newCuisineId,
                     cuisine_name: req.body.cuisine
                 });
@@ -484,11 +611,9 @@ app.post('/', async (req, res) => {
                 cuisineId = newCuisineId;
             }
         }*/
-
-        // Default image path
+      // Default image path
         let imagePath = '/views/CSS/RestoImages/default-restaurant.jpg';
-
-        // Handle image upload if present
+      // Handle image upload if present
         // Handle image upload if present
         if (req.files && req.files.image) {
           const image = req.files.image;
@@ -512,8 +637,7 @@ app.post('/', async (req, res) => {
               // Continue with default image if upload fails
           }
         }
-
-        
+      
         const newRestaurant = new Restaurant({
             resto_id: newRestoId,
             resto_name: req.body.name || '',
@@ -527,10 +651,8 @@ app.post('/', async (req, res) => {
             resto_img: imagePath,
             resto_owner_id: 0 // Default value
         });
-
-        await newRestaurant.save();
-
-        res.status(201).json({
+      await newRestaurant.save();
+      res.status(201).json({
             success: true,
             message: 'Restaurant added successfully',
             resto_id: newRestoId
