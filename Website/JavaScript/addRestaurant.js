@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             console.log("Form submitted!");
             
-            // Use FormData to handle file uploads
+            
             const formData = new FormData(this);
             
-            // Make sure all fields are included by manually adding them
+            
             formData.append('name', document.getElementById('resto-name').value);
             formData.append('address', document.getElementById('address1').value + 
                 (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value : ''));
@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(pair[0] + ': ' + (pair[0] === 'image' ? 'File data' : pair[1]));
             }
             
-            // Get submit button
+            
             const submitButton = document.getElementById('create-resto');
             if (submitButton) submitButton.disabled = true;
             
-            // Send data to server - IMPORTANT: Don't set Content-Type header when using FormData
+            // Send data to server 
             fetch('/', {
                 method: 'POST',
                 body: formData // Send FormData directly without Content-Type header

@@ -274,6 +274,8 @@
                                 <img src={{this.account_id.profile_pic}} alt="Profile" class="profile-pic"> 
                                 {{this.account_id.acc_name}}
                                 </a>
+
+                                <button class="delete-review" data-id="{{this.review_id}}">🗑️</button> <!-- TO DO!! -->
                             </h2>
                             
                             <!-- Add star rating visualization (display actual rating when available) -->
@@ -285,6 +287,12 @@
                             
                             <!-- Add timestamp (use actual timestamp when available) -->
                             <span class="review-date">Posted on {{#if this.date}}{{this.date}}{{else}}{{/if}}</span>
+                            
+                            <!-- ADD FORMS FOR THIS -->
+                            <div class="input-box button">
+                                    <input type="hidden" id="hidden-review_id" name="review_id" value="{{this.review_id}}">
+                                    <button type ="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review">Edit</button>
+                            </div>
                         </div>
                         {{/each}}
                     </div>
@@ -324,5 +332,7 @@
         <script src='/JavaScript/updateResto.js'></script>
         <script src='/JavaScript/deleteResto.js'></script>
         <script src='/JavaScript/addReview.js'></script>
+        <script src='/JavaScript/editReview.js'></script>
+        <script src ='/JavaScript/deleteReview.js'></script>
     </body>
 </html>

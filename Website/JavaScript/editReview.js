@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, looking for form");
-    const form = document.forms['create-review'];
+    const form = document.forms['edit-review'];
     
     
     let selectedRating = 0;
@@ -47,10 +47,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("Please write a review");
                 return;
             }
-            
-            
+            const review_id = document.getElementById('hidden-review-id').value;
             // Create review data
             const reviewData = {
+                review_id: review_id,
                 resto_id: resto_id,
                 rating: selectedRating,
                 review: reviewContent
@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (submitButton) submitButton.disabled = true;
             
             // Send data to server
-            fetch('/api/addreview', {
-                method: 'POST',
+            fetch('/api/editreview', {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reviewData)
             })
@@ -97,6 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     } else {
-        console.error("Form with name 'create-review' not found!");
+        console.error("Form with name 'edit-review' not found!");
     }
 });

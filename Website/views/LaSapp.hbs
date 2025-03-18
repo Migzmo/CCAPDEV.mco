@@ -126,6 +126,49 @@
         </div>
     </div>
 
+    <div id="editProfileFrame" style="display: none;">
+
+        <div class="editProfile-content">
+            <div id="editProfile_left">
+                <h2 id="edit-profile-title">Edit Your Profile</h2>
+                <form id="edit-profile-form" enctype="multipart/form-data">
+                    <input type="hidden" name="userId" value="{{account.acc_id}}">
+                    <div class="form-group">
+                        <label for="edit-username">Name</label>
+                        <input type="text" id="edit-username" name="username" placeholder="Your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-password">Password</label>
+                        <input type="password" id="edit-password" name="password" placeholder="Change your password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-bio">Bio</label>
+                        <textarea id="edit-bio" name="bio" placeholder="Tell us about yourself"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-profile-pic">Profile Picture</label>
+                        <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*">
+                        <div id="profile-pic-preview"></div>
+                    </div>
+
+                    <div class="button-section">
+                        <div class="input-box button">
+                            <input type="submit" value="Save Changes">
+                        </div>
+                        <div class="input-box button secondary">
+                            <input type="button" value="Cancel" onclick="toggleEditProfileFrame()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="editProfile_right"></div>
+            <button id="closeEditProfile" onclick="toggleEditProfileFrame()">&times;</button>
+        </div>
+    </div>
+
     <div id="backdrop"></div>
     <div id="createRestoFrame">
         <div class="createResto-header">

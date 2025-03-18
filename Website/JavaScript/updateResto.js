@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             console.log("Form submitted!");
             
-            // Get restaurant ID
+            
             const resto_id = document.getElementById('hidden-id').value;
             if (!resto_id) {
                 console.error("Missing restaurant ID");
@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Create FormData object for file uploads
+            
             const formData = new FormData(this);
             
-            // Make sure ID is included (might already be in the form)
+            
             if (!formData.has('resto_id')) {
                 formData.append('resto_id', resto_id);
             }
@@ -40,14 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(pair[0] + ': ' + (pair[0] === 'image' ? 'File data' : pair[1]));
             }
             
-            // Get submit button
+            
             const submitButton = document.getElementById('updateSub');
             if (submitButton) submitButton.disabled = true;
             
-            // Send data to server - IMPORTANT: Don't set Content-Type header when using FormData
+            // Send data to server 
             fetch('/api/submitupdate', {
                 method: 'PUT',
-                body: formData // Send FormData directly without Content-Type header
+                body: formData 
             })
             .then(response => {
                 console.log("Response received:", response.status);
