@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedRating = 0;
     
     // Sadly dos not work and also dont know what to use it for yet
-    const stars = document.querySelectorAll('.star-rating .star');
+    const stars = document.querySelectorAll('#edit-star-rating .star');
     stars.forEach(star => {
         star.addEventListener('click', function() {
             selectedRating = parseInt(this.getAttribute('data-value'));
@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Get review content
-            const reviewContent = document.getElementById('review-content').value;
+           
+            const reviewContent = document.getElementById('edit-review-content').value;
             if (!reviewContent.trim()) {
                 alert("Please write a review");
                 return;
@@ -77,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                console.log("Review submitted successfully:", data);
-                alert('Review submitted successfully!');
+                console.log("Review Edited successfully:", data);
+                alert('Review Edited successfully!');
                 
                 // Close modal
                 if (typeof toggleReviewModal === 'function') {

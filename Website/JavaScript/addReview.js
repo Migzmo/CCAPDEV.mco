@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 resto_id: resto_id,
                 rating: selectedRating,
                 review: reviewContent
-            };
+            }; 
             
             console.log("Review data to be sent:", reviewData);
             
