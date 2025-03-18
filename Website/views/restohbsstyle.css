@@ -1082,3 +1082,17 @@ form .input-box input {
 .reviewModal-content .button-section {
     justify-content: flex-end;
 }
+
+.delete-review{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-review:hover{
+    color: darkred;
+}

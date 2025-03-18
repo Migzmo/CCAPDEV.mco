@@ -716,6 +716,23 @@ app.put('/api/editreview', async (req, res) => {
   }
 });
 
+// CHANGE SHOULD BE ARHCHIVED NOT DELETE!!!! 
+app.delete("/api/deletereview/:id", async (req,res) => {
+  const reviewID = req.params.id;
+  try {
+    const result = await db.query("DELETE FROM reviews WHERE review_id = ?", [reviewID]);
+
+    if (result.affectedRows > 0) {
+        res.status(200).json({ message: "Review deleted successfully." });
+    } else {
+        res.status(404).json({ message: "Review not found." });
+    }
+  } catch (error) {
+      console.error("Error deleting review:", error);
+      res.status(500).json({ message: "Failed to delete review." });
+  }
+});
+
 /***************************************************************************************************************************************/
 
 app.use((err, req, res, next) => {
