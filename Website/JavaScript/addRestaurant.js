@@ -5,6 +5,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if (form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+
+            // Validate time (opening time must be before closing time)
+            const openingTime = document.getElementById('opening-time').value;
+            const closingTime = document.getElementById('closing-time').value;
+
+            if (openingTime && closingTime) {
+                // Convert to Date objects for comparison
+                const openDate = new Date(`2000-01-01T${openingTime}`);
+                const closeDate = new Date(`2000-01-01T${closingTime}`);
+                
+                if (closeDate <= openDate) {
+                    alert("Closing time must be after opening time");
+                    return;
+                }
+            }
             console.log("Form submitted!");
             
             
@@ -14,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('name', document.getElementById('resto-name').value);
             formData.append('address', document.getElementById('address1').value + 
                 (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value : ''));
-            formData.append('time', document.getElementById('opening-time').value + ' - ' + document.getElementById('closing-time').value);
+            formData.append('time', formatTimeTo12Hour(openingTime) + ' - ' + formatTimeTo12Hour(closingTime));
             formData.append('phoneNumber', document.getElementById('phone').value);
             formData.append('email', document.getElementById('email').value);
             formData.append('payment', document.getElementById('payment').value);
@@ -66,4 +81,19 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("Form with name 'restoForm' not found!");
     }
+
+    
 });
+
+// Function to format time from 24-hour to 12-hour format
+function formatTimeTo12Hour(time24) {
+    if (!time24) return '';
+    
+    const [hours24, minutes] = time24.split(':');
+    let hours12 = parseInt(hours24) % 12;
+    if (hours12 === 0) hours12 = 12;
+    
+    const ampm = parseInt(hours24) >= 12 ? 'PM' : 'AM';
+    
+    return `${hours12}:${minutes} ${ampm}`;
+}

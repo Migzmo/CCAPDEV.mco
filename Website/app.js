@@ -115,6 +115,24 @@ app.use(express.static(__dirname));
 var hbs = require('hbs')
 app.set('view engine','hbs');
 
+// Dynamic Star Reviews
+hbs.registerHelper('for', function(from, to, options) {
+    let result = '';
+    const f = parseInt(from);
+    const t = parseInt(to);
+    
+    console.log(`Generating loop from ${f} to ${t}`);
+    
+    for (let i = f; i < t; i++) {
+        if (options.hash && options.hash.includeIndex === false) {
+            result += options.fn();
+        } else {
+            result += options.fn(i);
+        }
+    }
+    return result;
+});
+
 //auth routes
 
 
@@ -404,19 +422,45 @@ app.get('/profile/:id', async function (req, res) {
         const account = await Account.findOne({acc_id: accountId});
         if(!account){
             return res.status(404).send('Account not found');
-    }else{
-        console.log("Sucessfully found account");
+        }
         
-    }
-    res.render('Profile', {
-        account: {
-            name: account.acc_name,
-            username: account.acc_username,
-            bio: account.acc_bio,
-            image: account.profile_pic
-        },
-    });
-    }catch(err){
+        // Fetch user's reviews
+        const userReviews = await Review.find({
+            account_id: accountId, 
+            isAlive: true
+        }).populate({
+            path: 'resto_id',
+            model: 'Restaurant'
+        }).exec();
+        
+        console.log(`Found ${userReviews.length} reviews for user ${accountId}`);
+        
+        // Format reviews for the template
+        const formattedReviews = userReviews.map(review => ({
+            id: review.review_id,
+            restaurantName: review.resto_id.resto_name,
+            restaurantId: review.resto_id.resto_id,
+            rating: review.rating,
+            review: review.review,
+            date: new Date(review._id.getTimestamp()).toLocaleDateString()
+        }));
+        
+        console.log('Formatted reviews:', formattedReviews);
+        
+        // Rest of your code...
+        
+        res.render('Profile', {
+            account: {
+                name: account.acc_name,
+                username: account.acc_username,
+                bio: account.acc_bio,
+                profile_pic: account.profile_pic
+            },
+            isOwnProfile: true,
+            reviews: formattedReviews,
+            savedRestaurants: savedRestaurants
+        });
+    } catch(err) {
         console.error(err);
         res.status(500).send('Server Error');
     }
@@ -509,7 +553,7 @@ app.put('/api/submitupdate', async (req, res) => {
       resto_phone: req.body.phoneNumber,
       resto_email: req.body.email,
       resto_payment: req.body.payment,
-      resto_perks: req.body.perks
+      resto_perks: req.body.perks,
     };
     
     // Handle image upload if present
@@ -935,5 +979,7 @@ app._router.stack.forEach((middleware) => {
  
 
 });
+
+
 
 /****************************************************************************************************************************************************************************/

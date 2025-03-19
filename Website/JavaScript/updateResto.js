@@ -83,3 +83,61 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("Form with name 'restoForm' not found!");
     }
 });
+
+// Function to populate the edit form with existing restaurant data
+function populateEditForm() {
+    // Get restaurant data from the page
+    const restaurantName = document.querySelector('.head-container h1').innerText;
+    const restaurantAddress = document.querySelector('.information p:nth-of-type(1)').innerText;
+    const restaurantTime = document.querySelector('.information p:nth-of-type(2)').innerText;
+    const restaurantPhone = document.querySelector('.information p:nth-of-type(3)').innerText;
+    const restaurantEmail = document.querySelector('.information p:nth-of-type(4)').innerText;
+    const restaurantPayment = document.querySelector('.information p:nth-of-type(5)').innerText;
+    const cuisineType = document.querySelector('.head-container p').innerText;
+    
+    // Get perks from list items
+    const perksItems = document.querySelectorAll('.information ul li');
+    let perksText = '';
+    perksItems.forEach((item, index) => {
+        perksText += item.innerText;
+        if (index < perksItems.length - 1) perksText += ', ';
+    });
+    
+    // Populate form fields
+    document.getElementById('resto-name').value = restaurantName;
+    
+    // Handle address (split if it contains a comma)
+    const addressParts = restaurantAddress.split(',');
+    document.getElementById('address1').value = addressParts[0].trim();
+    if (addressParts.length > 1) {
+        document.getElementById('address2').value = addressParts.slice(1).join(',').trim();
+    }
+    
+    // Handle time (split by dash or hyphen)
+    const timeParts = restaurantTime.split('-');
+    if (timeParts.length === 2) {
+        document.getElementById('opening-time').value = timeParts[0].trim();
+        document.getElementById('closing-time').value = timeParts[1].trim();
+    }
+    
+    document.getElementById('phone').value = restaurantPhone;
+    document.getElementById('email').value = restaurantEmail;
+    document.getElementById('payment').value = restaurantPayment;
+    document.getElementById('perks').value = perksText;
+    document.getElementById('cuisine').value = cuisineType;
+}
+
+// Modify the existing togglePopupCreateResto function to call populateEditForm
+function togglePopupCreateResto() {
+    const popup = document.getElementById('createRestoFrame');
+    const backdrop = document.getElementById('backdrop');
+    
+    if (popup.style.display === 'block') {
+        popup.style.display = 'none';
+        backdrop.style.display = 'none';
+    } else {
+        popup.style.display = 'block';
+        backdrop.style.display = 'block';
+        populateEditForm(); // Call this function when opening the form
+    }
+}

@@ -33,7 +33,6 @@ html, body {
     display: inline-block;
 }
 
-/* Apply margin only to list items that are not the last child */
 .dashboard li:not(:last-child) {
     margin-right: 150px; 
 }
@@ -799,251 +798,87 @@ font-family: 'Lexend', sans-serif;
 }
 
 .danger-zone {
- 
-
     margin-top: 30px;
- 
-
     border-top: 1px solid #ff5555;
- 
-
     padding-top: 15px;
- 
-
 }
- 
-
-
- 
 
 .danger-zone h4 {
- 
-
     color: #d32f2f;
- 
-
     font-family: 'Lexend', sans-serif;
- 
-
     font-size: 18px;
- 
-
     margin-bottom: 10px;
- 
-
 }
  
-
-
- 
-
 .danger-zone p {
- 
-
     font-family: 'Lexend', sans-serif;
- 
-
     font-size: 14px;
- 
-
     margin-bottom: 15px;
- 
-
     color: #555;
- 
-
 }
  
-
-
- 
-
 .delete-account-button {
- 
-
     background-color: #d32f2f;
- 
-
     color: white;
- 
-
     border: none;
- 
-
     padding: 10px 15px;
- 
-
     border-radius: 5px;
- 
-
     font-family: 'Lexend', sans-serif;
- 
-
     cursor: pointer;
- 
-
     transition: background-color 0.2s ease;
- 
-
 }
- 
-
-
- 
 
 .delete-account-button:hover {
- 
-
     background-color: #b71c1c;
- 
-
 }
- 
-
-
- 
 
 #deleteAccountConfirm {
- 
-
     display: none;
- 
-
     position: fixed;
- 
-
     top: 50%;
- 
-
     left: 50%;
- 
-
     transform: translate(-50%, -50%);
- 
-
     width: 350px;
- 
-
     background-color: white;
- 
-
     border-radius: 10px;
- 
-
     padding: 20px;
- 
-
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
- 
-
     z-index: 1002;
- 
-
 }
  
-
-
- 
-
 #deleteAccountConfirm h3 {
- 
-
     font-family: 'Lexend', sans-serif;
- 
-
     color: #d32f2f;
- 
-
     margin-bottom: 15px;
- 
-
 }
- 
-
-
- 
 
 #deleteAccountConfirm p {
- 
-
     font-family: 'Lexend', sans-serif;
- 
-
     margin-bottom: 20px;
- 
-
     font-size: 14px;
- 
-
 }
- 
-
-
- 
 
 .confirm-buttons {
- 
-
     display: flex;
- 
-
     justify-content: space-between;
- 
-
 }
- 
-
-
- 
 
 .confirm-buttons button {
- 
-
     padding: 8px 15px;
- 
-
     border-radius: 5px;
- 
-
     font-family: 'Lexend', sans-serif;
- 
-
     cursor: pointer;
- 
-
     border: none;
- 
-
 }
- 
-
-
- 
 
 #confirmDeleteAccount {
- 
-
     background-color: #d32f2f;
- 
-
     color: white;
- 
-
 }
  
-
-
- 
-
 #cancelDeleteAccount {
- 
-
     background-color: #e0e0e0;
- 
-
     color: #333;
- 
-
 }
 
 #filter {
@@ -1220,17 +1055,14 @@ form .input-box input {
     margin-top: 5px;
 }
 
-/* Adjust time inputs specifically */
 .wrapper form .input-box.time-input input {
     height: 45px;
 }
 
-/* Add more spacing between form sections */
 .form-section {
     margin-bottom: 25px;
 }
 
-/* Make submit and cancel buttons larger */
 .button-section .input-box.button input,
 .button-section .input-box.button.secondary input {
     height: 50px;
@@ -1240,7 +1072,6 @@ form .input-box input {
     border-radius: 8px;
 }
 
-/* Make form section headings larger */
 .form-section h4 {
     font-family: 'Lexend', sans-serif;
     color: black;
@@ -1250,13 +1081,10 @@ form .input-box input {
     font-weight: 600; 
 }
 
-/* Ensure placeholder text is a lighter shade but still readable */
 .wrapper form .input-box input::placeholder {
     color: #757575;
 }
 
-
-/* Style for single image upload */
 .input-box.image-upload input[type="file"] {
     padding: 10px;
     border: 1px dashed #81C784;
@@ -1267,4 +1095,42 @@ form .input-box input {
 
 .hidden {
     display: none;
+}
+
+.wrapper form .input-box select {
+    width: 100%;
+    box-sizing: border-box;
+    height: 45px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: 'Lexend', sans-serif;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 12px;
+    color: black;
+    background-color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px;
+}
+
+.wrapper form .input-box select:hover {
+    border-color: #81C784;
+}
+
+.wrapper form .input-box select:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.wrapper form .input-box select option {
+    font-family: 'Lexend', sans-serif;
+    color: black;
+    background-color: white;
 }

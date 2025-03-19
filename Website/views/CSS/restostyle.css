@@ -248,7 +248,6 @@ html, body {
     align-items: center;
 }
 
-/*Scrollable segment for reviews*/
 .scroll-div {
     width: 98.4%;
     height: 360px;
@@ -524,12 +523,10 @@ footer{
     width: 100%;  
 }
 
-/* Make sure buttons have consistent styling */
 .buttons-container button {
     margin: 0; 
 }
 
-/* Fix for the button inside an anchor tag */
 .buttons-container a {
     display: inline-block;  
     margin: 0;
@@ -553,7 +550,6 @@ footer{
 }
 
 /* CSS FOR FORMS*/ 
-
 .wrapper {
     padding: 20px;
     overflow-y: auto;
@@ -563,7 +559,6 @@ footer{
     background-color: #CDDECB; 
 }
 
-/* Custom scrollbar styling */
 .wrapper::-webkit-scrollbar {
     width: 8px;
 }
@@ -582,13 +577,11 @@ footer{
     background: #5EB762;
 }
 
-/* Fix input box positioning */
 .wrapper form .input-box {
     margin-left: 0; 
     padding: 0 20px; 
 }
 
-/* Form section styling */
 .form-section {
     margin-bottom: 20px;
     width: 100%;
@@ -601,7 +594,6 @@ footer{
     padding-left: 20px;
 }
 
-/* Fix button section to appear at the bottom */
 .button-section {
     margin-top: 25px;
     margin-bottom: 25px;
@@ -637,7 +629,6 @@ form .input-box input {
     box-sizing: border-box;
 }
 
-/* Form input styling - make fields bigger */
 .wrapper form .input-box input {
     width: 100%;
     box-sizing: border-box;
@@ -650,7 +641,6 @@ form .input-box input {
     color: black; 
 }
 
-
 .wrapper form .input-box label {
     display: block;
     font-family: 'Lexend', sans-serif;
@@ -661,17 +651,14 @@ form .input-box input {
     margin-top: 5px;
 }
 
-/* Adjust time inputs specifically */
 .wrapper form .input-box.time-input input {
     height: 45px;
 }
 
-/* Add more spacing between form sections */
 .form-section {
     margin-bottom: 25px;
 }
 
-/* Make submit and cancel buttons larger */
 .button-section .input-box.button input,
 .button-section .input-box.button.secondary input {
     height: 50px;
@@ -681,7 +668,6 @@ form .input-box input {
     border-radius: 8px;
 }
 
-/* Make form section headings larger */
 .form-section h4 {
     font-family: 'Lexend', sans-serif;
     color: black;
@@ -691,12 +677,9 @@ form .input-box input {
     font-weight: 600; 
 }
 
-/* Ensure placeholder text is a lighter shade but still readable */
 .wrapper form .input-box input::placeholder {
     color: #757575;
 }
-
-/* Style for single image upload */
 
 .input-box.image-upload input[type="file"] {
     padding: 10px;
@@ -957,7 +940,6 @@ form .input-box input {
     resize: vertical;
 }
 
-/* Make the submit button right-aligned */
 .reviewModal-content .button-section {
     justify-content: flex-end;
 }

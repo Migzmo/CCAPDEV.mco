@@ -1,4 +1,4 @@
-    document.getElementById('register').addEventListener('click', function() {
+document.getElementById('register').addEventListener('click', function() {
         const loginFrame = document.getElementById('loginframe');
         const registerFrame = document.getElementById('registerframe');
         const backdrop = document.getElementById('backdrop');
@@ -460,6 +460,66 @@
         signinFrame.style.pointerEvents = 'auto';
         backdrop.style.pointerEvents = 'auto';
     }); 
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Handler for closing the signin frame
+    const closeSigninBtn = document.getElementById('closeSignin');
+    if (closeSigninBtn) {
+        closeSigninBtn.addEventListener('click', function() {
+            const signinFrame = document.getElementById('signinframe');
+            const backdrop = document.getElementById('backdrop');
+            
+            signinFrame.style.display = 'none';
+            backdrop.style.display = 'none';
+            document.body.style.pointerEvents = 'auto';
+        });
+    }
+    
+    // Handler for going back to login options
+    const backToOptionsBtn = document.getElementById('backToOptions');
+    if (backToOptionsBtn) {
+        backToOptionsBtn.addEventListener('click', function() {
+            const signinFrame = document.getElementById('signinframe');
+            const loginFrame = document.getElementById('loginframe');
+            
+            signinFrame.style.display = 'none';
+            loginFrame.style.display = 'block';
+            
+            document.body.style.pointerEvents = 'none';
+            loginFrame.style.pointerEvents = 'auto';
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Handler for closing the signin frame
+  const closeSigninBtn = document.getElementById('closeSignin');
+  if (closeSigninBtn) {
+      closeSigninBtn.addEventListener('click', function() {
+          const signinFrame = document.getElementById('signinframe');
+          const backdrop = document.getElementById('backdrop');
+          
+          signinFrame.style.display = 'none';
+          backdrop.style.display = 'none';
+          document.body.style.pointerEvents = 'auto';
+      });
+  }
+  
+  // Handler for going back to login options
+  const backToOptionsBtn = document.getElementById('backToOptions');
+  if (backToOptionsBtn) {
+      backToOptionsBtn.addEventListener('click', function() {
+          const signinFrame = document.getElementById('signinframe');
+          const loginFrame = document.getElementById('loginframe');
+          
+          signinFrame.style.display = 'none';
+          loginFrame.style.display = 'block';
+          
+          document.body.style.pointerEvents = 'none';
+          loginFrame.style.pointerEvents = 'auto';
+      });
+  }
+});
 
 // Toggle Edit Profile modal
 function toggleEditProfileFrame() {
@@ -1023,4 +1083,42 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+});
+
+function setupProfileTabs() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding content
+            button.classList.add('active');
+            const tabName = button.getAttribute('data-tab');
+            const targetContent = document.getElementById(`${tabName}-content`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            } else {
+                console.error(`Tab content #${tabName}-content not found`);
+            }
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setupProfileTabs();
+    
+    // Debug check for reviews
+    const reviewsContent = document.getElementById('reviews-content');
+    if (reviewsContent) {
+        console.log('Reviews content found');
+        console.log('Reviews HTML:', reviewsContent.innerHTML);
+        const reviewsItems = reviewsContent.querySelectorAll('.review-card');
+        console.log(`Found ${reviewsItems.length} review cards`);
+    } else {
+        console.error('Reviews content element not found!');
+    }
 });

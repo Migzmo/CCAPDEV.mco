@@ -109,7 +109,18 @@
                             </div>
                             <div class="input-box">
                                 <label for="cuisine">Cuisine</label>
-                                <input type="text" id="cuisine" placeholder="Filipino, Italian, Japanese, etc." required>
+                                <select id="cuisine" name="cuisine" required>
+                                    <option value="">Select a cuisine type</option>
+                                    <option value="American">American</option>
+                                    <option value="Asian">Asian</option>
+                                    <option value="Cafe">Cafe</option>
+                                    <option value="Chinese">Chinese</option>
+                                    <option value="Fastfood">Fastfood</option>
+                                    <option value="Filipino">Filipino</option>
+                                    <option value="Japanese">Japanese</option>
+                                    <option value="Korean">Korean</option>
+                                    <option value="Mexican">Mexican</option>
+                                </select>
                             </div>
                         </div>
                         
@@ -348,7 +359,12 @@
                             
                             <!-- Add star rating visualization (display actual rating when available) -->
                             <div class="review-rating">
-                                ★★★★☆ <!-- Replace with dynamic stars based on rating -->
+                            {{#if this.rating}}
+                                {{!-- Display all stars on one line to remove space --}}
+                                {{#for 0 this.rating}}★{{/for}}{{#for this.rating 5}}☆{{/for}}
+                            {{else}}
+                                No rating
+                            {{/if}}
                             </div>
                             
                             <p>{{this.review}}</p>

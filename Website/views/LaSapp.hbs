@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{!-- {{> LaSapp-HeadImports}}  --}}
-    <meta charset="utf-8"/>
+<meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>LaSapp</title>
 <link rel="stylesheet" href="views/CSS/directory.css">
@@ -253,7 +252,18 @@
                         </div>
                         <div class="input-box">
                             <label for="cuisine">Cuisine</label>
-                            <input type="text" id="cuisine" placeholder="Filipino, Italian, Japanese, etc." required>
+                            <select id="cuisine" name="cuisine" required>
+                                <option value="">Select a cuisine type</option>
+                                <option value="American">American</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Cafe">Cafe</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="Fastfood">Fastfood</option>
+                                <option value="Filipino">Filipino</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Korean">Korean</option>
+                                <option value="Mexican">Mexican</option>
+                            </select>
                         </div>
                     </div>
                     

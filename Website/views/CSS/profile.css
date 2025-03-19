@@ -1,11 +1,11 @@
 .navbar {
-    position: fixed; /* Stays at the top */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     background-color: #fdfbe8; 
     display: flex;
-    flex-direction: row; /* Stack elements vertically */
+    flex-direction: row;
     justify-content: space-between;
     padding: 10px 40px;
     align-items: center;
@@ -215,4 +215,239 @@ footer img{
     margin-left: auto;
     margin-right: auto;
     border: solid rgb(0, 0, 0);
+}
+
+.profile-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.edit-profile-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #5EB762;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.edit-profile-button:hover {
+    background-color: #4CAF50;
+}
+
+/* Add to profile.css */
+.profile-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 100px auto 40px;
+    font-family: 'Lexend', sans-serif;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #81C784;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-details h2 {
+    color: #2E7D32;
+    margin: 0 0 5px 0;
+    font-family: 'Baloo', sans-serif;
+    font-size: 32px;
+}
+
+.profile-details .username {
+    color: #757575;
+    margin: 0;
+    font-size: 16px;
+}
+
+.profile-bio {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.profile-bio h3 {
+    color: #2E7D32;
+    font-family: 'Lexend', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 0;
+}
+
+.profile-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #f8fff8;
+    border: 1px solid #81C784;
+    color: #2E7D32;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    background-color: #81C784;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Review cards styling */
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.review-card {
+    background-color: #f8fff8;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.restaurant-link {
+    color: #2E7D32;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.restaurant-link:hover {
+    color: #1B5E20;
+    text-decoration: underline;
+}
+
+.review-rating {
+    color: #FFD700;
+    font-size: 18px;
+    letter-spacing: -1px;
+}
+
+.review-text {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+.review-date {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 12px;
+    color: #757575;
+    font-style: italic;
+}
+
+/* Saved restaurants styling */
+.saved-restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.saved-restaurant-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.saved-restaurant-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.saved-restaurant-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.saved-restaurant-info {
+    padding: 12px;
+    background-color: white;
+}
+
+.saved-restaurant-info h3 {
+    margin: 0 0 5px 0;
+    color: #2E7D32;
+    font-size: 16px;
+}
+
+.saved-restaurant-info p {
+    margin: 0;
+    color: #757575;
+    font-size: 14px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #757575;
+    font-style: italic;
 }

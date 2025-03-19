@@ -37,20 +37,95 @@
             </div>
         </header>
 
-        <div class="profile_header">
-            <img src={{account.image}} alt="Profile">
-            <h1>{{account.name}}</h1> 
-            <h4>{{account.username}}</h4>
-            <p>{{account.accbio}}.</p>
-            <button class="button-4" role="button">Edit Profile</button>
-        </div>
-
-        <div class="reviews">
-            <h2>{{account.name}}'s' Reviews:</h2>
-            <img src="/views/CSS/ProfileImages/idk.png" alt="No Reviews Yet.">
-            <p1>{{account.saved_reviews}}.</p1>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <div class="profile-picture">
+                        <img src="{{account.image}}" alt="{{account.acc_name}}'s profile">
+                    </div>
+                    <div class="profile-details">
+                        <h2>{{account.name}}</h2>
+                        <p class="username">@{{account.username}}</p>
+                    </div>
+                </div>
+                {{#if isOwnProfile}}
+                <button class="edit-profile-button" onclick="toggleEditProfileFrame()">Edit Profile</button>
+                {{/if}}
+            </div>
+            
+            <div class="profile-bio">
+                <h3>About</h3>
+                <p>{{account.bio}}</p>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-tabs">
+                    <button class="tab-button active" data-tab="reviews">Reviews</button>
+                    <button class="tab-button" data-tab="restaurants">Favorite Restaurants</button>
+                </div>
+                
+                <div class="tab-content active" id="reviews-content">
+                    {{#if reviews.length}}
+                        <div class="reviews-list">
+                            {{#each reviews}}
+                                <div class="review-card">
+                                    <div class="review-header">
+                                        <a href="/restaurant/{{this.restaurantId}}" class="restaurant-link">{{this.restaurantName}}</a>
+                                        <div class="review-rating">
+                                            {{#for 0 this.rating includeIndex=false}}★{{/for}}{{#for this.rating 5 includeIndex=false}}☆{{/for}}
+                                        </div>
+                                    </div>
+                                    <p class="review-text">{{this.review}}</p>
+                                    <span class="review-date">Posted on {{this.date}}</span>
+                                </div>
+                            {{/each}}
+                        </div>
+                    {{else}}
+                        <div class="empty-state">
+                            <p>No reviews yet.</p>
+                        </div>
+                    {{/if}}
+                </div>
+                
+                <div class="tab-content" id="restaurants-content">
+                    {{#if savedRestaurants.length}}
+                        <div class="saved-restaurants-grid">
+                            {{#each savedRestaurants}}
+                                <div class="saved-restaurant-card">
+                                    <a href="/restaurant/{{this.id}}">
+                                        <img src="{{this.image}}" alt="{{this.name}}">
+                                        <div class="saved-restaurant-info">
+                                            <h3>{{this.name}}</h3>
+                                            <p>{{this.cuisine}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            {{/each}}
+                        </div>
+                    {{else}}
+                        <div class="empty-state">
+                            <p>No favorite restaurants yet.</p>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
         </div>
             
         <script src="javascript/RestoInfo.js"></script>
+        <script>
+            // Initialize profile tabs on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                setupProfileTabs();
+                
+                // Add error handler for profile images
+                const profileImages = document.querySelectorAll('.profile-picture img');
+                profileImages.forEach(img => {
+                    img.onerror = function() {
+                        this.src = '/images/profiles/default-profile.png';
+                    };
+                });
+            });
+        </script>
+        <script src="/JavaScript/directoryScript.js"></script>
     </body>
 </html>
