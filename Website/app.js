@@ -156,30 +156,18 @@ app.post('/api/auth/login', async (req, res) => {
     }
     if (!account.isAlive) {
 
+ return res.status(401).json({
+   success: false,
+   message: 'This account has been deactivated'
+ });
  
-
-      return res.status(401).json({
+ }
  
-
-        success: false,
  
-
-        message: 'This account has been deactivated'
  
-
-      });
+ // Check password
  
-
-    }
- 
-
-    
- 
-
-    // Check password
- 
-
-    if (account.acc_password !== password) {
+ if (account.acc_password !== password) {
       return res.status(401).json({
         success: false,
         message: 'Invalid username or password'
@@ -264,149 +252,85 @@ app.post('/api/users/delete-account', async (req, res) => {
 
   try {
  
-
-    console.log('Delete account request received:', req.body);
+ console.log('Delete account request received:', req.body);
  
-
-    const userId = req.body.userId;
+ const userId = req.body.userId;
  
-
-    
  
-
-    if (!userId) {
  
-
-      return res.status(400).json({
+ if (!userId) {
+ return res.status(400).json({
+   success: false,
+   message: 'User ID is required'
+ });
  
-
-        success: false,
+ }
  
-
-        message: 'User ID is required'
  
-
-      });
  
-
-    }
+ // Make sure userId is an integer
  
-
-    
+ const parsedUserId = parseInt(userId, 10);
  
-
-    // Make sure userId is an integer
  
-
-    const parsedUserId = parseInt(userId, 10);
  
-
-    
+ if (isNaN(parsedUserId)) {
+ return res.status(400).json({
+   success: false,
+   message: 'Invalid user ID format'
+ });
  
-
-    if (isNaN(parsedUserId)) {
+ }
  
-
-      return res.status(400).json({
  
-
-        success: false,
  
-
-        message: 'Invalid user ID format'
+ const account = await Account.findOne({ acc_id: parsedUserId });
  
-
-      });
  
-
-    }
  
-
-    
+ if (!account) {
+ return res.status(404).json({
+   success: false,
+   message: 'Account not found'
+ });
  
-
-    const account = await Account.findOne({ acc_id: parsedUserId });
+ }
  
-
-    
  
-
-    if (!account) {
  
-
-      return res.status(404).json({
+ // Update account status
  
-
-        success: false,
+ account.isAlive = false;
  
-
-        message: 'Account not found'
+ await account.save();
  
-
-      });
  
-
-    }
  
-
-    
+ // Set content type explicitly
  
-
-    // Update account status
+ res.setHeader('Content-Type', 'application/json');
  
-
-    account.isAlive = false;
  
-
-    await account.save();
  
-
-    
+ // Return proper JSON response
  
-
-    // Set content type explicitly
+ return res.json({
+ success: true,
+ message: 'Account deleted successfully'
  
-
-    res.setHeader('Content-Type', 'application/json');
- 
-
-    
- 
-
-    // Return proper JSON response
- 
-
-    return res.json({
- 
-
-      success: true,
- 
-
-      message: 'Account deleted successfully'
- 
-
-    });
+ });
  
 
   } catch (error) {
  
-
-    console.error('Account deletion error:', error);
+ console.error('Account deletion error:', error);
  
-
-    res.status(500).json({
+ res.status(500).json({
+ success: false,
+ message: 'Error deleting account',
+ error: error.message
  
-
-      success: false,
- 
-
-      message: 'Error deleting account',
- 
-
-      error: error.message
- 
-
-    });
+ });
  
 
   }
@@ -458,7 +382,6 @@ app.get('/profile/:id', async function (req, res) {
             },
             isOwnProfile: true,
             reviews: formattedReviews,
-            savedRestaurants: savedRestaurants
         });
     } catch(err) {
         console.error(err);
@@ -554,6 +477,7 @@ app.put('/api/submitupdate', async (req, res) => {
       resto_email: req.body.email,
       resto_payment: req.body.payment,
       resto_perks: req.body.perks,
+      resto_cuisine: req.body.cuisine,
     };
     
     // Handle image upload if present
@@ -847,8 +771,7 @@ app.put('/api/editreview', async (req, res) => {
       rating: parseInt(rating, 10), 
       review: review                
     };
-
-    console.log("Update data:", updateData);
+ console.log("Update data:", updateData);
     
     // Find and update review
     const updatedReview = await Review.findOneAndUpdate(
@@ -886,12 +809,10 @@ app.put("/api/archivereview/:id", async (req, res) => {
           { isAlive: false },
           { new: true }
       );
-
-      if (!updatedReview) {
+   if (!updatedReview) {
           return res.status(404).json({ message: "Review not found." });
       }
-
-      res.status(200).json({ message: "Review archived successfully.", review: updatedReview });
+   res.status(200).json({ message: "Review archived successfully.", review: updatedReview });
   } catch (error) {
       console.error("Error archiving review:", error);
       res.status(500).json({ message: "Failed to archive review." });
@@ -935,44 +856,27 @@ app._router.stack.forEach((middleware) => {
 
   if (middleware.route) {
  
-
-    // Routes registered directly on the app
+ // Routes registered directly on the app
  
-
-    const path = middleware.route.path;
+ const path = middleware.route.path;
  
-
-    const methods = Object.keys(middleware.route.methods).join(', ').toUpperCase();
+ const methods = Object.keys(middleware.route.methods).join(', ').toUpperCase();
  
-
-    console.log(`${methods} ${path}`);
+ console.log(`${methods} ${path}`);
  
 
   } else if (middleware.name === 'router') {
  
-
-    // Routes registered using Router
+ // Routes registered using Router
  
-
-    middleware.handle.stack.forEach((handler) => {
+ middleware.handle.stack.forEach((handler) => {
+ if (handler.route) {
+   const path = handler.route.path;
+   const methods = Object.keys(handler.route.methods).join(', ').toUpperCase();
+   console.log(`${methods} ${path}`);
+ }
  
-
-      if (handler.route) {
- 
-
-        const path = handler.route.path;
- 
-
-        const methods = Object.keys(handler.route.methods).join(', ').toUpperCase();
- 
-
-        console.log(`${methods} ${path}`);
- 
-
-      }
- 
-
-    });
+ });
  
 
   }
