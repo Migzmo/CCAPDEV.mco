@@ -1014,3 +1014,7 @@ form .input-box input {
     background-color: #f8fff8;
     cursor: pointer;
 }
+
+.hidden {
+    display: none;
+}

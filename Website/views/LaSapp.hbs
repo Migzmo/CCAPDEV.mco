@@ -271,8 +271,6 @@
     </div>
     
 
-    
-
     <div class="container">
         <div>
             <img class="my_cover" src="views/CSS/images/foodflag.jpg" alt="Description of Image">
@@ -292,74 +290,75 @@
         </form>
     </div>
 
-    <div class ="categories" id="slider">
-        <!-- Food Categories -->
-        <div class="caterogy-container">
+    <div class="categories" id="slider">
+        <div class="category-container">
             <div class="category-row1">
+                <button class="category-btn" data-category="All">
+                    <img src="views/CSS/images/select-all.png" alt="All">
+                    <div class="category-name"><h3>All</h3></div>
+                </button>
                 <button class="category-btn" data-category="American">
                     <img src="views/CSS/images/Category - American.png" alt="American">
-                    <div class="category-name"> <h3>American</h3></div>
+                    <div class="category-name"><h3>American</h3></div>
                 </button>
                 <button class="category-btn" data-category="Asian">
-                    <img src="views/CSS/images/Category - Asian.png" alt="">
-                    <div class="category-name"> <h3>Asian</h3></div>
+                    <img src="views/CSS/images/Category - Asian.png" alt="Asian">
+                    <div class="category-name"><h3>Asian</h3></div>
                 </button>
-
                 <button class="category-btn" data-category="Cafe">
-                    <img src="views/CSS/images/Category - Cafe.png" alt="">
-                    <div class="category-name"> <h3>Cafe</h3></div>
+                    <img src="views/CSS/images/Category - Cafe.png" alt="Cafe">
+                    <div class="category-name"><h3>Cafe</h3></div>
                 </button>
-
                 <button class="category-btn" data-category="Fastfood">
-                    <img src="views/CSS/images/Category - Fastfood.png" alt="">
-                    <div class="category-name"> <h3>Fastfood</h3></div>
+                    <img src="views/CSS/images/Category - Fastfood.png" alt="Fastfood">
+                    <div class="category-name"><h3>Fastfood</h3></div>
                 </button>
-
                 <button class="category-btn" data-category="Japanese">
-                    <img src="views/CSS/images/Category - Japanese.png" alt="">
-                    <div class="category-name"> <h3>Japanese</h3></div>
+                    <img src="views/CSS/images/Category - Japanese.png" alt="Japanese">
+                    <div class="category-name"><h3>Japanese</h3></div>
                 </button>
-
                 <button class="category-btn" data-category="Chinese">
-                    <img src="views/CSS/images/Category - Chinese.png" alt="">
-                    <div class="category-name"> <h3>Chinese</h3></div>
+                    <img src="views/CSS/images/Category - Chinese.png" alt="Chinese">
+                    <div class="category-name"><h3>Chinese</h3></div>
                 </button>
-
                 <button class="category-btn" data-category="Korean">
-                    <img src="views/CSS/images/Category - Korean.png" alt="">
-                    <div class="category-name"> <h3>Korean</h3></div>
+                    <img src="views/CSS/images/Category - Korean.png" alt="Korean">
+                    <div class="category-name"><h3>Korean</h3></div>
+                </button>
+                <button class="category-btn" data-category="Mexican">
+                    <img src="views/CSS/images/Category - Mexican.png" alt="Mexican">
+                    <div class="category-name"><h3>Mexican</h3></div>
                 </button>
             </div>
         </div>
-          
     </div>
-    <div class = "resto-box-wrappers">
 
-        <div class="restaurants">
-            <a href="#" onclick="togglePopupCreateResto()">
-                <div>
-                    <img class="add-resto" src="views/CSS/images/Misc - Add Resto Icon.png">
-                    <button id="" style="display: none;"></button>  
-                </div>
-            </a>
-        </div>
-        {{#each restaurants}}
-        <div class="restaurants" id="resto-{{resto_id}}">
-            <a href="/restaurant/{{resto_id}}">
-                <img class="resto-img" src="{{resto_img}}">
-                <div class="filler"></div>
-                <div class="resto-text">
-                    <h2 class="resto-title">{{resto_name}} ⭐</h2>
-                    <h3 class="resto-category">{{cuisine_id}}</h3>
-                </div>
-            </a>
-        </div>
-        {{/each}}
-        
+    <div class="resto-box-wrappers">
+    <div class="restaurants">
+        <a href="#" onclick="togglePopupCreateResto()">
+            <div>
+                <img class="add-resto" src="views/CSS/images/Misc - Add Resto Icon.png">
+                <button id="" style="display: none;"></button>  
+            </div>
+        </a>
     </div>
+    {{#each restaurants}}
+    <div class="restaurants" id="resto-{{resto_id}}" data-category="{{cuisine_id}}">
+        <a href="/restaurant/{{resto_id}}">
+            <img class="resto-img" src="{{resto_img}}">
+            <div class="filler"></div>
+            <div class="resto-text">
+                <h2 class="resto-title">{{resto_name}} ⭐</h2>
+                <h3 class="resto-category">{{cuisine_id}}</h3>
+            </div>
+        </a>
+    </div>
+    {{/each}}
+</div>
 
     <script src = "javascript/web.js"></script>
     <script src='JavaScript/directoryScript.js'></script>
     <script src='/JavaScript/addRestaurant.js'></script>
+    <script src="/javascript/filter.js"></script>
 </body>
 </html>
