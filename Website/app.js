@@ -136,7 +136,32 @@ app.post('/api/auth/login', async (req, res) => {
         message: 'Invalid username or password'
       });
     }
-  if (account.acc_password !== password) {
+    if (!account.isAlive) {
+
+ 
+
+      return res.status(401).json({
+ 
+
+        success: false,
+ 
+
+        message: 'This account has been deactivated'
+ 
+
+      });
+ 
+
+    }
+ 
+
+    
+ 
+
+    // Check password
+ 
+
+    if (account.acc_password !== password) {
       return res.status(401).json({
         success: false,
         message: 'Invalid username or password'
@@ -196,7 +221,7 @@ app.post('/api/auth/register', async (req, res) => {
             acc_name: req.body.username,
             acc_username: req.body.username,
             acc_bio: req.body.description || '',
-            profile_pic: req.body.profilePic || '',
+            profile_pic: req.body.profilePic || '/images/profiles/default-profile.png',
             saved_restos: [],
             saved_reviews: [],
             acc_password: req.body.password,
@@ -212,72 +237,164 @@ app.post('/api/auth/register', async (req, res) => {
             accountType: newAccount.acc_type
         });
     } catch (error) {
-        console.error('Registration error:', error);
-        // Handle duplicate username error
-        if (error.code === 11000) {
-            return res.status(400).json({
-                success: false,
-                message: 'Username already exists' 
-            }); 
-        }
-        res.status(500).json({
-            success: false,
-            message: 'Error creating account',
-            error: error.message
-        });
     }
 });
 
-app.post('/api/users/update-profile', async (req, res) => {
-try {
-    console.log('Update profile request received:', req.body);
+app.post('/api/users/delete-account', async (req, res) => {
+
+ 
+
+  try {
+ 
+
+    console.log('Delete account request received:', req.body);
+ 
+
     const userId = req.body.userId;
-  if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: 'User ID is required'
-      });
-    }
-  // Find the account to update
-    const account = await Account.findOne({ acc_id: parseInt(userId) });
-  if (!account) {
-      return res.status(404).json({
-        success: false,
-        message: 'Account not found'
-      });
-    }
-  // Update account fields
-    if (req.body.username) account.acc_name = req.body.username;
-    if (req.body.username) account.acc_username = req.body.username; // Update both name fields
-    if (req.body.bio) account.acc_bio = req.body.bio;
-  // Update password if provided
-    if (req.body.password && req.body.password.trim() !== '') {
-      account.acc_password = req.body.password;
-    }
-  // Handle profile picture upload
-    if (req.files && req.files.profile_pic) {
-      const profilePic = req.files.profile_pic;
-      const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
-      const uploadPath = path.join(__dirname, 'public/images/profiles', fileName);
-    await profilePic.mv(uploadPath);
-      account.profile_pic = `/images/profiles/${fileName}`;
-    }
-  // Save the updated account
-    await account.save();
-  res.json({
-      success: true,
-      message: 'Profile updated successfully'
-    });
-  } catch (error) {
-    console.error('Profile update error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error updating profile',
-      error: error.message
-    });
-  }
-});
+ 
 
+    
+ 
+
+    if (!userId) {
+ 
+
+      return res.status(400).json({
+ 
+
+        success: false,
+ 
+
+        message: 'User ID is required'
+ 
+
+      });
+ 
+
+    }
+ 
+
+    
+ 
+
+    // Make sure userId is an integer
+ 
+
+    const parsedUserId = parseInt(userId, 10);
+ 
+
+    
+ 
+
+    if (isNaN(parsedUserId)) {
+ 
+
+      return res.status(400).json({
+ 
+
+        success: false,
+ 
+
+        message: 'Invalid user ID format'
+ 
+
+      });
+ 
+
+    }
+ 
+
+    
+ 
+
+    const account = await Account.findOne({ acc_id: parsedUserId });
+ 
+
+    
+ 
+
+    if (!account) {
+ 
+
+      return res.status(404).json({
+ 
+
+        success: false,
+ 
+
+        message: 'Account not found'
+ 
+
+      });
+ 
+
+    }
+ 
+
+    
+ 
+
+    // Update account status
+ 
+
+    account.isAlive = false;
+ 
+
+    await account.save();
+ 
+
+    
+ 
+
+    // Set content type explicitly
+ 
+
+    res.setHeader('Content-Type', 'application/json');
+ 
+
+    
+ 
+
+    // Return proper JSON response
+ 
+
+    return res.json({
+ 
+
+      success: true,
+ 
+
+      message: 'Account deleted successfully'
+ 
+
+    });
+ 
+
+  } catch (error) {
+ 
+
+    console.error('Account deletion error:', error);
+ 
+
+    res.status(500).json({
+ 
+
+      success: false,
+ 
+
+      message: 'Error deleting account',
+ 
+
+      error: error.message
+ 
+
+    });
+ 
+
+  }
+ 
+
+});
 
 //render profile page using handlebars this will fetch data in mongo db 
 app.get('/profile/:id', async function (req, res) {
@@ -764,6 +881,59 @@ app.get('/', function (req, res) {
 // Start server
 app.listen(3000, function () {
     console.log('Node server is running on http://localhost:3000');
+});
+
+console.log('Registered routes:');
+ 
+
+app._router.stack.forEach((middleware) => {
+ 
+
+  if (middleware.route) {
+ 
+
+    // Routes registered directly on the app
+ 
+
+    const path = middleware.route.path;
+ 
+
+    const methods = Object.keys(middleware.route.methods).join(', ').toUpperCase();
+ 
+
+    console.log(`${methods} ${path}`);
+ 
+
+  } else if (middleware.name === 'router') {
+ 
+
+    // Routes registered using Router
+ 
+
+    middleware.handle.stack.forEach((handler) => {
+ 
+
+      if (handler.route) {
+ 
+
+        const path = handler.route.path;
+ 
+
+        const methods = Object.keys(handler.route.methods).join(', ').toUpperCase();
+ 
+
+        console.log(`${methods} ${path}`);
+ 
+
+      }
+ 
+
+    });
+ 
+
+  }
+ 
+
 });
 
 /****************************************************************************************************************************************************************************/

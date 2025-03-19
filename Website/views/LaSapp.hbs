@@ -155,6 +155,20 @@
                         <div id="profile-pic-preview"></div>
                     </div>
 
+                    <div class="form-group danger-zone">
+ 
+
+                        <h4>Danger Zone</h4>
+ 
+
+                        <p>Deleting your account will remove all your data from our system.</p>
+ 
+
+                        <button type="button" id="delete-account-btn" class="delete-account-button">Delete Account</button>
+ 
+
+                    </div>
+
                     <div class="button-section">
                         <div class="input-box button">
                             <input type="submit" value="Save Changes">
@@ -358,6 +372,31 @@
     </div>
     {{/each}}
 </div>
+
+<div id="deleteAccountConfirm">
+
+ 
+
+        <h3>Delete Account?</h3>
+ 
+
+        <p>This action cannot be undone. Your account will be permanently deactivated.</p>
+ 
+
+        <div class="confirm-buttons">
+ 
+
+            <button id="cancelDeleteAccount">Cancel</button>
+ 
+
+            <button id="confirmDeleteAccount">Yes, Delete Account</button>
+ 
+
+        </div>
+ 
+
+    </div>
+
 
     <script src = "javascript/web.js"></script>
     <script src='JavaScript/directoryScript.js'></script>

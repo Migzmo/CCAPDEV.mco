@@ -504,10 +504,19 @@ function toggleEditProfileFrame() {
 
 // Fetch user profile data
 async function fetchUserProfile(userId) {
-try {
+  try {
+
+ 
+
     const response = await fetch(`/api/users/${userId}`);
+
+
     if (!response.ok) {
+
+
         throw new Error('Failed to fetch profile');
+
+
     }
 
     const userData = await response.json();
@@ -518,13 +527,35 @@ try {
 
     // Show profile image preview if available
     const previewDiv = document.getElementById('profile-pic-preview');
-    if (userData.profile_pic) {
-        previewDiv.style.backgroundImage = `url(${userData.profile_pic})`;
-    }
 
-} catch (error) {
-    console.error('Error fetching profile:', error);
-}
+ 
+
+        // Always set a background image - either the user's or the default
+ 
+
+        previewDiv.style.backgroundImage = `url(${userData.profile_pic || '/images/profiles/default-profile.png'})`;
+ 
+
+        
+ 
+
+        // If there's an error loading the image, use the default
+ 
+
+        previewDiv.onerror = function() {
+ 
+
+            this.style.backgroundImage = `url('/images/profiles/default-profile.png')`;
+ 
+
+        };
+ 
+
+    } catch (error) {
+ 
+
+        console.error('Error fetching profile:', error);
+    }
 }
 
 // Handle profile pic preview
@@ -578,6 +609,306 @@ editProfileForm.addEventListener('submit', function(e) {
 });
 }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+
+ 
+
+  // Set up delete account button handler
+
+
+  const deleteAccountBtn = document.getElementById('delete-account-btn');
+
+
+  if (deleteAccountBtn) {
+
+
+      deleteAccountBtn.addEventListener('click', showDeleteConfirmation);
+
+
+  }
+
+
+  
+
+
+  // Set up confirmation dialog handlers
+
+
+  const confirmDeleteBtn = document.getElementById('confirmDeleteAccount');
+
+
+  const cancelDeleteBtn = document.getElementById('cancelDeleteAccount');
+
+
+  
+
+
+  if (confirmDeleteBtn) {
+
+
+      confirmDeleteBtn.addEventListener('click', confirmDeleteAccount);
+
+
+  }
+
+
+  
+
+
+  if (cancelDeleteBtn) {
+
+
+      cancelDeleteBtn.addEventListener('click', hideDeleteConfirmation);
+
+
+  }
+
+
+});
+
+
+
+
+
+function showDeleteConfirmation() {
+
+
+  const deleteConfirmDialog = document.getElementById('deleteAccountConfirm');
+
+
+  const backdrop = document.getElementById('backdrop');
+
+
+  
+
+
+  if (deleteConfirmDialog) {
+
+
+      deleteConfirmDialog.style.display = 'block';
+
+
+  }
+
+
+  
+
+
+  if (backdrop) {
+
+
+      backdrop.style.display = 'block';
+
+
+  }
+
+
+}
+
+
+
+
+
+function hideDeleteConfirmation() {
+
+
+  const deleteConfirmDialog = document.getElementById('deleteAccountConfirm');
+
+
+  const backdrop = document.getElementById('backdrop');
+
+
+  
+
+
+  if (deleteConfirmDialog) {
+
+
+      deleteConfirmDialog.style.display = 'none';
+
+
+  }
+
+
+  
+
+
+  if (backdrop && document.getElementById('editProfileFrame').style.display !== 'block') {
+
+
+      backdrop.style.display = 'none';
+
+
+  }
+
+
+}
+
+
+
+
+
+async function confirmDeleteAccount() {
+
+
+  try {
+
+
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+
+      
+
+
+      if (!currentUser || !currentUser.userId) {
+
+
+          alert('Session expired. Please log in again.');
+
+
+          return;
+
+
+      }
+
+
+      
+
+
+      // Changed from PUT to POST
+
+
+      const response = await fetch('/api/users/delete-account', {
+
+
+          method: 'POST',
+
+
+          headers: {
+
+
+              'Content-Type': 'application/json'
+
+
+          },
+
+
+          body: JSON.stringify({ userId: currentUser.userId })
+
+
+      });
+
+
+      
+
+
+      // Debug logs
+
+
+      console.log('Delete account response status:', response.status);
+
+
+      
+
+
+      if (!response.ok) {
+
+
+          const errorText = await response.text();
+
+
+          console.error('Server error:', errorText);
+
+
+          throw new Error(`Server returned ${response.status}: ${errorText || 'Unknown error'}`);
+
+
+      }
+
+
+      
+
+
+      const data = await response.json();
+
+
+      
+
+
+      if (data.success) {
+
+
+          // Clear user data from localStorage
+
+
+          localStorage.removeItem('currentUser');
+
+
+          
+
+
+          // Hide all modals
+
+
+          hideDeleteConfirmation();
+
+
+          document.getElementById('editProfileFrame').style.display = 'none';
+
+
+          document.getElementById('backdrop').style.display = 'none';
+
+
+          
+
+
+          // Reset login button
+
+
+          resetLoginButton();
+
+
+          
+
+
+          // Show success message
+
+
+          alert('Your account has been deleted successfully.');
+
+
+          
+
+
+          // Redirect to home page
+
+
+          window.location.href = '/';
+
+
+      } else {
+
+
+          throw new Error(data.message || 'Failed to delete account');
+
+
+      }
+
+
+  } catch (error) {
+
+
+      console.error('Error deleting account:', error);
+
+
+      alert('Failed to delete account: ' + error.message);
+
+
+  }
+
+
+}
 
 // delete resto button
 // function toggleDeleteConfirm() {
