@@ -54,8 +54,4 @@ const cuisineSchema = new mongoose.Schema({
 
 const Cuisine = mongoose.model('Cuisine', cuisineSchema);
 
-
-
-
-
 module.exports = { Account, Cuisine, Restaurant, Review };
