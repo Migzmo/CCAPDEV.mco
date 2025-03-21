@@ -349,12 +349,19 @@
                         <!-- Will only display the reviews if isAlive = true -->
                         <div class="scroll-obj">   
                             <h2>
-                                <a href="/profile/{{this.account_id.acc_id}}">
-                                <img src={{this.account_id.profile_pic}} alt="Profile" class="profile-pic"> 
-                                {{this.account_id.acc_name}}
-                                </a>
+                                {{#if this.account_id}}
+                                    <a href="/profile/{{this.account_id.acc_id}}">
+                                        <img src="{{this.account_id.profile_pic}}" alt="Profile" class="profile-pic" onerror="this.src='/images/profiles/default-profile.png'"> 
+                                        {{this.account_id.acc_name}}
+                                    </a>
+                                {{else}}
+                                    <span>
+                                        <img src="/images/profiles/default-profile.png" alt="Profile" class="profile-pic"> 
+                                        Anonymous
+                                    </span>
+                                {{/if}}
 
-                                <button class="delete-review" data-id="{{this.review_id}}">🗑️</button> <!-- TO DO!! -->
+                                <button class="delete-review" data-id="{{this.review_id}}">🗑️</button>
                             </h2>
                             
                             <!-- Add star rating visualization (display actual rating when available) -->
@@ -418,5 +425,29 @@
         <script src='/JavaScript/addReview.js'></script>
         <script src='/JavaScript/editReview.js'></script>
         <script src ='/JavaScript/deleteReview.js'></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Fix profile links in reviews
+                const profileLinks = document.querySelectorAll('.scroll-obj h2 a');
+                profileLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        // Check if the link ends with just "/profile/" or contains "undefined"
+                        if (href === '/profile/' || href.includes('undefined')) {
+                            e.preventDefault();
+                            alert('User profile not available');
+                        }
+                    });
+                });
+                
+                // Fix profile images
+                const profileImages = document.querySelectorAll('.profile-pic');
+                profileImages.forEach(img => {
+                    img.onerror = function() {
+                        this.src = '/images/profiles/default-profile.png';
+                    };
+                });
+            });
+        </script>
     </body>
 </html>

@@ -1089,6 +1089,20 @@ function setupProfileTabs() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
     
+    // Initially hide all tab content except the first one
+    tabContents.forEach((content, index) => {
+        if (index === 0) {
+            content.classList.add('active');
+        } else {
+            content.classList.remove('active');
+        }
+    });
+    
+    // Set the first tab as active
+    if (tabButtons.length > 0) {
+        tabButtons[0].classList.add('active');
+    }
+    
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             // Remove active class from all buttons and contents
@@ -1101,8 +1115,6 @@ function setupProfileTabs() {
             const targetContent = document.getElementById(`${tabName}-content`);
             if (targetContent) {
                 targetContent.classList.add('active');
-            } else {
-                console.error(`Tab content #${tabName}-content not found`);
             }
         });
     });

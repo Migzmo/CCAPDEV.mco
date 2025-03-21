@@ -41,7 +41,7 @@
             <div class="profile-header">
                 <div class="profile-info">
                     <div class="profile-picture">
-                        <img src="{{account.image}}" alt="{{account.acc_name}}'s profile">
+                        <img src="{{account.profile_pic}}" alt="{{account.name}}'s profile" onerror="this.src='/images/profiles/default-profile.png'">
                     </div>
                     <div class="profile-details">
                         <h2>{{account.name}}</h2>
@@ -61,7 +61,6 @@
             <div class="profile-content">
                 <div class="profile-tabs">
                     <button class="tab-button active" data-tab="reviews">Reviews</button>
-                    <button class="tab-button" data-tab="restaurants">Favorite Restaurants</button>
                 </div>
                 
                 <div class="tab-content active" id="reviews-content">
@@ -127,5 +126,52 @@
             });
         </script>
         <script src="/JavaScript/directoryScript.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Check if the viewer is the profile owner
+                function checkProfileOwner() {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    const profileId = {{account.id}}; // The account ID from the server
+                    
+                    const isOwnProfile = currentUser && currentUser.userId === profileId;
+                    
+                    // Show/hide the edit profile button
+                    const editProfileButton = document.querySelector('.edit-profile-button');
+                    if (editProfileButton) {
+                        editProfileButton.style.display = isOwnProfile ? 'block' : 'none';
+                    }
+                    
+                    // Update the navigation for other user profiles
+                    if (!isOwnProfile && currentUser) {
+                        // You're viewing someone else's profile while logged in
+                        const backToYourProfileBtn = document.createElement('button');
+                        backToYourProfileBtn.className = 'back-to-profile-button';
+                        backToYourProfileBtn.textContent = 'Back to Your Profile';
+                        backToYourProfileBtn.addEventListener('click', function() {
+                            window.location.href = `/profile/${currentUser.userId}`;
+                        });
+                        
+                        // Add the button to the profile header
+                        const profileHeader = document.querySelector('.profile-header');
+                        profileHeader.appendChild(backToYourProfileBtn);
+                    }
+                }
+                
+                // Run the check
+                checkProfileOwner();
+                
+                // Handle profile picture loading errors
+                const profileImg = document.querySelector('.profile-picture img');
+                if (profileImg) {
+                    profileImg.onerror = function() {
+                        this.src = '/images/profiles/default-profile.png';
+                        console.log('Profile image failed to load, using default');
+                    };
+                }
+                
+                // Setup profile tabs
+                setupProfileTabs();
+            });
+        </script>
     </body>
 </html>

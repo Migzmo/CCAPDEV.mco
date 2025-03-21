@@ -343,7 +343,12 @@ app.get('/profile/:id', async function (req, res) {
     try{
         const accountId = parseInt(req.params.id, 10);
         console.log(`Account ID: ${accountId}`);
-        const account = await Account.findOne({acc_id: accountId});
+        
+        // Get the current user ID from the query string if available (for determining if it's own profile)
+        const currentUserId = req.query.currentUser ? parseInt(req.query.currentUser) : null;
+        
+        // Find the account
+        const account = await Account.findOne({acc_id: accountId, isAlive: true});
         if(!account){
             return res.status(404).send('Account not found');
         }
@@ -354,6 +359,8 @@ app.get('/profile/:id', async function (req, res) {
             isAlive: true
         }).populate({
             path: 'resto_id',
+            localField: 'resto_id',    
+            foreignField: 'resto_id',  
             model: 'Restaurant'
         }).exec();
         
@@ -369,19 +376,19 @@ app.get('/profile/:id', async function (req, res) {
             date: new Date(review._id.getTimestamp()).toLocaleDateString()
         }));
         
-        console.log('Formatted reviews:', formattedReviews);
+        // Determine if this is the user's own profile
+        const isOwnProfile = currentUserId === accountId;
         
-        // Rest of your code...
-        
+        // Render the profile page
         res.render('Profile', {
             account: {
                 name: account.acc_name,
                 username: account.acc_username,
                 bio: account.acc_bio,
-                profile_pic: account.profile_pic
+                profile_pic: account.profile_pic || '/images/profiles/default-profile.png'
             },
-            isOwnProfile: true,
-            reviews: formattedReviews,
+            isOwnProfile: isOwnProfile,
+            reviews: formattedReviews
         });
     } catch(err) {
         console.error(err);
@@ -449,12 +456,6 @@ res.status(500).json({
   }
 
 });
-
-
-
-
-
-
 
 /***************************************************************************************************************************************/
 //Restaurants API Routes
@@ -652,11 +653,21 @@ app.get('/restaurant/:id', async function (req, res) {
           console.log("Sucessfully found restaurant");
       }
       //this will get the reviews for the restaurant and also populate the account_id field with user data
-      var reviews = await Review.find({resto_id: restaurantId,isAlive:true}).populate({
+      var reviews = await Review.find({resto_id: restaurantId, isAlive: true})
+    .populate({
         path: 'account_id',
         localField: 'account_id',
         foreignField: 'acc_id',
-        model: 'Account'}).exec();
+        model: 'Account',
+        match: { isAlive: true } // Only populate active accounts
+    })
+    .exec();
+    
+console.log('Reviews with populated accounts:', reviews.map(r => ({
+    id: r.review_id,
+    accountId: r.account_id ? r.account_id.acc_id : 'None',
+    accountName: r.account_id ? r.account_id.acc_name : 'Anonymous'
+})));
       if(!reviews){
           console.log("No reviews found");
       }else{
@@ -685,17 +696,8 @@ app.get('/restaurant/:id', async function (req, res) {
   }
 });
 
-
-
-
-
-
-
-
-
 /***************************************************************************************************************************************/
 //Review API Routes
-
 
 app.post('/api/addreview', async (req, res) => {
   try {
@@ -710,17 +712,18 @@ app.post('/api/addreview', async (req, res) => {
       });
     }
     
-    
-    const accountId = 1; // Use a valid account ID that exists in database
+    // Get current user from token or session
+    const currentUser = req.body.userId;
+    const accountId = currentUser ? parseInt(currentUser) : 1; // Use provided ID or default
     
     // Create new review ID
     const highestReview = await Review.findOne().sort('-review_id');
     const newReviewId = highestReview ? highestReview.review_id + 1 : 1;
     
-    // Create new review
+    // Create new review with proper account_id
     const newReview = new Review({
       review_id: newReviewId,
-      account_id: accountId, // Using default account for now
+      account_id: accountId,
       resto_id: parseInt(resto_id, 10),
       rating: parseInt(rating, 10),
       review: review,
@@ -730,17 +733,6 @@ app.post('/api/addreview', async (req, res) => {
     // Save the review
     await newReview.save();
     console.log("Review saved:", newReview);
-    
-    
-    try {
-      await Restaurant.findOneAndUpdate(
-        { resto_id: parseInt(resto_id, 10) },
-        { $push: { resto_reviews: newReviewId } }
-      );
-    } catch (updateError) {
-      console.error("Error updating restaurant with review:", updateError);
-      // Continue anyway since review is saved
-    }
     
     // Return success
     res.status(201).json({

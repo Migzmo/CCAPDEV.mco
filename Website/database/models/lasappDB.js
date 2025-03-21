@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // Review Schema
 const reviewSchema = new mongoose.Schema({
   review_id: { type: Number, unique: true, required: true },
-  account_id: { type: Number, ref: 'Account' ,default:0},
+  account_id: { type: Number, ref: 'Account', default: 0 },
   resto_id: { type: Number, ref: 'Restaurant', required: true },
   rating: { type: Number, required: true },
   review: { type: String, required: true },
