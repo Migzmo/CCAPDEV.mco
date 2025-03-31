@@ -5,8 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>LaSapp</title>
         <link rel="stylesheet" href="/views//CSS/profile.css">
-        <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet"> 
-        <script src = "javascript/web.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +23,7 @@
             <!-- First Header -->
             <div class="navbar-container">
                 <a href="/" id = "logoImg">
-                <img src="/views/CSS/RestoImages/logo.png" alt="Logo" width="70" height="70">
+                <img src="./images/restaurantAssets/logo.png" alt="Logo" width="70" height="70">
                 </a>
                     <div class="logo">LaSapp</div>
                 
@@ -41,7 +40,7 @@
             <div class="profile-header">
                 <div class="profile-info">
                     <div class="profile-picture">
-                        <img src="{{account.profile_pic}}" alt="{{account.name}}'s profile" onerror="this.src='/images/profiles/default-profile.png'">
+                        <img src="{{account.profile_pic}}" alt="{{account.name}}'s profile" onerror="this.src='./images/profilePictures/default-profile.png'">
                     </div>
                     <div class="profile-details">
                         <h2>{{account.name}}</h2>
@@ -110,7 +109,7 @@
             </div>
         </div>
             
-        <script src="javascript/RestoInfo.js"></script>
+        <script src="../Controllers/RestoInfo.js"></script>
         <script>
             // Initialize profile tabs on page load
             document.addEventListener('DOMContentLoaded', function() {
@@ -120,12 +119,12 @@
                 const profileImages = document.querySelectorAll('.profile-picture img');
                 profileImages.forEach(img => {
                     img.onerror = function() {
-                        this.src = '/images/profiles/default-profile.png';
+                        this.src = '/images/profilePictures/default-profile.png';
                     };
                 });
             });
         </script>
-        <script src="/JavaScript/directoryScript.js"></script>
+        <script src="../Controllers/directoryScript.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Check if the viewer is the profile owner
@@ -164,7 +163,7 @@
                 const profileImg = document.querySelector('.profile-picture img');
                 if (profileImg) {
                     profileImg.onerror = function() {
-                        this.src = '/images/profiles/default-profile.png';
+                        this.src = './images/profilePictures/default-profile.png';
                         console.log('Profile image failed to load, using default');
                     };
                 }

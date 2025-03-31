@@ -21,11 +21,11 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const app = express();
-const imagesDir = path.join(__dirname, 'public/images/restaurants');
+const imagesDir = path.join(__dirname, './Views/images/restaurantPictures');
 if (!fs.existsSync(imagesDir)) {
   fs.mkdirSync(imagesDir, { recursive: true });
 }
-const profilesDir = path.join(__dirname, 'public/images/profiles');
+const profilesDir = path.join(__dirname, './Views/images/profilePictures');
 if (!fs.existsSync(profilesDir)) { 
   fs.mkdirSync(profilesDir, { recursive: true }); 
 }
@@ -55,7 +55,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
     try {
       // Import Accounts
       if (fs.existsSync('accounts.json')) {
-        const accountData = JSON.parse(fs.readFileSync('accounts.json', 'utf8'));
+        const accountData = JSON.parse(fs.readFileSync('./Models/Accounts/accountsDB-Data.json', 'utf8'));
         await Account.deleteMany({});
         await Account.insertMany(accountData);
         console.log('Account data imported successfully');
@@ -66,7 +66,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       
       // Import Cuisines
       if (fs.existsSync('cuisines.json')) {
-        const cuisineData = JSON.parse(fs.readFileSync('cuisines.json', 'utf8'));
+        const cuisineData = JSON.parse(fs.readFileSync('./Models/Cuisines/cuisinesDB-Data.json', 'utf8'));
         await Cuisine.deleteMany({});
         await Cuisine.insertMany(cuisineData);
         console.log('Cuisine data imported successfully');
@@ -76,7 +76,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       
       // Import Restaurants
       if (fs.existsSync('restaurants.json')) {
-        const restaurantData = JSON.parse(fs.readFileSync('restaurants.json', 'utf8'));
+        const restaurantData = JSON.parse(fs.readFileSync('./Models/Restaurants/restaurantsDB-Data.json', 'utf8'));
         await Restaurant.deleteMany({});
         await Restaurant.insertMany(restaurantData);
         console.log('Restaurant data imported successfully');
@@ -86,7 +86,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
       
       // Import Reviews
       if (fs.existsSync('reviews.json')) {
-        const reviewData = JSON.parse(fs.readFileSync('reviews.json', 'utf8'));
+        const reviewData = JSON.parse(fs.readFileSync('./Models/Reviews/reviewsDB-Data.json', 'utf8'));
         await Review.deleteMany({});
         await Review.insertMany(reviewData);
         console.log('Review data imported successfully');
@@ -105,7 +105,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
   })
   .catch(err => console.error('Connection error:', err));
 // Initialize our Reviews
-const { Account, Cuisine, Restaurant, Review } = require("./database/models/lasappDB");
+const { Account, Cuisine, Restaurant, Review } = require("./Models/lasappDB");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -191,9 +191,6 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-
-
-
 app.get('/api/users/:id', async (req, res) => {
   try {
     const userId = parseInt(req.params.id);
@@ -227,7 +224,7 @@ app.post('/api/auth/register', async (req, res) => {
             acc_name: req.body.username,
             acc_username: req.body.username,
             acc_bio: req.body.description || '',
-            profile_pic: req.body.profilePic || '/images/profiles/default-profile.png',
+            profile_pic: req.body.profilePic || './Views/images/profilePictures/default-profile.png',
             saved_restos: [],
             saved_reviews: [],
             acc_password: req.body.password,
@@ -247,95 +244,54 @@ app.post('/api/auth/register', async (req, res) => {
 });
 
 app.post('/api/users/delete-account', async (req, res) => {
-
- 
-
   try {
- 
- console.log('Delete account request received:', req.body);
- 
- const userId = req.body.userId;
- 
- 
- 
- if (!userId) {
- return res.status(400).json({
-   success: false,
-   message: 'User ID is required'
- });
- 
- }
- 
- 
- 
- // Make sure userId is an integer
- 
- const parsedUserId = parseInt(userId, 10);
- 
- 
- 
- if (isNaN(parsedUserId)) {
- return res.status(400).json({
-   success: false,
-   message: 'Invalid user ID format'
- });
- 
- }
- 
- 
- 
- const account = await Account.findOne({ acc_id: parsedUserId });
- 
- 
- 
- if (!account) {
- return res.status(404).json({
-   success: false,
-   message: 'Account not found'
- });
- 
- }
- 
- 
- 
- // Update account status
- 
- account.isAlive = false;
- 
- await account.save();
- 
- 
- 
- // Set content type explicitly
- 
- res.setHeader('Content-Type', 'application/json');
- 
- 
- 
- // Return proper JSON response
- 
- return res.json({
- success: true,
- message: 'Account deleted successfully'
- 
- });
- 
-
-  } catch (error) {
- 
- console.error('Account deletion error:', error);
- 
- res.status(500).json({
- success: false,
- message: 'Error deleting account',
- error: error.message
- 
- });
- 
-
+    console.log('Delete account request received:', req.body);
+    userId = req.body.userId;
+    
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: 'User ID is required'
+      });
+    }
+    
+    // Make sure userId is an integer
+    const parsedUserId = parseInt(userId, 10);
+    if (isNaN(parsedUserId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid user ID format'
+      });
+    }
+    
+    const account = await Account.findOne({ acc_id: parsedUserId });
+    if (!account) {
+      return res.status(404).json({
+        success: false,
+        message: 'Account not found'
+      });
+    }
+    // Update account status
+    account.isAlive = false;
+    await account.save();
+    
+    // Set content type explicitly
+    res.setHeader('Content-Type', 'application/json');
+    
+    // Return proper JSON response
+    return res.json({
+      success: true,
+      message: 'Account deleted successfully'
+    });
+  } 
+  catch (error) {
+    console.error('Account deletion error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting account',
+      error: error.message
+    });
   }
- 
-
 });
 
 //render profile page using handlebars this will fetch data in mongo db 
@@ -385,7 +341,7 @@ app.get('/profile/:id', async function (req, res) {
                 name: account.acc_name,
                 username: account.acc_username,
                 bio: account.acc_bio,
-                profile_pic: account.profile_pic || '/images/profiles/default-profile.png'
+                profile_pic: account.profile_pic || './Views/images/profilePictures/default-profile.png'
             },
             isOwnProfile: isOwnProfile,
             reviews: formattedReviews
@@ -431,10 +387,10 @@ if (req.body.password && req.body.password.trim() !== '') {
 if (req.files && req.files.profile_pic) {
   const profilePic = req.files.profile_pic;
   const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
-  const uploadPath = path.join(__dirname, 'public/images/profiles', fileName);
+  const uploadPath = path.join(__dirname, './Views/images/profilePictures', fileName);
   
   await profilePic.mv(uploadPath);
-  account.profile_pic = `/images/profiles/${fileName}`;
+  account.profile_pic = `./Views/images/profilePictures/${fileName}`;
 }
 
   // Save the updated account
@@ -487,14 +443,14 @@ app.put('/api/submitupdate', async (req, res) => {
       const fileName = `restaurant_${restaurantId}_${Date.now()}${path.extname(image.name)}`;
       
       // Create destination path
-      const filePath = path.join(__dirname, 'public/images/restaurants', fileName);
+      const filePath = path.join(__dirname, './Views/images/restaurantPictures', fileName);
       
       try {
         
         await image.mv(filePath);
         
         // Set the image path for database update
-        updateData.resto_img = `/images/restaurants/${fileName}`;
+        updateData.resto_img = `./Views/images/restaurantPictures/${fileName}`;
         console.log("Image updated to:", updateData.resto_img);
         
         
@@ -587,7 +543,7 @@ app.post('/', async (req, res) => {
         const newRestoId = highestRestaurant ? highestRestaurant.resto_id + 1 : 1;
      
       // Default image path
-        let imagePath = '/views/CSS/RestoImages/default-restaurant.jpg';
+        let imagePath = './Views/images/restaurantPictures/default-restaurant.png';
       
         if (req.files && req.files.image) {
           const image = req.files.image;
@@ -595,7 +551,7 @@ app.post('/', async (req, res) => {
           const fileName = `restaurant_${newRestoId}_${Date.now()}${path.extname(image.name)}`;
           
           // Create destination path
-          const filePath = path.join(__dirname, 'public/images/restaurants', fileName);
+          const filePath = path.join(__dirname, './Views/images/restaurantPictures', fileName);
           
           try {
               // Move the uploaded file to the destination
@@ -603,7 +559,7 @@ app.post('/', async (req, res) => {
               
               // Set the image path for the new restaurant
               // Update imagePath instead of using undefined updateData variable
-              imagePath = `/images/restaurants/${fileName}`;
+              imagePath = `./Views/images/restaurantPictures/${fileName}`;
               console.log("Image path set to:", imagePath);
               
           } catch (imageError) {
@@ -844,38 +800,20 @@ console.log('Registered routes:');
  
 
 app._router.stack.forEach((middleware) => {
- 
-
   if (middleware.route) {
- 
- // Routes registered directly on the app
- 
- const path = middleware.route.path;
- 
- const methods = Object.keys(middleware.route.methods).join(', ').toUpperCase();
- 
- console.log(`${methods} ${path}`);
- 
-
+    // Routes registered directly on the app
+    const path = middleware.route.path;
+    const methods = Object.keys(middleware.route.methods).join(', ').toUpperCase();
+    console.log(`${methods} ${path}`);
   } else if (middleware.name === 'router') {
- 
- // Routes registered using Router
- 
- middleware.handle.stack.forEach((handler) => {
- if (handler.route) {
-   const path = handler.route.path;
-   const methods = Object.keys(handler.route.methods).join(', ').toUpperCase();
-   console.log(`${methods} ${path}`);
- }
- 
- });
- 
-
+    // Routes registered using Router
+    middleware.handle.stack.forEach((handler) => {
+      if (handler.route) {
+        const path = handler.route.path;
+        const methods = Object.keys(handler.route.methods).join(', ').toUpperCase();
+        console.log(`${methods} ${path}`);
+      }
+    });
   }
- 
-
 });
-
-
-
 /****************************************************************************************************************************************************************************/
