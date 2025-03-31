@@ -1,0 +1,32 @@
+{{! views/layouts/main.hbs }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{title}} - LaSapp</title>
+    <link rel="stylesheet" href="/css/common.css">
+    {{#each styles}}
+        <link rel="stylesheet" href="{{this}}">
+    {{/each}}
+    <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    {{> header}}
+    
+    <main>
+        {{{body}}}
+    </main>
+    
+    {{> footer}}
+    
+    {{!-- Common scripts --}}
+    <script src="/js/utils/common.js"></script>
+    
+    {{!-- Page specific scripts --}}
+    {{#each scripts}}
+        <script src="{{this}}"></script>
+    {{/each}}
+</body>
+</html>
