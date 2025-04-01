@@ -6,8 +6,9 @@ import {
     loginUser, 
     updateUIAfterLogin, 
     checkUserLoggedIn, 
+    resetLoginButton,
     toggleUserDropdown 
-} from './utils/authManager.js';
+} from './Accounts/authManager.js';
 
 import { 
     togglePopupVisibility, 
@@ -359,3 +360,6 @@ window.toggleEditProfileFrame = toggleEditProfileFrame;
 window.togglePopupCreateResto = togglePopupCreateResto;
 window.toggleDeleteConfirm = toggleDeleteConfirm;
 window.toggleReviewModal = toggleReviewModal;
+window.toggleUserDropdown = function(btnElement) {
+    toggleUserDropdown(btnElement);
+};
