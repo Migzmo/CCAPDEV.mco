@@ -104,8 +104,9 @@ router.put('/edit', async (req, res) => {
 });
 
 // Archive (soft delete) a review
-router.put('/api/archivereview/:id', async (req, res) => {
-  const reviewID = req.params.id;
+router.put('/archivereview', async (req, res) => {
+  const reviewID = req.body.review_id;
+  console.log("Received Archive Review Request:", reviewID);
   try {
     const updatedReview = await Review.findOneAndUpdate(
       { review_id: reviewID },

@@ -1,33 +1,36 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//     document.querySelectorAll(".delete-review").forEach(button => {
-//         button.addEventListener("click", async function() {
-//             const reviewID = this.getAttribute("data-id");
-//             const confirmation = confirm("Are you sure you want to archive this review?");
+ document.addEventListener("DOMContentLoaded", function() {
+     document.querySelectorAll(".delete-review").forEach(button => {
+         button.addEventListener("click", async function() {
+             const reviewID = this.getAttribute("data-id");
+             const confirmation = confirm("Are you sure you want to archive this review?");
 
-//             if (!confirmation) return;
+             if (!confirmation) return;
 
-//             try {
-//                 const response = await fetch(`/api/archivereview/${reviewID}`, {
-//                     method: "PUT",
-//                     headers: { "Content-Type": "application/json" },
-//                     body: JSON.stringify({ isAlive: false })
-//                 });
+             try {
+                const response = await fetch(`/api/reviews/archivereview`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        review_id: reviewID,
+                        isAlive: false 
+                    })
+                });
 
-//                 if (response.ok) {
-//                     alert("Review archived successfully.");
-//                     this.closest(".scroll-obj").remove(); 
-//                 } else {
-//                     const errorData = await response.json();
-//                     throw new Error(errorData.message || "Server error");
-//                 }
-//             } catch (error) {
-//                 console.error("Error archiving review:", error);
-//                 alert("Failed to archive the review! " + error.message);
-//             }
-//         });
-//     });
-// });
-
+                 if (response.ok) {
+                     alert("Review archived successfully.");
+                     this.closest(".scroll-obj").remove(); 
+                 } else {
+                     const errorData = await response.json();
+                     throw new Error(errorData.message || "Server error");
+                 }
+             } catch (error) {
+                 console.error("Error archiving review:", error);
+                 alert("Failed to archive the review! " + error.message);
+             }
+         });
+     });
+ });
+/*
 document.addEventListener("DOMContentLoaded", function() {
     let currentReviewId = null;
     const deletePopup = document.getElementById("deleteReviewConfirmPopup");
@@ -87,4 +90,4 @@ document.addEventListener("DOMContentLoaded", function() {
             toggleDeleteReviewPopup(false);
         }
     });
-});
+});*/

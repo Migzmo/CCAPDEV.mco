@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
+            
             console.log("Form submitted!");
             
             const resto_id = document.getElementById('hidden-id').value;
@@ -69,7 +74,13 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Failed to update restaurant. Please try again.');
+                
+                // Try to parse the error response
+                if (error.message && error.message.includes('already exists')) {
+                    alert('A restaurant with this name already exists. Please use a different name.');
+                } else {
+                    alert('Failed to update restaurant. Please try again.');
+                }
             })
             .finally(() => {
                 if (submitButton) submitButton.disabled = false;
@@ -79,6 +90,22 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("Form with name 'restoForm' not found!");
     }
 });
+
+// Add this function before form submission to validate time
+function validateForm() {
+    // Get opening and closing times
+    const openingTime = document.getElementById('opening-time').value;
+    const closingTime = document.getElementById('closing-time').value;
+    
+    // Compare times (as strings, in 24h format they'll compare correctly)
+    if (openingTime >= closingTime) {
+        alert('Opening time must be before closing time');
+        return false;
+    }
+    
+    return true;
+}
+
 
 // Function to populate the edit form with existing restaurant data
 function populateEditForm() {
