@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
     <style>
+        /* Additional styling to fix header size */
         .profile-header {
             display: flex;
             align-items: center;
@@ -165,9 +166,21 @@
         </div>
 
         <div class="tab-content" id="saved-content">
-            <h2>Saved Items</h2>
-            <p class="no-content">No saved items yet!</p>
-        </div>
+    <h2>Liked Restaurants</h2>
+    <div id="saved-restaurants-container">
+        {{#if savedRestaurants}}
+            {{#each savedRestaurants}}
+                <div class="saved-restaurant-card">
+                    <h3>{{this.resto_name}}</h3>
+                    <p>{{this.cuisine_id}}</p>
+                    <a href="/restaurant/{{this.resto_id}}" class="view-details">View Details</a>
+                </div>
+            {{/each}}
+        {{else}}
+            <p class="no-content">No Likes Yet!</p>
+        {{/if}}
+    </div>
+</div>
     </div>
 
     <!-- Include all the necessary modals -->
@@ -256,7 +269,138 @@
         document.addEventListener('DOMContentLoaded', function() {
             checkUserLoggedIn();
             setupProfileTabs();
+            
+            // Get the tab from URL hash if present (for direct linking to tabs)
+            if (window.location.hash === '#saved') {
+                document.querySelector('.tab-button[data-tab="saved"]').click();
+            }
         });
+
+        function setupProfileTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const tab = button.getAttribute('data-tab');
+
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach((btn) => btn.classList.remove('active'));
+                    tabContents.forEach((content) => content.classList.remove('active'));
+
+                    // Add active class to the clicked button and corresponding content
+                    button.classList.add('active');
+                    document.getElementById(`${tab}-content`).classList.add('active');
+
+                    // Fetch and render saved restaurants when the "Saved" tab is clicked
+                    if (tab === 'saved') {
+                        fetchSavedRestaurants();
+                    }
+                });
+            });
+        }
+
+        function fetchSavedRestaurants() {
+            // Use correct ID field based on what's available
+            const userId = "{{account.acc_id}}" || "{{account.id}}";
+            
+            console.log("Fetching saved restaurants for user ID:", userId);
+            
+            // Show loading state
+            const container = document.getElementById('saved-restaurants-container');
+            container.innerHTML = '<p>Loading your liked restaurants...</p>';
+
+            fetch(`/api/likes/saved-restaurants/${userId}`)
+                .then(response => {
+                    console.log("Response status:", response.status);
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(`Server responded with ${response.status}: ${err.message || 'Unknown error'}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Fetched saved restaurants:', data);
+                    container.innerHTML = ''; // Clear loading message
+
+                    if (data && data.length > 0) {
+                        data.forEach(restaurant => {
+                            const card = document.createElement('div');
+                            card.className = 'saved-restaurant-card';
+                            
+                            // Create restaurant card with image if available
+                            card.innerHTML = `
+                                <div class="restaurant-card-image">
+                                    <img src="${restaurant.image || '/Views/images/default-restaurant.jpg'}" 
+                                         alt="${restaurant.resto_name}" 
+                                         onerror="this.onerror=null; this.src='/Views/images/default-restaurant.jpg';">
+                                </div>
+                                <div class="restaurant-card-details">
+                                    <h3>${restaurant.resto_name}</h3>
+                                    <p>${restaurant.cuisine_id || 'Various Cuisine'}</p>
+                                    <div class="restaurant-card-actions">
+                                        <a href="/restaurant/${restaurant.resto_id}" class="view-details">View Details</a>
+                                        <button class="unlike-button" data-resto-id="${restaurant.resto_id}">Unlike</button>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            container.appendChild(card);
+                        });
+                        
+                        // Add event listeners to unlike buttons
+                        document.querySelectorAll('.unlike-button').forEach(button => {
+                            button.addEventListener('click', handleUnlikeRestaurant);
+                        });
+                    } else {
+                        container.innerHTML = '<p class="no-content">No Liked Restaurants Yet!</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    container.innerHTML = `<p class="error">Failed to load saved restaurants: ${error.message}</p>`;
+                    
+                    // Add a retry button
+                    const retryBtn = document.createElement('button');
+                    retryBtn.textContent = 'Try Again';
+                    retryBtn.className = 'retry-button';
+                    retryBtn.onclick = fetchSavedRestaurants;
+                    container.appendChild(retryBtn);
+                });
+        }
+        
+        function handleUnlikeRestaurant(event) {
+            const restoId = event.target.dataset.restoId;
+            const userId = "{{account.acc_id}}";
+            
+            fetch('/api/restaurants/unlike', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId, restoId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove card from UI
+                    const card = event.target.closest('.saved-restaurant-card');
+                    card.remove();
+                    
+                    // Show "no content" message if no restaurants left
+                    const container = document.getElementById('saved-restaurants-container');
+                    if (!container.querySelector('.saved-restaurant-card')) {
+                        container.innerHTML = '<p class="no-content">No Liked Restaurants Yet!</p>';
+                    }
+                } else {
+                    console.error('Failed to unlike restaurant:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error unliking restaurant:', error);
+            });
+        }
     </script>
 </body>
 </html>

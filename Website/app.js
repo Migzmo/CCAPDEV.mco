@@ -101,6 +101,7 @@ const authRoutes = require('./Routes/authRoutes');
 const userRoutes = require('./Routes/userRoutes');
 const restaurantRoutes = require('./Routes/restaurantRoutes');
 const reviewRoutes = require('./Routes/reviewRoutes');
+const likeRoutes = require('./Routes/likeRoutes');
 
 // Import Error Handlers
 const { globalErrorHandler, denyDatabaseAccess } = require('./Routes/errorHandlers');
@@ -116,6 +117,10 @@ app.get('/', (req, res) => {
 // Mount restaurant routes before user routes to avoid path conflicts
 app.use('/restaurant', restaurantRoutes);
 app.use('/profile', userRoutes); // Mount user routes at /profile prefix
+
+// Make sure the likes route is registered before the server starts
+// Update position to be earlier in the code
+app.use('/api/likes', likeRoutes);
 
 // API routes
 app.use('/api/auth', authRoutes);
@@ -151,3 +156,56 @@ app._router.stack.forEach((middleware) => {
   }
 });
 /****************************************************************************************************************************************************************************/
+// Add a restaurant to saved_restos
+
+app.post('/api/restaurants/like', async (req, res) => {
+  try {
+    const { userId, restoId } = req.body;
+
+    if (!userId || !restoId) {
+      return res.status(400).json({ success: false, message: 'User ID and Restaurant ID are required' });
+    }
+
+    const account = await Account.findOne({ acc_id: userId });
+
+    if (!account) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (!account.saved_restos.includes(restoId)) {
+      account.saved_restos.push(restoId);
+      await account.save();
+    }
+
+    res.status(200).json({ success: true, message: 'Restaurant liked and saved' });
+  } catch (error) {
+    console.error('Error liking restaurant:', error);
+    res.status(500).json({ success: false, message: 'Failed to like restaurant', error: error.message });
+  }
+});
+
+// Remove a restaurant from saved_restos
+app.post('/api/restaurants/unlike', async (req, res) => {
+  try {
+    const { userId, restoId } = req.body;
+
+    if (!userId || !restoId) {
+      return res.status(400).json({ success: false, message: 'User ID and Restaurant ID are required' });
+    }
+
+    const account = await Account.findOne({ acc_id: userId });
+
+    if (!account) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Convert to string for comparison if they're not already strings
+    account.saved_restos = account.saved_restos.filter(id => String(id) !== String(restoId));
+    await account.save();
+
+    res.status(200).json({ success: true, message: 'Restaurant unliked and removed from saved' });
+  } catch (error) {
+    console.error('Error unliking restaurant:', error);
+    res.status(500).json({ success: false, message: 'Failed to unlike restaurant', error: error.message });
+  }
+});
