@@ -54,7 +54,68 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Debug check for reviews
     checkReviewsContent();
+    
+    // Initialize click handlers for elements with inline onclick attributes
+    initializeInlineHandlers();
 });
+
+/**
+ * Initialize event handlers for elements with inline onclick attributes
+ * This replaces the inline handlers with proper event listeners
+ */
+function initializeInlineHandlers() {
+    // Replace login button onclick handler
+    const loginButton = document.getElementById('loginButton');
+    if (loginButton) {
+        loginButton.removeAttribute('onclick');
+        loginButton.addEventListener('click', togglePopup);
+    }
+    
+    // Replace close buttons onclick handlers
+    const closeLoginBtn = document.getElementById('closeLogin');
+    if (closeLoginBtn) {
+        closeLoginBtn.removeAttribute('onclick');
+        closeLoginBtn.addEventListener('click', togglePopup);
+    }
+    
+    // Replace edit profile cancel button onclick handler
+    const cancelEditBtn = document.querySelector('#editProfileFrame .secondary input[type="button"]');
+    if (cancelEditBtn) {
+        cancelEditBtn.removeAttribute('onclick');
+        cancelEditBtn.addEventListener('click', toggleEditProfileFrame);
+    }
+    
+    // Replace close edit profile button onclick handler
+    const closeEditProfileBtn = document.getElementById('closeEditProfile');
+    if (closeEditProfileBtn) {
+        closeEditProfileBtn.removeAttribute('onclick');
+        closeEditProfileBtn.addEventListener('click', toggleEditProfileFrame);
+    }
+    
+    // Replace add restaurant links/buttons onclick handlers
+    const addRestoLinks = document.querySelectorAll('a[onclick="togglePopupCreateResto()"]');
+    addRestoLinks.forEach(link => {
+        link.removeAttribute('onclick');
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            togglePopupCreateResto();
+        });
+    });
+    
+    // Replace cancel add restaurant button onclick handler
+    const cancelAddRestoBtn = document.querySelector('#createRestoFrame .secondary input[type="button"]');
+    if (cancelAddRestoBtn) {
+        cancelAddRestoBtn.removeAttribute('onclick');
+        cancelAddRestoBtn.addEventListener('click', togglePopupCreateResto);
+    }
+    
+    // Replace close add restaurant button onclick handler
+    const closeCreateRestoBtn = document.getElementById('closeCreateResto');
+    if (closeCreateRestoBtn) {
+        closeCreateRestoBtn.removeAttribute('onclick');
+        closeCreateRestoBtn.addEventListener('click', togglePopupCreateResto);
+    }
+}
 
 /**
  * Toggle the login popup visibility
@@ -63,7 +124,7 @@ function togglePopup() {
     const loginFrame = document.getElementById('loginframe');
     const backdrop = document.getElementById('backdrop');
     const registerFrame = document.getElementById('registerframe');
-    const isHidden = (loginFrame.style.display === 'none');
+    const isHidden = (loginFrame.style.display === 'none' || !loginFrame.style.display);
 
     loginFrame.style.display = isHidden ? 'block' : 'none';
     backdrop.style.display = isHidden ? 'block' : 'none';
@@ -243,7 +304,7 @@ function checkReviewsContent() {
 function togglePopupCreateResto() {
     const popup = document.getElementById('createRestoFrame');
     const backdrop = document.getElementById('backdrop');
-    const isHidden = (popup.style.display === 'none');
+    const isHidden = (popup.style.display === 'none' || !popup.style.display);
     
     popup.style.display = isHidden ? 'block' : 'none';
     backdrop.style.display = isHidden ? 'block' : 'none';
@@ -292,7 +353,7 @@ function toggleReviewModal() {
     }
 }
 
-// Make functions globally accessible
+// Make functions available globally
 window.togglePopup = togglePopup;
 window.toggleEditProfileFrame = toggleEditProfileFrame;
 window.togglePopupCreateResto = togglePopupCreateResto;
