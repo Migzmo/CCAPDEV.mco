@@ -530,14 +530,19 @@ function toggleEditProfileFrame() {
         // Get current user data to pre-populate the form
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        if (!currentUser) {
+        if (!currentUser || !currentUser.userId) {
             alert("You must be logged in to edit your profile");
             return;
         }
 
-        // Fetch user data to populate the form
-        fetch(`/api/users/${currentUser.userId}`)
-            .then(response => response.json())
+        // Fetch user data to populate the form - update to use new API endpoint
+        fetch(`/api/users/api/${currentUser.userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch profile (status ${response.status})`);
+                }
+                return response.json();
+            })
             .then(userData => {
                 document.getElementById('edit-username').value = userData.acc_name || '';
                 document.getElementById('edit-bio').value = userData.acc_bio || '';
@@ -565,7 +570,7 @@ function toggleEditProfileFrame() {
 // Fetch user profile data
 async function fetchUserProfile(userId) {
   try {
-    const response = await fetch(`/api/users/${userId}`);
+    const response = await fetch(`/api/users/api/${userId}`);
     if (!response.ok) {
         throw new Error('Failed to fetch profile');
     }
