@@ -96,7 +96,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Add new restaurant
-router.post('/', async (req, res) => {
+router.post('/create-resto', async (req, res) => {
   try {
     console.log("Received restaurant submission");
     // Find highest existing resto_id
@@ -138,7 +138,8 @@ router.post('/', async (req, res) => {
       resto_perks: req.body.perks || 'None',
       cuisine_id: req.body.cuisine_id || '',
       resto_img: imagePath,
-      resto_owner_id: 0 
+      resto_owner_id: 0 ,
+      isAlive: true  // Add this line
     });
     
     await newRestaurant.save();
@@ -148,6 +149,7 @@ router.post('/', async (req, res) => {
       resto_id: newRestoId
     });
   } catch (error) {
+    console.log("Error in restaurant submission:");
     console.error('Error adding restaurant:', error);
     res.status(500).json({
       success: false,

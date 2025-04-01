@@ -47,8 +47,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (submitButton) submitButton.disabled = true;
             
             // Send data to server 
-            fetch('/', {
+            fetch('/restaurant/create-resto', {
                 method: 'POST',
+                // 
+               
                 body: formData // Send FormData directly without Content-Type header
             })
             .then(response => {
