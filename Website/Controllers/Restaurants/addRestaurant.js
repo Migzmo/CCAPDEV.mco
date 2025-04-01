@@ -55,7 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => {
                 console.log("Response received:", response.status);
                 if (!response.ok) {
-                    throw new Error('Server error');
+                    return response.json().then(errorData => {
+                        throw new Error(JSON.stringify(errorData));
+                    });
                 }
                 return response.json();
             })
@@ -73,7 +75,19 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Failed to add restaurant. Please try again.');
+                
+                // Try to parse the error message as JSON
+                try {
+                    const errorData = JSON.parse(error.message);
+                    if (errorData.error === 'duplicate_name') {
+                        alert('Restaurant creation failed: A restaurant with this name already exists. Please use a different name.');
+                    } else {
+                        alert(`Failed to add restaurant: ${errorData.message || 'Please try again.'}`);
+                    }
+                } catch (e) {
+                    // If not JSON, show generic message
+                    alert('Failed to add restaurant. Please try again.');
+                }
             })
             .finally(() => {
                 if (submitButton) submitButton.disabled = false;

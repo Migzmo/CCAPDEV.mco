@@ -62,10 +62,13 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!currentReviewId) return;
         
         try {
-            const response = await fetch(`/api/archivereview/${currentReviewId}`, {
+            const response = await fetch(`/api/reviews/archivereview`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ isAlive: false })
+                body: JSON.stringify({ 
+                    review_id: currentReviewId,
+                    isAlive: false 
+                })
             });
 
             if (response.ok) {

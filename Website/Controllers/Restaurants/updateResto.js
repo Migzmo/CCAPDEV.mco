@@ -82,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to populate the edit form with existing restaurant data
 function populateEditForm() {
+    console.log("Populating edit form with existing restaurant data");
+    
     // Get restaurant data from the page
     const restaurantName = document.querySelector('.head-container h1').innerText;
     const restaurantAddress = document.querySelector('.information p:nth-of-type(1)').innerText;
@@ -99,6 +101,21 @@ function populateEditForm() {
         if (index < perksItems.length - 1) perksText += ', ';
     });
     
+    // Get restaurant ID from URL
+    const pathSegments = window.location.pathname.split('/');
+    const restaurantId = pathSegments[pathSegments.length - 1];
+    
+    // Add hidden field for restaurant ID if it doesn't exist
+    let hiddenIdField = document.getElementById('hidden-id');
+    if (!hiddenIdField) {
+        hiddenIdField = document.createElement('input');
+        hiddenIdField.type = 'hidden';
+        hiddenIdField.id = 'hidden-id';
+        hiddenIdField.name = 'resto_id';
+        document.forms['restoForm'].appendChild(hiddenIdField);
+    }
+    hiddenIdField.value = restaurantId;
+
     // Populate form fields
     document.getElementById('resto-name').value = restaurantName;
     
@@ -112,28 +129,78 @@ function populateEditForm() {
     // Handle time (split by dash or hyphen)
     const timeParts = restaurantTime.split('-');
     if (timeParts.length === 2) {
-        document.getElementById('opening-time').value = timeParts[0].trim();
-        document.getElementById('closing-time').value = timeParts[1].trim();
+        // Convert from 12-hour format to 24-hour format for time inputs
+        const openingTime = convertTo24Hour(timeParts[0].trim());
+        const closingTime = convertTo24Hour(timeParts[1].trim());
+        
+        document.getElementById('opening-time').value = openingTime;
+        document.getElementById('closing-time').value = closingTime;
     }
     
     document.getElementById('phone').value = restaurantPhone;
     document.getElementById('email').value = restaurantEmail;
     document.getElementById('payment').value = restaurantPayment;
     document.getElementById('perks').value = perksText;
-    document.getElementById('cuisine').value = cuisineType;
+    
+    // Set cuisine dropdown to match current cuisine
+    const cuisineSelect = document.getElementById('cuisine');
+    if (cuisineSelect) {
+        for (let i = 0; i < cuisineSelect.options.length; i++) {
+            if (cuisineSelect.options[i].text === cuisineType) {
+                cuisineSelect.selectedIndex = i;
+                break;
+            }
+        }
+    }
+    
+    console.log("Form populated successfully");
 }
 
-// Modify the existing togglePopupCreateResto function to call populateEditForm
-function togglePopupCreateResto() {
-    const popup = document.getElementById('createRestoFrame');
-    const backdrop = document.getElementById('backdrop');
+// Helper function to convert 12-hour time format to 24-hour format for inputs
+function convertTo24Hour(time12h) {
+    const [time, modifier] = time12h.split(' ');
+    let [hours, minutes] = time.split(':');
     
-    if (popup.style.display === 'block') {
-        popup.style.display = 'none';
-        backdrop.style.display = 'none';
+    if (hours === '12') {
+        hours = '00';
+    }
+    
+    if (modifier === 'PM' && hours !== '00') {
+        hours = parseInt(hours, 10) + 12;
+    }
+    
+    return `${hours.padStart(2, '0')}:${minutes}`;
+}
+
+/**
+ * Toggle popup for creating/editing a restaurant
+ */
+function togglePopupCreateResto() {
+    const backdrop = document.getElementById('backdrop');
+    const createRestoFrame = document.getElementById('createRestoFrame');
+    
+    if (createRestoFrame && backdrop) {
+        if (createRestoFrame.style.display === 'block') {
+            // Closing the form
+            createRestoFrame.style.display = 'none';
+            backdrop.style.display = 'none';
+        } else {
+            // Opening the form - populate with existing data if editing
+            createRestoFrame.style.display = 'block';
+            backdrop.style.display = 'block';
+            
+            // Check if we're on a restaurant page (editing mode)
+            const isEditMode = window.location.pathname.includes('/restaurant/');
+            if (isEditMode && typeof populateEditForm === 'function') {
+                // Set form title to indicate editing
+                const formTitle = createRestoFrame.querySelector('.createResto-content h2');
+                if (formTitle) formTitle.textContent = 'Edit Restaurant';
+                
+                // Add a small delay to ensure DOM is ready
+                setTimeout(populateEditForm, 100);
+            }
+        }
     } else {
-        popup.style.display = 'block';
-        backdrop.style.display = 'block';
-        populateEditForm(); // Call this function when opening the form
+        console.error('Popup elements not found');
     }
 }

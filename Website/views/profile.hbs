@@ -401,6 +401,23 @@
                 console.error('Error unliking restaurant:', error);
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    const tab = this.getAttribute('data-tab');
+                    this.classList.add('active');
+                    document.getElementById(`${tab}-content`).classList.add('active');
+                });
+            });
+        });
     </script>
 </body>
 </html>

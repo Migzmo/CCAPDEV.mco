@@ -29,35 +29,37 @@ import {
     setupDeleteAccountHandlers 
 } from './Accounts/deleteAccount.js';
 
-// Wait for DOM to be fully loaded before attaching event handlers
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if user is logged in on page load
+    clearStaleUserData();
+    
     checkUserLoggedIn();
     
-    // Set up profile tabs if on profile page
     setupProfileTabs();
-    
-    // Set up profile picture preview
     setupProfilePicPreview();
-    
-    // Set up profile update form handler
     setupProfileUpdateHandler();
-    
-    // Set up delete account handlers
     setupDeleteAccountHandlers();
-    
-    // Set up registration listeners
     setupRegistrationListeners();
-    
-    // Set up login listeners
     setupLoginListeners();
-    
-    // Debug check for reviews
     checkReviewsContent();
     
-    // Initialize click handlers for elements with inline onclick attributes
     initializeInlineHandlers();
 });
+
+function clearStaleUserData() {
+    const userData = localStorage.getItem('currentUser');
+    if (userData) {
+        try {
+            const user = JSON.parse(userData);
+            if (!user || !user.userId || !user.username) {
+                console.log('Clearing invalid user session data');
+                localStorage.removeItem('currentUser');
+            }
+        } catch (e) {
+            console.log('Clearing corrupted user session data');
+            localStorage.removeItem('currentUser');
+        }
+    }
+}
 
 /**
  * Initialize event handlers for elements with inline onclick attributes
@@ -121,18 +123,16 @@ function initializeInlineHandlers() {
  * Toggle the login popup visibility
  */
 function togglePopup() {
-    const loginFrame = document.getElementById('loginframe');
+    const popup = document.getElementById('loginframe');
     const backdrop = document.getElementById('backdrop');
-    const registerFrame = document.getElementById('registerframe');
-    const isHidden = (loginFrame.style.display === 'none' || !loginFrame.style.display);
-
-    loginFrame.style.display = isHidden ? 'block' : 'none';
+    const isHidden = (popup.style.display === 'none' || !popup.style.display);
+    
+    popup.style.display = isHidden ? 'block' : 'none';
     backdrop.style.display = isHidden ? 'block' : 'none';
-    registerFrame.style.display = 'none';
 
     if (isHidden) {
         document.body.style.pointerEvents = 'none';
-        loginFrame.style.pointerEvents = 'auto';
+        popup.style.pointerEvents = 'auto';
         backdrop.style.pointerEvents = 'auto';
     } else {
         document.body.style.pointerEvents = 'auto';

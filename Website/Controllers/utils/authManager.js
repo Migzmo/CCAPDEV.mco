@@ -48,13 +48,19 @@ function updateUIAfterLogin() {
     const userBtn = document.getElementById('loginButton');
     if (!userBtn) return;
     
-    userBtn.textContent = 'USER PROFILE';
-    userBtn.removeAttribute('onclick');
-
-    userBtn.addEventListener('click', function(e) {
+    const newBtn = document.createElement('button');
+    newBtn.id = 'loginButton';
+    newBtn.textContent = 'USER PROFILE';
+    
+    userBtn.parentNode.replaceChild(newBtn, userBtn);
+    
+    newBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        toggleUserDropdown(userBtn);  // Pass the button reference
+        e.stopPropagation();
+        toggleUserDropdown(this);
     });
+    
+    console.log('UI updated for logged-in user');
 }
 
 /**
@@ -88,38 +94,35 @@ function resetLoginButton() {
     const userBtn = document.getElementById('loginButton');
     if (!userBtn) return;
     
-    userBtn.textContent = 'LOGIN';
-    userBtn.setAttribute('onclick', 'togglePopup()');
+    const newBtn = document.createElement('button');
+    newBtn.id = 'loginButton';
+    newBtn.textContent = 'LOGIN';
     
-    // Remove any existing event listeners
-    const newBtn = userBtn.cloneNode(true);
     userBtn.parentNode.replaceChild(newBtn, userBtn);
     
-    // Clear any invalid data
+    newBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        togglePopup();
+    });
+
     localStorage.removeItem('currentUser');
+    console.log('Login button reset to default state');
 }
 
-/**
- * Toggle the user dropdown menu
- * @param {HTMLElement} userBtn - The user button element
- */
 function toggleUserDropdown(userBtn) {
     const existingDropdown = document.querySelector('.user-dropdown');
 
-    // Remove existing dropdown if it exists
     if (existingDropdown) {
         existingDropdown.remove();
         return;
     }
 
-    // Get current user data from localStorage
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (!currentUser) {
         console.error('No user data found');
         return;
     }
 
-    // Create dropdown menu
     const menu = document.createElement('div');
     menu.className = 'user-dropdown';
     menu.innerHTML = `
@@ -161,6 +164,7 @@ function toggleUserDropdown(userBtn) {
 
     document.getElementById('logoutBtn').addEventListener('click', function() {
         localStorage.removeItem('currentUser');
+        resetLoginButton();
         location.reload();
     });
 

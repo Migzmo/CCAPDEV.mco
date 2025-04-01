@@ -99,6 +99,21 @@ router.get('/:id', async (req, res) => {
 router.post('/create-resto', async (req, res) => {
   try {
     console.log("Received restaurant submission");
+
+    // Check if restaurant with same name already exists
+    const existingRestaurant = await Restaurant.findOne({ 
+      resto_name: req.body.name,
+      isAlive: true 
+    });
+    
+    if (existingRestaurant) {
+      return res.status(409).json({ 
+        success: false, 
+        message: 'A restaurant with this name already exists',
+        error: 'duplicate_name'
+      });
+    }
+    
     // Find highest existing resto_id
     const highestRestaurant = await Restaurant.findOne().sort('-resto_id');
     const newRestoId = highestRestaurant ? highestRestaurant.resto_id + 1 : 1;
