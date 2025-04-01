@@ -5,9 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>LaSapp</title>
         <link rel="stylesheet" href="/views/restohbsstyle.css"/>
-        <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet"> 
-        <script src = "javascript/web.js"></script>
-        <img src="/views/CSS/RestoImages/logo.png" id="logoImg" alt="logo" height="70" width="70">
+        <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
+        <img src="../Views/images/assets/logo.png" id="logoImg" alt="logo" height="70" width="70">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -26,7 +25,7 @@
             <!-- First Header -->
             <div class="navbar-container">
                 <a href="/" id = "logoImg">
-                <img src="/views/CSS/RestoImages/logo.png" alt="Logo" width="70" height="70">
+                <img src="../Views/images/assets/logo.png" alt="Logo" width="70" height="70">
                 </a>
                     <div class="logo">LaSapp</div>
                 
@@ -196,8 +195,8 @@
                 </div>
                 <!-- Header -->
                 <div class="classheader">
-                    <button onclick="toggleHeart()" id="btnh1" class="btn">
-                        <i id="heartIcon" class="fa-solid fa-heart heart"></i>
+                    <button onclick="toggleHeart({{restaurant.id}})" id="btnh1" class="btn">
+                        <i id="heartIcon" class="fa-solid fa-heart heart {{#if isLiked}}liked{{/if}}"></i>
                     </button>
                     <div class="head-container">
                         <h1>{{restaurant.name}}</h1>  
@@ -351,12 +350,12 @@
                             <h2>
                                 {{#if this.account_id}}
                                     <a href="/profile/{{this.account_id.acc_id}}">
-                                        <img src="{{this.account_id.profile_pic}}" alt="Profile" class="profile-pic" onerror="this.src='/images/profiles/default-profile.png'"> 
+                                        <img src="{{this.account_id.profile_pic}}" alt="Profile" class="profile-pic" onerror="this.src='/images/profilePictures/default-profile.png'"> 
                                         {{this.account_id.acc_name}}
                                     </a>
                                 {{else}}
                                     <span>
-                                        <img src="/images/profiles/default-profile.png" alt="Profile" class="profile-pic"> 
+                                        <img src="/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic"> 
                                         Anonymous
                                     </span>
                                 {{/if}}
@@ -393,21 +392,22 @@
 
         <!-- Footer -->
         <footer>
-            <img src="/views/CSS/RestoImages/logo.png" id="footerLogo" alt="logo" height="70" width="70">
+            <img src="../Views/images/assets/logo.png" id="footerLogo" alt="logo" height="70" width="70">
             <div class="logo">LaSapp</div>
 
             <div class="footerIcon">
                 <a href="https://www.facebook.com" target="_blank">
-                    <img src="/views/CSS/RestoImages/icons/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
+                    <img src="./images/assets/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
                 </a>
                 <a href="https://www.instagram.com" target="_blank">
-                    <img src="/views/CSS/RestoImages/icons/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
+                    <img src="./images/assets/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
                 </a>
             </div>
         </footer>
 
-        <script src="/javascript/RestoInfo.js"></script>
-        <script>
+        <script src="../Controllers/RestoInfo.js"></script>
+        <script src="../Controllers/Restaurants/likeRestaurant.js"></script>
+        {{!-- <script>
             function toggleHeart() {
                 const heartIcon = document.getElementById("heartIcon");
                 heartIcon.classList.toggle("liked");
@@ -418,13 +418,13 @@
                     heartIcon.style.color = "gray";
                 }
             }
-        </script>
-       <script src='/JavaScript/directoryScript.js'></script>
-        <script src='/JavaScript/updateResto.js'></script>
-        <script src='/JavaScript/deleteResto.js'></script>
-        <script src='/JavaScript/addReview.js'></script>
-        <script src='/JavaScript/editReview.js'></script>
-        <script src ='/JavaScript/deleteReview.js'></script>
+        </script> --}}
+       <script src='../Controllers/directoryScript.js'></script>
+        <script src='../Controllers/Restaurants/updateResto.js'></script>
+        <script src='../Controllers/Restaurants/deleteResto.js'></script>
+        <script src='../Controllers/Reviews/addReview.js'></script>
+        <script src='../Controllers/Reviews/editReview.js'></script>
+        <script src ='../Controllers/Reviews/deleteReview.js'></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Fix profile links in reviews
@@ -444,7 +444,7 @@
                 const profileImages = document.querySelectorAll('.profile-pic');
                 profileImages.forEach(img => {
                     img.onerror = function() {
-                        this.src = '/images/profiles/default-profile.png';
+                        this.src = './images/profilePictures/default-profile.png';
                     };
                 });
             });

@@ -1,177 +1,406 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>LaSapp</title>
-        <link rel="stylesheet" href="/views//CSS/profile.css">
-        <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet"> 
-        <script src = "javascript/web.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - {{account.name}}</title>
+    <link rel="stylesheet" href="/Views/css/profile.css">
+    <link rel="stylesheet" href="/Views/css/directory.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styling to fix header size */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .profile-image {
+            width: 120px; /* Reduced size */
+            height: 120px; /* Reduced size */
+            margin-right: 30px;
+            flex-shrink: 0;
+        }
+        
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 60px; /* Half of width/height for circle */
+            object-fit: cover;
+            border: 3px solid #2E7D32;
+        }
+        
+        .profile-info {
+            flex-grow: 1;
+        }
+        
+        .profile-info h1 {
+            font-size: 1.8rem; /* Reduced size */
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .username {
+            font-size: 1rem; /* Reduced size */
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .bio {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            max-width: 600px;
+        }
+        
+        .edit-profile-btn {
+            background-color: #2E7D32;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .edit-profile-btn:hover {
+            background-color: #1B5E20;
+        }
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        /* Tab styling improvements */
+        .profile-tabs {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .tab-button.active {
+            color: #2E7D32;
+        }
+        
+        .tab-button.active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #2E7D32;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Ribbon -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/">LaSapp</a>
+        </div>
+        <ul class="dashboard">
+            <li><a href="/">DIRECTORY</a></li>
+            <li><button onclick="togglePopup()" id="loginButton">LOGIN</button></li>
+        </ul>
+    </nav>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Lexend:wght@100..900&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <!-- Navigation Bar -->
-        <header class="navbar">
-            <!-- First Header -->
-            <div class="navbar-container">
-                <a href="/" id = "logoImg">
-                <img src="/views/CSS/RestoImages/logo.png" alt="Logo" width="70" height="70">
-                </a>
-                    <div class="logo">LaSapp</div>
-                
-                <div class="options">
-                    <ul>
-                        <li><a href="/">DIRECTORY</a></li>
-                        <li><a href="#">ACCOUNT</a></li>
-                    </ul>
-                </div>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="{{account.profile_pic}}" alt="Profile Picture" onerror="this.onerror=null; this.src='/Views/images/profilePictures/default-profile.png';">
             </div>
-        </header>
-
-        <div class="profile-container">
-            <div class="profile-header">
-                <div class="profile-info">
-                    <div class="profile-picture">
-                        <img src="{{account.profile_pic}}" alt="{{account.name}}'s profile" onerror="this.src='/images/profiles/default-profile.png'">
-                    </div>
-                    <div class="profile-details">
-                        <h2>{{account.name}}</h2>
-                        <p class="username">@{{account.username}}</p>
-                    </div>
-                </div>
+            <div class="profile-info">
+                <h1>{{account.name}}</h1>
+                <p class="username">@{{account.username}}</p>
+                {{#if account.bio}}
+                <p class="bio">{{account.bio}}</p>
+                {{else}}
+                <p class="bio">No bio provided</p>
+                {{/if}}
                 {{#if isOwnProfile}}
-                <button class="edit-profile-button" onclick="toggleEditProfileFrame()">Edit Profile</button>
+                <button class="edit-profile-btn" onclick="toggleEditProfileFrame()">Edit Profile</button>
                 {{/if}}
             </div>
-            
-            <div class="profile-bio">
-                <h3>About</h3>
-                <p>{{account.bio}}</p>
+        </div>
+
+        <div class="profile-tabs">
+            <button class="tab-button active" data-tab="reviews">Reviews</button>
+            <button class="tab-button" data-tab="saved">Saved</button>
+        </div>
+
+        <div class="tab-content active" id="reviews-content">
+            <h2>Reviews</h2>
+            {{#if reviews.length}}
+                {{#each reviews}}
+                <div class="review-card">
+                    <div class="review-header">
+                        <h3><a href="/restaurant/{{this.restaurantId}}">{{this.restaurantName}}</a></h3>
+                        <div class="review-rating">
+                            {{#for 0 this.rating}}⭐{{/for}}
+                            <span class="review-date">{{this.date}}</span>
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <p>{{this.review}}</p>
+                    </div>
+                </div>
+                {{/each}}
+            {{else}}
+                <p class="no-content">No reviews yet!</p>
+            {{/if}}
+        </div>
+
+        <div class="tab-content" id="saved-content">
+    <h2>Liked Restaurants</h2>
+    <div id="saved-restaurants-container">
+        {{#if savedRestaurants}}
+            {{#each savedRestaurants}}
+                <div class="saved-restaurant-card">
+                    <h3>{{this.resto_name}}</h3>
+                    <p>{{this.cuisine_id}}</p>
+                    <a href="/restaurant/{{this.resto_id}}" class="view-details">View Details</a>
+                </div>
+            {{/each}}
+        {{else}}
+            <p class="no-content">No Likes Yet!</p>
+        {{/if}}
+    </div>
+</div>
+    </div>
+
+    <!-- Include all the necessary modals -->
+    <div id="loginframe">
+        <!-- Login frame content -->
+        <div class="loginframe-content">
+            <div id="loginframe_left">
+                <h2>Log in or sign up now!</h2>
+                <div class="button-container">
+                    <button class="signin-button"><span id="mail-logo"></span>Continue with Account</button>
+                    <button class="login-button"><span id="google-logo"></span>Login with Gmail</button>
+                </div>
+                <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
+                <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="">DLSU Student Handbook</a> and/or <a href="">Privacy Policy</a> of LaSapp.</p>
             </div>
-            
-            <div class="profile-content">
-                <div class="profile-tabs">
-                    <button class="tab-button active" data-tab="reviews">Reviews</button>
-                </div>
-                
-                <div class="tab-content active" id="reviews-content">
-                    {{#if reviews.length}}
-                        <div class="reviews-list">
-                            {{#each reviews}}
-                                <div class="review-card">
-                                    <div class="review-header">
-                                        <a href="/restaurant/{{this.restaurantId}}" class="restaurant-link">{{this.restaurantName}}</a>
-                                        <div class="review-rating">
-                                            {{#for 0 this.rating includeIndex=false}}★{{/for}}{{#for this.rating 5 includeIndex=false}}☆{{/for}}
-                                        </div>
-                                    </div>
-                                    <p class="review-text">{{this.review}}</p>
-                                    <span class="review-date">Posted on {{this.date}}</span>
-                                </div>
-                            {{/each}}
-                        </div>
-                    {{else}}
-                        <div class="empty-state">
-                            <p>No reviews yet.</p>
-                        </div>
-                    {{/if}}
-                </div>
-                
-                <div class="tab-content" id="restaurants-content">
-                    {{#if savedRestaurants.length}}
-                        <div class="saved-restaurants-grid">
-                            {{#each savedRestaurants}}
-                                <div class="saved-restaurant-card">
-                                    <a href="/restaurant/{{this.id}}">
-                                        <img src="{{this.image}}" alt="{{this.name}}">
-                                        <div class="saved-restaurant-info">
-                                            <h3>{{this.name}}</h3>
-                                            <p>{{this.cuisine}}</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            {{/each}}
-                        </div>
-                    {{else}}
-                        <div class="empty-state">
-                            <p>No favorite restaurants yet.</p>
-                        </div>
-                    {{/if}}
-                </div>
+            <div id="loginframe_right">
+                <button id="closeLogin" onclick="togglePopup()">&times</button>
             </div>
         </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileFrame" style="display: none;">
+        <div class="editProfile-content">
+            <div id="editProfile_left">
+                <h2 id="edit-profile-title">Edit Your Profile</h2>
+                <form id="edit-profile-form" enctype="multipart/form-data">
+                    <input type="hidden" name="userId" value="{{account.id}}">
+                    <div class="form-group">
+                        <label for="edit-username">Name</label>
+                        <input type="text" id="edit-username" name="username" placeholder="Your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-password">Password</label>
+                        <input type="password" id="edit-password" name="password" placeholder="Change your password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-bio">Bio</label>
+                        <textarea id="edit-bio" name="bio" placeholder="Tell us about yourself"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-profile-pic">Profile Picture</label>
+                        <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*">
+                        <div id="profile-pic-preview"></div>
+                    </div>
+
+                    <div class="form-group danger-zone">
+                        <h4>Danger Zone</h4>
+                        <p>Deleting your account will remove all your data from our system.</p>
+                        <button type="button" id="delete-account-btn" class="delete-account-button">Delete Account</button>
+                    </div>
+
+                    <div class="button-section">
+                        <div class="input-box button">
+                            <input type="submit" value="Save Changes">
+                        </div>
+                        <div class="input-box button secondary">
+                            <input type="button" value="Cancel" onclick="toggleEditProfileFrame()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="editProfile_right"></div>
+            <button id="closeEditProfile" onclick="toggleEditProfileFrame()">&times;</button>
+        </div>
+    </div>
+
+    <!-- Delete Account Confirmation Dialog -->
+    <div id="deleteAccountConfirm" style="display: none;">
+        <h3>Delete Account?</h3>
+        <p>This action cannot be undone. Your account will be permanently deactivated.</p>
+        <div class="confirm-buttons">
+            <button id="cancelDeleteAccount">Cancel</button>
+            <button id="confirmDeleteAccount">Yes, Delete Account</button>
+        </div>
+    </div>
+
+    <div id="backdrop" style="display: none;"></div>
+
+    <!-- Scripts -->
+    <script src="/Controllers/directoryScript.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUserLoggedIn();
+            setupProfileTabs();
             
-        <script src="javascript/RestoInfo.js"></script>
-        <script>
-            // Initialize profile tabs on page load
-            document.addEventListener('DOMContentLoaded', function() {
-                setupProfileTabs();
-                
-                // Add error handler for profile images
-                const profileImages = document.querySelectorAll('.profile-picture img');
-                profileImages.forEach(img => {
-                    img.onerror = function() {
-                        this.src = '/images/profiles/default-profile.png';
-                    };
+            // Get the tab from URL hash if present (for direct linking to tabs)
+            if (window.location.hash === '#saved') {
+                document.querySelector('.tab-button[data-tab="saved"]').click();
+            }
+        });
+
+        function setupProfileTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const tab = button.getAttribute('data-tab');
+
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach((btn) => btn.classList.remove('active'));
+                    tabContents.forEach((content) => content.classList.remove('active'));
+
+                    // Add active class to the clicked button and corresponding content
+                    button.classList.add('active');
+                    document.getElementById(`${tab}-content`).classList.add('active');
+
+                    // Fetch and render saved restaurants when the "Saved" tab is clicked
+                    if (tab === 'saved') {
+                        fetchSavedRestaurants();
+                    }
                 });
             });
-        </script>
-        <script src="/JavaScript/directoryScript.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Check if the viewer is the profile owner
-                function checkProfileOwner() {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    const profileId = {{account.id}}; // The account ID from the server
-                    
-                    const isOwnProfile = currentUser && currentUser.userId === profileId;
-                    
-                    // Show/hide the edit profile button
-                    const editProfileButton = document.querySelector('.edit-profile-button');
-                    if (editProfileButton) {
-                        editProfileButton.style.display = isOwnProfile ? 'block' : 'none';
+        }
+
+        function fetchSavedRestaurants() {
+            // Use correct ID field based on what's available
+            const userId = "{{account.acc_id}}" || "{{account.id}}";
+            
+            console.log("Fetching saved restaurants for user ID:", userId);
+            
+            // Show loading state
+            const container = document.getElementById('saved-restaurants-container');
+            container.innerHTML = '<p>Loading your liked restaurants...</p>';
+
+            fetch(`/api/likes/saved-restaurants/${userId}`)
+                .then(response => {
+                    console.log("Response status:", response.status);
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(`Server responded with ${response.status}: ${err.message || 'Unknown error'}`);
+                        });
                     }
-                    
-                    // Update the navigation for other user profiles
-                    if (!isOwnProfile && currentUser) {
-                        // You're viewing someone else's profile while logged in
-                        const backToYourProfileBtn = document.createElement('button');
-                        backToYourProfileBtn.className = 'back-to-profile-button';
-                        backToYourProfileBtn.textContent = 'Back to Your Profile';
-                        backToYourProfileBtn.addEventListener('click', function() {
-                            window.location.href = `/profile/${currentUser.userId}`;
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Fetched saved restaurants:', data);
+                    container.innerHTML = ''; // Clear loading message
+
+                    if (data && data.length > 0) {
+                        data.forEach(restaurant => {
+                            const card = document.createElement('div');
+                            card.className = 'saved-restaurant-card';
+                            
+                            // Create restaurant card with image if available
+                            card.innerHTML = `
+                                <div class="restaurant-card-image">
+                                    <img src="${restaurant.image || '/Views/images/default-restaurant.jpg'}" 
+                                         alt="${restaurant.resto_name}" 
+                                         onerror="this.onerror=null; this.src='/Views/images/default-restaurant.jpg';">
+                                </div>
+                                <div class="restaurant-card-details">
+                                    <h3>${restaurant.resto_name}</h3>
+                                    <p>${restaurant.cuisine_id || 'Various Cuisine'}</p>
+                                    <div class="restaurant-card-actions">
+                                        <a href="/restaurant/${restaurant.resto_id}" class="view-details">View Details</a>
+                                        <button class="unlike-button" data-resto-id="${restaurant.resto_id}">Unlike</button>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            container.appendChild(card);
                         });
                         
-                        // Add the button to the profile header
-                        const profileHeader = document.querySelector('.profile-header');
-                        profileHeader.appendChild(backToYourProfileBtn);
+                        // Add event listeners to unlike buttons
+                        document.querySelectorAll('.unlike-button').forEach(button => {
+                            button.addEventListener('click', handleUnlikeRestaurant);
+                        });
+                    } else {
+                        container.innerHTML = '<p class="no-content">No Liked Restaurants Yet!</p>';
                     }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    container.innerHTML = `<p class="error">Failed to load saved restaurants: ${error.message}</p>`;
+                    
+                    // Add a retry button
+                    const retryBtn = document.createElement('button');
+                    retryBtn.textContent = 'Try Again';
+                    retryBtn.className = 'retry-button';
+                    retryBtn.onclick = fetchSavedRestaurants;
+                    container.appendChild(retryBtn);
+                });
+        }
+        
+        function handleUnlikeRestaurant(event) {
+            const restoId = event.target.dataset.restoId;
+            const userId = "{{account.acc_id}}";
+            
+            fetch('/api/restaurants/unlike', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId, restoId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove card from UI
+                    const card = event.target.closest('.saved-restaurant-card');
+                    card.remove();
+                    
+                    // Show "no content" message if no restaurants left
+                    const container = document.getElementById('saved-restaurants-container');
+                    if (!container.querySelector('.saved-restaurant-card')) {
+                        container.innerHTML = '<p class="no-content">No Liked Restaurants Yet!</p>';
+                    }
+                } else {
+                    console.error('Failed to unlike restaurant:', data.message);
                 }
-                
-                // Run the check
-                checkProfileOwner();
-                
-                // Handle profile picture loading errors
-                const profileImg = document.querySelector('.profile-picture img');
-                if (profileImg) {
-                    profileImg.onerror = function() {
-                        this.src = '/images/profiles/default-profile.png';
-                        console.log('Profile image failed to load, using default');
-                    };
-                }
-                
-                // Setup profile tabs
-                setupProfileTabs();
+            })
+            .catch(error => {
+                console.error('Error unliking restaurant:', error);
             });
-        </script>
-    </body>
+        }
+    </script>
+</body>
 </html>
