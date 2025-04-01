@@ -312,6 +312,13 @@ function togglePopupCreateResto() {
     if (isHidden) {
         document.body.style.pointerEvents = 'none';
         popup.style.pointerEvents = 'auto';
+        
+        // Check if we're editing a restaurant (only call populateEditForm on restaurant detail page)
+        if (window.location.pathname.includes('/restaurant/') && 
+            typeof populateEditForm === 'function') {
+            console.log("Populating edit form");
+            populateEditForm();
+        }
     } else {
         document.body.style.pointerEvents = 'auto';
     }

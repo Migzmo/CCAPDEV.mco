@@ -128,4 +128,31 @@ router.put('/archivereview', async (req, res) => {
   }
 });
 
+// Get a single review by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const reviewId = parseInt(req.params.id, 10);
+    
+    if (isNaN(reviewId)) {
+      return res.status(400).json({ success: false, message: 'Invalid review ID' });
+    }
+    
+    const review = await Review.findOne({ review_id: reviewId });
+    
+    if (!review) {
+      return res.status(404).json({ success: false, message: 'Review not found' });
+    }
+    
+    res.status(200).json({
+      success: true,
+      review_id: review.review_id,
+      rating: review.rating,
+      review: review.review,
+      account_id: review.account_id
+    });
+  } catch (error) {
+    console.error('Error fetching review:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch review', error: error.message });
+  }
+});
 module.exports = router;

@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (submitButton) submitButton.disabled = true;
             
             // Send data to server - FIX: Update the URL endpoint
-            fetch('/api/reviews/update', {
-                method: 'POST',
+            fetch('/api/reviews/edit', {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reviewData)
             })
