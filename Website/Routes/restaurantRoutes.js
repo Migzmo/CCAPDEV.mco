@@ -11,8 +11,19 @@ const { Restaurant, Review } = require('../Models/lasappDB');
 router.get('/', async (req, res) => {
   try {
     const restaurants = await Restaurant.find({isAlive: true});
-    console.log("Successfully found restaurants:", restaurants);
-    res.render('LaSapp', { restaurants: restaurants });
+    
+    // Fix image paths for all restaurants to use absolute paths
+    const formattedRestaurants = restaurants.map(resto => {
+      const restaurant = resto.toObject();
+      // Check if image path starts with './' and convert to absolute path
+      if (restaurant.resto_img && restaurant.resto_img.startsWith('./')) {
+        restaurant.resto_img = '/' + restaurant.resto_img.substring(2);
+      }
+      return restaurant;
+    });
+    
+    console.log("Successfully found restaurants:", formattedRestaurants);
+    res.render('LaSapp', { restaurants: formattedRestaurants });
   } catch (err) {
     console.error('Error fetching restaurants:', err);
     res.status(500).send('Server Error');
@@ -55,13 +66,19 @@ router.get('/:id', async (req, res) => {
       console.log(`Found ${reviews.length} reviews`);
     }
     
+    // Convert relative image path to absolute path
+    let imagePath = restaurant.resto_img;
+    if (imagePath && imagePath.startsWith('./')) {
+      imagePath = '/' + imagePath.substring(2);
+    }
+    
     // Render restaurant page
     res.render('restaurant', {
       restaurant: {
         id: restaurant.resto_id,
         name: restaurant.resto_name,
         location: restaurant.resto_address,
-        image: restaurant.resto_img,
+        image: imagePath, // Use the corrected path
         address: restaurant.resto_address,
         time: restaurant.resto_time,
         phone: restaurant.resto_phone,
@@ -86,8 +103,8 @@ router.post('/', async (req, res) => {
     const highestRestaurant = await Restaurant.findOne().sort('-resto_id');
     const newRestoId = highestRestaurant ? highestRestaurant.resto_id + 1 : 1;
     
-    // Default image path
-    let imagePath = './Views/images/restaurantPictures/default-restaurant.png';
+    // Default image path - use absolute path
+    let imagePath = '/Views/images/restaurantPictures/default-restaurant.png';
     
     if (req.files && req.files.image) {
       const image = req.files.image;
@@ -100,8 +117,8 @@ router.post('/', async (req, res) => {
         // Move the uploaded file to the destination
         await image.mv(filePath);
         
-        // Set the image path for the new restaurant
-        imagePath = `./Views/images/restaurantPictures/${fileName}`;
+        // Set the image path as absolute path for the new restaurant
+        imagePath = `/Views/images/restaurantPictures/${fileName}`;
         console.log("Image path set to:", imagePath);
         
       } catch (imageError) {
@@ -175,8 +192,8 @@ router.put('/update', async (req, res) => {
       try {
         await image.mv(filePath);
         
-        // Set the image path for database update
-        updateData.resto_img = `./Views/images/restaurantPictures/${fileName}`;
+        // Set the image path for database update using absolute path
+        updateData.resto_img = `/Views/images/restaurantPictures/${fileName}`;
         console.log("Image updated to:", updateData.resto_img);
         
       } catch (imageError) {

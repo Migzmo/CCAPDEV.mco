@@ -7,18 +7,62 @@ const router = express.Router();
 const path = require('path');
 const { Account, Review, Restaurant } = require('../Models/lasappDB');
 
-// Render profile page (HTML route) - updated path for the new mounting point
+// API route handler for retrieving user data
+// Important: This route must come before the HTML route handler
+router.get('/api/:id', async (req, res) => {
+  try {
+    console.log(`API request for user ${req.params.id}`);
+    
+    // Validate that id is a number
+    if (!req.params.id || req.params.id === 'undefined' || req.params.id === 'null') {
+      return res.status(400).json({ success: false, message: 'User ID is required' });
+    }
+    
+    const userId = parseInt(req.params.id, 10);
+    
+    // Check that the parsed userId is a valid number
+    if (isNaN(userId)) {
+      console.log(`Invalid user ID format: "${req.params.id}"`);
+      return res.status(400).json({ success: false, message: 'Invalid user ID format' });
+    }
+    
+    const account = await Account.findOne({ acc_id: userId });
+    
+    if (!account) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    
+    // Set appropriate content type
+    res.setHeader('Content-Type', 'application/json');
+    
+    // Return user data
+    res.json({
+      acc_id: account.acc_id,
+      acc_name: account.acc_name,
+      acc_username: account.acc_username,
+      acc_bio: account.acc_bio,
+      profile_pic: account.profile_pic,
+      acc_type: account.acc_type
+    });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// Render profile page (HTML route)
 router.get('/:id', async function (req, res) {
   try {
+    // Check if id is numeric before parsing
+    if (!/^\d+$/.test(req.params.id)) {
+      console.log(`Invalid profile ID format: "${req.params.id}"`);
+      return res.status(400).send('Invalid account ID: Must be a number');
+    }
+    
     const accountId = parseInt(req.params.id, 10);
     console.log(`Account ID: ${accountId}`);
     
-    // Validate accountId is a valid number
-    if (isNaN(accountId)) {
-      return res.status(400).send('Invalid account ID');
-    }
-    
-    // Get the current user ID from the query string if available (for determining if it's own profile)
+    // Get the current user ID from the query string if available
     const currentUserId = req.query.currentUser ? parseInt(req.query.currentUser) : null;
     
     // Find the account
@@ -72,7 +116,8 @@ router.get('/:id', async function (req, res) {
         name: account.acc_name,
         username: account.acc_username,
         bio: account.acc_bio,
-        profile_pic: account.profile_pic || './Views/images/profilePictures/default-profile.png'
+        // Use absolute path for profile pic to avoid relative path issues
+        profile_pic: account.profile_pic || '/Views/images/profilePictures/default-profile.png'
       },
       isOwnProfile: isOwnProfile,
       reviews: formattedReviews
@@ -80,47 +125,6 @@ router.get('/:id', async function (req, res) {
   } catch(err) {
     console.error(err);
     res.status(500).send('Server Error');
-  }
-});
-
-// Get user information as JSON (API route)
-router.get('/:id', async (req, res) => {
-  try {
-    // Validate that id is a number first, before trying to parse it
-    if (!req.params.id || req.params.id === 'undefined' || req.params.id === 'null') {
-      return res.status(400).json({ success: false, message: 'User ID is required' });
-    }
-    
-    const userId = parseInt(req.params.id, 10);
-    
-    // Check that the parsed userId is actually a valid number
-    if (isNaN(userId)) {
-      console.log(`Invalid user ID format: "${req.params.id}"`);
-      return res.status(400).json({ success: false, message: 'Invalid user ID format' });
-    }
-    
-    console.log(`API request for user ${userId}`);
-    const account = await Account.findOne({ acc_id: userId });
-    
-    if (!account) {
-      return res.status(404).json({ success: false, message: 'User not found' });
-    }
-    
-    // Set appropriate content type
-    res.setHeader('Content-Type', 'application/json');
-    
-    // Return user data
-    res.json({
-      acc_id: account.acc_id,
-      acc_name: account.acc_name,
-      acc_username: account.acc_username,
-      acc_bio: account.acc_bio,
-      profile_pic: account.profile_pic,
-      acc_type: account.acc_type
-    });
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
   }
 });
 
@@ -216,7 +220,7 @@ router.post('/update-profile', async (req, res) => {
       const uploadPath = path.join(__dirname, '../Views/images/profilePictures', fileName);
       
       await profilePic.mv(uploadPath);
-      account.profile_pic = `./Views/images/profilePictures/${fileName}`;
+      account.profile_pic = `/Views/images/profilePictures/${fileName}`;
     }
 
     // Save the updated account

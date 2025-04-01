@@ -117,9 +117,9 @@ app.get('/', (req, res) => {
 app.use('/restaurant', restaurantRoutes);
 app.use('/profile', userRoutes); // Mount user routes at /profile prefix
 
-// API routes - Update the path to match the revised API endpoint
+// API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes); // This will use the /api/users prefix for API calls
+app.use('/api/users', userRoutes); // Will use the appropriate API routes in userRoutes.js
 app.use('/api/restaurant', restaurantRoutes);
 app.use('/api/reviews', reviewRoutes);
 

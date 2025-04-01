@@ -535,22 +535,35 @@ function toggleEditProfileFrame() {
             return;
         }
 
-        // Fetch user data to populate the form - update to use new API endpoint
+        // Use the dedicated API endpoint with error handling
         fetch(`/api/users/api/${currentUser.userId}`)
             .then(response => {
                 if (!response.ok) {
+                    console.error(`Failed to fetch profile (status ${response.status})`);
                     throw new Error(`Failed to fetch profile (status ${response.status})`);
                 }
+                
+                // Check the content type to ensure we're getting JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.error('Response is not JSON:', contentType);
+                    throw new Error('Server returned non-JSON response');
+                }
+                
                 return response.json();
             })
             .then(userData => {
+                console.log("User data retrieved:", userData);
                 document.getElementById('edit-username').value = userData.acc_name || '';
                 document.getElementById('edit-bio').value = userData.acc_bio || '';
 
                 // Show profile picture if available
+                const previewDiv = document.getElementById('profile-pic-preview');
                 if (userData.profile_pic) {
-                    const previewDiv = document.getElementById('profile-pic-preview');
                     previewDiv.style.backgroundImage = `url('${userData.profile_pic}')`;
+                } else {
+                    // Use absolute path for default image
+                    previewDiv.style.backgroundImage = `url('/Views/images/profilePictures/default-profile.png')`;
                 }
 
                 // Display the form
@@ -584,11 +597,11 @@ async function fetchUserProfile(userId) {
     // Show profile image preview if available
     const previewDiv = document.getElementById('profile-pic-preview');
         // Always set a background image - either the user's or the default
-        previewDiv.style.backgroundImage = `url(${userData.profile_pic || '../Views/images/profilePictures/default-profile.png'})`;
+        previewDiv.style.backgroundImage = `url(${userData.profile_pic || '/Views/images/profilePictures/default-profile.png'})`;
 
         // If there's an error loading the image, use the default
         previewDiv.onerror = function() {
-            this.style.backgroundImage = `url('../Views/images/profilePictures/default-profile.png')`;
+            this.style.backgroundImage = `url('/Views/images/profilePictures/default-profile.png')`;
         };
  
     } catch (error) {

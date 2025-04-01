@@ -62,13 +62,13 @@ router.post('/register', async (req, res) => {
     const lastAccount = await Account.findOne().sort({ acc_id: -1 });
     const newAccId = lastAccount ? lastAccount.acc_id + 1 : 1;
     
-    // Create new account
+    // Create new account with absolute path for profile picture
     const newAccount = new Account({
         acc_id: newAccId,
         acc_name: req.body.username,
         acc_username: req.body.username,
         acc_bio: req.body.description || '',
-        profile_pic: req.body.profilePic || './Views/images/profilePictures/default-profile.png',
+        profile_pic: req.body.profilePic || '/Views/images/profilePictures/default-profile.png',
         saved_restos: [],
         saved_reviews: [],
         acc_password: req.body.password,
