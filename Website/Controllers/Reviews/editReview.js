@@ -1,71 +1,135 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM loaded, looking for form");
-    const form = document.forms['edit-review'];
+    console.log("DOM loaded for edit review functionality");
     
+    // Setup for star rating in edit form
+    let editSelectedRating = 0;
     
-    let selectedRating = 0;
-    
-    // Sadly dos not work and also dont know what to use it for yet
-    const stars = document.querySelectorAll('#edit-star-rating .star');
-    stars.forEach(star => {
-        star.addEventListener('click', function() {
-            selectedRating = parseInt(this.getAttribute('data-value'));
-            
-            // Update stars visual state
-            stars.forEach(s => {
-                if (parseInt(s.getAttribute('data-value')) <= selectedRating) {
-                    s.classList.add('selected');
-                } else {
-                    s.classList.remove('selected');
-                }
+    function setupEditStarRating() {
+        const editStars = document.querySelectorAll('#editReviewModal .star-rating .star');
+        if (editStars.length > 0) {
+            editStars.forEach(star => {
+                star.addEventListener('click', function() {
+                    editSelectedRating = parseInt(this.getAttribute('data-value'));
+                    
+                    // Update stars visual state
+                    editStars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-value')) <= editSelectedRating) {
+                            s.classList.add('selected');
+                        } else {
+                            s.classList.remove('selected');
+                        }
+                    });
+                    
+                    // Update rating text
+                    document.getElementById('edit-rating-text').textContent = editSelectedRating + ' out of 5';
+                });
             });
-            
-            // Update rating text
-            document.getElementById('rating-text').textContent = selectedRating + ' out of 5';
-        });
-    });
+        }
+    }
     
-    if (form) {
-        // FIXED: Changed 'submitReview' to 'submit'
-        form.addEventListener('submit', function(e) {
+    // Function to toggle the edit review modal
+    window.toggleEditReviewModal = function() {
+        const backdrop = document.getElementById('backdrop');
+        const editReviewModal = document.getElementById('editReviewModal');
+        
+        if (editReviewModal && backdrop) {
+            if (editReviewModal.style.display === 'block') {
+                editReviewModal.style.display = 'none';
+                backdrop.style.display = 'none';
+            } else {
+                editReviewModal.style.display = 'block';
+                backdrop.style.display = 'block';
+                setupEditStarRating();
+            }
+        } else {
+            console.error('Edit review modal elements not found');
+        }
+    };
+    
+    // Function to open edit review modal with pre-populated data
+    window.openEditReview = function(reviewId) {
+        console.log("Opening edit review for ID:", reviewId);
+        
+        // Set the review ID
+        document.getElementById('edit-review-id').value = reviewId;
+        
+        // Fetch the review data to pre-populate the form
+        fetch(`/api/reviews/${reviewId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server responded with ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Review data:", data);
+                
+                // Pre-populate form fields
+                document.getElementById('edit-review-content').value = data.review;
+                
+                // Set the initial rating
+                editSelectedRating = data.rating || 0;
+                const editStars = document.querySelectorAll('#editReviewModal .star-rating .star');
+                editStars.forEach(star => {
+                    if (parseInt(star.getAttribute('data-value')) <= editSelectedRating) {
+                        star.classList.add('selected');
+                    } else {
+                        star.classList.remove('selected');
+                    }
+                });
+                
+                if (document.getElementById('edit-rating-text')) {
+                    document.getElementById('edit-rating-text').textContent = editSelectedRating + ' out of 5';
+                }
+                
+                // Show the modal
+                toggleEditReviewModal();
+            })
+            .catch(error => {
+                console.error("Error fetching review data:", error);
+                alert("Error loading review data: " + error.message);
+            });
+    };
+    
+    // Handle edit review form submission
+    const editForm = document.forms['edit-review'];
+    if (editForm) {
+        editForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log("Review form submitted!");
+            console.log("Edit review form submitted!");
             
-            // Get restaurant ID from URL
-            const pathSegments = window.location.pathname.split('/');
-            const resto_id = pathSegments[pathSegments.length - 1];
+            // Get review ID
+            const reviewId = document.getElementById('edit-review-id').value;
             
             // Validate rating
-            if (selectedRating === 0) {
+            if (editSelectedRating === 0) {
                 alert("Please select a rating");
                 return;
             }
             
             // Get review content
-           
             const reviewContent = document.getElementById('edit-review-content').value;
             if (!reviewContent.trim()) {
                 alert("Please write a review");
                 return;
             }
-            const review_id = document.getElementById('hidden-review-id').value;
+            
             // Create review data
             const reviewData = {
-                review_id: review_id,
-                resto_id: resto_id,
-                rating: selectedRating,
+                review_id: reviewId,
+                rating: editSelectedRating,
                 review: reviewContent
             };
             
-            console.log("Review data to be sent:", reviewData);
+            console.log("Edit review data to be sent:", reviewData);
             
             // Disable submit button
-            const submitButton = form.querySelector('input[type="submit"]');
+            const submitButton = editForm.querySelector('input[type="submit"]');
             if (submitButton) submitButton.disabled = true;
             
-            // Send data to server
-            fetch('/api/editreview', {
-                method: 'PUT',
+            // Send data to server - FIX: Update the URL endpoint
+            fetch('/api/reviews/update', {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reviewData)
             })
@@ -78,20 +142,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                console.log("Review Edited successfully:", data);
-                alert('Review Edited successfully!');
+                console.log("Review updated successfully:", data);
+                alert('Review updated successfully!');
                 
                 // Close modal
-                if (typeof toggleReviewModal === 'function') {
-                    toggleReviewModal();
-                }
+                toggleEditReviewModal();
                 
-                // Reload page to show the new review
+                // Reload page to show the updated review
                 window.location.reload();
             })
             .catch(error => {
-                console.error('Error submitting review:', error);
-                alert('Failed to submit review: ' + error.message);
+                console.error('Error updating review:', error);
+                alert('Failed to update review: ' + error.message);
             })
             .finally(() => {
                 if (submitButton) submitButton.disabled = false;

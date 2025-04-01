@@ -234,9 +234,7 @@
             <div class="reviews">
             <div class="review1">
                 <h1> Reviews</h1>
-
                 <button class="button-3" onclick="toggleReviewModal()">Make a Review</button>
-            
             </div>
             
 
@@ -397,33 +395,51 @@
 
             <div class="footerIcon">
                 <a href="https://www.facebook.com" target="_blank">
-                    <img src="./images/assets/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
+                    <img src="../Views/images/assets/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
                 </a>
                 <a href="https://www.instagram.com" target="_blank">
-                    <img src="./images/assets/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
+                    <img src="../Views/images/assets/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
                 </a>
             </div>
         </footer>
 
-        <script src="../Controllers/RestoInfo.js"></script>
-        <script>
-            function toggleHeart() {
-                const heartIcon = document.getElementById("heartIcon");
-                heartIcon.classList.toggle("liked");
-
-                if (heartIcon.classList.contains("liked")) {
-                    heartIcon.style.color = "red";
-                } else {
-                    heartIcon.style.color = "gray";
+                    <script src="../Controllers/RestoInfo.js"></script>
+            <script>
+                function toggleHeart() {
+                    const heartIcon = document.getElementById("heartIcon");
+                    heartIcon.classList.toggle("liked");
+    
+                    if (heartIcon.classList.contains("liked")) {
+                        heartIcon.style.color = "red";
+                    } else {
+                        heartIcon.style.color = "gray";
+                    }
                 }
-            }
-        </script>
-       <script src='../Controllers/directoryScript.js'></script>
-        <script src='../Controllers/Restaurants/updateResto.js'></script>
-        <script src='../Controllers/Restaurants/deleteResto.js'></script>
-        <script src='../Controllers/Reviews/addReview.js'></script>
-        <script src='../Controllers/Reviews/editReview.js'></script>
-        <script src ='../Controllers/Reviews/deleteReview.js'></script>
+    
+                // Add explicit implementation of toggleReviewModal function
+                function toggleReviewModal() {
+                    const backdrop = document.getElementById('backdrop');
+                    const reviewModal = document.getElementById('reviewModal');
+                    
+                    if (reviewModal && backdrop) {
+                        if (reviewModal.style.display === 'block') {
+                            reviewModal.style.display = 'none';
+                            backdrop.style.display = 'none';
+                        } else {
+                            reviewModal.style.display = 'block';
+                            backdrop.style.display = 'block';
+                        }
+                    } else {
+                        console.error('Modal elements not found');
+                    }
+                }
+            </script>
+           <script src='../Controllers/directoryScript.js'></script>
+            <script src='../Controllers/Restaurants/updateResto.js'></script>
+            <script src='../Controllers/Restaurants/deleteResto.js'></script>
+            <script src='../Controllers/Reviews/addReview.js'></script>
+            <script src='../Controllers/Reviews/editReview.js'></script>
+            <script src ='../Controllers/Reviews/deleteReview.js'></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Fix profile links in reviews
@@ -443,10 +459,12 @@
                 const profileImages = document.querySelectorAll('.profile-pic');
                 profileImages.forEach(img => {
                     img.onerror = function() {
-                        this.src = './images/profilePictures/default-profile.png';
+                        this.src = '../Views/images/profilePictures/default-profile.png';
                     };
                 });
             });
         </script>
+        <script type="module" src="/Controllers/directoryScript.js"></script>   
+        <script type="module" src="/Controllers/Restaurants/deleteResto.js"></script>
     </body>
 </html>

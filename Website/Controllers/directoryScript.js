@@ -335,6 +335,7 @@ function toggleDeleteConfirm() {
     } else {
         document.body.style.pointerEvents = 'auto';
     }
+    window.toggleDeleteConfirm = toggleDeleteConfirm;
 }
 
 /**

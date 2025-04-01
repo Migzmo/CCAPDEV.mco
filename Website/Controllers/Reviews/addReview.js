@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let selectedRating = 0;
     
-    // Sadly dos not work and also dont know what to use it for yet
+    // Star rating functionality
     const stars = document.querySelectorAll('.star-rating .star');
     stars.forEach(star => {
         star.addEventListener('click', function() {
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     if (form) {
-        // FIXED: Changed 'submitReview' to 'submit'
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             console.log("Review form submitted!");
@@ -62,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitButton = form.querySelector('input[type="submit"]');
             if (submitButton) submitButton.disabled = true;
             
-            // Send data to server
-            fetch('/api/addreview', {
+            // Send data to server - FIX: Update the URL endpoint
+            fetch('/api/reviews/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reviewData)
