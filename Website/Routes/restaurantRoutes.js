@@ -8,27 +8,27 @@ const path = require('path');
 const { Restaurant, Review } = require('../Models/lasappDB');
 
 // Get all restaurants (homepage)
-router.get('/', async (req, res) => {
-  try {
-    const restaurants = await Restaurant.find({isAlive: true});
-    
-    // Fix image paths for all restaurants to use absolute paths
-    const formattedRestaurants = restaurants.map(resto => {
-      const restaurant = resto.toObject();
-      // Check if image path starts with './' and convert to absolute path
-      if (restaurant.resto_img && restaurant.resto_img.startsWith('./')) {
-        restaurant.resto_img = '/' + restaurant.resto_img.substring(2);
-      }
-      return restaurant;
-    });
-    
-    console.log("Successfully found restaurants:", formattedRestaurants);
-    res.render('LaSapp', { restaurants: formattedRestaurants });
-  } catch (err) {
-    console.error('Error fetching restaurants:', err);
-    res.status(500).send('Server Error');
-  }
-});
+  router.get('/', async (req, res) => {
+    try {
+      const restaurants = await Restaurant.find({isAlive: true});
+      
+      // Fix image paths for all restaurants to use absolute paths
+      const formattedRestaurants = restaurants.map(resto => {
+        const restaurant = resto.toObject();
+        // Check if image path starts with './' and convert to absolute path
+        if (restaurant.resto_img && restaurant.resto_img.startsWith('./')) {
+          restaurant.resto_img = '/' + restaurant.resto_img.substring(2);
+        }
+        return restaurant;
+      });
+      
+      console.log("Successfully found restaurants:", formattedRestaurants);
+      res.render('LaSapp', { restaurants: formattedRestaurants });
+    } catch (err) {
+      console.error('Error fetching restaurants:', err);
+      res.status(500).send('Server Error');
+    }
+  });
 
 // Get single restaurant by ID
 router.get('/:id', async (req, res) => {
@@ -160,7 +160,7 @@ router.post('/create-resto', async (req, res) => {
 });
 
 // Update restaurant
-router.put('/update', async (req, res) => {
+router.put('/api/submitupdate', async (req, res) => {
   try {
     console.log("Received Update Request:", req.body);
     

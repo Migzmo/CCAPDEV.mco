@@ -49,8 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Send data to server 
             fetch('/restaurant/create-resto', {
                 method: 'POST',
-                // 
-               
+
                 body: formData // Send FormData directly without Content-Type header
             })
             .then(response => {
