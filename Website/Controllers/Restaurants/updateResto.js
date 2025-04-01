@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('email', document.getElementById('email').value);
             formData.append('payment', document.getElementById('payment').value);
             formData.append('perks', document.getElementById('perks').value);
-            formData.append('cuisine_name', document.getElementById('cuisine').value);
+            formData.append('cuisine_id', document.getElementById('cuisine').value);
             
             // Debug log what's being sent
             console.log("FormData being sent:");
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (submitButton) submitButton.disabled = true;
             
             // Send data to server 
-            fetch('/api/submitupdate', {
+            fetch('/restaurant/api/submitupdate', {
                 method: 'PUT',
                 body: formData 
             })
