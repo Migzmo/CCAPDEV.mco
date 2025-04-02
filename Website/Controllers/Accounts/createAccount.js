@@ -38,7 +38,7 @@ async function registerUser(userData) {
 
             // Update UI
             updateUIAfterLogin();
-            
+             // Reload the page to reflect changes
             return { success: true, data };
         } else {
             throw new Error(data.message || 'Registration failed');

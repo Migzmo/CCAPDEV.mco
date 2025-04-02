@@ -30,8 +30,9 @@ async function loginUser(credentials) {
                 userId: data.userId,
                 accountType: data.accountType
             }));
-            
+            window.location.reload();
             return { success: true, data };
+            
         } else {
             throw new Error(data.message || 'Login failed');
         }

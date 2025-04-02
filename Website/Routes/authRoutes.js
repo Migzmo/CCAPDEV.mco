@@ -65,9 +65,13 @@ router.post('/login', async (req, res) => {
         message: 'Login successful',
         userId: account.acc_id,
         username: account.acc_username,
-        accountType: account.acc_type
+        accountType: account.acc_type,
+        
       });
+      
     });
+    //reroute to home page
+   
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({
