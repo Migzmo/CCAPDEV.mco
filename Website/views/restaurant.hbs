@@ -588,17 +588,21 @@
                 // Setup login button when not logged in
                 const loginButton = document.getElementById('loginButton');
                 if (loginButton) {
+                    console.log("Found login button, attaching click handler");
                     loginButton.addEventListener('click', function() {
+                        console.log("Login button clicked");
                         const loginframe = document.getElementById('loginframe');
                         const backdrop = document.getElementById('backdrop');
                         
                         if (loginframe && backdrop) {
+                            console.log("Showing login frame");
                             loginframe.style.display = 'block';
                             backdrop.style.display = 'block';
-                            
                             document.body.style.pointerEvents = 'none';
                             loginframe.style.pointerEvents = 'auto';
                             backdrop.style.pointerEvents = 'auto';
+                        } else {
+                            console.error("Login frame elements not found");
                         }
                     });
                 }
@@ -617,7 +621,7 @@
                         }
                     });
                 }
-
+                
                 // Setup signin button
                 const signinBtn = document.querySelector('.signin-button');
                 if (signinBtn) {
@@ -710,7 +714,12 @@
                 
                 if (dropdownToggle && dropdownMenu) {
                     console.log("Found dropdown elements - attaching click handlers");
-                    dropdownToggle.addEventListener('click', function() {
+                    
+                    // Create fresh event listener
+                    dropdownToggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log("Toggle dropdown clicked");
                         dropdownMenu.classList.toggle('show');
                     });
                     
@@ -768,13 +777,56 @@
                             }
                         })
                         .then(response => {
-                            // Reload the page to reflect the logged out state
-                            window.location.reload();
+                            // Replace user dropdown with login button
+                            const dropdownContainer = document.querySelector('.user-dropdown').parentElement;
+                            const loginButton = document.createElement('button');
+                            loginButton.id = 'loginButton';
+                            loginButton.className = 'login-button';
+                            loginButton.textContent = 'LOGIN';
+                            
+                            // Add event listener to the new login button
+                            loginButton.addEventListener('click', function() {
+                                const loginframe = document.getElementById('loginframe');
+                                const backdrop = document.getElementById('backdrop');
+                                
+                                if (loginframe && backdrop) {
+                                    loginframe.style.display = 'block';
+                                    backdrop.style.display = 'block';
+                                    document.body.style.pointerEvents = 'none';
+                                    loginframe.style.pointerEvents = 'auto';
+                                    backdrop.style.pointerEvents = 'auto';
+                                }
+                            });
+                            
+                            // Replace dropdown with login button
+                            dropdownContainer.innerHTML = '';
+                            dropdownContainer.appendChild(loginButton);
                         })
                         .catch(error => {
                             console.error('Logout error:', error);
-                            // Reload anyway
-                            window.location.reload();
+                            // Handle manually by updating UI directly rather than reloading
+                            try {
+                                const dropdownContainer = document.querySelector('.user-dropdown').parentElement;
+                                dropdownContainer.innerHTML = '<button id="loginButton" class="login-button">LOGIN</button>';
+                                
+                                // Add click handler to the newly created login button
+                                const newLoginBtn = document.getElementById('loginButton');
+                                newLoginBtn.addEventListener('click', function() {
+                                    const loginframe = document.getElementById('loginframe');
+                                    const backdrop = document.getElementById('backdrop');
+                                    if (loginframe && backdrop) {
+                                        loginframe.style.display = 'block';
+                                        backdrop.style.display = 'block';
+                                        document.body.style.pointerEvents = 'none';
+                                        loginframe.style.pointerEvents = 'auto';
+                                        backdrop.style.pointerEvents = 'auto';
+                                    }
+                                });
+                            } catch (e) {
+                                console.error("Error updating UI:", e);
+                                // Last resort - reload the page
+                                window.location.href = '/restaurant/{{restaurant.id}}';
+                            }
                         });
                     });
                 }
@@ -904,6 +956,7 @@
                     });
                 });
             });
+            
             function toggleHeart() {
                 const heartIcon = document.getElementById("heartIcon");
                 const isLiking = !heartIcon.classList.contains("liked");
