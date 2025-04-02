@@ -153,6 +153,7 @@ router.get('/logout', (req, res) => {
       message: 'Logged out successfully'
     });
   });
+  console.log("Session destroyed successfully");  // Debug log
 });
 
 module.exports = router;
