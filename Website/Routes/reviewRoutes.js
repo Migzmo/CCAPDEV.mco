@@ -71,7 +71,8 @@ router.put('/edit', async (req, res) => {
     const reviewId = parseInt(review_id, 10);
     const updateData = {
       rating: parseInt(rating, 10), 
-      review: review                
+      review: review,
+      last_edited_at: new Date() // Add this to track edit time
     };
     
     console.log("Update data:", updateData);

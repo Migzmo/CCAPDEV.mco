@@ -6,7 +6,8 @@ const reviewSchema = new mongoose.Schema({
   resto_id: { type: Number, ref: 'Restaurant', required: true },
   rating: { type: Number, required: true },
   review: { type: String, required: true },
-  isAlive: { type: Boolean, default: true }
+  isAlive: { type: Boolean, default: true },
+  last_edited_at: { type: Date }
 });
 
 const Review = mongoose.model('Review', reviewSchema);

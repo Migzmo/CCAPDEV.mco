@@ -380,7 +380,13 @@
                             <p>{{this.review}}</p>
                             
                             <!-- Add timestamp (use actual timestamp when available) -->
-                            <span class="review-date">Posted on {{#if this.date}}{{this.date}}{{else}}{{/if}}</span>
+                            <span class="review-date">
+                            {{#if this.isEdited}}
+                                Last Edited: {{this.editedDate}}
+                            {{else}}
+                                Posted on {{this.date}}
+                            {{/if}}
+                            </span>
                             
                             <!-- ADD FORMS FOR THIS -->
                             <div class="input-box button">

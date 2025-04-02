@@ -56,8 +56,8 @@ router.get('/:id', async (req, res) => {
       .exec();
     
     reviews = reviews.map(review => {
-      // Create a formatted date from MongoDB's ObjectId timestamp
-      const formattedDate = new Date(review._id.getTimestamp()).toLocaleString('en-US', {
+      // Create a formatted date from MongoDB's ObjectId timestamp (creation date)
+      const createdDate = new Date(review._id.getTimestamp()).toLocaleString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -65,10 +65,24 @@ router.get('/:id', async (req, res) => {
         minute: '2-digit'
       });
       
-      // Return review with date added
+      // Format the edit date if it exists
+      let editedDate = null;
+      if (review.last_edited_at) {
+        editedDate = new Date(review.last_edited_at).toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
+      
+      // Return review with both dates and edit status
       return {
         ...review.toObject(),
-        date: formattedDate
+        date: createdDate,
+        editedDate: editedDate,
+        isEdited: !!review.last_edited_at
       };
     });
       
