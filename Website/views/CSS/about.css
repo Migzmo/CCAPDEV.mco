@@ -16,8 +16,8 @@ body {
     margin: 20px auto;
     padding: 20px;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(109, 108, 108, 0.1);
 }
 
 .section-title {
@@ -45,11 +45,10 @@ body {
 }
 
 .member-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
     object-fit: cover;
-    margin-bottom: 10px;
 }
 
 .member-info {
