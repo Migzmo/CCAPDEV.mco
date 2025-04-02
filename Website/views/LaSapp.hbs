@@ -182,7 +182,7 @@
             <button id="closeEditProfile" onclick="toggleEditProfileFrame()">&times;</button>
         </div>
     </div>
-
+   
     <div id="backdrop"></div>
     <div id="createRestoFrame">
         <div class="createResto-header">
@@ -293,6 +293,7 @@
         </div>
     </div>
     
+    
 
     <div class="container">
         <div>
@@ -361,6 +362,8 @@
     </div>
 
     <div class="resto-box-wrappers">
+    {{#if currentUser}}
+    {{#if (eq userType "business-owner")}}
     <div class="restaurants">
         <a href="#" onclick="togglePopupCreateResto()">
             <div>
@@ -369,6 +372,8 @@
             </div>
         </a>
     </div>
+    {{/if}}
+    {{/if}}
     {{#each restaurants}}
     <div class="restaurants" id="resto-{{resto_id}}" data-category="{{cuisine_id}}">
         <a href="/restaurant/{{resto_id}}">

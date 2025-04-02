@@ -152,6 +152,13 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
   }
 }));
+let currentSessionId = null;
+app.use((req, res, next) => {
+  if (req.session && req.session.userId) {
+    currentSessionId = req.session.id;
+  }
+  next();
+});
 // Mount restaurant routes before user routes to avoid path conflicts
 app.use(populateUserData);
 app.use('/auth', authRoutes); // NOT protected by isAuthenticated
@@ -197,6 +204,9 @@ app._router.stack.forEach((middleware) => {
     });
   }
 });
+
+//this is for closing server and deleting session
+
 /****************************************************************************************************************************************************************************/
 // Add a restaurant to saved_restos
 

@@ -29,7 +29,11 @@ const populateUserData = (req, res, next) => {
     res.locals.currentUser = req.session.user || null;
     next();
 };
-
+//
+hbs.registerHelper('eq', function(a, b) {
+    console.log(`Comparing ${a} and ${b}`);
+    return a === b;
+});
 
 // Configure Handlebars helpers
 hbs.registerHelper('for', function(from, to, options) {
