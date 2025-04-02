@@ -67,11 +67,11 @@ function clearStaleUserData() {
  */
 function initializeInlineHandlers() {
     // Replace login button onclick handler
-    const loginButton = document.getElementById('loginButton');
+    /*const loginButton = document.getElementById('loginButton');
     if (loginButton) {
         loginButton.removeAttribute('onclick');
         loginButton.addEventListener('click', togglePopup);
-    }
+    }*/
     
     // Replace close buttons onclick handlers
     const closeLoginBtn = document.getElementById('closeLogin');
