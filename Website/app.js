@@ -41,6 +41,8 @@ const {
 setupDirectories();
 setupMiddleware(app);
 
+app.use(express.static('views'));
+
 //For importing sample data to MONGO DB
 let impErr1= false;
 let impErr2= false;
