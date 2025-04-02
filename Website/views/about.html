@@ -5,26 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>About</title>
     <link rel="stylesheet" href="views/css/directory.css">
+    <link rel="stylesheet" href="views/css/about.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Baloo+Thambi+2:wght@400..800&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Lexend:wght@100..900&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -37,31 +19,78 @@
         </ul>
     </nav>
 
-    <!-- About Section -->
-    <section class="container">
-        <h1 class="resto-title">About This Website</h1>
-        <p class="Description">
-            LaSapp is a platform designed to help users discover and explore restaurants. It provides a user-friendly interface for browsing restaurants by category, searching for specific cuisines, and saving favorite places for future visits.
-        </p>
-    </section>
+    <div class="spacing">
+        <!-- About Section -->
+        <section class="container">
+            <h1 class="section-title">About This Website</h1>
+            <p class="section-description">
+                LaSapp is a web application designed to help users discover and explore restaurants. It provides a user-friendly interface for browsing restaurants by category, searching for specific cuisines, and saving favorite places for future visits.
+            </p>
+        </section>
 
-    <!-- Members Section -->
-    <section class="container">
-        <h2 class="resto-title">Members</h2>
-        <ul class="Description">
-            <li>John Doe</li>
-            <li>Jane Smith</li>
-            <li>Alice Johnson</li>
-            <li>Bob Brown</li>
-        </ul>
-    </section>
+        <!-- Members Section -->
+        <section class="container">
+            <h2 class="section-title">Members</h2>
+            <div class="members">
+                <!-- Member 1 -->
+                <div class="member">
+                    <img src="images/profilePictures/idk.png" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">Bon Windel Aquino</h3>
+                        <p class="member-course">Course: BS Computer Science</p>
+                        <p class="member-school">School: De La Salle University</p>
+                    </div>
+                </div>
 
-    <!-- School Section -->
-    <section class="container">
-        <h2 class="resto-title">School</h2>
-        <p class="Description">
-            This project was developed as part of the coursework at <strong>De La Salle University (DLSU)</strong>. DLSU is a leading university in the Philippines, known for its commitment to academic excellence and innovation.
-        </p>
-    </section>
+                <div class="member">
+                    <img src="views/images/john_doe.jpg" alt="John Doe" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">Karl Matthew Dela Cruz</h3>
+                        <p class="member-course">Course: BS Computer Science</p>
+                        <p class="member-school">School: De La Salle University</p>
+                    </div>
+                </div>
+
+                <div class="member">
+                    <img src="views/images/john_doe.jpg" alt="John Doe" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">Jose Miguel Espinosa</h3>
+                        <p class="member-course">Course: BS Computer Science</p>
+                        <p class="member-school">School: De La Salle University</p>
+                    </div>
+                </div>
+
+                <div class="member">
+                    <img src="views/images/john_doe.jpg" alt="John Doe" class="member-photo">
+                    <div class="member-info">
+                        <h3 class="member-name">Adler Clarence Strebel</h3>
+                        <p class="member-course">Course: BS Computer Science</p>
+                        <p class="member-school">School: De La Salle University</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NPM Packages Section -->
+        <section class="container">
+            <h2 class="section-title">NPM Packages Used</h2>
+            <ul class="section-description">
+                <li><strong>express</strong>: A fast, unopinionated, minimalist web framework for Node.js.</li>
+                <li><strong>express-fileupload</strong>: Simple middleware for handling file uploads in Express applications.</li>
+                <li><strong>mongoose</strong>: A MongoDB object modeling tool designed to work in an asynchronous environment.</li>
+                <li><strong>express-sessions</strong>: A session middleware for Express to manage user sessions.</li>
+                <li><strong>connect-mongo</strong>: MongoDB session store for Express and Connect.</li>
+            </ul>
+        </section>
+
+        <!-- Third-Party Libraries Section -->
+        <section class="container">
+            <h2 class="section-title">Third-Party Libraries Used</h2>
+            <ul class="section-description">
+                <li><strong>Google Fonts</strong>: Used for typography and styling (e.g., Baloo).</li>
+                <li><strong>Material Symbols</strong>: Used for icons (e.g., search icon).</li>
+            </ul>
+        </section>
+    </div>
 </body>
 </html>
