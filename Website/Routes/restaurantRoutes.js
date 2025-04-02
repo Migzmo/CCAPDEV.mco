@@ -6,6 +6,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const { Restaurant, Review } = require('../Models/lasappDB');
+const { isAuthenticated, isAuthenticatedApi } = require('./configs');
 
 // Get all restaurants (homepage)
   router.get('/', async (req, res) => {
@@ -97,7 +98,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Add new restaurant
-router.post('/create-resto', async (req, res) => {
+router.post('/create-resto',isAuthenticated, async (req, res) => {
   try {
     console.log("Received restaurant submission");
 

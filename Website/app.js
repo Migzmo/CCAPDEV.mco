@@ -126,6 +126,7 @@ const { globalErrorHandler, denyDatabaseAccess } = require('./Routes/errorHandle
 app.get('/', (req, res) => {
   res.redirect('/restaurant');
 });
+
 app.use(session({
   secret: 'lasapp_key',
   resave: false,
@@ -141,7 +142,7 @@ app.use(session({
 // Mount restaurant routes before user routes to avoid path conflicts
 app.use(populateUserData);
 app.use('/auth', authRoutes); // NOT protected by isAuthenticated
-app.use('/restaurant', restaurantRoutes);
+app.use('/restaurant',restaurantRoutes);
 
 app.use('/profile', isAuthenticated, userRoutes); // Mount user routes at /profile prefix
 
