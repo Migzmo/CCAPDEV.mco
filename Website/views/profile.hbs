@@ -264,41 +264,41 @@
     <div id="backdrop" style="display: none;"></div>
 
     <!-- Scripts -->
-    <script src="/Controllers/directoryScript.js"></script>
+    <script src="/Controllers/directoryScript.js" type="module"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             checkUserLoggedIn();
-            setupProfileTabs();
             
             // Get the tab from URL hash if present (for direct linking to tabs)
             if (window.location.hash === '#saved') {
-                document.querySelector('.tab-button[data-tab="saved"]').click();
+                setTimeout(() => {
+                    document.querySelector('.tab-button[data-tab="saved"]').click();
+                }, 100);
             }
-        });
-
-        function setupProfileTabs() {
+            
+            // Setup tab click handlers
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
-
+            
             tabButtons.forEach((button) => {
                 button.addEventListener('click', () => {
                     const tab = button.getAttribute('data-tab');
-
+                    
                     // Remove active class from all buttons and contents
                     tabButtons.forEach((btn) => btn.classList.remove('active'));
                     tabContents.forEach((content) => content.classList.remove('active'));
-
+                    
                     // Add active class to the clicked button and corresponding content
                     button.classList.add('active');
                     document.getElementById(`${tab}-content`).classList.add('active');
-
+                    
                     // Fetch and render saved restaurants when the "Saved" tab is clicked
                     if (tab === 'saved') {
                         fetchSavedRestaurants();
                     }
                 });
             });
-        }
+        });
 
         function fetchSavedRestaurants() {
             // Use correct ID field based on what's available
@@ -401,23 +401,6 @@
                 console.error('Error unliking restaurant:', error);
             });
         }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function () {
-
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-
-                    const tab = this.getAttribute('data-tab');
-                    this.classList.add('active');
-                    document.getElementById(`${tab}-content`).classList.add('active');
-                });
-            });
-        });
     </script>
 </body>
 </html>
