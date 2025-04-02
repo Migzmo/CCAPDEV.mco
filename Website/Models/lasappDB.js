@@ -15,7 +15,8 @@ const restaurantSchema = new mongoose.Schema({
   resto_id: { type: Number, required: true },//im not sure about this being non unique
   resto_name: { type: String,unique:true, required: true },
   resto_address: { type: String, required: true }, // Corrected field name
-  resto_time: { type: String },
+  opening_time: { type: Date},
+  closing_time: { type: Date},
   resto_phone: { type: String },
   resto_email: { type: String },
   resto_payment: { type: String },

@@ -23,8 +23,25 @@ hbs.registerHelper('for', function(from, to, options) {
             result += options.fn(i);
         }
     }
+
     return result;
 });
+
+// Format time from Date object to readable time string
+hbs.registerHelper('formatTime', function(dateTime) {
+    if (!dateTime) return '';
+    
+    const date = new Date(dateTime);
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Convert 0 to 12
+    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+    
+    return `${hours}:${minutesStr} ${ampm}`;
+}); // Fixed closing syntax
 
 // Setup middleware functions
 const setupMiddleware = (app) => {

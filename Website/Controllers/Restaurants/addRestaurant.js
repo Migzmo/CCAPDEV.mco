@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('name', document.getElementById('resto-name').value);
             formData.append('address', document.getElementById('address1').value + 
                 (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value : ''));
-            formData.append('time', formatTimeTo12Hour(openingTime) + ' - ' + formatTimeTo12Hour(closingTime));
+            formData.append('opening_time', openingTime);
+            formData.append('closing_time', closingTime);
             formData.append('phoneNumber', document.getElementById('phone').value);
             formData.append('email', document.getElementById('email').value);
             formData.append('payment', document.getElementById('payment').value);

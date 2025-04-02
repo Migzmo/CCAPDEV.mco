@@ -78,9 +78,10 @@ router.get('/:id', async (req, res) => {
         id: restaurant.resto_id,
         name: restaurant.resto_name,
         location: restaurant.resto_address,
-        image: imagePath, // Use the corrected path
+        image: imagePath,
         address: restaurant.resto_address,
-        time: restaurant.resto_time,
+        opening_time: restaurant.opening_time, // Add this line
+        closing_time: restaurant.closing_time, // Add this line
         phone: restaurant.resto_phone,
         email: restaurant.resto_email,
         payment: restaurant.resto_payment,
@@ -142,11 +143,26 @@ router.post('/create-resto', async (req, res) => {
       }
     }
     
+    // Convert time strings to Date objects
+    const openingTimeStr = req.body.opening_time; // Format: "HH:MM"
+    const closingTimeStr = req.body.closing_time; // Format: "HH:MM"
+    
+    // Create today's date with the specified times
+    const today = new Date();
+    const openingDate = new Date(today);
+    const [openHours, openMinutes] = openingTimeStr.split(':');
+    openingDate.setHours(parseInt(openHours), parseInt(openMinutes), 0, 0);
+    
+    const closingDate = new Date(today);
+    const [closeHours, closeMinutes] = closingTimeStr.split(':');
+    closingDate.setHours(parseInt(closeHours), parseInt(closeMinutes), 0, 0);
+
     const newRestaurant = new Restaurant({
       resto_id: newRestoId,
       resto_name: req.body.name || '',
       resto_address: req.body.address || '',
-      resto_time: req.body.time || '',
+      opening_time: openingDate || '',
+      closing_time: closingDate || '',
       resto_phone: req.body.phoneNumber || '',
       resto_email: req.body.email || '',
       resto_payment: req.body.payment || '',
@@ -185,17 +201,46 @@ router.put('/api/submitupdate', async (req, res) => {
     }
     
     const restaurantId = parseInt(req.body.resto_id, 10);
+
+    // Check if restaurant with same name already exists (excluding the current restaurant)
+    const existingRestaurant = await Restaurant.findOne({ 
+      resto_name: req.body.name, 
+      resto_id: { $ne: restaurantId },
+      isAlive: true 
+    });
+    
+    if (existingRestaurant) {
+      return res.status(409).json({ 
+        success: false, 
+        message: 'A restaurant with this name already exists',
+        error: 'duplicate_name'
+      });
+    }
+
+    // Convert time strings to Date objects
+    const openingTimeStr = req.body.opening_time;
+    const closingTimeStr = req.body.closing_time;
+    
+    const today = new Date();
+    const openingDate = new Date(today);
+    const [openHours, openMinutes] = openingTimeStr.split(':');
+    openingDate.setHours(parseInt(openHours), parseInt(openMinutes), 0, 0);
+    
+    const closingDate = new Date(today);
+    const [closeHours, closeMinutes] = closingTimeStr.split(':');
+    closingDate.setHours(parseInt(closeHours), parseInt(closeMinutes), 0, 0);
     
     // Create properly mapped update object that matches your schema
     const updateData = {
       resto_name: req.body.name,
       resto_address: req.body.address,
-      resto_time: req.body.time,
+      opening_time: openingDate,
+      closing_time: closingDate,
       resto_phone: req.body.phoneNumber,
       resto_email: req.body.email,
       resto_payment: req.body.payment,
       resto_perks: req.body.perks,
-      resto_cuisine: req.body.cuisine,
+      cuisine_id: req.body.cuisine_id  // CORRECTED
     };
     
     // Handle image upload if present

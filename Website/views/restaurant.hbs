@@ -211,7 +211,13 @@
                     <h2>📍 Address: </h2>
                     <p>{{restaurant.address}}</p>
                     <h2>⏰ Time: </h2>
-                    <p>{{restaurant.time}}</p>
+                    <p>
+                    {{#if restaurant.opening_time}}
+                    {{formatTime restaurant.opening_time}} - {{formatTime restaurant.closing_time}}
+                    {{else}}
+                    {{restaurant.time}}
+                    {{/if}}
+                    </p>
                     <h2>📱 Phone #: </h2>
                     <p>{{restaurant.phone}}</p>
                     <h2>📥 Email: </h2>
@@ -462,6 +468,19 @@
                         this.src = '../Views/images/profilePictures/default-profile.png';
                     };
                 });
+
+                // Enhance togglePopupCreateResto to call populateEditForm
+                const originalTogglePopup = window.togglePopupCreateResto;
+                window.togglePopupCreateResto = function() {
+                    if (typeof originalTogglePopup === 'function') {
+                       originalTogglePopup();
+                    }
+                    // Call populateEditForm after popup is opened
+                    if (document.getElementById('createRestoFrame').style.display === 'block') {
+                        console.log("Calling populateEditForm after popup opened");
+                        populateEditForm();
+                    }
+                };
             });
         </script>
         <script type="module" src="/Controllers/directoryScript.js"></script>  

@@ -6,6 +6,21 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             console.log("Form submitted!");
+
+            // Validate time (opening time must be before closing time)
+            const openingTime = document.getElementById('opening-time').value;
+            const closingTime = document.getElementById('closing-time').value;
+
+            if (openingTime && closingTime) {
+                // Convert to Date objects for comparison
+                const openDate = new Date(`2000-01-01T${openingTime}`);
+                const closeDate = new Date(`2000-01-01T${closingTime}`);
+                
+                if (closeDate <= openDate) {
+                    alert("Closing time must be after opening time");
+                    return;
+                }
+            }
             
             const resto_id = document.getElementById('hidden-id').value;
             if (!resto_id) {
@@ -24,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('name', document.getElementById('resto-name').value);
             formData.append('address', document.getElementById('address1').value + 
                 (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value : ''));
-            formData.append('time', document.getElementById('opening-time').value + ' - ' + document.getElementById('closing-time').value);
+            formData.append('opening_time', document.getElementById('opening-time').value);
+            formData.append('closing_time', document.getElementById('closing-time').value);
             formData.append('phoneNumber', document.getElementById('phone').value);
             formData.append('email', document.getElementById('email').value);
             formData.append('payment', document.getElementById('payment').value);
@@ -48,7 +64,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => {
                 console.log("Response received:", response.status);
                 if (!response.ok) {
-                    throw new Error('Server error');
+                    return response.json().then(errorData => {
+                        throw new Error(JSON.stringify(errorData));
+                    });
                 }
                 return response.json();
             })
@@ -69,7 +87,19 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Failed to update restaurant. Please try again.');
+                
+                // Try to parse the error message as JSON
+                try {
+                    const errorData = JSON.parse(error.message);
+                    if (errorData.error === 'duplicate_name') {
+                        alert('Update failed: A restaurant with this name already exists. Please use a different name.');
+                    } else {
+                        alert(`Failed to update restaurant: ${errorData.message || 'Please try again.'}`);
+                    }
+                } catch (e) {
+                    // If not JSON, show generic message
+                    alert('Failed to update restaurant. Please try again.');
+                }
             })
             .finally(() => {
                 if (submitButton) submitButton.disabled = false;
@@ -82,6 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to populate the edit form with existing restaurant data
 function populateEditForm() {
+    console.log("Populating edit form");
+    
     // Get restaurant data from the page
     const restaurantName = document.querySelector('.head-container h1').innerText;
     const restaurantAddress = document.querySelector('.information p:nth-of-type(1)').innerText;
@@ -90,6 +122,8 @@ function populateEditForm() {
     const restaurantEmail = document.querySelector('.information p:nth-of-type(4)').innerText;
     const restaurantPayment = document.querySelector('.information p:nth-of-type(5)').innerText;
     const cuisineType = document.querySelector('.head-container p').innerText;
+    
+    console.log("Found cuisine type:", cuisineType);
     
     // Get perks from list items
     const perksItems = document.querySelectorAll('.information ul li');
@@ -109,18 +143,66 @@ function populateEditForm() {
         document.getElementById('address2').value = addressParts.slice(1).join(',').trim();
     }
     
-    // Handle time (split by dash or hyphen)
-    const timeParts = restaurantTime.split('-');
+    // Handle time (now formatted as "12:00 PM - 8:00 PM")
+    const timeParts = restaurantTime.split('-').map(t => t.trim());
     if (timeParts.length === 2) {
-        document.getElementById('opening-time').value = timeParts[0].trim();
-        document.getElementById('closing-time').value = timeParts[1].trim();
+        // Convert from 12-hour format to 24-hour format for time inputs
+        const openingTime = convertTo24Hour(timeParts[0]);
+        const closingTime = convertTo24Hour(timeParts[1]);
+        
+        console.log("Converted opening time:", timeParts[0], "to", openingTime);
+        console.log("Converted closing time:", timeParts[1], "to", closingTime);
+        
+        document.getElementById('opening-time').value = openingTime;
+        document.getElementById('closing-time').value = closingTime;
     }
     
     document.getElementById('phone').value = restaurantPhone;
     document.getElementById('email').value = restaurantEmail;
     document.getElementById('payment').value = restaurantPayment;
     document.getElementById('perks').value = perksText;
-    document.getElementById('cuisine').value = cuisineType;
+    
+    // Explicitly set the cuisine dropdown by value
+    const cuisineSelect = document.getElementById('cuisine');
+    if (cuisineSelect) {
+        // Try to find the option that matches cuisineType
+        let optionFound = false;
+        
+        for (let i = 0; i < cuisineSelect.options.length; i++) {
+            if (cuisineSelect.options[i].text.trim() === cuisineType.trim()) {
+                cuisineSelect.selectedIndex = i;
+                console.log("Cuisine matched:", cuisineType, "at index", i);
+                optionFound = true;
+                break;
+            }
+        }
+        
+        if (!optionFound) {
+            console.warn("Could not find matching cuisine option for:", cuisineType);
+        }
+    } else {
+        console.error("Cuisine select element not found");
+    }
+}
+
+// Helper function to convert 12-hour time format to 24-hour format
+function convertTo24Hour(timeStr) {
+    // Parse time in format like "12:30 PM"
+    const [timePart, ampm] = timeStr.split(' ');
+    let [hours, minutes] = timePart.split(':');
+    
+    hours = parseInt(hours);
+    minutes = minutes || '00';
+    
+    // Convert to 24-hour format
+    if (ampm && ampm.toUpperCase() === 'PM' && hours < 12) {
+        hours += 12;
+    } else if (ampm && ampm.toUpperCase() === 'AM' && hours === 12) {
+        hours = 0;
+    }
+    
+    // Format as HH:MM for time input
+    return `${hours.toString().padStart(2, '0')}:${minutes}`;
 }
 
 // Modify the existing togglePopupCreateResto function to call populateEditForm
