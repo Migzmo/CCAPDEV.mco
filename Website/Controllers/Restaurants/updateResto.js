@@ -35,16 +35,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('resto_id', resto_id);
             }
             
-            // Map form fields to what the server expects
-            formData.append('name', document.getElementById('resto-name').value);
-            formData.append('address', document.getElementById('address1').value + 
-                (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value : ''));
+            // Map form fields to what the server expects - TRIM ALL TEXT INPUTS
+            formData.append('name', document.getElementById('resto-name').value.trim());
+            formData.append('address', document.getElementById('address1').value.trim() + 
+                (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value.trim() : ''));
             formData.append('opening_time', document.getElementById('opening-time').value);
             formData.append('closing_time', document.getElementById('closing-time').value);
-            formData.append('phoneNumber', document.getElementById('phone').value);
-            formData.append('email', document.getElementById('email').value);
-            formData.append('payment', document.getElementById('payment').value);
-            formData.append('perks', document.getElementById('perks').value);
+            formData.append('phoneNumber', document.getElementById('phone').value.trim());
+            formData.append('email', document.getElementById('email').value.trim());
+            formData.append('payment', document.getElementById('payment').value.trim());
+            formData.append('perks', document.getElementById('perks').value.trim());
             formData.append('cuisine_id', document.getElementById('cuisine').value);
             
             // Debug log what's being sent

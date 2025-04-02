@@ -26,15 +26,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(this);
             
             
-            formData.append('name', document.getElementById('resto-name').value);
-            formData.append('address', document.getElementById('address1').value + 
-                (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value : ''));
+            formData.append('name', document.getElementById('resto-name').value.trim());
+            formData.append('address', document.getElementById('address1').value.trim() + 
+                (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value.trim() : ''));
             formData.append('opening_time', openingTime);
             formData.append('closing_time', closingTime);
-            formData.append('phoneNumber', document.getElementById('phone').value);
-            formData.append('email', document.getElementById('email').value);
-            formData.append('payment', document.getElementById('payment').value);
-            formData.append('perks', document.getElementById('perks').value);
+            formData.append('phoneNumber', document.getElementById('phone').value.trim());
+            formData.append('email', document.getElementById('email').value.trim());
+            formData.append('payment', document.getElementById('payment').value.trim());
+            formData.append('perks', document.getElementById('perks').value.trim());
             formData.append('cuisine_id', document.getElementById('cuisine').value);
             
             // Debug log what's being sent

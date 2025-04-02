@@ -55,6 +55,23 @@ router.get('/:id', async (req, res) => {
       })
       .exec();
     
+    reviews = reviews.map(review => {
+      // Create a formatted date from MongoDB's ObjectId timestamp
+      const formattedDate = new Date(review._id.getTimestamp()).toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      // Return review with date added
+      return {
+        ...review.toObject(),
+        date: formattedDate
+      };
+    });
+      
     console.log('Reviews with populated accounts:', reviews.map(r => ({
       id: r.review_id,
       accountId: r.account_id ? r.account_id.acc_id : 'None',
@@ -160,19 +177,19 @@ router.post('/create-resto',isAuthenticated, async (req, res) => {
 
     const newRestaurant = new Restaurant({
       resto_id: newRestoId,
-      resto_name: req.body.name || '',
-      resto_address: req.body.address || '',
+      resto_name: (req.body.name || '').trim(),
+      resto_address: (req.body.address || '').trim(),
       opening_time: openingDate || '',
       closing_time: closingDate || '',
-      resto_phone: req.body.phoneNumber || '',
-      resto_email: req.body.email || '',
-      resto_payment: req.body.payment || '',
-      resto_perks: req.body.perks || 'None',
-      cuisine_id: req.body.cuisine_id || '',
+      resto_phone: (req.body.phoneNumber || '').trim(),
+      resto_email: (req.body.email || '').trim(),
+      resto_payment: (req.body.payment || '').trim(),
+      resto_perks: (req.body.perks || 'None').trim(),
+      cuisine_id: (req.body.cuisine_id || '').trim(),
       resto_img: imagePath,
-      resto_owner_id: 0 ,
-      isAlive: true  // Add this line
-    });
+      resto_owner_id: 0,
+      isAlive: true
+    });    
     
     await newRestaurant.save();
     res.status(201).json({
@@ -233,15 +250,15 @@ router.put('/api/submitupdate', async (req, res) => {
     
     // Create properly mapped update object that matches your schema
     const updateData = {
-      resto_name: req.body.name,
-      resto_address: req.body.address,
+      resto_name: (req.body.name || '').trim(),
+      resto_address: (req.body.address || '').trim(),
       opening_time: openingDate,
       closing_time: closingDate,
-      resto_phone: req.body.phoneNumber,
-      resto_email: req.body.email,
-      resto_payment: req.body.payment,
-      resto_perks: req.body.perks,
-      cuisine_id: req.body.cuisine_id  // CORRECTED
+      resto_phone: (req.body.phoneNumber || '').trim(),
+      resto_email: (req.body.email || '').trim(),
+      resto_payment: (req.body.payment || '').trim(),
+      resto_perks: (req.body.perks || '').trim(),
+      cuisine_id: (req.body.cuisine_id || '').trim()
     };
     
     // Handle image upload if present
@@ -282,7 +299,7 @@ router.put('/api/submitupdate', async (req, res) => {
       message: 'Restaurant updated successfully',
       restaurant,
       resto_id: restaurantId
-    });
+    }); 
   } catch (error) {
     console.error('Error updating restaurant:', error);
     res.status(500).json({ success: false, message: 'Failed to update restaurant', error: error.message });

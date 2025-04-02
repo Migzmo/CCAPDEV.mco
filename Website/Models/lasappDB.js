@@ -13,7 +13,7 @@ const Review = mongoose.model('Review', reviewSchema);
 // Restaurant Schema
 const restaurantSchema = new mongoose.Schema({
   resto_id: { type: Number, required: true },//im not sure about this being non unique
-  resto_name: { type: String,unique:true, required: true },
+  resto_name: { type: String, required: true },
   resto_address: { type: String, required: true }, // Corrected field name
   opening_time: { type: Date},
   closing_time: { type: Date},
