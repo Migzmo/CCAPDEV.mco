@@ -7,7 +7,7 @@ import {
     updateUIAfterLogin, 
     checkUserLoggedIn, 
     toggleUserDropdown 
-} from './utils/authManager.js';
+} from '../Controllers/utils/authManager.js';
 
 import { 
     togglePopupVisibility, 

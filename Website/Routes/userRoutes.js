@@ -93,6 +93,25 @@ router.get('/:id', async function (req, res) {
       review: review.review,
       date: new Date(review._id.getTimestamp()).toLocaleDateString()
     }));
+
+    // Fetch user's saved restaurants
+    let savedRestaurants = [];
+    if (account.saved_restos && account.saved_restos.length > 0) {
+      savedRestaurants = await Restaurant.find({
+        resto_id: { $in: account.saved_restos },
+        isAlive: true
+      });
+
+      console.log(`Found ${savedRestaurants.length} saved restaurants for user ${accountId}`);
+      
+      // Format restaurant data for template
+      savedRestaurants = savedRestaurants.map(resto => ({
+        resto_id: resto.resto_id,
+        resto_name: resto.resto_name,
+        cuisine_id: resto.cuisine_id,
+        image: resto.resto_img || '/Views/images/restaurantPictures/default-restaurant.png'
+      }));
+    }
     
     // Determine if this is the user's own profile
     const isOwnProfile = currentUserId === accountId;
@@ -106,13 +125,15 @@ router.get('/:id', async function (req, res) {
         profilePic: account.profile_pic
       },
       isOwnProfile: isOwnProfile,
-      reviewsCount: formattedReviews.length
+      reviewsCount: formattedReviews.length,
+      savedRestaurantsCount: savedRestaurants.length
     });
     
-    // Render the profile page
+    // Render the profile page with saved restaurants
     res.render('profile', {
       account: {
         id: account.acc_id,
+        acc_id: account.acc_id,  // Include both formats for compatibility
         name: account.acc_name,
         username: account.acc_username,
         bio: account.acc_bio,
@@ -120,7 +141,8 @@ router.get('/:id', async function (req, res) {
         profile_pic: account.profile_pic || '/Views/images/profilePictures/default-profile.png'
       },
       isOwnProfile: isOwnProfile,
-      reviews: formattedReviews
+      reviews: formattedReviews,
+      savedRestaurants: savedRestaurants
     });
   } catch(err) {
     console.error(err);
