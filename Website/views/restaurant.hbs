@@ -188,8 +188,10 @@
         <div class="info">
                 <!-- Exit Button -->
                 <div class="buttons-container">
+                    {{#if (eq restaurant.userType "business-owner")}}
                     <button class="oval-button-review delete-btn" onclick="toggleDeleteConfirm()">Delete</button>
                     <button class="oval-button-review edit-btn" onclick="togglePopupCreateResto()">Edit</button>
+                    {{/if}}
                     <a href="/">
                         <button class="oval-button-review">Back</button>
                     </a>

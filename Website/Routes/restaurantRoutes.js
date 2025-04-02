@@ -104,7 +104,11 @@ router.get('/:id', async (req, res) => {
     if (imagePath && imagePath.startsWith('./')) {
       imagePath = '/' + imagePath.substring(2);
     }
+    const userType =  req.session.user?.accountType || null;
+   
+    console.log("User type:", userType);
     
+
     // Render restaurant page
     res.render('restaurant', {
       restaurant: {
@@ -119,7 +123,8 @@ router.get('/:id', async (req, res) => {
         email: restaurant.resto_email,
         payment: restaurant.resto_payment,
         perks: restaurant.resto_perks.split(', '),
-        cuisine: restaurant.cuisine_id 
+        cuisine: restaurant.cuisine_id,
+        userType: userType
       },
       reviews: reviews
     });

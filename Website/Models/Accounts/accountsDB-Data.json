@@ -19,6 +19,7 @@
     "saved_reviews": [1],
     "profile_pic": "/views/images/profilePictures/profile_sample_two.jpg",
     "isAlive": true,
+    "acc_type":"business-owner",
     "acc_password": "$2b$10$PuMAmnfFxLZme2Kcx82OJu4nXtEhMEAnwEXgp5PYWTG8vxK8Bxgfi"
   }
 ]
