@@ -42,7 +42,6 @@
                                 </button>
                                 <div class="dropdown-menu" id="userDropdownMenu">
                                     <a href="#" id="viewProfileBtn">My Profile</a>
-                                    <a href="#" id="editProfileBtn">Edit Profile</a>
                                     <a href="#" id="logoutBtn">Logout</a>
                                 </div>
                             </div>
@@ -366,7 +365,7 @@
                     <h1>{{restaurant.name}}</h1>  
                     <p>{{restaurant.cuisine}}</p> 
                 </div>
-            </div>       
+            </div>          
             <!-- Main body-->
             <div class="main">
                 <img src={{restaurant.image}} alt={{restaurant.name}}>
@@ -505,7 +504,7 @@
                         <button id="closeEditReviewModal">&times;</button>
                     </div>
                 </div>
-                        
+                          
                 <!-- Scrollable Reviews -->
                 <div>
                     <div class="scroll-div"> 
@@ -560,7 +559,7 @@
                         {{/each}}
                     </div>
                 </div>
-            </div>      
+            </div>        
         </div>
 
         <!-- Footer -->
@@ -726,79 +725,6 @@
                     });
                 }
                 
-                // Handle edit profile button click
-                const editProfileBtn = document.getElementById('editProfileBtn');
-                if (editProfileBtn) {
-                    editProfileBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        
-                        const editProfileFrame = document.getElementById('editProfileFrame');
-                        const backdrop = document.getElementById('backdrop');
-                        
-                        if (editProfileFrame && backdrop) {
-                            // Get current user data
-                            const userData = localStorage.getItem('currentUser');
-                            if (!userData) {
-                                alert("You must be logged in to edit your profile");
-                                return;
-                            }
-                            
-                            try {
-                                const user = JSON.parse(userData);
-                                if (!user || !user.userId) {
-                                    alert("Invalid user data");
-                                    return;
-                                }
-                                
-                                // Fetch user profile data to populate form
-                                fetch(`/api/users/api/${user.userId}`)
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error('Failed to fetch profile data');
-                                        }
-                                        return response.json();
-                                    })
-                                    .then(userData => {
-                                        // Populate form fields
-                                        document.getElementById('edit-username').value = userData.acc_name || '';
-                                        document.getElementById('edit-bio').value = userData.acc_bio || '';
-                                        
-                                        // Set user ID in hidden field
-                                        const userIdField = document.querySelector('#edit-profile-form input[name="userId"]');
-                                        if (userIdField) {
-                                            userIdField.value = user.userId;
-                                        }
-                                        
-                                        // Show profile picture preview if available
-                                        const previewDiv = document.getElementById('profile-pic-preview');
-                                        if (previewDiv) {
-                                            if (userData.profile_pic) {
-                                                previewDiv.style.backgroundImage = `url('${userData.profile_pic}')`;
-                                            } else {
-                                                previewDiv.style.backgroundImage = `url('/Views/images/profilePictures/default-profile.png')`;
-                                            }
-                                        }
-                                        
-                                        // Show the form
-                                        editProfileFrame.style.display = 'block';
-                                        backdrop.style.display = 'block';
-                                        
-                                        document.body.style.pointerEvents = 'none';
-                                        editProfileFrame.style.pointerEvents = 'auto';
-                                        backdrop.style.pointerEvents = 'auto';
-                                    })
-                                    .catch(error => {
-                                        console.error('Error loading profile data:', error);
-                                        alert('Failed to load profile data: ' + error.message);
-                                    });
-                            } catch (error) {
-                                console.error('Error parsing user data:', error);
-                                alert('Invalid user data format');
-                            }
-                        }
-                    });
-                }
-                
                 // Handle View Profile button click
                 const viewProfileBtn = document.getElementById('viewProfileBtn');
                 if (viewProfileBtn) {
@@ -833,8 +759,23 @@
                         e.preventDefault();
                         // Clear local storage
                         localStorage.removeItem('currentUser');
-                        // Redirect to home page
-                        window.location.href = '/';
+                        
+                        // Send a logout request to the server to clear the session
+                        fetch('/auth/logout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            // Reload the page to reflect the logged out state
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Logout error:', error);
+                            // Reload anyway
+                            window.location.reload();
+                        });
                     });
                 }
                 
@@ -963,7 +904,6 @@
                     });
                 });
             });
-            
             function toggleHeart() {
                 const heartIcon = document.getElementById("heartIcon");
                 const isLiking = !heartIcon.classList.contains("liked");
@@ -1159,7 +1099,6 @@
         <script src='/Controllers/Reviews/addReview.js'></script>
         <script src='/Controllers/Reviews/editReview.js'></script>
         <script src='/Controllers/Reviews/deleteReview.js'></script>
-        
         <script type="module">
             import { toggleEditProfileFrame, setupProfilePicPreview, setupProfileUpdateHandler } from '../Controllers/Accounts/updateAccount.js';
             import { setupDeleteAccountHandlers } from '../Controllers/Accounts/deleteAccount.js';
