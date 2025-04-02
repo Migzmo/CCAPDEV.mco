@@ -1200,3 +1200,295 @@ form .input-box input {
     color: black;
     background-color: white;
 }
+
+/* Reply System - Complete Styling */
+.review-replies {
+    margin-top: 18px;
+    padding-left: 25px;
+    border-left: 3px solid #e0e0e0;
+}
+
+.reply-item {
+    margin: 15px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.reply-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.reply-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    position: relative;
+    width: 100%;
+}
+
+.profile-pic-small {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e8f5e9;
+    margin-right: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.reply-header a, 
+.reply-header span {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.reply-header a:hover {
+    color: #1b5e20;
+}
+
+.reply-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.reply-item p {
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.reply-date {
+    margin-top: 0; /* Remove top margin since it's now in a flex container */
+    font-size: 14px;
+    color: #888;
+    text-align: right;
+    font-style: italic;
+    font-family: 'Lexend', sans-serif;
+    margin-left: auto; /* Push to the right */
+}
+
+.delete-reply {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.delete-reply:hover {
+    color: #d32f2f;
+}
+
+.reply-toggle-btn {
+    background: none;
+    border: none;
+    color: #4a7c59;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+    margin-top: 0; /* Remove top margin since it's in a flex container */
+}
+
+.reply-toggle-btn:hover {
+    background-color: rgba(74, 124, 89, 0.1);
+    color: #2E7D32;
+}
+
+.reply-to-reply-btn {
+    background: none;
+    border: none;
+    color: #4a7c59;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.reply-to-reply-btn:hover {
+    background-color: rgba(74, 124, 89, 0.1);
+    color: #2E7D32;
+}
+
+.reply-form-container,
+.reply-to-reply-form-container {
+    margin-top: 12px;
+    padding: 15px;
+    background-color: #f8fff8;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.reply-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-height: 80px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    margin-bottom: 12px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.reply-form textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.reply-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.submit-reply-btn, 
+.cancel-reply-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.submit-reply-btn {
+    background-color: #5EB762;
+    color: white;
+}
+
+.submit-reply-btn:hover {
+    background-color: #4CAF50;
+}
+
+.cancel-reply-btn {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.cancel-reply-btn:hover {
+    background-color: #bdbdbd;
+}
+
+.reply-children {
+    margin-left: 25px;
+    padding-left: 15px;
+    border-left: 2px solid #e8f5e9;
+    margin-top: 10px;
+}
+
+
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .review-replies {
+        padding-left: 15px;
+    }
+    
+    .reply-children {
+        margin-left: 15px;
+        padding-left: 10px;
+    }
+    
+    .reply-item {
+        padding: 12px;
+    }
+    
+    .profile-pic-small {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Move reply date to header and make it green */
+.reply-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    position: relative;
+    width: 100%;
+    flex-wrap: wrap; /* Allow content to wrap if needed */
+}
+
+/* Reposition delete button and add spacing */
+.delete-reply {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+    transition: color 0.2s;
+    margin-right: 5px; /* Add some spacing from the edge */
+}
+
+/* Style the reply date */
+.reply-date {
+    margin-left: auto;
+    margin-right: 40px; /* Make room for the delete button */
+    font-size: 14px;
+    color: #999; /* Green color to match theme */
+    font-style: italic;
+    font-family: 'Lexend', sans-serif;
+}
+
+/* Keep the reply actions layout clean */
+.reply-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* EXTRA STUFF FOR EDIT REVIEW*/
+
+/* Edit button styling to match delete button */
+.edit-review {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 0;
+    color: #444;
+    transition: color 0.2s;
+}
+
+.edit-review:hover {
+    color: #007bff;
+}
+
+/* Adjust spacing for the buttons */
+.delete-review, .edit-review {
+    margin-left: 8px;
+}

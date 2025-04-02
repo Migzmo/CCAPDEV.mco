@@ -56,4 +56,17 @@ const cuisineSchema = new mongoose.Schema({
 
 const Cuisine = mongoose.model('Cuisine', cuisineSchema);
 
-module.exports = { Account, Cuisine, Restaurant, Review };
+// Reply Schema
+const replySchema = new mongoose.Schema({
+  reply_id: { type: Number, unique: true, required: true },
+  review_id: { type: Number, ref: 'Review', required: true },
+  account_id: { type: Number, ref: 'Account', default: 0 },
+  content: { type: String, required: true },
+  parent_id: { type: Number, ref: 'Reply', default: null },
+  isAlive: { type: Boolean, default: true },
+  created_at: { type: Date, default: Date.now }
+});
+
+const Reply = mongoose.model('Reply', replySchema);
+
+module.exports = { Account, Cuisine, Restaurant, Review, Reply };

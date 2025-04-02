@@ -387,6 +387,51 @@
                                 Posted on {{this.date}}
                             {{/if}}
                             </span>
+
+                            <div class="review-replies">
+                                {{#if this.replies}}
+                                    {{#each this.replies}}
+                                        <div class="reply-item" data-id="{{this.reply_id}}">
+                                            <div class="reply-header">
+                                            {{#if this.account_id}}
+                                                <a href="/profile/{{this.account_id.acc_id}}">
+                                                    <img src="{{this.account_id.profile_pic}}" alt="Profile" class="profile-pic-small" onerror="this.src='/images/profilePictures/default-profile.png'"> 
+                                                    {{this.account_id.acc_name}}
+                                                </a>
+                                            {{else}}
+                                                <span>
+                                                    <img src="../Views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
+                                                    Anonymous
+                                                </span>
+                                            {{/if}}
+                                            
+                                            <span class="reply-date">{{this.created_at}}</span>
+                                            
+                                            {{#if this.canDelete}}
+                                            <button class="delete-reply" data-id="{{this.reply_id}}">🗑️</button>
+                                            {{/if}}
+                                        </div>
+                                        <p>{{this.content}}</p>
+                                        <div class="reply-actions">
+                                            <button class="reply-to-reply-btn" data-parent-id="{{this.reply_id}}">Reply</button>
+                                        </div>
+                                    {{/each}}
+                                {{/if}}
+                                
+                                <div class="reply-actions">
+                                    <button class="reply-toggle-btn" data-review-id="{{this.review_id}}">Reply</button>
+                                </div>
+                                
+                                <div class="reply-form-container" style="display: none;">
+                                    <form class="reply-form" data-review-id="{{this.review_id}}">
+                                        <textarea class="reply-content" placeholder="Write your reply..." required></textarea>
+                                        <div class="reply-buttons">
+                                            <button type="submit" class="submit-reply-btn">Submit</button>
+                                            <button type="button" class="cancel-reply-btn">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                             
                             <!-- ADD FORMS FOR THIS -->
                             <div class="input-box button">
@@ -504,6 +549,7 @@
         <script src='../Controllers/Reviews/addReview.js'></script>
         <script src='../Controllers/Reviews/editReview.js'></script>
         <script src='../Controllers/Reviews/deleteReview.js'></script>
+        <script src='../Controllers/Reviews/replyReview.js'></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Fix profile links in reviews
