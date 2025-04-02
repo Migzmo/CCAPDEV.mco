@@ -48,7 +48,7 @@
                             </div>
                         </li>
                         {{else}}
-                        <li><button onclick="togglePopup()" id="loginButton">LOGIN</button></li>
+                        <li><button id="loginButton" class="login-button">LOGIN</button></li>
                         {{/if}}
                     </ul>
                 </div>
@@ -70,7 +70,7 @@
                     <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="">DLSU Student Handbook</a> and/or <a href="">Privacy Policy</a> of LaSapp.</p>
                 </div>
                 <div id="loginframe_right">
-                    <button id="closeLogin" onclick="togglePopup()">&times</button>
+                    <button id="closeLogin">&times</button>
                 </div>
             </div>
         </div>
@@ -583,11 +583,129 @@
             // Store restaurant ID for use in like/unlike functions
             const restaurantId = "{{restaurant.id}}";
             
-            // User dropdown toggle functionality
             document.addEventListener('DOMContentLoaded', function() {
-                console.log("DOM loaded, setting up dropdown functionality");
+                console.log("DOM loaded, setting up functionality");
                 
-                // Fix dropdown toggle functionality
+                // Setup login button when not logged in
+                const loginButton = document.getElementById('loginButton');
+                if (loginButton) {
+                    loginButton.addEventListener('click', function() {
+                        const loginframe = document.getElementById('loginframe');
+                        const backdrop = document.getElementById('backdrop');
+                        
+                        if (loginframe && backdrop) {
+                            loginframe.style.display = 'block';
+                            backdrop.style.display = 'block';
+                            
+                            document.body.style.pointerEvents = 'none';
+                            loginframe.style.pointerEvents = 'auto';
+                            backdrop.style.pointerEvents = 'auto';
+                        }
+                    });
+                }
+                
+                // Setup close login button
+                const closeLoginBtn = document.getElementById('closeLogin');
+                if (closeLoginBtn) {
+                    closeLoginBtn.addEventListener('click', function() {
+                        const loginframe = document.getElementById('loginframe');
+                        const backdrop = document.getElementById('backdrop');
+                        
+                        if (loginframe && backdrop) {
+                            loginframe.style.display = 'none';
+                            backdrop.style.display = 'none';
+                            document.body.style.pointerEvents = 'auto';
+                        }
+                    });
+                }
+
+                // Setup signin button
+                const signinBtn = document.querySelector('.signin-button');
+                if (signinBtn) {
+                    signinBtn.addEventListener('click', function() {
+                        const loginFrame = document.getElementById('loginframe');
+                        const signinFrame = document.getElementById('signinframe');
+                        
+                        if (loginFrame && signinFrame) {
+                            loginFrame.style.display = 'none';
+                            signinFrame.style.display = 'block';
+                        }
+                    });
+                }
+                
+                // Setup register button
+                const registerBtn = document.getElementById('register');
+                if (registerBtn) {
+                    registerBtn.addEventListener('click', function() {
+                        const loginFrame = document.getElementById('loginframe');
+                        const registerFrame = document.getElementById('registerframe');
+                        
+                        if (loginFrame && registerFrame) {
+                            loginFrame.style.display = 'none';
+                            registerFrame.style.display = 'block';
+                        }
+                    });
+                }
+                
+                // Setup back to options button
+                const backToOptionsBtn = document.getElementById('backToOptions');
+                if (backToOptionsBtn) {
+                    backToOptionsBtn.addEventListener('click', function() {
+                        const signinFrame = document.getElementById('signinframe');
+                        const loginFrame = document.getElementById('loginframe');
+                        
+                        if (signinFrame && loginFrame) {
+                            signinFrame.style.display = 'none';
+                            loginFrame.style.display = 'block';
+                        }
+                    });
+                }
+                
+                // Setup back to login button
+                const backToLoginBtn = document.getElementById('backToLogin');
+                if (backToLoginBtn) {
+                    backToLoginBtn.addEventListener('click', function() {
+                        const registerFrame = document.getElementById('registerframe');
+                        const loginFrame = document.getElementById('loginframe');
+                        
+                        if (registerFrame && loginFrame) {
+                            registerFrame.style.display = 'none';
+                            loginFrame.style.display = 'block';
+                        }
+                    });
+                }
+                
+                // Setup close register button
+                const closeRegisterBtn = document.getElementById('closeRegister');
+                if (closeRegisterBtn) {
+                    closeRegisterBtn.addEventListener('click', function() {
+                        const registerFrame = document.getElementById('registerframe');
+                        const backdrop = document.getElementById('backdrop');
+                        
+                        if (registerFrame && backdrop) {
+                            registerFrame.style.display = 'none';
+                            backdrop.style.display = 'none';
+                            document.body.style.pointerEvents = 'auto';
+                        }
+                    });
+                }
+                
+                // Setup close signin button
+                const closeSigninBtn = document.getElementById('closeSignin');
+                if (closeSigninBtn) {
+                    closeSigninBtn.addEventListener('click', function() {
+                        const signinFrame = document.getElementById('signinframe');
+                        const backdrop = document.getElementById('backdrop');
+                        
+                        if (signinFrame && backdrop) {
+                            signinFrame.style.display = 'none';
+                            backdrop.style.display = 'none';
+                            document.body.style.pointerEvents = 'auto';
+                        }
+                    });
+                }
+                
+                // User dropdown toggle functionality
                 const dropdownToggle = document.getElementById('userDropdownToggle');
                 const dropdownMenu = document.getElementById('userDropdownMenu');
                 
@@ -606,54 +724,118 @@
                             }
                         }
                     });
-                    
-                    // Handle logout button click
-                    const logoutBtn = document.getElementById('logoutBtn');
-                    if (logoutBtn) {
-                        logoutBtn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            // Clear local storage
-                            localStorage.removeItem('currentUser');
-                            // Redirect to home page
-                            window.location.href = '/';
-                        });
-                    }
-                    
-                    // Handle edit profile button click
-                    const editProfileBtn = document.getElementById('editProfileBtn');
-                    if (editProfileBtn) {
-                        editProfileBtn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            toggleEditProfileFrame();
-                        });
-                    }
-                    
-                    // Handle View Profile button click
-                    const viewProfileBtn = document.getElementById('viewProfileBtn');
-                    if (viewProfileBtn) {
-                        viewProfileBtn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            
-                            // Get user data from localStorage
+                }
+                
+                // Handle edit profile button click
+                const editProfileBtn = document.getElementById('editProfileBtn');
+                if (editProfileBtn) {
+                    editProfileBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const editProfileFrame = document.getElementById('editProfileFrame');
+                        const backdrop = document.getElementById('backdrop');
+                        
+                        if (editProfileFrame && backdrop) {
+                            // Get current user data
                             const userData = localStorage.getItem('currentUser');
                             if (!userData) {
-                                alert('Session data not found. Please log in again.');
+                                alert("You must be logged in to edit your profile");
                                 return;
                             }
                             
                             try {
                                 const user = JSON.parse(userData);
-                                if (user && user.userId) {
-                                    window.location.href = `/profile/${user.userId}`;
-                                } else {
-                                    alert('Invalid user data. Please log in again.');
+                                if (!user || !user.userId) {
+                                    alert("Invalid user data");
+                                    return;
                                 }
+                                
+                                // Fetch user profile data to populate form
+                                fetch(`/api/users/api/${user.userId}`)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Failed to fetch profile data');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(userData => {
+                                        // Populate form fields
+                                        document.getElementById('edit-username').value = userData.acc_name || '';
+                                        document.getElementById('edit-bio').value = userData.acc_bio || '';
+                                        
+                                        // Set user ID in hidden field
+                                        const userIdField = document.querySelector('#edit-profile-form input[name="userId"]');
+                                        if (userIdField) {
+                                            userIdField.value = user.userId;
+                                        }
+                                        
+                                        // Show profile picture preview if available
+                                        const previewDiv = document.getElementById('profile-pic-preview');
+                                        if (previewDiv) {
+                                            if (userData.profile_pic) {
+                                                previewDiv.style.backgroundImage = `url('${userData.profile_pic}')`;
+                                            } else {
+                                                previewDiv.style.backgroundImage = `url('/Views/images/profilePictures/default-profile.png')`;
+                                            }
+                                        }
+                                        
+                                        // Show the form
+                                        editProfileFrame.style.display = 'block';
+                                        backdrop.style.display = 'block';
+                                        
+                                        document.body.style.pointerEvents = 'none';
+                                        editProfileFrame.style.pointerEvents = 'auto';
+                                        backdrop.style.pointerEvents = 'auto';
+                                    })
+                                    .catch(error => {
+                                        console.error('Error loading profile data:', error);
+                                        alert('Failed to load profile data: ' + error.message);
+                                    });
                             } catch (error) {
-                                console.error('Error processing user data:', error);
-                                alert('Error accessing profile. Please log in again.');
+                                console.error('Error parsing user data:', error);
+                                alert('Invalid user data format');
                             }
-                        });
-                    }
+                        }
+                    });
+                }
+                
+                // Handle View Profile button click
+                const viewProfileBtn = document.getElementById('viewProfileBtn');
+                if (viewProfileBtn) {
+                    viewProfileBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Get user data from localStorage
+                        const userData = localStorage.getItem('currentUser');
+                        if (!userData) {
+                            alert('Session data not found. Please log in again.');
+                            return;
+                        }
+                        
+                        try {
+                            const user = JSON.parse(userData);
+                            if (user && user.userId) {
+                                window.location.href = `/profile/${user.userId}`;
+                            } else {
+                                alert('Invalid user data. Please log in again.');
+                            }
+                        } catch (error) {
+                            console.error('Error processing user data:', error);
+                            alert('Error accessing profile. Please log in again.');
+                        }
+                    });
+                }
+                
+                // Handle logout button click
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // Clear local storage
+                        localStorage.removeItem('currentUser');
+                        // Redirect to home page
+                        window.location.href = '/';
+                    });
                 }
                 
                 // Fix profile links in reviews
@@ -816,9 +998,7 @@
                     })
                     .then(response => {
                         if (!response.ok) {
-                            return response.json().then(err => {
-                                throw new Error(err.message || 'Server error');
-                            });
+                            throw new Error('Server error');
                         }
                         return response.json();
                     })

@@ -1263,8 +1263,31 @@ form .input-box input {
 #loginButton {
     background: none;
     border: none;
-    color: white;
+    color: #2E7D32;
     font-family: 'Lexend', sans-serif;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    text-transform: uppercase;
+}
+
+#loginButton:hover {
+    color: #1B5E20;
+    text-decoration: underline;
+}
+
+/* Login frame styling */
+#loginframe {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 800px;
+    background-color: white;
+    z-index: 1001;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
