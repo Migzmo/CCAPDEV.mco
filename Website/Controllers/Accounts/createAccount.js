@@ -39,6 +39,7 @@ async function registerUser(userData) {
             // Update UI
             updateUIAfterLogin();
              // Reload the page to reflect changes
+             window.location.href = '/';
             return { success: true, data };
         } else {
             throw new Error(data.message || 'Registration failed');
@@ -56,11 +57,13 @@ async function registerUser(userData) {
 async function handleRegistration(event) {
     event.preventDefault();
     console.log('Registration form submitted');
-
+    const selectedAccountType = document.querySelector('input[name="accountType"]:checked').value;
+    console.log(selectedAccountType); // Will be "User" or "business-owner"
     const formData = {
         username: document.getElementById('username').value,
         password: document.getElementById('password').value,
         description: document.getElementById('description').value,
+        accountType: selectedAccountType,
         profilePic: '' // You can add file handling later
     };
 
