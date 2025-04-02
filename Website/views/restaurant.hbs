@@ -196,7 +196,7 @@
                 <!-- Header -->
                 <div class="classheader">
                     <button onclick="toggleHeart()" id="btnh1" class="btn">
-                        <i id="heartIcon" class="fa-solid fa-heart heart"></i>
+                        <i id="heartIcon" class="fa-solid fa-heart heart" data-resto-id="{{restaurant.id}}"></i>
                     </button>
                     <div class="head-container">
                         <h1>{{restaurant.name}}</h1>  
@@ -409,43 +409,95 @@
             </div>
         </footer>
 
-                    <script src="../Controllers/RestoInfo.js"></script>
-            <script>
-                function toggleHeart() {
-                    const heartIcon = document.getElementById("heartIcon");
-                    heartIcon.classList.toggle("liked");
-    
-                    if (heartIcon.classList.contains("liked")) {
-                        heartIcon.style.color = "red";
-                    } else {
-                        heartIcon.style.color = "gray";
-                    }
+        <script src="../Controllers/RestoInfo.js"></script>
+        <script>
+            // Store restaurant ID for use in like/unlike functions
+            const restaurantId = "{{restaurant.id}}";
+            
+            function toggleHeart() {
+                const heartIcon = document.getElementById("heartIcon");
+                const isLiking = !heartIcon.classList.contains("liked");
+                
+                // Get current user data
+                const userData = localStorage.getItem('currentUser');
+                if (!userData) {
+                    alert('Please login to save restaurants');
+                    return;
                 }
-    
-                // Add explicit implementation of toggleReviewModal function
-                function toggleReviewModal() {
-                    const backdrop = document.getElementById('backdrop');
-                    const reviewModal = document.getElementById('reviewModal');
+                
+                try {
+                    const user = JSON.parse(userData);
+                    if (!user || !user.userId) {
+                        alert('Please login to save restaurants');
+                        return;
+                    }
                     
-                    if (reviewModal && backdrop) {
-                        if (reviewModal.style.display === 'block') {
-                            reviewModal.style.display = 'none';
-                            backdrop.style.display = 'none';
-                        } else {
-                            reviewModal.style.display = 'block';
-                            backdrop.style.display = 'block';
+                    const userId = user.userId;
+                    const endpoint = isLiking ? '/api/restaurants/like' : '/api/restaurants/unlike';
+                    
+                    // Send API request to like/unlike restaurant
+                    fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userId: userId,
+                            restoId: restaurantId
+                        })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.message || 'Server error');
+                            });
                         }
-                    } else {
-                        console.error('Modal elements not found');
-                    }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Toggle heart appearance
+                            heartIcon.classList.toggle("liked");
+                            heartIcon.style.color = isLiking ? "red" : "gray";
+                            console.log(isLiking ? 'Restaurant saved' : 'Restaurant unsaved');
+                        } else {
+                            console.error('Failed to update saved status:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating restaurant saved status:', error);
+                        alert('Failed to update restaurant saved status: ' + error.message);
+                    });
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                    alert('Please login to save restaurants');
                 }
-            </script>
-           <script src='../Controllers/directoryScript.js'></script>
-            <script src='../Controllers/Restaurants/updateResto.js'></script>
-            <script src='../Controllers/Restaurants/deleteResto.js'></script>
-            <script src='../Controllers/Reviews/addReview.js'></script>
-            <script src='../Controllers/Reviews/editReview.js'></script>
-            <script src ='../Controllers/Reviews/deleteReview.js'></script>
+            }
+    
+            // Add explicit implementation of toggleReviewModal function
+            function toggleReviewModal() {
+                const backdrop = document.getElementById('backdrop');
+                const reviewModal = document.getElementById('reviewModal');
+                
+                if (reviewModal && backdrop) {
+                    if (reviewModal.style.display === 'block') {
+                        reviewModal.style.display = 'none';
+                        backdrop.style.display = 'none';
+                    } else {
+                        reviewModal.style.display = 'block';
+                        backdrop.style.display = 'block';
+                    }
+                } else {
+                    console.error('Modal elements not found');
+                }
+            }
+        </script>
+        <script src='../Controllers/directoryScript.js'></script>
+        <script src='../Controllers/Restaurants/updateResto.js'></script>
+        <script src='../Controllers/Restaurants/deleteResto.js'></script>
+        <script src='../Controllers/Reviews/addReview.js'></script>
+        <script src='../Controllers/Reviews/editReview.js'></script>
+        <script src='../Controllers/Reviews/deleteReview.js'></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Fix profile links in reviews
@@ -481,7 +533,53 @@
                         populateEditForm();
                     }
                 };
+                
+                // Check if the restaurant is already liked
+                checkIfRestaurantIsLiked();
             });
+            
+            // Check if current restaurant is already in user's saved list
+            function checkIfRestaurantIsLiked() {
+                const userData = localStorage.getItem('currentUser');
+                if (!userData) {
+                    return;
+                }
+                
+                try {
+                    const user = JSON.parse(userData);
+                    if (!user || !user.userId) {
+                        return;
+                    }
+                    
+                    const userId = user.userId;
+                    const restoId = "{{restaurant.id}}";
+                    
+                    // Fetch user's saved restaurants
+                    fetch(`/api/likes/saved-restaurants/${userId}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Failed to fetch saved restaurants');
+                            }
+                            return response.json();
+                        })
+                        .then(restaurants => {
+                            // Check if current restaurant is in the list
+                            const isLiked = restaurants.some(resto => resto.resto_id == restoId);
+                            
+                            // Update heart icon if restaurant is liked
+                            if (isLiked) {
+                                const heartIcon = document.getElementById("heartIcon");
+                                heartIcon.classList.add("liked");
+                                heartIcon.style.color = "red";
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error checking if restaurant is liked:', error);
+                        });
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            }
         </script>
         <script type="module" src="/Controllers/directoryScript.js"></script>  
     </body>
