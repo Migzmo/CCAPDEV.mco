@@ -1200,3 +1200,71 @@ form .input-box input {
     color: black;
     background-color: white;
 }
+
+/* User Dropdown Menu */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    color: #2E7D32;  /* Changed to match the navigation links color */
+}
+
+.profile-pic-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #DDF0DE;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;  /* Position it right below the toggle button */
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10001;  /* Ensure it's above other elements */
+    border-radius: 4px;
+    margin-top: 5px;
+    border-top: 3px solid #2E7D32;
+}
+
+.dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-family: 'Lexend', sans-serif;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+    color: #2E7D32;
+}
+
+.show {
+    display: block !important;  /* Force display with !important */
+}
+
+/* Login Button */
+#loginButton {
+    background: none;
+    border: none;
+    color: white;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}

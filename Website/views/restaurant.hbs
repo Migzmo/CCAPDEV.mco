@@ -25,21 +25,186 @@
         <header class="navbar">
             <!-- First Header -->
             <div class="navbar-container">
-                <a href="/" id = "logoImg">
+                <a href="/" id="logoImg">
                 <img src="../Views/images/assets/logo.png" alt="Logo" width="70" height="70">
                 </a>
-                    <div class="logo">LaSapp</div>
-                
+                <div class="logo">LaSapp</div>
                 
                 <div class="options">
                     <ul>
                         <li><a href="/">DIRECTORY</a></li>
-                        <li><a href="#">ACCOUNT</a></li>
+                        {{#if currentUser}}
+                        <li>
+                            <div class="user-dropdown">
+                                <button class="dropdown-toggle" id="userDropdownToggle">
+                                    <img src="{{currentUser.profilePic}}" alt="Profile" class="profile-pic-small" onerror="this.src='/Views/images/profilePictures/default-profile.png'">
+                                    {{currentUser.username}}
+                                </button>
+                                <div class="dropdown-menu" id="userDropdownMenu">
+                                    <a href="#" id="viewProfileBtn">My Profile</a>
+                                    <a href="#" id="editProfileBtn">Edit Profile</a>
+                                    <a href="#" id="logoutBtn">Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                        {{else}}
+                        <li><button onclick="togglePopup()" id="loginButton">LOGIN</button></li>
+                        {{/if}}
                     </ul>
                 </div>
             </div>
         </header>
-                <div id="backdrop"></div>
+        <div id="backdrop"></div>
+        
+        {{#unless currentUser}}
+        <!-- Login Frame -->
+        <div id="loginframe">
+            <div class="loginframe-content">
+                <div id="loginframe_left">
+                    <h2>Log in or sign up now!</h2>
+                    <div class="button-container">
+                        <button class="signin-button"><span id="mail-logo"></span>Continue with Account</button>
+                        <button class="login-button"><span id="google-logo"></span>Login with Gmail</button>
+                    </div>
+                    <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
+                    <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="">DLSU Student Handbook</a> and/or <a href="">Privacy Policy</a> of LaSapp.</p>
+                </div>
+                <div id="loginframe_right">
+                    <button id="closeLogin" onclick="togglePopup()">&times</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="signinframe">
+            <div class="signinframe-content">
+                <div id="signinframe_left">
+                    <h2 id="h2-signin">Sign in</h2>
+                    <form class="signin-form">
+                        <div class="form-group">
+                            <input type="text" id="signin-username" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="signin-password" placeholder="Password" required>
+                        </div>
+
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <button type="submit" class="signin-submit-button">Sign in</button>
+                    </form>
+                    <p class="back-to-login">Need an account? <button id="backToOptions">Go back</button></p>
+                </div>
+                <div id="signinframe_right">
+                    <button id="closeSignin">&times;</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="registerframe">
+            <div class="registerframe-content">
+                <div id="registerframe_left">
+                    <h2 id="create-account">Create Your Account</h2>
+                    <form id="registration-form" class="form-container">
+                        <div class="form-group">
+                            <input type="text" id="username" placeholder="Username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="password" placeholder="Password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <br/><br/><br/>
+                            <label for="avatar" class="instruction">Profile Picture</label>
+                            <input type="file" id="avatar" accept="image/*">
+                        </div>
+
+                        <div class="form-group account-type">
+                            <label class="instruction">Account Type:</label>
+                            <div class="radio-group">
+                                <input type="radio" id="user" name="accountType" value="user" checked>
+                                <label for="user" class="instruction">User</label>
+                                <input type="radio" id="business-owner" name="accountType" value="business-owner">
+                                <label for="business-owner" class="instruction">Business Owner</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea id="description" placeholder="Short description (optional)"></textarea>
+                        </div>
+
+                        <button type="submit" class="register-button">Create Account</button>
+                    </form>
+
+                    <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
+                </div>
+                <div id="registerframe_right">
+                    <button id="closeRegister">&times;</button>
+                </div>
+            </div>
+        </div>
+        {{/unless}}
+        
+        <!-- Add the Edit Profile Frame that's missing -->
+        <div id="editProfileFrame" style="display: none;">
+            <div class="editProfile-content">
+                <div id="editProfile_left">
+                    <h2 id="edit-profile-title">Edit Your Profile</h2>
+                    <form id="edit-profile-form" enctype="multipart/form-data">
+                        <input type="hidden" name="userId" value="{{currentUser.userId}}">
+                        <div class="form-group">
+                            <label for="edit-username">Name</label>
+                            <input type="text" id="edit-username" name="username" placeholder="Your name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-password">Password</label>
+                            <input type="password" id="edit-password" name="password" placeholder="Change your password">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-bio">Bio</label>
+                            <textarea id="edit-bio" name="bio" placeholder="Tell us about yourself"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-profile-pic">Profile Picture</label>
+                            <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*">
+                            <div id="profile-pic-preview"></div>
+                        </div>
+
+                        <div class="form-group danger-zone">
+                            <h4>Danger Zone</h4>
+                            <p>Deleting your account will remove all your data from our system.</p>
+                            <button type="button" id="delete-account-btn" class="delete-account-button">Delete Account</button>
+                        </div>
+
+                        <div class="button-section">
+                            <div class="input-box button">
+                                <input type="submit" value="Save Changes">
+                            </div>
+                            <div class="input-box button secondary">
+                                <input type="button" value="Cancel" id="cancelEditProfile">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="editProfile_right"></div>
+                <button id="closeEditProfile">&times;</button>
+            </div>
+        </div>
+        
+        <!-- Add the Delete Account Confirmation Dialog -->
+        <div id="deleteAccountConfirm" style="display: none;">
+            <h3>Delete Account?</h3>
+            <p>This action cannot be undone. Your account will be permanently deactivated.</p>
+            <div class="confirm-buttons">
+                <button id="cancelDeleteAccount">Cancel</button>
+                <button id="confirmDeleteAccount">Yes, Delete Account</button>
+            </div>
+        </div>
+        
         <div id="createRestoFrame">
             <div class="createResto-header">
                 <h2>Edit Restaurant</h2>
@@ -128,10 +293,9 @@
                             <h4>Reference Image</h4>
                             <div class="input-box image-upload">
                                 <label for="restaurant-images">Upload Reference Photo</label>
-                               <input type="file" id="restaurant-images" name="image" accept="image/*">
+                                <input type="file" id="restaurant-images" name="image" accept="image/*">
                             </div>
                         </div>
-
 
                         <!-- Button Section stays inside the scrollable area but will be styled to stand out -->
                         <div class="button-section">
@@ -139,14 +303,12 @@
                                 <input type="submit" id="updateSub" value="Update Restaurant">
                             </div>
                             <div class="input-box button secondary">
-                                <input type="button" value="Cancel" onclick="togglePopupCreateResto()">
+                                <input type="button" value="Cancel" id="cancelCreateResto">
                             </div>
                         </div>
                     </form>
                 </div>
-        
-
-                <button id="closeCreateResto" onclick="togglePopupCreateResto()">&times</button>
+                <button id="closeCreateResto">&times</button>
             </div>
         </div>
 
@@ -160,11 +322,11 @@
                     <p class="warning-text">This action cannot be undone.</p>
                     
                     <div class="confirm-buttons">
-                        <button class="cancel-delete-btn" onclick="toggleDeleteConfirm()">Cancel</button>
-                        <button class="confirm-delete-btn" onclick="deleteRestaurant()">Yes, Delete</button>
+                        <button class="cancel-delete-btn" id="cancelDeleteResto">Cancel</button>
+                        <button class="confirm-delete-btn" id="confirmDeleteResto">Yes, Delete</button>
                     </div>
                 </div>
-                <button id="closeDeleteConfirm" onclick="toggleDeleteConfirm()">&times;</button>
+                <button id="closeDeleteConfirm">&times;</button>
             </div>
         </div>
 
@@ -183,29 +345,28 @@
             </div>
         </div>
 
-
         <!-- Restaurant Information -->
         <div class="info">
-                <!-- Exit Button -->
-                <div class="buttons-container">
-                    {{#if (eq restaurant.userType "business-owner")}}
-                    <button class="oval-button-review delete-btn" onclick="toggleDeleteConfirm()">Delete</button>
-                    <button class="oval-button-review edit-btn" onclick="togglePopupCreateResto()">Edit</button>
-                    {{/if}}
-                    <a href="/">
-                        <button class="oval-button-review">Back</button>
-                    </a>
+            <!-- Exit Button -->
+            <div class="buttons-container">
+                {{#if (eq restaurant.userType "business-owner")}}
+                <button class="oval-button-review delete-btn" id="deleteRestoBtn">Delete</button>
+                <button class="oval-button-review edit-btn" id="editRestoBtn">Edit</button>
+                {{/if}}
+                <a href="/">
+                    <button class="oval-button-review">Back</button>
+                </a>
+            </div>
+            <!-- Header -->
+            <div class="classheader">
+                <button id="heartBtn" class="btn">
+                    <i id="heartIcon" class="fa-solid fa-heart heart" data-resto-id="{{restaurant.id}}"></i>
+                </button>
+                <div class="head-container">
+                    <h1>{{restaurant.name}}</h1>  
+                    <p>{{restaurant.cuisine}}</p> 
                 </div>
-                <!-- Header -->
-                <div class="classheader">
-                    <button onclick="toggleHeart()" id="btnh1" class="btn">
-                        <i id="heartIcon" class="fa-solid fa-heart heart" data-resto-id="{{restaurant.id}}"></i>
-                    </button>
-                    <div class="head-container">
-                        <h1>{{restaurant.name}}</h1>  
-                        <p>{{restaurant.cuisine}}</p> 
-                    </div>
-                </div>       
+            </div>       
             <!-- Main body-->
             <div class="main">
                 <img src={{restaurant.image}} alt={{restaurant.name}}>
@@ -241,111 +402,110 @@
 
             <!-- Reviews -->
             <div class="reviews">
-            <div class="review1">
-                <h1> Reviews</h1>
-                <button class="button-3" onclick="toggleReviewModal()">Make a Review</button>
-            </div>
-            
-
-            <div id="reviewModal">
-                <div class="reviewModal-header">
-                    <h2>Write a Review</h2>
+                <div class="review1">
+                    <h1>Reviews</h1>
+                    <button class="button-3" id="makeReviewBtn">Make a Review</button>
                 </div>
-                <div class="reviewModal-content">
-                    <div class="wrapper">
-                        <form action="/api/addreview" name = "create-review" method="post">
-                            <!-- Restaurant Name -->
-                            <div class="form-section">
-                                <h4>{{restaurant.name}}</h4>
-                                
-                                <!-- Rating Section -->
-                                <div class="rating-container">
-                                    <label>Your Rating:</label>
-                                    <div class="star-rating">
-                                        <span class="star" data-value="1">★</span>
-                                        <span class="star" data-value="2">★</span>
-                                        <span class="star" data-value="3">★</span>
-                                        <span class="star" data-value="4">★</span>
-                                        <span class="star" data-value="5">★</span>
-                                    </div>
-                                    <span id="rating-text">0 out of 5</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Review Content -->
-                            <div class="form-section">
-                                <div class="input-box">
-                                    <label for="review-content">Your Review</label>
-                                    <textarea id="review-content" placeholder="Share your experience with this restaurant..." required></textarea>
-                                </div>
-                            </div>
-            
-                            <!-- Button Section -->
-                            <div class="button-section">
-                                <div class="input-box button">
-                                    <input type="submit" id = 'submitReview' value="Submit Review">
-                                </div>
-                                <div class="input-box button secondary">
-                                    <input type="button" value="Cancel" onclick="toggleReviewModal()">
-                                </div>
-                            </div>
-                        </form>
+                
+                <div id="reviewModal">
+                    <div class="reviewModal-header">
+                        <h2>Write a Review</h2>
                     </div>
-                    <button id="closeReviewModal" onclick="toggleReviewModal()">&times;</button>
-                </div>
-            </div> 
-
-            <div id="editReviewModal">
-                <div class="reviewModal-header">
-                    <h2>Edit Review</h2>
-                </div>
-                <div class="reviewModal-content">
-                    <div class="wrapper">
-                        <form action="/api/editreview" name="edit-review" method="post" enctype="multipart/form-data">
-                            <!-- Restaurant Name -->
-                            <div class="form-section">
-                                <h4>{{restaurant.name}}</h4>
-                                
-                                <!-- Rating Section -->
-                                <div class="rating-container">
-                                    <label>Your Rating:</label>
-                                    <div class="star-rating" id="edit-star-rating">
-                                        <span class="star" data-value="1">★</span>
-                                        <span class="star" data-value="2">★</span>
-                                        <span class="star" data-value="3">★</span>
-                                        <span class="star" data-value="4">★</span>
-                                        <span class="star" data-value="5">★</span>
+                    <div class="reviewModal-content">
+                        <div class="wrapper">
+                            <form action="/api/addreview" name="create-review" method="post">
+                                <!-- Restaurant Name -->
+                                <div class="form-section">
+                                    <h4>{{restaurant.name}}</h4>
+                                    
+                                    <!-- Rating Section -->
+                                    <div class="rating-container">
+                                        <label>Your Rating:</label>
+                                        <div class="star-rating">
+                                            <span class="star" data-value="1">★</span>
+                                            <span class="star" data-value="2">★</span>
+                                            <span class="star" data-value="3">★</span>
+                                            <span class="star" data-value="4">★</span>
+                                            <span class="star" data-value="5">★</span>
+                                        </div>
+                                        <span id="rating-text">0 out of 5</span>
                                     </div>
-                                    <span id="edit-rating-text">0 out of 5</span>
                                 </div>
-                            </div>
-                            
-                            <!-- Review Content -->
-                            <div class="form-section">
-                                <div class="input-box">
-                                    <label for="edit-review-content">Your Review</label>
-                                    <textarea id="edit-review-content" name="review" placeholder="Share your experience with this restaurant..." required></textarea>
+                                
+                                <!-- Review Content -->
+                                <div class="form-section">
+                                    <div class="input-box">
+                                        <label for="review-content">Your Review</label>
+                                        <textarea id="review-content" placeholder="Share your experience with this restaurant..." required></textarea>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <!-- Hidden input for review ID -->
-                            <input type="hidden" id="edit-review-id" name="review_id" value="">
-                    
-                            <!-- Button Section -->
-                            <div class="button-section">
-                                <div class="input-box button">
-                                    <input type="submit" id="submitEditReview" value="Update Review">
+                
+                                <!-- Button Section -->
+                                <div class="button-section">
+                                    <div class="input-box button">
+                                        <input type="submit" id="submitReview" value="Submit Review">
+                                    </div>
+                                    <div class="input-box button secondary">
+                                        <input type="button" value="Cancel" id="cancelReview">
+                                    </div>
                                 </div>
-                                <div class="input-box button secondary">
-                                    <input type="button" value="Cancel" onclick="toggleEditReviewModal()">
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+                        <button id="closeReviewModal">&times;</button>
                     </div>
-                    <button id="closeEditReviewModal" onclick="toggleEditReviewModal()">&times;</button>
+                </div> 
+
+                <div id="editReviewModal">
+                    <div class="reviewModal-header">
+                        <h2>Edit Review</h2>
+                    </div>
+                    <div class="reviewModal-content">
+                        <div class="wrapper">
+                            <form action="/api/editreview" name="edit-review" method="post" enctype="multipart/form-data">
+                                <!-- Restaurant Name -->
+                                <div class="form-section">
+                                    <h4>{{restaurant.name}}</h4>
+                                    
+                                    <!-- Rating Section -->
+                                    <div class="rating-container">
+                                        <label>Your Rating:</label>
+                                        <div class="star-rating" id="edit-star-rating">
+                                            <span class="star" data-value="1">★</span>
+                                            <span class="star" data-value="2">★</span>
+                                            <span class="star" data-value="3">★</span>
+                                            <span class="star" data-value="4">★</span>
+                                            <span class="star" data-value="5">★</span>
+                                        </div>
+                                        <span id="edit-rating-text">0 out of 5</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Review Content -->
+                                <div class="form-section">
+                                    <div class="input-box">
+                                        <label for="edit-review-content">Your Review</label>
+                                        <textarea id="edit-review-content" name="review" placeholder="Share your experience with this restaurant..." required></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden input for review ID -->
+                                <input type="hidden" id="edit-review-id" name="review_id" value="">
+                        
+                                <!-- Button Section -->
+                                <div class="button-section">
+                                    <div class="input-box button">
+                                        <input type="submit" id="submitEditReview" value="Update Review">
+                                    </div>
+                                    <div class="input-box button secondary">
+                                        <input type="button" value="Cancel" id="cancelEditReview">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <button id="closeEditReviewModal">&times;</button>
+                    </div>
                 </div>
-            </div>
-                    
+                        
                 <!-- Scrollable Reviews -->
                 <div>
                     <div class="scroll-div"> 
@@ -357,7 +517,7 @@
                             <h2>
                                 {{#if this.account_id}}
                                     <a href="/profile/{{this.account_id.acc_id}}">
-                                        <img src="{{this.account_id.profile_pic}}" alt="Profile" class="profile-pic" onerror="this.src='/images/profilePictures/default-profile.png'"> 
+                                        <img src="{{this.account_id.profile_pic}}" alt="Profile" class="profile-pic" onerror="this.src='/Views/images/profilePictures/default-profile.png'"> 
                                         {{this.account_id.acc_name}}
                                     </a>
                                 {{else}}
@@ -393,8 +553,8 @@
                             
                             <!-- ADD FORMS FOR THIS -->
                             <div class="input-box button">
-                                    <input type="hidden" id="hidden-review-id" name="review_id" value="{{this.review_id}}">
-                                    <button type="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review" onclick="openEditReview({{this.review_id}})">Edit</button>
+                                <input type="hidden" id="hidden-review-id" name="review_id" value="{{this.review_id}}">
+                                <button type="button" class="oval-button-review edit-review-btn" data-id="{{this.review_id}}">Edit</button>
                             </div>
                         </div>
                         {{/each}}
@@ -422,6 +582,205 @@
         <script>
             // Store restaurant ID for use in like/unlike functions
             const restaurantId = "{{restaurant.id}}";
+            
+            // User dropdown toggle functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log("DOM loaded, setting up dropdown functionality");
+                
+                // Fix dropdown toggle functionality
+                const dropdownToggle = document.getElementById('userDropdownToggle');
+                const dropdownMenu = document.getElementById('userDropdownMenu');
+                
+                if (dropdownToggle && dropdownMenu) {
+                    console.log("Found dropdown elements - attaching click handlers");
+                    dropdownToggle.addEventListener('click', function() {
+                        dropdownMenu.classList.toggle('show');
+                    });
+                    
+                    // Close the dropdown when clicking outside
+                    window.addEventListener('click', function(event) {
+                        if (!event.target.matches('#userDropdownToggle') && 
+                            !event.target.matches('.profile-pic-small')) {
+                            if (dropdownMenu.classList.contains('show')) {
+                                dropdownMenu.classList.remove('show');
+                            }
+                        }
+                    });
+                    
+                    // Handle logout button click
+                    const logoutBtn = document.getElementById('logoutBtn');
+                    if (logoutBtn) {
+                        logoutBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            // Clear local storage
+                            localStorage.removeItem('currentUser');
+                            // Redirect to home page
+                            window.location.href = '/';
+                        });
+                    }
+                    
+                    // Handle edit profile button click
+                    const editProfileBtn = document.getElementById('editProfileBtn');
+                    if (editProfileBtn) {
+                        editProfileBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            toggleEditProfileFrame();
+                        });
+                    }
+                    
+                    // Handle View Profile button click
+                    const viewProfileBtn = document.getElementById('viewProfileBtn');
+                    if (viewProfileBtn) {
+                        viewProfileBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            
+                            // Get user data from localStorage
+                            const userData = localStorage.getItem('currentUser');
+                            if (!userData) {
+                                alert('Session data not found. Please log in again.');
+                                return;
+                            }
+                            
+                            try {
+                                const user = JSON.parse(userData);
+                                if (user && user.userId) {
+                                    window.location.href = `/profile/${user.userId}`;
+                                } else {
+                                    alert('Invalid user data. Please log in again.');
+                                }
+                            } catch (error) {
+                                console.error('Error processing user data:', error);
+                                alert('Error accessing profile. Please log in again.');
+                            }
+                        });
+                    }
+                }
+                
+                // Fix profile links in reviews
+                const profileLinks = document.querySelectorAll('.scroll-obj h2 a');
+                profileLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        // Check if the link ends with just "/profile/" or contains "undefined"
+                        if (href === '/profile/' || href.includes('undefined')) {
+                            e.preventDefault();
+                            alert('User profile not available');
+                        }
+                    });
+                });
+                
+                // Fix profile images
+                const profileImages = document.querySelectorAll('.profile-pic');
+                profileImages.forEach(img => {
+                    img.onerror = function() {
+                        this.src = '../Views/images/profilePictures/default-profile.png';
+                    };
+                });
+
+                // Setup heart button event
+                const heartBtn = document.getElementById('heartBtn');
+                if (heartBtn) {
+                    heartBtn.addEventListener('click', toggleHeart);
+                }
+                
+                // Setup make review button event
+                const makeReviewBtn = document.getElementById('makeReviewBtn');
+                if (makeReviewBtn) {
+                    makeReviewBtn.addEventListener('click', toggleReviewModal);
+                }
+                
+                // Setup cancel review button event
+                const cancelReviewBtn = document.getElementById('cancelReview');
+                if (cancelReviewBtn) {
+                    cancelReviewBtn.addEventListener('click', toggleReviewModal);
+                }
+                
+                // Setup close review modal button event
+                const closeReviewModalBtn = document.getElementById('closeReviewModal');
+                if (closeReviewModalBtn) {
+                    closeReviewModalBtn.addEventListener('click', toggleReviewModal);
+                }
+                
+                // Setup cancel edit review button event
+                const cancelEditReviewBtn = document.getElementById('cancelEditReview');
+                if (cancelEditReviewBtn) {
+                    cancelEditReviewBtn.addEventListener('click', toggleEditReviewModal);
+                }
+                
+                // Setup close edit review modal button event
+                const closeEditReviewModalBtn = document.getElementById('closeEditReviewModal');
+                if (closeEditReviewModalBtn) {
+                    closeEditReviewModalBtn.addEventListener('click', toggleEditReviewModal);
+                }
+                
+                // Setup edit profile frame handlers
+                const closeEditProfileBtn = document.getElementById('closeEditProfile');
+                if (closeEditProfileBtn) {
+                    closeEditProfileBtn.addEventListener('click', closeEditProfile);
+                }
+                
+                const cancelEditProfileBtn = document.getElementById('cancelEditProfile');
+                if (cancelEditProfileBtn) {
+                    cancelEditProfileBtn.addEventListener('click', closeEditProfile);
+                }
+                
+                // Setup restaurant edit/delete handlers
+                const editRestoBtn = document.getElementById('editRestoBtn');
+                if (editRestoBtn) {
+                    editRestoBtn.addEventListener('click', togglePopupCreateResto);
+                }
+                
+                const deleteRestoBtn = document.getElementById('deleteRestoBtn');
+                if (deleteRestoBtn) {
+                    deleteRestoBtn.addEventListener('click', toggleDeleteConfirm);
+                }
+                
+                const cancelCreateRestoBtn = document.getElementById('cancelCreateResto');
+                if (cancelCreateRestoBtn) {
+                    cancelCreateRestoBtn.addEventListener('click', togglePopupCreateResto);
+                }
+                
+                const closeCreateRestoBtn = document.getElementById('closeCreateResto');
+                if (closeCreateRestoBtn) {
+                    closeCreateRestoBtn.addEventListener('click', togglePopupCreateResto);
+                }
+                
+                const cancelDeleteRestoBtn = document.getElementById('cancelDeleteResto');
+                if (cancelDeleteRestoBtn) {
+                    cancelDeleteRestoBtn.addEventListener('click', toggleDeleteConfirm);
+                }
+                
+                const closeDeleteConfirmBtn = document.getElementById('closeDeleteConfirm');
+                if (closeDeleteConfirmBtn) {
+                    closeDeleteConfirmBtn.addEventListener('click', toggleDeleteConfirm);
+                }
+                
+                const confirmDeleteRestoBtn = document.getElementById('confirmDeleteResto');
+                if (confirmDeleteRestoBtn) {
+                    confirmDeleteRestoBtn.addEventListener('click', deleteRestaurant);
+                }
+                
+                // Check if current restaurant is already in user's saved list
+                checkIfRestaurantIsLiked();
+                
+                // Setup edit review buttons
+                const editReviewBtns = document.querySelectorAll('.edit-review-btn');
+                editReviewBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const reviewId = this.getAttribute('data-id');
+                        openEditReview(reviewId);
+                    });
+                });
+                
+                // Setup delete review buttons
+                const deleteReviewBtns = document.querySelectorAll('.delete-review');
+                deleteReviewBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const reviewId = this.getAttribute('data-id');
+                        openDeleteReviewConfirm(reviewId);
+                    });
+                });
+            });
             
             function toggleHeart() {
                 const heartIcon = document.getElementById("heartIcon");
@@ -482,72 +841,95 @@
                     alert('Please login to save restaurants');
                 }
             }
-    
-            // Add explicit implementation of toggleReviewModal function
+            
             function toggleReviewModal() {
                 const backdrop = document.getElementById('backdrop');
                 const reviewModal = document.getElementById('reviewModal');
                 
-                if (reviewModal && backdrop) {
-                    if (reviewModal.style.display === 'block') {
-                        reviewModal.style.display = 'none';
-                        backdrop.style.display = 'none';
-                    } else {
-                        reviewModal.style.display = 'block';
-                        backdrop.style.display = 'block';
-                    }
+                if (reviewModal.style.display === 'block') {
+                    reviewModal.style.display = 'none';
+                    backdrop.style.display = 'none';
                 } else {
-                    console.error('Modal elements not found');
+                    reviewModal.style.display = 'block';
+                    backdrop.style.display = 'block';
                 }
             }
-        </script>
-        <script src='../Controllers/directoryScript.js'></script>
-        <script src='../Controllers/Restaurants/updateResto.js'></script>
-        <script src='../Controllers/Restaurants/deleteResto.js'></script>
-        <script src='../Controllers/Reviews/addReview.js'></script>
-        <script src='../Controllers/Reviews/editReview.js'></script>
-        <script src='../Controllers/Reviews/deleteReview.js'></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Fix profile links in reviews
-                const profileLinks = document.querySelectorAll('.scroll-obj h2 a');
-                profileLinks.forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        const href = this.getAttribute('href');
-                        // Check if the link ends with just "/profile/" or contains "undefined"
-                        if (href === '/profile/' || href.includes('undefined')) {
-                            e.preventDefault();
-                            alert('User profile not available');
-                        }
-                    });
-                });
+            
+            function toggleEditReviewModal() {
+                const backdrop = document.getElementById('backdrop');
+                const editReviewModal = document.getElementById('editReviewModal');
                 
-                // Fix profile images
-                const profileImages = document.querySelectorAll('.profile-pic');
-                profileImages.forEach(img => {
-                    img.onerror = function() {
-                        this.src = '../Views/images/profilePictures/default-profile.png';
-                    };
-                });
-
-                // Enhance togglePopupCreateResto to call populateEditForm
-                const originalTogglePopup = window.togglePopupCreateResto;
-                window.togglePopupCreateResto = function() {
-                    if (typeof originalTogglePopup === 'function') {
-                       originalTogglePopup();
-                    }
-                    // Call populateEditForm after popup is opened
-                    if (document.getElementById('createRestoFrame').style.display === 'block') {
-                        console.log("Calling populateEditForm after popup opened");
+                if (editReviewModal.style.display === 'block') {
+                    editReviewModal.style.display = 'none';
+                    backdrop.style.display = 'none';
+                } else {
+                    editReviewModal.style.display = 'block';
+                    backdrop.style.display = 'block';
+                }
+            }
+            
+            function togglePopupCreateResto() {
+                const popup = document.getElementById('createRestoFrame');
+                const backdrop = document.getElementById('backdrop');
+                
+                if (popup.style.display === 'block') {
+                    popup.style.display = 'none';
+                    backdrop.style.display = 'none';
+                } else {
+                    popup.style.display = 'block';
+                    backdrop.style.display = 'block';
+                    
+                    // Call populateEditForm if it exists
+                    if (typeof populateEditForm === 'function') {
                         populateEditForm();
                     }
-                };
-                
-                // Check if the restaurant is already liked
-                checkIfRestaurantIsLiked();
-            });
+                }
+            }
             
-            // Check if current restaurant is already in user's saved list
+            function toggleDeleteConfirm() {
+                const popup = document.getElementById('deleteConfirmPopup');
+                const backdrop = document.getElementById('backdrop');
+                
+                if (popup.style.display === 'block') {
+                    popup.style.display = 'none';
+                    backdrop.style.display = 'none';
+                } else {
+                    popup.style.display = 'block';
+                    backdrop.style.display = 'block';
+                }
+            }
+            
+            function closeEditProfile() {
+                const editProfileFrame = document.getElementById('editProfileFrame');
+                const backdrop = document.getElementById('backdrop');
+                
+                editProfileFrame.style.display = 'none';
+                backdrop.style.display = 'none';
+            }
+            
+            function openEditReview(reviewId) {
+                // Set the review ID in the form
+                document.getElementById('edit-review-id').value = reviewId;
+                
+                // Call the toggle function to show the modal
+                toggleEditReviewModal();
+                
+                // You could also fetch the review data from the server to pre-populate the form
+                // For now, we'll assume this functionality exists elsewhere
+            }
+            
+            function openDeleteReviewConfirm(reviewId) {
+                // Store the review ID for later use
+                document.getElementById('confirmDeleteReview').setAttribute('data-id', reviewId);
+                
+                // Show the delete confirmation dialog
+                const deleteReviewConfirm = document.getElementById('deleteReviewConfirmPopup');
+                const backdrop = document.getElementById('backdrop');
+                
+                deleteReviewConfirm.style.display = 'block';
+                backdrop.style.display = 'block';
+            }
+            
             function checkIfRestaurantIsLiked() {
                 const userData = localStorage.getItem('currentUser');
                 if (!userData) {
@@ -574,10 +956,10 @@
                         .then(restaurants => {
                             // Check if current restaurant is in the list
                             const isLiked = restaurants.some(resto => resto.resto_id == restoId);
+                            const heartIcon = document.getElementById("heartIcon");
                             
                             // Update heart icon if restaurant is liked
-                            if (isLiked) {
-                                const heartIcon = document.getElementById("heartIcon");
+                            if (isLiked && heartIcon) {
                                 heartIcon.classList.add("liked");
                                 heartIcon.style.color = "red";
                             }
@@ -590,6 +972,26 @@
                 }
             }
         </script>
-        <script type="module" src="/Controllers/directoryScript.js"></script>  
+        
+        <script src='/Controllers/directoryScript.js'></script>
+        <script src='/Controllers/Restaurants/updateResto.js'></script>
+        <script src='/Controllers/Restaurants/deleteResto.js'></script>
+        <script src='/Controllers/Reviews/addReview.js'></script>
+        <script src='/Controllers/Reviews/editReview.js'></script>
+        <script src='/Controllers/Reviews/deleteReview.js'></script>
+        
+        <script type="module">
+            import { toggleEditProfileFrame, setupProfilePicPreview, setupProfileUpdateHandler } from '../Controllers/Accounts/updateAccount.js';
+            import { setupDeleteAccountHandlers } from '../Controllers/Accounts/deleteAccount.js';
+            
+            // Make functions available globally
+            window.toggleEditProfileFrame = toggleEditProfileFrame;
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                setupProfilePicPreview();
+                setupProfileUpdateHandler();
+                setupDeleteAccountHandlers();
+            });
+        </script>
     </body>
 </html>
