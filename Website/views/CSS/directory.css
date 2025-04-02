@@ -338,7 +338,7 @@ font-family: 'Lexend', sans-serif;
 
 #signinframe_right {
     flex: 1;
-    background-image: url('images/login.png');
+    background-image: url('../images/assets/login.png');
     background-size: cover;
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;
@@ -416,7 +416,7 @@ font-family: 'Lexend', sans-serif;
 
 #loginframe_right {
     flex: 1;
-    background-image: url('images/login.png');
+    background-image: url('../images/assets/login.png');
     background-size: cover;
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;
@@ -474,7 +474,7 @@ font-family: 'Lexend', sans-serif;
 }
 
 #mail-logo{
-    background-image: url('images/Mail.png');
+    background-image: url('../images/assets/Mail.png');
     width: 20px; 
     height: 20px; 
     background-size: contain;
@@ -482,7 +482,7 @@ font-family: 'Lexend', sans-serif;
 }
 
 #google-logo {
-    background-image: url('images/google-logo.png');
+    background-image: url('../images/assets/google-logo.png');
     width: 30px;
     height: 30px; 
     margin-top:10px;
@@ -584,7 +584,7 @@ font-family: 'Lexend', sans-serif;
 
 #registerframe_right {
     flex: 1;
-    background-image: url('images/login.png');
+    background-image: url('../images/assets/login.png');
     background-size: cover;
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;
@@ -715,7 +715,7 @@ font-family: 'Lexend', sans-serif;
 
 #editProfile_right {
     flex: 1;
-    background-image: url('images/login.png');
+    background-image: url('../images/assets/login.png');
     background-size: cover;
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;
