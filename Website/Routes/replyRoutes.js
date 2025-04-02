@@ -208,4 +208,59 @@ router.put('/archive', isAuthenticatedApi, async (req, res) => {
   }
 });
 
+// Edit a reply
+router.put('/edit', isAuthenticatedApi, async (req, res) => {
+  try {
+    const { reply_id, content } = req.body;
+    
+    if (!reply_id || !content) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Missing required fields" 
+      });
+    }
+    
+    const replyId = parseInt(reply_id, 10);
+    
+    // Find the reply
+    const reply = await Reply.findOne({ reply_id: replyId });
+    
+    if (!reply) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Reply not found" 
+      });
+    }
+    
+    // Check if user has permission to edit
+    if (reply.account_id !== req.session.userId && req.session.userType !== 'admin') {
+      return res.status(403).json({
+        success: false,
+        message: "You don't have permission to edit this reply"
+      });
+    }
+    
+    // Update the reply
+    reply.content = content;
+    await reply.save();
+    
+    res.status(200).json({
+      success: true,
+      message: "Reply updated successfully",
+      reply: {
+        reply_id: reply.reply_id,
+        content: reply.content,
+        created_at: new Date(reply.created_at).toLocaleString()
+      }
+    });
+  } catch (error) {
+    console.error('Error updating reply:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to update reply', 
+      error: error.message 
+    });
+  }
+});
+
 module.exports = router;

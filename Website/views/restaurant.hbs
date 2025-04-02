@@ -363,7 +363,7 @@
                                         Anonymous
                                     </span>
                                 {{/if}}
-
+                                <button type="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review edit-review-main" onclick="openEditReview({{this.review_id}})">Edit</button>
                                 <button class="delete-review" data-id="{{this.review_id}}">🗑️</button>
                             </h2>
                             
@@ -393,36 +393,111 @@
                                     {{#each this.replies}}
                                         <div class="reply-item" data-id="{{this.reply_id}}">
                                             <div class="reply-header">
-                                            {{#if this.account_id}}
-                                                <a href="/profile/{{this.account_id.acc_id}}">
-                                                    <img src="{{this.account_id.profile_pic}}" alt="Profile" class="profile-pic-small" onerror="this.src='/images/profilePictures/default-profile.png'"> 
-                                                    {{this.account_id.acc_name}}
-                                                </a>
-                                            {{else}}
-                                                <span>
-                                                    <img src="../Views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
-                                                    Anonymous
-                                                </span>
-                                            {{/if}}
+                                                {{#if this.account_id}}
+                                                    <a href="/profile/{{this.account_id.acc_id}}">
+                                                        <img src="{{this.account_id.profile_pic}}" 
+                                                            alt="Profile" class="profile-pic-small" 
+                                                            onerror="this.src='/images/profilePictures/default-profile.png'"> 
+                                                        {{this.account_id.acc_name}}
+                                                    </a>
+                                                {{else}}
+                                                    <span>
+                                                        <img src="../Views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
+                                                        Anonymous
+                                                    </span>
+                                                {{/if}}
+                                                
+                                                {{#if this.canDelete}}
+                                                    <button class="delete-reply" data-id="{{this.reply_id}}">🗑️</button>
+                                                    <button class="edit-reply" data-id="{{this.reply_id}}">✏️</button>
+                                                {{/if}}
+                                            </div>
                                             
-                                            <span class="reply-date">{{this.created_at}}</span>
+                                            <p>{{this.content}}</p>
                                             
-                                            {{#if this.canDelete}}
-                                            <button class="delete-reply" data-id="{{this.reply_id}}">🗑️</button>
+                                            <!-- Edit form inside each reply item -->
+                                            <div class="edit-reply-form-container" style="display: none;">
+                                                <form class="edit-reply-form" data-reply-id="{{this.reply_id}}" data-review-id="{{../this.review_id}}">
+                                                    <textarea class="edit-reply-content" placeholder="Edit your reply..." required></textarea>
+                                                    <div class="reply-buttons">
+                                                        <button type="submit" class="submit-edit-reply-btn">Update</button>
+                                                        <button type="button" class="cancel-edit-reply-btn">Cancel</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            
+                                            <div class="reply-actions">
+                                                <button class="reply-to-reply-btn" data-reply-id="{{this.reply_id}}" data-review-id="{{../this.review_id}}">Reply</button>
+                                                <span class="reply-date">{{this.created_at}}</span>
+                                            </div>
+
+                                            <div class="reply-to-reply-form-container" style="display: none;">
+                                                <form class="reply-form" data-review-id="{{../this.review_id}}" data-parent-id="{{this.reply_id}}">
+                                                    <textarea class="reply-content" placeholder="Write your reply..." required></textarea>
+                                                    <div class="reply-buttons">
+                                                        <button type="submit" class="submit-reply-btn">Submit</button>
+                                                        <button type="button" class="cancel-reply-btn">Cancel</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            
+                                            <!-- Container for nested replies (children) -->
+                                            {{#if this.children}}
+                                                <div class="reply-children">
+                                                    {{#each this.children}}
+                                                        <div class="reply-item nested-reply" data-id="{{this.reply_id}}">
+                                                            <div class="reply-header">
+                                                                {{#if this.account_id}}
+                                                                    <a href="/profile/{{this.account_id.acc_id}}">
+                                                                        <img src="{{this.account_id.profile_pic}}" 
+                                                                            alt="Profile" class="profile-pic-small" 
+                                                                            onerror="this.src='/images/profilePictures/default-profile.png'"> 
+                                                                        {{this.account_id.acc_name}}
+                                                                    </a>
+                                                                {{else}}
+                                                                    <span>
+                                                                        <img src="../Views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
+                                                                        Anonymous
+                                                                    </span>
+                                                                {{/if}}
+                                                                
+                                                                {{#if this.canDelete}}
+                                                                    <button class="delete-reply" data-id="{{this.reply_id}}">🗑️</button>
+                                                                    <button class="edit-reply" data-id="{{this.reply_id}}">✏️</button>
+                                                                {{/if}}
+                                                            </div>
+                                                            
+                                                            <p>{{this.content}}</p>
+                                                            
+                                                            <!-- Edit form for nested replies -->
+                                                            <div class="edit-reply-form-container" style="display: none;">
+                                                                <form class="edit-reply-form" data-reply-id="{{this.reply_id}}" data-review-id="{{../../this.review_id}}">
+                                                                    <textarea class="edit-reply-content" placeholder="Edit your reply..." required></textarea>
+                                                                    <div class="reply-buttons">
+                                                                        <button type="submit" class="submit-edit-reply-btn">Update</button>
+                                                                        <button type="button" class="cancel-edit-reply-btn">Cancel</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            
+                                                            <div class="reply-actions">
+                                                                <span class="reply-date">{{this.created_at}}</span>
+                                                            </div>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
                                             {{/if}}
-                                        </div>
-                                        <p>{{this.content}}</p>
-                                        <div class="reply-actions">
-                                            <button class="reply-to-reply-btn" data-parent-id="{{this.reply_id}}">Reply</button>
                                         </div>
                                     {{/each}}
                                 {{/if}}
                                 
+                                <!-- Main review reply section -->
                                 <div class="reply-actions">
+                                    <span class="reply-date"></span>
                                     <button class="reply-toggle-btn" data-review-id="{{this.review_id}}">Reply</button>
                                 </div>
                                 
-                                <div class="reply-form-container" style="display: none;">
+                                <div class="reply-to-reply-form-container" style="display: none;">
                                     <form class="reply-form" data-review-id="{{this.review_id}}">
                                         <textarea class="reply-content" placeholder="Write your reply..." required></textarea>
                                         <div class="reply-buttons">
@@ -432,11 +507,14 @@
                                     </form>
                                 </div>
                             </div>
+
+                            <!-- Don't forget to include the hidden review ID -->
+                            <input type="hidden" name="review_id" value="{{this.review_id}}">
                             
                             <!-- ADD FORMS FOR THIS -->
                             <div class="input-box button">
                                     <input type="hidden" id="hidden-review-id" name="review_id" value="{{this.review_id}}">
-                                    <button type="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review" onclick="openEditReview({{this.review_id}})">Edit</button>
+                                    {{!-- <button type="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review" onclick="openEditReview({{this.review_id}})">Edit</button> --}}
                             </div>
                         </div>
                         {{/each}}

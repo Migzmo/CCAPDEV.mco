@@ -85,6 +85,11 @@ html, body {
     margin-left: 0; 
 }
 
+.edit-review-main {
+    position: absolute;
+    right: 60px;
+}
+
 .oval-button-review:hover {
     background-color: #087c2fca;
 } 
@@ -1270,28 +1275,6 @@ form .input-box input {
     margin: 0 0 10px 0;
 }
 
-.reply-date {
-    margin-top: 0; /* Remove top margin since it's now in a flex container */
-    font-size: 14px;
-    color: #888;
-    text-align: right;
-    font-style: italic;
-    font-family: 'Lexend', sans-serif;
-    margin-left: auto; /* Push to the right */
-}
-
-.delete-reply {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #999;
-    font-size: 18px;
-    transition: color 0.2s;
-}
-
 .delete-reply:hover {
     color: #d32f2f;
 }
@@ -1449,25 +1432,25 @@ form .input-box input {
     color: #999;
     font-size: 18px;
     transition: color 0.2s;
-    margin-right: 5px; /* Add some spacing from the edge */
+    margin-right: 5px;
 }
 
 /* Style the reply date */
 .reply-date {
-    margin-left: auto;
-    margin-right: 40px; /* Make room for the delete button */
     font-size: 14px;
-    color: #999; /* Green color to match theme */
+    color: #999;
     font-style: italic;
     font-family: 'Lexend', sans-serif;
+    margin-left: auto; /* Push the date to the right */
 }
 
 /* Keep the reply actions layout clean */
 .reply-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; /* Changed from space-between */
     align-items: center;
     margin-top: 10px;
+    gap: 10px; /* Add some space between button and date */
 }
 
 /* EXTRA STUFF FOR EDIT REVIEW*/
@@ -1491,4 +1474,49 @@ form .input-box input {
 /* Adjust spacing for the buttons */
 .delete-review, .edit-review {
     margin-left: 8px;
+}
+
+/* Edit reply button styling */
+.edit-reply {
+    position: absolute;
+    top: 0;
+    right: 30px; /* Adjust this value as needed to create enough space */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.edit-reply:hover {
+    color: #4CAF50;
+}
+
+.edit-reply-form-container {
+    margin-top: 12px;
+    padding: 15px;
+    background-color: #f8fff8;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.edit-reply-content {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-height: 80px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    margin-bottom: 12px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.edit-reply-content:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
