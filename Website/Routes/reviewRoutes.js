@@ -22,7 +22,7 @@ router.post('/add', async (req, res) => {
     
     // Get current user from token or session
     const currentUser = req.body.userId;
-    const accountId = currentUser ? parseInt(currentUser) : 1; // Use provided ID or default
+    const accountId = req.session.userId; // Use provided ID or default
     
     // Create new review ID
     const highestReview = await Review.findOne().sort('-review_id');

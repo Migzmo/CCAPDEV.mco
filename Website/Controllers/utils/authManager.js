@@ -163,9 +163,22 @@ function toggleUserDropdown(userBtn) {
     });
 
     document.getElementById('logoutBtn').addEventListener('click', function() {
-        localStorage.removeItem('currentUser');
-        resetLoginButton();
-        location.reload();
+        fetch('/auth/logout')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Clear local data after server confirms session destruction
+                localStorage.removeItem('currentUser');
+                resetLoginButton();
+                // Redirect to home page
+                window.location.href = '/';
+            } else {
+                console.error('Logout failed:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error during logout:', error);
+        });
     });
 
     // Close dropdown when clicking outside

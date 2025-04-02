@@ -8,6 +8,29 @@ const fileUpload = require('express-fileupload');
 const fs = require('fs');
 const hbs = require('hbs');
 
+const isAuthenticated = (req, res, next) => {
+    if (req.session && req.session.userId) {
+        return next();
+    }
+    res.redirect('/auth/login');
+};
+
+// API authentication middleware (returns JSON instead of redirecting)
+const isAuthenticatedApi = (req, res, next) => {
+    if (req.session && req.session.userId) {
+        return next();
+    }
+    res.status(401).json({ success: false, message: 'Unauthorized - Please login' });
+};
+
+// Make user data available in templates
+const populateUserData = (req, res, next) => {
+    res.locals.isAuthenticated = !!req.session.userId;
+    res.locals.currentUser = req.session.user || null;
+    next();
+};
+
+
 // Configure Handlebars helpers
 hbs.registerHelper('for', function(from, to, options) {
     let result = '';
@@ -84,5 +107,8 @@ const setupDirectories = () => {
 
 module.exports = {
     setupMiddleware,
-    setupDirectories
+    setupDirectories,
+    isAuthenticated,
+    isAuthenticatedApi,
+    populateUserData
 };
