@@ -239,7 +239,10 @@ function setupLoginListeners() {
     // Back to options button
     const backToOptionsBtn = document.getElementById('backToOptions');
     if (backToOptionsBtn) {
-        backToOptionsBtn.addEventListener('click', function() {
+        backToOptionsBtn.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent any default action
+            e.stopPropagation(); // Stop event propagation
+            
             const signinFrame = document.getElementById('signinframe');
             const loginFrame = document.getElementById('loginframe');
             

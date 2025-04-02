@@ -6,6 +6,7 @@
         <title>LaSapp</title>
         <link rel="icon" href="views/images/assets/logo.png" type="image/png">
         <link rel="stylesheet" href="/views/restohbsstyle.css"/>
+        <link rel="stylesheet" href="/views/css/modal-styles.css"/>
         <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
         <img src="../Views/images/assets/logo.png" id="logoImg" alt="logo" height="70" width="70">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,118 +92,15 @@
                             <label for="remember">Remember me</label>
                         </div>
                         <button type="submit" class="signin-submit-button">Sign in</button>
+                        <p class="back-to-login">Need an account? <button type="button" id="backToOptions">Go back</button></p>
                     </form>
-                    <p class="back-to-login">Need an account? <button id="backToOptions">Go back</button></p>
                 </div>
                 <div id="signinframe_right">
                     <button id="closeSignin">&times;</button>
                 </div>
             </div>
         </div>
-
-        <div id="registerframe">
-            <div class="registerframe-content">
-                <div id="registerframe_left">
-                    <h2 id="create-account">Create Your Account</h2>
-                    <form id="registration-form" class="form-container">
-                        <div class="form-group">
-                            <input type="text" id="username" placeholder="Username" required>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="password" id="password" placeholder="Password" required>
-                        </div>
-
-                        <div class="form-group">
-                            <br/><br/><br/>
-                            <label for="avatar" class="instruction">Profile Picture</label>
-                            <input type="file" id="avatar" accept="image/*">
-                        </div>
-
-                        <div class="form-group account-type">
-                            <label class="instruction">Account Type:</label>
-                            <div class="radio-group">
-                                <input type="radio" id="user" name="accountType" value="user" checked>
-                                <label for="user" class="instruction">User</label>
-                                <input type="radio" id="business-owner" name="accountType" value="business-owner">
-                                <label for="business-owner" class="instruction">Business Owner</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <textarea id="description" placeholder="Short description (optional)"></textarea>
-                        </div>
-
-                        <button type="submit" class="register-button">Create Account</button>
-                    </form>
-
-                    <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
-                </div>
-                <div id="registerframe_right">
-                    <button id="closeRegister">&times;</button>
-                </div>
-            </div>
-        </div>
         {{/unless}}
-        
-        <!-- Add the Edit Profile Frame that's missing -->
-        <div id="editProfileFrame" style="display: none;">
-            <div class="editProfile-content">
-                <div id="editProfile_left">
-                    <h2 id="edit-profile-title">Edit Your Profile</h2>
-                    <form id="edit-profile-form" enctype="multipart/form-data">
-                        <input type="hidden" name="userId" value="{{currentUser.userId}}">
-                        <div class="form-group">
-                            <label for="edit-username">Name</label>
-                            <input type="text" id="edit-username" name="username" placeholder="Your name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-password">Password</label>
-                            <input type="password" id="edit-password" name="password" placeholder="Change your password">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-bio">Bio</label>
-                            <textarea id="edit-bio" name="bio" placeholder="Tell us about yourself"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-profile-pic">Profile Picture</label>
-                            <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*">
-                            <div id="profile-pic-preview"></div>
-                        </div>
-
-                        <div class="form-group danger-zone">
-                            <h4>Danger Zone</h4>
-                            <p>Deleting your account will remove all your data from our system.</p>
-                            <button type="button" id="delete-account-btn" class="delete-account-button">Delete Account</button>
-                        </div>
-
-                        <div class="button-section">
-                            <div class="input-box button">
-                                <input type="submit" value="Save Changes">
-                            </div>
-                            <div class="input-box button secondary">
-                                <input type="button" value="Cancel" id="cancelEditProfile">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div id="editProfile_right"></div>
-                <button id="closeEditProfile">&times;</button>
-            </div>
-        </div>
-        
-        <!-- Add the Delete Account Confirmation Dialog -->
-        <div id="deleteAccountConfirm" style="display: none;">
-            <h3>Delete Account?</h3>
-            <p>This action cannot be undone. Your account will be permanently deactivated.</p>
-            <div class="confirm-buttons">
-                <button id="cancelDeleteAccount">Cancel</button>
-                <button id="confirmDeleteAccount">Yes, Delete Account</button>
-            </div>
-        </div>
         
         <div id="createRestoFrame">
             <div class="createResto-header">
@@ -438,7 +336,7 @@
                                         <textarea id="review-content" placeholder="Share your experience with this restaurant..." required></textarea>
                                     </div>
                                 </div>
-                
+
                                 <!-- Button Section -->
                                 <div class="button-section">
                                     <div class="input-box button">
@@ -452,7 +350,7 @@
                         </div>
                         <button id="closeReviewModal">&times;</button>
                     </div>
-                </div> 
+                </div>
 
                 <div id="editReviewModal">
                     <div class="reviewModal-header">
@@ -559,7 +457,7 @@
                         {{/each}}
                     </div>
                 </div>
-            </div>        
+            </div>
         </div>
 
         <!-- Footer -->
@@ -766,8 +664,6 @@
                 if (logoutBtn) {
                     logoutBtn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        // Clear local storage
-                        localStorage.removeItem('currentUser');
                         
                         // Send a logout request to the server to clear the session
                         fetch('/auth/logout', {
@@ -777,59 +673,23 @@
                             }
                         })
                         .then(response => {
-                            // Replace user dropdown with login button
-                            const dropdownContainer = document.querySelector('.user-dropdown').parentElement;
-                            const loginButton = document.createElement('button');
-                            loginButton.id = 'loginButton';
-                            loginButton.className = 'login-button';
-                            loginButton.textContent = 'LOGIN';
+                            // Clear local storage AFTER successful server-side logout
+                            localStorage.removeItem('currentUser');
                             
-                            // Add event listener to the new login button
-                            loginButton.addEventListener('click', function() {
-                                const loginframe = document.getElementById('loginframe');
-                                const backdrop = document.getElementById('backdrop');
-                                
-                                if (loginframe && backdrop) {
-                                    loginframe.style.display = 'block';
-                                    backdrop.style.display = 'block';
-                                    document.body.style.pointerEvents = 'none';
-                                    loginframe.style.pointerEvents = 'auto';
-                                    backdrop.style.pointerEvents = 'auto';
-                                }
-                            });
-                            
-                            // Replace dropdown with login button
-                            dropdownContainer.innerHTML = '';
-                            dropdownContainer.appendChild(loginButton);
+                            // Simply reload the page - let the server handle rendering the correct state
+                            window.location.reload();
                         })
                         .catch(error => {
                             console.error('Logout error:', error);
-                            // Handle manually by updating UI directly rather than reloading
-                            try {
-                                const dropdownContainer = document.querySelector('.user-dropdown').parentElement;
-                                dropdownContainer.innerHTML = '<button id="loginButton" class="login-button">LOGIN</button>';
-                                
-                                // Add click handler to the newly created login button
-                                const newLoginBtn = document.getElementById('loginButton');
-                                newLoginBtn.addEventListener('click', function() {
-                                    const loginframe = document.getElementById('loginframe');
-                                    const backdrop = document.getElementById('backdrop');
-                                    if (loginframe && backdrop) {
-                                        loginframe.style.display = 'block';
-                                        backdrop.style.display = 'block';
-                                        document.body.style.pointerEvents = 'none';
-                                        loginframe.style.pointerEvents = 'auto';
-                                        backdrop.style.pointerEvents = 'auto';
-                                    }
-                                });
-                            } catch (e) {
-                                console.error("Error updating UI:", e);
-                                // Last resort - reload the page
-                                window.location.href = '/restaurant/{{restaurant.id}}';
-                            }
+                            // Still clear localStorage even if server request fails
+                            localStorage.removeItem('currentUser');
+                            window.location.reload();
                         });
                     });
                 }
+                
+                // Add session verification on page load
+                verifyUserSession();
                 
                 // Fix profile links in reviews
                 const profileLinks = document.querySelectorAll('.scroll-obj h2 a');
@@ -1144,6 +1004,43 @@
                     console.error('Error parsing user data:', e);
                 }
             }
+
+            // Add this function to verify user session is valid
+            function verifyUserSession() {
+                const userData = localStorage.getItem('currentUser');
+                if (!userData) {
+                    return; // No stored user data, nothing to verify
+                }
+                
+                try {
+                    const user = JSON.parse(userData);
+                    if (!user || !user.userId) {
+                        localStorage.removeItem('currentUser');
+                        return;
+                    }
+                    
+                    // Call an endpoint to verify the session
+                    fetch('/api/auth/verify-session')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.authenticated || data.userId != user.userId) {
+                                console.log('Session invalid or expired, clearing local data');
+                                localStorage.removeItem('currentUser');
+                                // Only reload if we appear to be logged in but session is invalid
+                                const userDropdown = document.querySelector('.user-dropdown');
+                                if (userDropdown) {
+                                    window.location.reload();
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error verifying session:', error);
+                        });
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                    localStorage.removeItem('currentUser');
+                }
+            }
         </script>
         
         <script src='/Controllers/directoryScript.js'></script>
@@ -1166,4 +1063,5 @@
             });
         </script>
     </body>
+
 </html>

@@ -164,4 +164,33 @@ router.get('/logout', (req, res) => {
   console.log("Session destroyed successfully");  // Debug log
 });
 
+// Logout route
+router.post('/logout', (req, res) => {
+  // Clear the session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      return res.status(500).json({ success: false, message: 'Error during logout' });
+    }
+    // Session destroyed successfully
+    res.clearCookie('connect.sid'); // Clear the session cookie
+    res.json({ success: true, message: 'Logged out successfully' });
+  });
+});
+
+// Verify session endpoint
+router.get('/verify-session', (req, res) => {
+  if (req.session && req.session.userId) {
+    return res.json({
+      authenticated: true,
+      userId: req.session.userId,
+      username: req.session.user?.username || null
+    });
+  }
+  
+  return res.json({
+    authenticated: false
+  });
+});
+
 module.exports = router;

@@ -1,0 +1,152 @@
+/* Common styles for login and signin modals across site */
+
+/* Signin frame styles */
+#signinframe {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 800px;
+    max-height: 90vh;
+    background-color: white;
+    z-index: 1001;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.signinframe-content {
+    display: flex;
+    height: 100%;
+    max-height: 90vh;
+}
+
+#signinframe_left {
+    flex: 1;
+    background-color: #CDDECB;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 30px;
+    overflow-y: auto; /* Allow scrolling if content is too tall */
+}
+
+#signinframe_right {
+    flex: 1;
+    background-image: url('../images/assets/login.png');
+    background-size: cover;
+    background-position: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: relative;
+}
+
+#closeSignin {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+#h2-signin {
+    font-family: 'Baloo';
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.signin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.signin-form .form-group {
+    margin-bottom: 15px;
+}
+
+.signin-form input[type="text"],
+.signin-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.remember-me input {
+    margin-right: 8px;
+}
+
+.remember-me label {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.signin-submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2E7D32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.signin-submit-button:hover {
+    background-color: #1B5E20;
+}
+
+.back-to-login {
+    text-align: center;
+    margin-top: 15px;
+    font-family: 'Lexend', sans-serif;
+}
+
+#backToOptions {
+    background: none;
+    border: none;
+    color: #246126;
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    #signinframe {
+        width: 90%;
+    }
+    
+    .signinframe-content {
+        flex-direction: column;
+    }
+    
+    #signinframe_left {
+        border-radius: 10px 10px 0 0;
+    }
+    
+    #signinframe_right {
+        height: 200px;
+        border-radius: 0 0 10px 10px;
+    }
+}

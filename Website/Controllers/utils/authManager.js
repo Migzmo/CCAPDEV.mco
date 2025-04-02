@@ -66,20 +66,38 @@ function updateUIAfterLogin() {
 
 /**
  * Check if user is logged in and update UI accordingly
- * @returns {boolean} - Whether the user is logged in
+ * @returns {Promise<boolean>} - Whether the user is logged in
  */
-function checkUserLoggedIn() {
+async function checkUserLoggedIn() {
     const currentUserString = localStorage.getItem('currentUser');
     if (currentUserString) {
         try {
             const currentUser = JSON.parse(currentUserString);
             if (currentUser && currentUser.userId) {
-                // Valid user data exists
-                updateUIAfterLogin();
-                return true;
+                // Verify with server that session is still valid
+                try {
+                    const response = await fetch('/api/auth/verify-session');
+                    const data = await response.json();
+                    
+                    if (data.authenticated && data.userId == currentUser.userId) {
+                        // Valid user data exists and session is active
+                        updateUIAfterLogin();
+                        return true;
+                    } else {
+                        // Session expired or invalid - clear local storage
+                        console.log('Session expired or invalid - clearing local data');
+                        localStorage.removeItem('currentUser');
+                    }
+                } catch (error) {
+                    console.error('Error verifying session:', error);
+                    // Continue with client-side data for now if server is unreachable
+                    updateUIAfterLogin();
+                    return true;
+                }
             }
         } catch (e) {
             console.error("Error parsing user data:", e);
+            localStorage.removeItem('currentUser');
         }
     }
     
