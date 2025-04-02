@@ -23,8 +23,6 @@
     font-family: 'Baloo';
     font-size: 50px;
     color: #2E7D32;
-    padding-left: 1%;
-    padding-right: 1%;
 }
 
 .navbar img{
@@ -51,7 +49,6 @@
     text-decoration: none;
     font-weight: bold;
     color:#2E7D32;
-    text-transform: uppercase;
 }
 
 .navbar a:hover{

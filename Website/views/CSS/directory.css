@@ -22,6 +22,16 @@ html, body {
     z-index: 10000;
 }
 
+.navbar a:hover {
+    color: #087c2fca; 
+    text-decoration: underline;
+}
+
+.navbar li button:hover {
+    color: #087c2fca; 
+    text-decoration: underline;
+}
+
 .logo a {
     font-family: 'Baloo';
     font-size: 50px;
