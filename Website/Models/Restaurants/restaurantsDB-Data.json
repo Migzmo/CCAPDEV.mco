@@ -9,7 +9,7 @@
       "resto_email": "el_poco_cantina@gmail.com",
       "resto_payment": "Cash, Visa, Mastercard",
       "resto_perks": "Good Food, Great Ambiance",
-      "resto_img": "Views/images/restaurantPictures/elpococantina.png",
+      "resto_img": "../Views/images/restaurantPictures/elpococantina.png",
       "resto_owner_id":0,
       "cuisine_id": "Mexican",
       "isAlive": true
@@ -24,7 +24,7 @@
       "resto_email": "asd@gmail.com",
       "resto_payment": "Cash, Visa, Mastercard",
       "resto_perks": "Good Food, Great Ambiance",
-      "resto_img": "views/images/restaurantPictures/phomahalwebp.png",
+      "resto_img": "../views/images/restaurantPictures/phomahalwebp.png",
       "resto_owner_id":0,
       "cuisine_id": "Mexican",
       "isAlive": true
