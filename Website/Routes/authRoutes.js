@@ -36,13 +36,35 @@ router.post('/login', async (req, res) => {
         message: 'Invalid username or password'
       }); 
     }
-  
-    res.status(200).json({
-      success: true,
-      message: 'Login successful',
-      userId: account.acc_id,
+    
+    // Set up session data with user information
+    req.session.userId = account.acc_id;
+    req.session.user = {
+      id: account.acc_id,
       username: account.acc_username,
-      accountType: account.acc_type
+      name: account.acc_name,
+      accountType: account.acc_type,
+      profilePic: account.profile_pic
+    };
+    console.log("Session created:", req.session);  // Debug log
+    // Save the session
+    req.session.save(err => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error creating session'
+        });
+      }
+      console.log("Session saved successfully");  // Debug log
+      // Continue with successful response
+      res.status(200).json({
+        success: true,
+        message: 'Login successful',
+        userId: account.acc_id,
+        username: account.acc_username,
+        accountType: account.acc_type
+      });
     });
   } catch (error) {
     console.error('Login error:', error);
@@ -77,13 +99,34 @@ router.post('/register', async (req, res) => {
     
     await newAccount.save();
     
-    // Return login information similar to login endpoint
-    res.status(201).json({
+    // Set up session data for automatic login after registration
+    req.session.userId = newAccount.acc_id;
+    req.session.user = {
+      id: newAccount.acc_id,
+      username: newAccount.acc_username,
+      name: newAccount.acc_name,
+      accountType: newAccount.acc_type,
+      profilePic: newAccount.profile_pic
+    };
+    
+    // Save the session
+    req.session.save(err => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error creating session'
+        });
+      }
+      
+      // Continue with successful response
+      res.status(201).json({
         success: true,
         message: 'Account created successfully',
         userId: newAccount.acc_id,
         username: newAccount.acc_username,
         accountType: newAccount.acc_type
+      });
     });
   } catch (error) {
     console.error('Registration error:', error);
@@ -93,6 +136,23 @@ router.post('/register', async (req, res) => {
       error: error.message
     });
   }
+});
+
+// Add a logout route
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error logging out'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      message: 'Logged out successfully'
+    });
+  });
 });
 
 module.exports = router;

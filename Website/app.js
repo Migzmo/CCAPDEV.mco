@@ -20,9 +20,22 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const app = express();
+//for sessions
+
+
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+
 
 // Import configuration and middleware setup
-const { setupMiddleware, setupDirectories } = require('./Routes/configs');
+const { 
+  setupMiddleware, 
+  setupDirectories, 
+  isAuthenticated, 
+  isAuthenticatedApi,
+  populateUserData  // Add this import
+} = require('./Routes/configs');
 
 // Set up directories and middleware
 setupDirectories();
@@ -113,20 +126,35 @@ const { globalErrorHandler, denyDatabaseAccess } = require('./Routes/errorHandle
 app.get('/', (req, res) => {
   res.redirect('/restaurant');
 });
-
+app.use(session({
+  secret: 'lasapp_key',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: 'mongodb://localhost/lasappDB',
+    collection: 'sessions'
+  }),
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
+  }
+}));
 // Mount restaurant routes before user routes to avoid path conflicts
+app.use(populateUserData);
+app.use('/auth', authRoutes); // NOT protected by isAuthenticated
 app.use('/restaurant', restaurantRoutes);
-app.use('/profile', userRoutes); // Mount user routes at /profile prefix
+
+app.use('/profile', isAuthenticated, userRoutes); // Mount user routes at /profile prefix
 
 // Make sure the likes route is registered before the server starts
 // Update position to be earlier in the code
-app.use('/api/likes', likeRoutes);
+app.use('/api/likes', isAuthenticatedApi, likeRoutes);
 
-// API routes
+// 5. API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes); // Will use the appropriate API routes in userRoutes.js
-app.use('/api/restaurant', restaurantRoutes);
-app.use('/api/reviews', reviewRoutes);
+app.use('/api/likes', isAuthenticatedApi, likeRoutes);
+app.use('/api/users', isAuthenticatedApi, userRoutes);
+app.use('/api/restaurant', isAuthenticatedApi, restaurantRoutes);
+app.use('/api/reviews', isAuthenticatedApi, reviewRoutes);
 
 // Error handling middleware
 app.use('/database', denyDatabaseAccess);
