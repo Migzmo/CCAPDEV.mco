@@ -5,6 +5,7 @@ This file contains user-related routes including profile management and user dat
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const bcrypt = require('bcrypt');
 const { Account, Review, Restaurant } = require('../Models/lasappDB');
 
 // API route handler for retrieving user data
@@ -232,7 +233,7 @@ router.post('/update-profile', async (req, res) => {
 
     // Update password if provided
     if (req.body.password && req.body.password.trim() !== '') {
-      account.acc_password = req.body.password;
+      account.acc_password = await bcrypt.hash(req.body.password, 10); // Hash the new password
     }
     
     // Handle profile picture upload

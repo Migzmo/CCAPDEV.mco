@@ -2,6 +2,7 @@
 This file contains authentication routes including login and registration
 */
 
+const bcrypt = require('bcrypt'); 
 const express = require('express');
 const router = express.Router();
 const { Account } = require('../Models/lasappDB');
@@ -30,11 +31,12 @@ router.post('/login', async (req, res) => {
     }
     
     // Check password
-    if (account.acc_password !== password) {
+    const isMatch = await bcrypt.compare(password, account.acc_password);
+    if (!isMatch) {
       return res.status(401).json({
         success: false,
         message: 'Invalid username or password'
-      }); 
+      });
     }
     
     // Set up session data with user information
@@ -84,6 +86,8 @@ router.post('/register', async (req, res) => {
     const lastAccount = await Account.findOne().sort({ acc_id: -1 });
     const newAccId = lastAccount ? lastAccount.acc_id + 1 : 1;
     
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     // Create new account with absolute path for profile picture
     const newAccount = new Account({
         acc_id: newAccId,
@@ -93,7 +97,7 @@ router.post('/register', async (req, res) => {
         profile_pic: req.body.profilePic || '/Views/images/profilePictures/default-profile.png',
         saved_restos: [],
         saved_reviews: [],
-        acc_password: req.body.password,
+        acc_password: hashedPassword,
         acc_type: req.body.accountType || 'user'
     });
     
