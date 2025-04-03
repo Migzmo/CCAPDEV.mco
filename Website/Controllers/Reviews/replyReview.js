@@ -17,6 +17,41 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Variables for delete reply confirmation
+    let currentReplyId = null;
+    let currentReviewId = null;
+    const deleteReplyPopup = document.getElementById("deleteReplyConfirmPopup");
+    const backdrop = document.getElementById("backdrop");
+    
+    // Function to show/hide delete reply confirmation popup
+    function toggleDeleteReplyPopup(show, replyId = null, reviewId = null) {
+        if (show) {
+            currentReplyId = replyId;
+            currentReviewId = reviewId;
+        }
+        
+        deleteReplyPopup.style.display = show ? "block" : "none";
+        backdrop.style.display = show ? "block" : "none";
+    }
+    
+    // Close popup when clicking the X button
+    document.getElementById("closeDeleteReplyConfirm").addEventListener("click", function() {
+        toggleDeleteReplyPopup(false);
+    });
+    
+    // Cancel button closes popup
+    document.getElementById("cancelDeleteReply").addEventListener("click", function() {
+        toggleDeleteReplyPopup(false);
+    });
+    
+    // Confirm delete button
+    document.getElementById("confirmDeleteReply").addEventListener("click", function() {
+        if (!currentReplyId || !currentReviewId) return;
+        
+        deleteReply(currentReplyId, currentReviewId);
+        toggleDeleteReplyPopup(false);
+    });
     
     // CONSOLIDATED EVENT HANDLERS - Handle all form submissions
     document.addEventListener('submit', async function(e) {
@@ -126,6 +161,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Hide the edit form
                 e.target.parentElement.style.display = 'none';
                 
+                // Update the reply content
+                const replyItem = e.target.closest('.reply-item');
+                const contentElement = replyItem.querySelector('p');
+                contentElement.textContent = content;
+                
+                // Update the date to show "Last Edited"
+                const dateElement = replyItem.querySelector('.reply-date');
+                if (result.reply && result.reply.last_edited_at) {
+                    dateElement.textContent = 'Last Edited: ' + result.reply.last_edited_at;
+                }
+                
                 // Reload all replies to update the UI
                 loadReplies(reviewId);
                 
@@ -187,14 +233,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Handle delete reply
         if (e.target.classList.contains('delete-reply')) {
-            if (!confirm('Are you sure you want to delete this reply?')) {
-                return;
-            }
-            
             const replyId = e.target.getAttribute('data-id');
             const reviewId = e.target.closest('.scroll-obj').querySelector('input[name="review_id"]').value;
             
-            deleteReply(replyId, reviewId);
+            // Show delete confirmation popup instead of confirm()
+            toggleDeleteReplyPopup(true, replyId, reviewId);
         }
         
         // Handle edit reply button click
@@ -400,7 +443,9 @@ function addReplyToUI(reviewId, reply, container) {
             
             <div class="reply-actions">
                 <button class="reply-to-reply-btn" data-reply-id="${reply.reply_id}" data-review-id="${reviewId}">Reply</button>
-                <span class="reply-date">${reply.created_at}</span>
+                <span class="reply-date">
+                    ${reply.isEdited ? 'Last Edited: ' + reply.editedDate : 'Posted on ' + reply.created_at}
+                </span>
             </div>
             <div class="reply-to-reply-form-container" style="display: none;">
                 <form class="reply-form" data-review-id="${reviewId}" data-parent-id="${reply.reply_id}">

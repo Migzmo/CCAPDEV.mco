@@ -1,3 +1,5 @@
+// Replace the entire file with this fixed version
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded for edit review functionality");
     
@@ -15,8 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     editStars.forEach(s => {
                         if (parseInt(s.getAttribute('data-value')) <= editSelectedRating) {
                             s.classList.add('selected');
+                            s.classList.add('active'); // Add both classes for compatibility
                         } else {
                             s.classList.remove('selected');
+                            s.classList.remove('active');
                         }
                     });
                     
@@ -53,6 +57,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set the review ID
         document.getElementById('edit-review-id').value = reviewId;
         
+        // Find the review element - try different selectors to be safe
+        let reviewElement;
+        try {
+            // First try data-id selector
+            reviewElement = document.querySelector(`.edit-review[data-id="${reviewId}"]`).closest('.scroll-obj');
+        } catch (e) {
+            try {
+                // Then try ID selector
+                reviewElement = document.querySelector(`#Edit-Review-${reviewId}`).closest('.scroll-obj');
+            } catch (e2) {
+                console.error("Could not find review element:", e2);
+            }
+        }
+        
         // Fetch the review data to pre-populate the form
         fetch(`/api/reviews/${reviewId}`)
             .then(response => {
@@ -73,8 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 editStars.forEach(star => {
                     if (parseInt(star.getAttribute('data-value')) <= editSelectedRating) {
                         star.classList.add('selected');
+                        star.classList.add('active');
                     } else {
                         star.classList.remove('selected');
+                        star.classList.remove('active');
                     }
                 });
                 
@@ -83,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 // Show the modal
-                toggleEditReviewModal();
+                window.toggleEditReviewModal();
             })
             .catch(error => {
                 console.error("Error fetching review data:", error);
@@ -127,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitButton = editForm.querySelector('input[type="submit"]');
             if (submitButton) submitButton.disabled = true;
             
-            // Send data to server - FIX: Update the URL endpoint
+            // Send data to server
             fetch('/api/reviews/edit', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -146,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Review updated successfully!');
                 
                 // Close modal
-                toggleEditReviewModal();
+                window.toggleEditReviewModal();
                 
                 // Reload page to show the updated review
                 window.location.reload();
@@ -162,45 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("Form with name 'edit-review' not found!");
     }
-});
-
-// Function to toggle the edit review modal visibility
-function toggleEditReviewModal() {
-    const modal = document.getElementById('editReviewModal');
-    const backdrop = document.getElementById('backdrop');
     
-    if (modal.style.display === 'block') {
-        modal.style.display = 'none';
-        backdrop.style.display = 'none';
-    } else {
-        modal.style.display = 'block';
-        backdrop.style.display = 'block';
-    }
-}
-
-// Function to open edit review modal with existing review data
-function openEditReview(reviewId) {
-    console.log("Opening edit for review:", reviewId);
-    
-    // Find the review element
-    const reviewElement = document.querySelector(`#Edit-Review-${reviewId}`).closest('.scroll-obj');
-    
-    // Get the review text
-    const reviewText = reviewElement.querySelector('p').textContent;
-    
-    // Set the review ID in the hidden input
-    document.getElementById('edit-review-id').value = reviewId;
-    
-    // Set the review content in textarea
-    document.getElementById('edit-review-content').value = reviewText;
-    
-    // Show the modal and backdrop
-    document.getElementById('editReviewModal').style.display = 'block';
-    document.getElementById('backdrop').style.display = 'block';
-}
-
-// Initialize star rating when document is loaded
-document.addEventListener('DOMContentLoaded', function() {
     // Handle star rating in the edit modal
     const editStars = document.querySelectorAll('#edit-star-rating .star');
     
@@ -209,17 +191,24 @@ document.addEventListener('DOMContentLoaded', function() {
             const value = parseInt(this.getAttribute('data-value'));
             
             // Clear all stars first
-            editStars.forEach(s => s.classList.remove('active'));
+            editStars.forEach(s => {
+                s.classList.remove('active');
+                s.classList.remove('selected');
+            });
             
             // Then set active stars up to the clicked one
             editStars.forEach(s => {
                 if (parseInt(s.getAttribute('data-value')) <= value) {
                     s.classList.add('active');
+                    s.classList.add('selected');
                 }
             });
             
             // Update rating text
             document.getElementById('edit-rating-text').textContent = value + ' out of 5';
+            
+            // Set the rating value in a hidden field
+            editSelectedRating = value;
             
             // Add hidden rating input field if it doesn't exist
             let ratingInput = document.querySelector('form[name="edit-review"] input[name="rating"]');

@@ -182,6 +182,21 @@
             </div>
         </div>
 
+        <div id="deleteReplyConfirmPopup">
+            <div class="deleteConfirm-header">
+                <h2>Delete Reply</h2>
+                <button id="closeDeleteReplyConfirm">&times;</button>
+            </div>
+            <div class="deleteConfirm-body">
+                <p>Are you sure you want to delete this reply?</p>
+                <p class="warning-text">This action cannot be undone.</p>
+                <div class="confirm-buttons">
+                    <button class="cancel-delete-btn" id="cancelDeleteReply">Cancel</button>
+                    <button class="confirm-delete-btn" id="confirmDeleteReply">Delete</button>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Restaurant Information -->
         <div class="info">
@@ -363,7 +378,7 @@
                                         Anonymous
                                     </span>
                                 {{/if}}
-                                <button type="button" id="Edit-Review-{{this.review_id}}" class="oval-button-review edit-review-main" onclick="openEditReview({{this.review_id}})">Edit</button>
+                                <button class="edit-review" data-id="{{this.review_id}}" onclick="openEditReview({{this.review_id}})">✏️</button>
                                 <button class="delete-review" data-id="{{this.review_id}}">🗑️</button>
                             </h2>
                             

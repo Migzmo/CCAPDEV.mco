@@ -31,15 +31,38 @@ router.get('/:reviewId', async (req, res) => {
           req.session.userType === 'admin'
         );
         
+        // Format the date fields and add isEdited flag
+        const created_at = new Date(reply.created_at).toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        // Format the edit date if it exists
+        let editedDate = null;
+        if (reply.last_edited_at) {
+          editedDate = new Date(reply.last_edited_at).toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        }
+
         return {
           reply_id: reply.reply_id,
           review_id: reply.review_id,
           account_id: reply.account_id,
           content: reply.content,
           parent_id: reply.parent_id,
-          created_at: new Date(reply.created_at).toLocaleString(),
+          created_at: created_at,
+          editedDate: editedDate,
+          isEdited: !!reply.last_edited_at,
           canDelete,
-          children: [] // Initialize children array
+          children: []
         };
       });
       
@@ -242,15 +265,30 @@ router.put('/edit', isAuthenticatedApi, async (req, res) => {
     
     // Update the reply
     reply.content = content;
+    reply.last_edited_at = new Date(); // Add this line to record edit time
     await reply.save();
-    
+
     res.status(200).json({
       success: true,
       message: "Reply updated successfully",
       reply: {
         reply_id: reply.reply_id,
         content: reply.content,
-        created_at: new Date(reply.created_at).toLocaleString()
+        created_at: new Date(reply.created_at).toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        }),
+        last_edited_at: new Date().toLocaleString('en-US', {  // Add this to return the edit time
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        }),
+        isEdited: true  // Add this flag
       }
     });
   } catch (error) {

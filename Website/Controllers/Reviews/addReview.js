@@ -15,8 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
             stars.forEach(s => {
                 if (parseInt(s.getAttribute('data-value')) <= selectedRating) {
                     s.classList.add('selected');
+                    s.classList.add('active'); // Add both classes for compatibility
                 } else {
                     s.classList.remove('selected');
+                    s.classList.remove('active');
                 }
             });
             
