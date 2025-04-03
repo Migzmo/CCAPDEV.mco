@@ -1,0 +1,370 @@
+/* Authentication forms styling */
+
+/* SIGNIN FRAME */
+#signinframe {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 800px;
+    max-height: 90vh;
+    background-color: white;
+    z-index: 1001;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.signinframe-content {
+    display: flex;
+    height: 100%;
+    max-height: 90vh;
+}
+
+#signinframe_left {
+    flex: 1;
+    background-color: #CDDECB;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 30px;
+    overflow-y: auto; /* Allow scrolling if content is too tall */
+}
+
+#signinframe_right {
+    flex: 1;
+    background-image: url('../images/assets/login.png');
+    background-size: cover;
+    background-position: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: relative;
+}
+
+#h2-signin {
+    font-family: 'Baloo';
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.signin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.signin-form .form-group {
+    margin-bottom: 15px;
+}
+
+.signin-form input[type="text"],
+.signin-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.remember-me input {
+    margin-right: 8px;
+}
+
+.remember-me label {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.signin-submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2E7D32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.signin-submit-button:hover {
+    background-color: #1B5E20;
+}
+
+.back-to-login {
+    text-align: center;
+    margin-top: 15px;
+    font-family: 'Lexend', sans-serif;
+}
+
+#backToOptions, #backToLogin {
+    background: none;
+    border: none;
+    color: #246126;
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+}
+
+#closeSignin {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* LOGIN FRAME */
+#loginframe {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 800px;
+    background-color: white;
+    z-index: 1001;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.loginframe-content {
+    display: flex;
+    height: 100%;
+}
+
+#loginframe_left {
+    flex: 1;
+    background-color: #CDDECB;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+#loginframe_right {
+    flex: 1;
+    background-image: url('../images/assets/login.png');
+    background-size: cover;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: relative;
+}
+
+#loginframe_left h2 {
+    font-family: 'Baloo';
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.signin-button, .login-button {
+    padding: 12px 20px;
+    background-color: #81C784;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Baloo';
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+}
+
+.signin-button:hover, .login-button:hover {
+    background-color: #5EB762;
+}
+
+#mail-logo {
+    background-image: url('../images/assets/Mail.png');
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#google-logo {
+    background-image: url('../images/assets/google-logo.png');
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.describe-register {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#register {
+    background: none;
+    border: none;
+    color: #246126;
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+}
+
+.Description {
+    font-family: 'Lexend', sans-serif;
+    font-size: 12px;
+    color: black;
+    margin-top: 20px;
+    text-align: center;
+}
+
+#closeLogin {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* REGISTER FRAME */
+#registerframe {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 800px;
+    max-height: 90vh;
+    background-color: white;
+    z-index: 1001;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.registerframe-content {
+    display: flex;
+    height: 100%;
+}
+
+#registerframe_left {
+    flex: 1;
+    background-color: #CDDECB;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+#registerframe_right {
+    flex: 1;
+    background-image: url('../images/assets/login.png');
+    background-size: cover;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: relative;
+}
+
+#create-account {
+    font-family: 'Baloo';
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.instruction {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    color: black;
+}
+
+.register-button {
+    padding: 12px;
+    background-color: #2E7D32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+#closeRegister {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #loginframe, #signinframe, #registerframe {
+        width: 90%;
+    }
+    
+    .loginframe-content, .signinframe-content, .registerframe-content {
+        flex-direction: column;
+    }
+    
+    #loginframe_left, #signinframe_left, #registerframe_left {
+        border-radius: 10px 10px 0 0;
+    }
+    
+    #loginframe_right, #signinframe_right, #registerframe_right {
+        height: 200px;
+        border-radius: 0 0 10px 10px;
+    }
+}
