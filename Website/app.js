@@ -128,6 +128,7 @@ const userRoutes = require('./Routes/userRoutes');
 const restaurantRoutes = require('./Routes/restaurantRoutes');
 const reviewRoutes = require('./Routes/reviewRoutes');
 const likeRoutes = require('./Routes/likeRoutes');
+const replyRoutes = require('./Routes/replyRoutes');
 
 // Import Error Handlers
 const { globalErrorHandler, denyDatabaseAccess } = require('./Routes/errorHandlers');
@@ -176,6 +177,7 @@ app.use('/api/likes', isAuthenticatedApi, likeRoutes);
 app.use('/api/users', isAuthenticatedApi, userRoutes);
 app.use('/api/restaurant', isAuthenticatedApi, restaurantRoutes);
 app.use('/api/reviews', isAuthenticatedApi, reviewRoutes);
+app.use('/api/replies', replyRoutes);
 
 // Error handling middleware
 app.use('/database', denyDatabaseAccess);

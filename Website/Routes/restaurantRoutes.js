@@ -56,6 +56,7 @@ router.get('/:id', async (req, res) => {
       })
       .exec();
     
+    // Add empty replies array to each review (this will be populated client-side)
     reviews = reviews.map(review => {
       // Create a formatted date from MongoDB's ObjectId timestamp (creation date)
       const createdDate = new Date(review._id.getTimestamp()).toLocaleString('en-US', {
@@ -83,7 +84,8 @@ router.get('/:id', async (req, res) => {
         ...review.toObject(),
         date: createdDate,
         editedDate: editedDate,
-        isEdited: !!review.last_edited_at
+        isEdited: !!review.last_edited_at,
+        replies: [] // Add empty replies array
       };
     });
       
