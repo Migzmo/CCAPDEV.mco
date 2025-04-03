@@ -76,9 +76,9 @@ const setupMiddleware = (app) => {
     app.use(express.json({ limit: '50mb' }));
     app.use(express.urlencoded({ extended: true }));
     
-    // Serve static files - order matters for proper resolution
-    app.use('/Views', express.static(path.join(__dirname, '../Views'))); // Serve Views directory directly
-    app.use(express.static(path.join(__dirname, '..'))); // Serve from project root
+    // Serve static files
+    app.use('/Views', express.static(path.join(__dirname, '../Views'))); 
+    app.use(express.static(path.join(__dirname, '..'))); 
     app.use(express.static(path.join(__dirname, '../public')));
     
     // File upload middleware
@@ -88,7 +88,7 @@ const setupMiddleware = (app) => {
         tempFileDir: '/tmp/'
     }));
     
-    // Set view engine and views directory
+    // Set view engine and views directory - use consistent capitalization
     app.set('view engine', 'hbs');
     app.set('views', path.join(__dirname, '../Views'));
     

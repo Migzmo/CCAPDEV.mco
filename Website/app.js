@@ -20,13 +20,13 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const app = express();
+
 //for sessions
-
-
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
-
+// IMPORTANT: Import hbs BEFORE using it
+const hbs = require('hbs');
 
 // Import configuration and middleware setup
 const { 
@@ -34,13 +34,36 @@ const {
   setupDirectories, 
   isAuthenticated, 
   isAuthenticatedApi,
-  populateUserData  // Add this import
+  populateUserData
 } = require('./Routes/configs');
 
 // Set up directories and middleware
 setupDirectories();
 setupMiddleware(app);
 
+// For registering partials' handlebars - AFTER importing hbs
+const partialsDir = path.join(__dirname, 'Views/partials');
+hbs.registerPartials(partialsDir, (err) => {
+  if (err) {
+    console.error('Error registering Handlebars partials:', err);
+  } else {
+    console.log('Handlebars partials registered successfully');
+    // For logging
+    console.log('Registered partials:', Object.keys(hbs.handlebars.partials));
+  }
+});
+
+// Debugging: Checking if the views directory exists
+const viewsDir = path.join(__dirname, 'Views');
+console.log('Views directory exists:', fs.existsSync(viewsDir));
+console.log('Partials directory exists:', fs.existsSync(partialsDir));
+
+if (fs.existsSync(partialsDir)) {
+  console.log('Partials directory contents:', fs.readdirSync(partialsDir));
+}
+
+// Serve static files including views
+app.use('/Views', express.static(path.join(__dirname, 'Views')));
 app.use(express.static('views'));
 
 //For importing sample data to MONGO DB

@@ -6,6 +6,8 @@
 <title>LaSapp</title>
 <link rel="icon" href="views/images/assets/logo.png" type="image/png">
 <link rel="stylesheet" href="views/css/directory.css">
+<link rel="stylesheet" href="views/css/navbar.css">
+<link rel="stylesheet" href="Views/CSS/modal-styles.css">
 <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,15 +31,7 @@
 </head>
 <body>
     <!-- Top Ribbon -->
-    <nav class="navbar">
-        <div class="logo">
-            <a href="#">LaSapp</a>
-        </div>
-        <ul class="dashboard">
-            <li><a href="/about.html">ABOUT</a></li>
-            <li><button onclick="togglePopup()" id="loginButton">LOGIN</button></li>
-        </ul>
-    </nav>
+    {{> navbar_partial}}
 
     <div id="loginframe">
         <div class="loginframe-content">

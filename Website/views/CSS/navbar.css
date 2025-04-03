@@ -1,0 +1,193 @@
+* {
+    text-decoration: none;
+}
+
+html, body {
+    margin: 0;
+    background-color: #FFFFEF;
+}
+
+/* Navbar Styles */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 96%;
+    background-color: #fdfbe8;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 40px;
+    align-items: center;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    box-sizing: border-box;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    font-family: 'Baloo';
+    font-size: 50px;
+    color: #2E7D32;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.navbar img {
+    border-radius: 15px;
+    border: black solid;
+}
+
+/* Navigation Links */
+.options {
+    margin-left: auto;
+    margin-right: 7%;
+}
+
+.navbar ul.dashboard {
+    font-family: 'Baloo';
+    font-size: 20px;
+    list-style: none;
+    display: flex;
+    gap: 40px;
+    padding: 0;
+    margin: 0;
+    align-items: center; /* Ensure vertical alignment */
+}
+
+.navbar li {
+    display: flex;
+    align-items: center;
+}
+
+.navbar a,
+.navbar button.nav-button,
+.navbar button.login-button {
+    list-style: none;
+    text-decoration: none;
+    font-weight: bold;
+    color: #2E7D32;
+    text-transform: uppercase;
+    font-family: 'Baloo';
+    font-size: 20px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.navbar a:hover,
+.navbar button:hover {
+    color: #087c2fca;
+    text-decoration: underline;
+}
+
+.navbar li button:hover {
+    color: #087c2fca; 
+    text-decoration: underline;
+}
+
+.logo a {
+    font-family: 'Baloo';
+    font-size: 50px;
+    color: #2E7D32;
+}
+
+.dashboard li {
+    list-style: none;
+    display: inline-block;
+}
+
+.dashboard li:not(:last-child) {
+    margin-right: 150px; 
+}
+
+li a {
+    font-family: 'Baloo';
+    font-weight: bold;
+    color:#2E7D32;
+    font-size: 18px;
+    margin-right: 25px;
+}
+
+/* User dropdown menu styles - refined */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Baloo', sans-serif !important;
+    font-size: 20px !important;
+    color: #2E7D32;
+    padding: 0;
+}
+
+.profile-pic-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #DDF0DE;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10001;
+    border-radius: 4px;
+    margin-top: 5px;
+    border-top: 3px solid #2E7D32;
+}
+
+.dropdown-menu a {
+    color: black !important;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-family: 'Lexend', sans-serif;
+    text-transform: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+    color: #2E7D32 !important;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Login Button */
+#loginButton {
+    background: none;
+    border: none;
+    color: #2E7D32;
+    font-family: 'Baloo', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 0;
+    margin-right: 30px;
+}

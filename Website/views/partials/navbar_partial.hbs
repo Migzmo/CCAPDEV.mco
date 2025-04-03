@@ -1,0 +1,95 @@
+<header class="navbar">
+    <div class="navbar-container">
+        <a href="/" id="logoImg">
+            <img src="/Views/images/assets/logo.png" alt="Logo" width="70" height="70">
+        </a>
+        <div class="logo"><a href="/">LaSapp</a></div>
+        
+        <div class="options">
+            <ul class="dashboard">
+                <li><a href="/">DIRECTORY</a></li>
+                {{#if currentUser}}
+                <li>
+                    <div class="user-dropdown">
+                        <button class="dropdown-toggle" id="userDropdownToggle">
+                            <img src="{{currentUser.profilePic}}" alt="Profile" class="profile-pic-small" onerror="this.src='/Views/images/profilePictures/default-profile.png'">
+                            {{currentUser.username}}
+                        </button>
+                        <div class="dropdown-menu" id="userDropdownMenu">
+                            <a href="/profile/{{currentUser.userId}}" id="viewProfileBtn">My Profile</a>
+                            <a href="#" id="logoutBtn">Logout</a>
+                        </div>
+                    </div>
+                </li>
+                {{else}}
+                <li><button id="loginButton" class="login-button">LOGIN</button></li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup login button when not logged in
+    const loginButton = document.getElementById('loginButton');
+    if (loginButton) {
+        loginButton.addEventListener('click', function() {
+            const loginframe = document.getElementById('loginframe');
+            const backdrop = document.getElementById('backdrop');
+            
+            if (loginframe && backdrop) {
+                loginframe.style.display = 'block';
+                backdrop.style.display = 'block';
+                document.body.style.pointerEvents = 'none';
+                loginframe.style.pointerEvents = 'auto';
+                backdrop.style.pointerEvents = 'auto';
+            }
+        });
+    }
+    
+    // User dropdown toggle functionality
+    const dropdownToggle = document.getElementById('userDropdownToggle');
+    const dropdownMenu = document.getElementById('userDropdownMenu');
+    
+    if (dropdownToggle && dropdownMenu) {
+        dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+        });
+        
+        // Close the dropdown when clicking outside
+        window.addEventListener('click', function(event) {
+            if (!event.target.matches('#userDropdownToggle') && 
+                !event.target.matches('.profile-pic-small')) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    }
+    
+    // Handle logout button click
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            fetch('/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Logout error:', error);
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            });
+        });
+    }
+});
+</script>

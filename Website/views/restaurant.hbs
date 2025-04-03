@@ -6,6 +6,7 @@
         <title>LaSapp</title>
         <link rel="icon" href="views/images/assets/logo.png" type="image/png">
         <link rel="stylesheet" href="../Views/restohbsstyle.css"/>
+        <link rel="stylesheet" href="../views/css/navbar.css">
         <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
         <img src="../Views/images/assets/logo.png" id="logoImg" alt="logo" height="70" width="70">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,37 +23,8 @@
     </head>
     <body>
         <!-- Navigation Bar -->
-        <header class="navbar">
-            <!-- First Header -->
-            <div class="navbar-container">
-                <a href="/" id="logoImg">
-                <img src="../Views/images/assets/logo.png" alt="Logo" width="70" height="70">
-                </a>
-                <div class="logo">LaSapp</div>
-                
-                <div class="options">
-                    <ul>
-                        <li><a href="/">DIRECTORY</a></li>
-                        {{#if currentUser}}
-                        <li>
-                            <div class="user-dropdown">
-                                <button class="dropdown-toggle" id="userDropdownToggle">
-                                    <img src="{{currentUser.profilePic}}" alt="Profile" class="profile-pic-small" onerror="this.src='/Views/images/profilePictures/default-profile.png'">
-                                    {{currentUser.username}}
-                                </button>
-                                <div class="dropdown-menu" id="userDropdownMenu">
-                                    <a href="#" id="viewProfileBtn">My Profile</a>
-                                    <a href="#" id="logoutBtn">Logout</a>
-                                </div>
-                            </div>
-                        </li>
-                        {{else}}
-                        <li><button id="loginButton" class="login-button">LOGIN</button></li>
-                        {{/if}}
-                    </ul>
-                </div>
-            </div>
-        </header>
+        {{> navbar_partial}}
+        
         <div id="backdrop"></div>
         
         {{#unless currentUser}}
@@ -251,6 +223,34 @@
                 {{/if}}
                 <a href="/">
                     <button class="oval-button-review">Back</button>
+                </a>
+            </div>
+            <!-- Header -->
+            <div class="classheader">
+                <button id="heartBtn" class="btn">
+                    <i id="heartIcon" class="fa-solid fa-heart heart" data-resto-id="{{restaurant.id}}"></i>
+                </button>
+                <div class="head-container">
+                    <h1>{{restaurant.name}}</h1>  
+                    <p>{{restaurant.cuisine}}</p> 
+                </div>
+            </div>          
+            <!-- Main body-->
+            <div class="main">
+                <img src={{restaurant.image}} alt={{restaurant.name}}>
+                <div class="information">
+                    <h1>About:</h1>
+                    <h2>📍 Address: </h2>
+                    <p>{{restaurant.address}}</p>
+                    <h2>⏰ Time: </h2>
+                    <p>
+                    {{#if restaurant.opening_time}}
+                    {{formatTime restaurant.opening_time}} - {{formatTime restaurant.closing_time}}
+                    {{else}}
+                    {{restaurant.time}}
+                    {{/if}}
+                    </p>
+                    <h2>📱 Phone #: </h2>
                 </a>
             </div>
             <!-- Header -->
