@@ -43,15 +43,17 @@ html, body {
 /* Navigation Links */
 .options{
     margin-left: auto;
-    margin-right: 7%;
+    margin-right: 4%;
 }
+
 .navbar ul {
     font-family: 'Baloo';
     font-size: 20px;
     list-style: none;
     display: flex;
-    gap: 40px;
-
+    gap: 180px; /* Reduced gap between items */
+    margin-right: 30px;
+    justify-content: flex-end; /* Push items to the right */
 }
 
 .navbar a {
@@ -1730,4 +1732,21 @@ body.modal-open {
     background-position: center;
     margin: 10px 0;
     display: inline-block;
+}
+
+#loginButton {
+    font-family: 'Baloo';
+    font-weight: bold;
+    color: #2E7D32;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+#loginButton:hover {
+    color: #087c2fca;
+    text-decoration: underline;
 }

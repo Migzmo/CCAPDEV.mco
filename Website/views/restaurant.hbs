@@ -40,99 +40,101 @@
                 </div>
             </div>
         </header>
-                <div id="backdrop"></div>
-                <!-- Add login frame -->
-                <div id="loginframe">
-                    <div class="loginframe-content">
-                        <div id="loginframe_left">
-                            <h2>Log in or sign up now!</h2>
-                            <div class="button-container">
-                                <button class="signin-button"><span id="mail-logo"></span>Continue with Account</button>
-                                <button class="login-button"><span id="google-logo"></span>Login with Gmail</button>
+        <div id="backdrop"></div>
+
+        <!-- Add login frame -->
+        <div id="loginframe">
+            <div class="loginframe-content">
+                <div id="loginframe_left">
+                    <h2>Log in or sign up now!</h2>
+                    <div class="button-container">
+                        <button class="signin-button"><span id="mail-logo"></span>Continue with Account</button>
+                        <button class="login-button"><span id="google-logo"></span>Login with Gmail</button>
+                    </div>
+                    <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
+                    <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="">DLSU Student Handbook</a> and/or <a href="">Privacy Policy</a> of LaSapp.</p>
+                </div>
+                <div id="loginframe_right">
+                    <button id="closeLogin" onclick="togglePopup()">&times;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add signin frame -->
+        <div id="signinframe">
+            <div class="signinframe-content">
+                <div id="signinframe_left">
+                    <h2 id="h2-signin">Sign in</h2>
+                    <form class="signin-form">
+                        <div class="form-group">
+                            <input type="text" id="signin-username" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="signin-password" placeholder="Password" required>
+                        </div>
+
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <button type="submit" class="signin-submit-button">Sign in</button>
+                    </form>
+                    <p class="back-to-login">Need an account? <button id="backToOptions">Go back</button></p>
+                </div>
+                <div id="signinframe_right">
+                    <button id="closeSignin">&times;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add register frame -->
+        <div id="registerframe">
+            <div class="registerframe-content">
+                <div id="registerframe_left">
+                    <h2 id="create-account">Create Your Account</h2>
+                    <form id="registration-form" class="form-container">
+                        <div class="form-group">
+                            <input type="text" id="username" placeholder="Username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="password" placeholder="Password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="avatar" class="instruction">Profile Picture</label>
+                            <div class="profile-upload-area">
+                                <input type="file" id="avatar" name="profile_pic" accept="image/*">
+                                <label for="avatar" class="upload-btn">Choose Picture</label>
+                                <div class="profile-pic-preview" id="avatar-preview"></div>
                             </div>
-                            <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
-                            <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="">DLSU Student Handbook</a> and/or <a href="">Privacy Policy</a> of LaSapp.</p>
                         </div>
-                        <div id="loginframe_right">
-                            <button id="closeLogin" onclick="togglePopup()">&times;</button>
+
+                        <div class="form-group account-type">
+                            <label class="instruction">Account Type:</label>
+                            <div class="radio-group">
+                                <input type="radio" id="user" name="accountType" value="user" checked>
+                                <label for="user" class="instruction">User</label>
+                                <input type="radio" id="business-owner" name="accountType" value="business-owner">
+                                <label for="business-owner" class="instruction">Business Owner</label>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <textarea id="description" placeholder="Short description (optional)"></textarea>
+                        </div>
+
+                        <button type="submit" class="register-button">Create Account</button>
+                    </form>
+
+                    <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
                 </div>
-
-                <!-- Add signin frame -->
-                <div id="signinframe">
-                    <div class="signinframe-content">
-                        <div id="signinframe_left">
-                            <h2 id="h2-signin">Sign in</h2>
-                            <form class="signin-form">
-                                <div class="form-group">
-                                    <input type="text" id="signin-username" placeholder="Username" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" id="signin-password" placeholder="Password" required>
-                                </div>
-
-                                <div class="remember-me">
-                                    <input type="checkbox" id="remember" name="remember">
-                                    <label for="remember">Remember me</label>
-                                </div>
-                                <button type="submit" class="signin-submit-button">Sign in</button>
-                            </form>
-                            <p class="back-to-login">Need an account? <button id="backToOptions">Go back</button></p>
-                        </div>
-                        <div id="signinframe_right">
-                            <button id="closeSignin">&times;</button>
-                        </div>
-                    </div>
+                <div id="registerframe_right">
+                    <button id="closeRegister">&times;</button>
                 </div>
+            </div>
+        </div>
 
-                <!-- Add register frame -->
-                <div id="registerframe">
-                    <div class="registerframe-content">
-                        <div id="registerframe_left">
-                            <h2 id="create-account">Create Your Account</h2>
-                            <form id="registration-form" class="form-container">
-                                <div class="form-group">
-                                    <input type="text" id="username" placeholder="Username" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="password" id="password" placeholder="Password" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="avatar" class="instruction">Profile Picture</label>
-                                    <div class="profile-upload-area">
-                                        <input type="file" id="avatar" name="profile_pic" accept="image/*">
-                                        <label for="avatar" class="upload-btn">Choose Picture</label>
-                                        <div class="profile-pic-preview" id="avatar-preview"></div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group account-type">
-                                    <label class="instruction">Account Type:</label>
-                                    <div class="radio-group">
-                                        <input type="radio" id="user" name="accountType" value="user" checked>
-                                        <label for="user" class="instruction">User</label>
-                                        <input type="radio" id="business-owner" name="accountType" value="business-owner">
-                                        <label for="business-owner" class="instruction">Business Owner</label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <textarea id="description" placeholder="Short description (optional)"></textarea>
-                                </div>
-
-                                <button type="submit" class="register-button">Create Account</button>
-                            </form>
-
-                            <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
-                        </div>
-                        <div id="registerframe_right">
-                            <button id="closeRegister">&times;</button>
-                        </div>
-                    </div>
-                </div>
         <div id="createRestoFrame">
             <div class="createResto-header">
                 <h2>Edit Restaurant</h2>
@@ -240,6 +242,68 @@
         
 
                 <button id="closeCreateResto" onclick="togglePopupCreateResto()">&times</button>
+            </div>
+        </div>
+
+        <!-- Edit Profile Modal -->
+        <div id="editProfileFrame" style="display: none;">
+            <div class="editProfile-content">
+                <div id="editProfile_left">
+                    <h2 id="edit-profile-title">Edit Your Profile</h2>
+                    <form id="edit-profile-form" enctype="multipart/form-data">
+                        <input type="hidden" name="userId" value="">
+                        <div class="form-group">
+                            <label for="edit-username" class="instruction">Name</label>
+                            <input type="text" id="edit-username" name="username" placeholder="Your name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-password" class="instruction">Password</label>
+                            <input type="password" id="edit-password" name="password" placeholder="Change your password">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-bio" class="instruction">Bio</label>
+                            <textarea id="edit-bio" name="bio" placeholder="Tell us about yourself"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-profile-pic" class="instruction">Profile Picture</label>
+                            <div class="profile-upload-area">
+                                <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*">
+                                <label for="edit-profile-pic" class="upload-btn">Choose Picture</label>
+                                <div id="profile-pic-preview"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group danger-zone">
+                            <h4>Danger Zone</h4>
+                            <p>Deleting your account will remove all your data from our system.</p>
+                            <button type="button" id="delete-account-btn" class="delete-account-button">Delete Account</button>
+                        </div>
+
+                        <div class="button-section">
+                            <div class="input-box button">
+                                <input type="submit" value="Save Changes">
+                            </div>
+                            <div class="input-box button secondary">
+                                <input type="button" value="Cancel" onclick="toggleEditProfileFrame()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="editProfile_right"></div>
+                <button id="closeEditProfile" onclick="toggleEditProfileFrame()">&times;</button>
+            </div>
+        </div>
+
+        <!-- Delete Account Confirmation Dialog -->
+        <div id="deleteAccountConfirm" style="display: none;">
+            <h3>Delete Account?</h3>
+            <p>This action cannot be undone. Your account will be permanently deactivated.</p>
+            <div class="confirm-buttons">
+                <button id="cancelDeleteAccount">Cancel</button>
+                <button id="confirmDeleteAccount">Yes, Delete Account</button>
             </div>
         </div>
 
@@ -828,28 +892,37 @@
         <script src="../Controllers/utils/authManager.js" type="module"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Check if user is logged in and update UI
-                const currentUserString = localStorage.getItem('currentUser');
-                if (currentUserString) {
-                    try {
-                        const currentUser = JSON.parse(currentUserString);
-                        if (currentUser && currentUser.userId) {
-                            // Update the login button to show USER PROFILE
-                            const loginBtn = document.getElementById('loginButton');
-                            if (loginBtn) {
-                                loginBtn.textContent = 'USER PROFILE';
-                                loginBtn.onclick = function(e) {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    toggleUserDropdown(this);
-                                };
-                            }
+            // Check if user is logged in and update UI
+            const currentUserString = localStorage.getItem('currentUser');
+            if (currentUserString) {
+                try {
+                    const currentUser = JSON.parse(currentUserString);
+                    if (currentUser && currentUser.userId) {
+                        // Update the login button to show USER PROFILE
+                        const loginBtn = document.getElementById('loginButton');
+                        if (loginBtn) {
+                            loginBtn.textContent = 'USER PROFILE';
+                            loginBtn.onclick = function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                toggleUserDropdown(this);
+                            };
                         }
-                    } catch (e) {
-                        console.error("Error parsing user data:", e);
+                        
+                        // Import the edit profile functionality
+                        import('../Controllers/Accounts/updateAccount.js')
+                            .then(module => {
+                                window.toggleEditProfileFrame = module.toggleEditProfileFrame;
+                                window.setupProfilePicPreview = module.setupProfilePicPreview;
+                                window.setupProfileUpdateHandler = module.setupProfileUpdateHandler;
+                            })
+                            .catch(err => console.error('Error importing profile update module:', err));
                     }
+                } catch (e) {
+                    console.error("Error parsing user data:", e);
                 }
-            });
+            }
+        });
         </script>
 
         <script>
@@ -938,6 +1011,74 @@
                 }
             });
         </script>
+
+        <script type="module">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Import profile update functionality
+            import('../Controllers/Accounts/updateAccount.js')
+                .then(module => {
+                    // Make these functions available globally if they aren't already
+                    window.setupProfilePicPreview = module.setupProfilePicPreview;
+                    window.setupProfileUpdateHandler = module.setupProfileUpdateHandler;
+                    
+                    // Initialize profile pic preview functionality
+                    setupProfilePicPreview();
+                    
+                    // Initialize profile update handler
+                    setupProfileUpdateHandler();
+                    
+                    // Setup delete account confirmation
+                    const deleteAccountBtn = document.getElementById('delete-account-btn');
+                    const deleteConfirm = document.getElementById('deleteAccountConfirm');
+                    const cancelDelete = document.getElementById('cancelDeleteAccount');
+                    const confirmDelete = document.getElementById('confirmDeleteAccount');
+                    
+                    if (deleteAccountBtn) {
+                        deleteAccountBtn.addEventListener('click', function() {
+                            deleteConfirm.style.display = 'block';
+                            document.getElementById('backdrop').style.display = 'block';
+                        });
+                    }
+                    
+                    if (cancelDelete) {
+                        cancelDelete.addEventListener('click', function() {
+                            deleteConfirm.style.display = 'none';
+                            document.getElementById('backdrop').style.display = 'none';
+                        });
+                    }
+                    
+                    if (confirmDelete) {
+                        confirmDelete.addEventListener('click', function() {
+                            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                            if (currentUser && currentUser.userId) {
+                                fetch('/api/users/delete-account', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ userId: currentUser.userId })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        alert('Account deleted successfully');
+                                        localStorage.removeItem('currentUser');
+                                        window.location.href = '/';
+                                    } else {
+                                        alert('Failed to delete account: ' + data.message);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error deleting account:', error);
+                                    alert('An error occurred while deleting account');
+                                });
+                            }
+                        });
+                    }
+                })
+                .catch(err => console.error('Error importing profile update module:', err));
+        });
+    </script>
 
     </body>
 </html>
