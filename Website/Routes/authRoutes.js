@@ -2,8 +2,10 @@
 This file contains authentication routes including login and registration
 */
 
+const path = require('path');
 const bcrypt = require('bcrypt'); 
 const express = require('express');
+const fs = require('fs');
 const router = express.Router();
 const { Account } = require('../Models/lasappDB');
 
@@ -86,19 +88,49 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
   try {
     console.log('Register route accessed', req.body);
+    console.log('Files received:', req.files); // Debug log for files
+    
     // Generate unique account ID
     const lastAccount = await Account.findOne().sort({ acc_id: -1 });
     const newAccId = lastAccount ? lastAccount.acc_id + 1 : 1;
     
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    // Create new account with absolute path for profile picture
+    // Default profile picture path
+    let profilePicPath = '/Views/images/profilePictures/default-profile.png';
+    
+    // Handle profile picture upload if present
+    if (req.files && req.files.profile_pic) {
+      const profilePic = req.files.profile_pic;
+      const fileName = `profile_${newAccId}_${Date.now()}${path.extname(profilePic.name)}`;
+      const uploadDir = path.join(__dirname, '../Views/images/profilePictures');
+      const uploadPath = path.join(uploadDir, fileName);
+      
+      try {
+        // Ensure directory exists
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        
+        // Move the uploaded file to the destination
+        await profilePic.mv(uploadPath);
+        
+        // Set the profile picture path for the database
+        profilePicPath = `/Views/images/profilePictures/${fileName}`;
+        console.log("Profile picture saved at:", profilePicPath);
+      } catch (uploadError) {
+        console.error("Error saving profile picture:", uploadError);
+        // Continue with default profile picture if upload fails
+      }
+    }
+
+    // Create new account with profile picture path
     const newAccount = new Account({
         acc_id: newAccId,
         acc_name: req.body.username,
         acc_username: req.body.username,
         acc_bio: req.body.description || '',
-        profile_pic: req.body.profilePic || '/Views/images/profilePictures/default-profile.png',
+        profile_pic: profilePicPath,
         saved_restos: [],
         saved_reviews: [],
         acc_password: hashedPassword,

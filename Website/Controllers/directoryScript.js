@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupProfileUpdateHandler();
     setupDeleteAccountHandlers();
     setupRegistrationListeners();
+    setupRegistrationProfilePicPreview();
     setupLoginListeners();
     checkReviewsContent();
     
@@ -321,6 +322,30 @@ function togglePopupCreateResto() {
         }
     } else {
         document.body.style.pointerEvents = 'auto';
+    }
+}
+
+/**
+ * Set up profile picture preview for registration form
+ */
+function setupRegistrationProfilePicPreview() {
+    const avatarInput = document.getElementById('avatar');
+    const previewElement = document.getElementById('avatar-preview');
+    
+    if (avatarInput && previewElement) {
+        avatarInput.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewElement.style.backgroundImage = `url('${e.target.result}')`;
+                    previewElement.removeAttribute('empty'); // Remove empty attribute if it exists
+                    previewElement.classList.remove('empty'); // Remove empty class if it exists
+                };
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
     }
 }
 

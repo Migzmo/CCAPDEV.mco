@@ -613,13 +613,22 @@ font-family: 'Lexend', sans-serif;
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 18px; 
+    margin-bottom: 22px;
+    width: 100%;
 }
 
-#create-account{
+.form-group textarea:focus {
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.3);
+    outline: none;
+}
+
+#create-account {
     font-family: 'Baloo';
     font-size: 24px;
     color: black;
+    margin-bottom: 25px;
+    margin-top: 10px;
 }
 
 .account-type {
@@ -633,36 +642,186 @@ font-family: 'Lexend', sans-serif;
 }
 
 .form-group input[type="text"],
-.form-group input[type="password"] {
-    padding: 12px;
-    border-radius: 8px;
+.form-group input[type="password"],
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    border-radius: 10px;
     border: none;
     font-family: 'Lexend', sans-serif;
     background-color: #DDF0DE;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.3);
+    outline: none;
 }
 
 .form-group input[type="file"] {
-    margin-top: 5px;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.form-group input[type="file"] + label {
     font-family: 'Lexend', sans-serif;
     font-size: 14px;
+    font-weight: 500;
+    color: #246126;
+    background-color: #DDF0DE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px dashed #81C784;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.form-group input[type="file"] + label.upload-btn {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #246126;
+    background-color: #DDF0DE;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px dashed #81C784;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input[type="file"] + label.upload-btn:hover {
+    background-color: #c1e6c3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+.form-group input[type="file"] + label:hover {
+    background-color: #c1e6c3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.form-group input[type="file"] + label::before {
+    content: "📷 ";
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.form-group input[type="file"] + label i {
+    margin-right: 8px;
+}
+
 
 .radio-group {
     display: flex;
-    gap: 30px;
+    gap: 15px;
     align-items: center;
-    margin-top: 5px;
+    margin-top: 10px;
+}
+
+.radio-group input[type="radio"] {
+    display: none;
+}
+
+.radio-group input[type="radio"] + label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    padding: 10px 18px;
+    background-color: #DDF0DE;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.radio-group input[type="radio"]:checked + label {
+    background-color: #81C784;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.4);
+}
+
+.profile-pic-preview {
+    width: 60px;  
+    height: 60px; 
+    border-radius: 50%;
+    margin: 0; 
+    border: 3px solid #81C784;
+    background-color: #f0f0f0;
+    background-size: cover;
+    background-position: center;
+    display: block; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    flex-shrink: 0;
+}
+
+.profile-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.profile-upload-area .form-group input[type="file"] + label.upload-btn {
+    width: 70%;
+    margin: 0;
+}
+
+
+.profile-pic-preview:empty::before {
+    content: "📷";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    color: #a0a0a0;
+}
+
+.profile-pic-preview[style*="background-image"]::before {
+    display: none;
 }
 
 .register-button {
     background-color: #81C784;
     color: black;
     border: none;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px;
+    border-radius: 8px;
     font-family: 'Baloo';
+    font-size: 16px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 15px;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .register-button:hover {
@@ -671,8 +830,10 @@ font-family: 'Lexend', sans-serif;
 
 .back-to-login {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 25px;
+    margin-bottom: 15px;
     font-family: 'Lexend', sans-serif;
+    padding-bottom: 10px;
 }
 
 #backToLogin {
