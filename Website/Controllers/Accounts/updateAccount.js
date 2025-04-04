@@ -114,9 +114,21 @@ function toggleEditProfileFrame() {
  */
 function setupProfilePicPreview() {
     const profilePicInput = document.getElementById('edit-profile-pic');
+    const previewElement = document.getElementById('profile-pic-preview');
+    
     if (profilePicInput) {
         profilePicInput.addEventListener('change', (e) => {
-            showProfilePicPreview(e, 'profile-pic-preview');
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewElement.style.backgroundImage = `url('${e.target.result}')`;
+                    previewElement.removeAttribute('empty');
+                    previewElement.classList.remove('empty');
+                };
+                
+                reader.readAsDataURL(e.target.files[0]);
+            }
         });
     }
 }
@@ -151,6 +163,7 @@ function setupProfileUpdateHandler() {
             if (result.success) {
                 alert('Profile updated successfully!');
                 toggleEditProfileFrame();
+                window.location.reload();
             } else {
                 alert(result.error || 'Update failed');
             }

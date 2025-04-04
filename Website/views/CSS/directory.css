@@ -864,7 +864,7 @@ font-family: 'Lexend', sans-serif;
     transform: translate(-50%, -50%);
     width: 60%;
     height: 70%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: transparent;
     z-index: 1000;
     border-radius: 40px;
     overflow: hidden;
@@ -896,8 +896,8 @@ font-family: 'Lexend', sans-serif;
     font-family: 'Baloo';
     font-size: 24px;
     color: black;
-    text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    margin-top: 10px;
 }
 
 #edit-profile-form {
@@ -907,6 +907,102 @@ font-family: 'Lexend', sans-serif;
     max-width: 80%;
     margin: 0 auto;
 }
+
+#edit-profile-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+#edit-profile-form input[type="text"],
+#edit-profile-form input[type="password"],
+#edit-profile-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Lexend', sans-serif;
+    background-color: #DDF0DE;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#edit-profile-form input[type="text"]:focus,
+#edit-profile-form input[type="password"]:focus,
+#edit-profile-form textarea:focus {
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.3);
+    outline: none;
+}
+
+#edit-profile-form input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#edit-profile-form input[type="file"] + label {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #246126;
+    background-color: #DDF0DE;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px dashed #81C784;
+    text-align: center;
+    width: 70%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#edit-profile-form input[type="file"] + label:hover {
+    background-color: #c1e6c3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#edit-profile-form input[type="file"] + label::before {
+    content: "📷 ";
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+#edit-profile-form .button-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+#edit-profile-form .input-box.button input {
+    background-color: #81C784;
+    color: black;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Baloo';
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+#edit-profile-form .input-box.button input:hover {
+    background-color: #5EB762;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 #edit-bio {
     width: 100%;
@@ -920,13 +1016,18 @@ font-family: 'Lexend', sans-serif;
 }
 
 #profile-pic-preview {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    margin: 0;
+    border: 3px solid #81C784;
     background-color: #f0f0f0;
-    margin-top: 10px;
     background-size: cover;
     background-position: center;
+    display: block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    flex-shrink: 0;
 }
 
 #closeEditProfile {
@@ -969,25 +1070,27 @@ font-family: 'Lexend', sans-serif;
 }
 
 .danger-zone {
+    text-align: center;
+    padding: 15px;
     margin-top: 30px;
-    border-top: 1px solid #ff5555;
-    padding-top: 15px;
+    border-top: 1px solid #d32f2f; 
 }
 
 .danger-zone h4 {
-    color: #d32f2f;
     font-family: 'Lexend', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
+    color: #d32f2f;
     margin-bottom: 10px;
 }
- 
+
 .danger-zone p {
     font-family: 'Lexend', sans-serif;
     font-size: 14px;
+    color: #666;
     margin-bottom: 15px;
-    color: #555;
+    text-align: center;
 }
- 
+
 .delete-account-button {
     background-color: #d32f2f;
     color: white;

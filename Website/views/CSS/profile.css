@@ -467,3 +467,111 @@ footer img{
     color: #757575;
     font-style: italic;
 }
+
+/* Add this to ensure danger zone looks consistent */
+.danger-zone {
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+    border-top: 1px solid #d32f2f; /* Changed from #e0e0e0 to #d32f2f (red) */
+}
+
+.danger-zone h4 {
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+.danger-zone p {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.delete-account-button {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: 'Lexend', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-account-button:hover {
+    background-color: #b71c1c;
+}
+
+/* Add user dropdown styling for profile page */
+.user-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    min-width: 150px;
+    border: 1px solid #DDF0DE;
+    border-top: 3px solid #2E7D32; /* Green top border for visual connection */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 10px;
+    z-index: 10001;
+    margin-top: 5px;
+}
+   
+.user-dropdown a {
+    font-family: 'Lexend', sans-serif;
+    color: #000000;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+}
+
+.user-dropdown a:hover {
+    background-color: #DDF0DE;
+}
+
+#editProfileFrame .danger-zone,
+.editProfile-content .danger-zone,
+#edit-profile-form .danger-zone {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 30px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-top: 1px solid #d32f2f !important; 
+}
+
+#editProfileFrame .danger-zone h4,
+.editProfile-content .danger-zone h4,
+#edit-profile-form .danger-zone h4 {
+    text-align: center !important;
+    width: 100% !important;
+    position: static !important;
+    left: auto !important;
+    margin: 0 0 10px 0 !important;
+}
+
+#editProfileFrame .danger-zone p,
+.editProfile-content .danger-zone p,
+#edit-profile-form .danger-zone p {
+    text-align: center !important;
+    width: 100% !important;
+    position: static !important;
+    left: auto !important;
+    margin: 0 0 15px 0 !important;
+}
+
+#editProfileFrame .delete-account-button,
+.editProfile-content .delete-account-button,
+#edit-profile-form .delete-account-button {
+    display: block !important;
+    margin: 0 auto !important;
+}
