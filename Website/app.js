@@ -183,7 +183,7 @@ app.use(populateUserData);
 app.use('/auth', authRoutes); // NOT protected by isAuthenticated
 app.use('/restaurant',restaurantRoutes);
 
-app.use('/profile', isAuthenticated, userRoutes); // Mount user routes at /profile prefix
+app.use('/profile', userRoutes); // Mount user routes at /profile prefix
 
 // Make sure the likes route is registered before the server starts
 // Update position to be earlier in the code

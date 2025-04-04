@@ -63,8 +63,9 @@ router.get('/:id', async function (req, res) {
     const accountId = parseInt(req.params.id, 10);
     console.log(`Account ID: ${accountId}`);
     
-    // Get the current user ID from the query string if available
-    const currentUserId = req.query.currentUser ? parseInt(req.query.currentUser) : null;
+    // Get user information from session if available
+    const currentUserId = req.session.user ? req.session.user.userId : null;
+    const isLoggedIn = !!currentUserId;
     
     // Find the account
     const account = await Account.findOne({acc_id: accountId, isAlive: true});
@@ -72,7 +73,7 @@ router.get('/:id', async function (req, res) {
       return res.status(404).send('Account not found');
     }
     
-    // Fetch user's reviews
+    // Fetch user's reviews - this should be viewable by all users
     const userReviews = await Review.find({
       account_id: accountId, 
       isAlive: true
@@ -95,9 +96,11 @@ router.get('/:id', async function (req, res) {
       date: new Date(review._id.getTimestamp()).toLocaleDateString()
     }));
 
-    // Fetch user's saved restaurants
+    // Fetch user's saved restaurants - only if the user is viewing their own profile
     let savedRestaurants = [];
-    if (account.saved_restos && account.saved_restos.length > 0) {
+    const isOwnProfile = isLoggedIn && parseInt(currentUserId, 10) === accountId;
+    
+    if (account.saved_restos && account.saved_restos.length > 0 && isOwnProfile) {
       savedRestaurants = await Restaurant.find({
         resto_id: { $in: account.saved_restos },
         isAlive: true
@@ -114,34 +117,18 @@ router.get('/:id', async function (req, res) {
       }));
     }
     
-    // Determine if this is the user's own profile
-    const isOwnProfile = currentUserId === accountId;
-    
-    // Adding debug output
-    console.log("Rendering profile page with:", {
-      accountDetails: {
-        name: account.acc_name,
-        username: account.acc_username,
-        bio: account.acc_bio,
-        profilePic: account.profile_pic
-      },
-      isOwnProfile: isOwnProfile,
-      reviewsCount: formattedReviews.length,
-      savedRestaurantsCount: savedRestaurants.length
-    });
-    
-    // Render the profile page with saved restaurants
+    // Render the profile page
     res.render('profile', {
       account: {
         id: account.acc_id,
-        acc_id: account.acc_id,  // Include both formats for compatibility
+        acc_id: account.acc_id,
         name: account.acc_name,
         username: account.acc_username,
         bio: account.acc_bio,
-        // Use absolute path for profile pic to avoid relative path issues
         profile_pic: account.profile_pic || '/Views/images/profilePictures/default-profile.png'
       },
       isOwnProfile: isOwnProfile,
+      isLoggedIn: isLoggedIn,
       reviews: formattedReviews,
       savedRestaurants: savedRestaurants
     });

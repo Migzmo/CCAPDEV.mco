@@ -42,8 +42,9 @@ router.post('/login', async (req, res) => {
     }
     
     // Set up session data with user information
-    req.session.userId = account.acc_id;
+    req.session.userId = parseInt(account.acc_id, 10);
     req.session.user = {
+      userId: parseInt(account.acc_id, 10), 
       id: account.acc_id,
       username: account.acc_username,
       name: account.acc_name,
@@ -140,8 +141,9 @@ router.post('/register', async (req, res) => {
     await newAccount.save();
     
     // Set up session data for automatic login after registration
-    req.session.userId = newAccount.acc_id;
+    req.session.userId = parseInt(newAccount.acc_id, 10);
     req.session.user = {
+      userId: parseInt(newAccount.acc_id, 10), 
       id: newAccount.acc_id,
       username: newAccount.acc_username,
       name: newAccount.acc_name,
