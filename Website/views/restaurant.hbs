@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>LaSapp</title>
         <link rel="icon" href="views/images/assets/logo.png" type="image/png">
+        <link rel="stylesheet" href="/Views/css/directory.css"/>
         <link rel="stylesheet" href="/views/restohbsstyle.css"/>
         <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
         <img src="../Views/images/assets/logo.png" id="logoImg" alt="logo" height="70" width="70">
@@ -34,12 +35,104 @@
                 <div class="options">
                     <ul>
                         <li><a href="/">DIRECTORY</a></li>
-                        <li><a href="#">ACCOUNT</a></li>
+                        <li><button onclick="togglePopup()" id="loginButton">LOGIN</button></li>
                     </ul>
                 </div>
             </div>
         </header>
                 <div id="backdrop"></div>
+                <!-- Add login frame -->
+                <div id="loginframe">
+                    <div class="loginframe-content">
+                        <div id="loginframe_left">
+                            <h2>Log in or sign up now!</h2>
+                            <div class="button-container">
+                                <button class="signin-button"><span id="mail-logo"></span>Continue with Account</button>
+                                <button class="login-button"><span id="google-logo"></span>Login with Gmail</button>
+                            </div>
+                            <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
+                            <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="">DLSU Student Handbook</a> and/or <a href="">Privacy Policy</a> of LaSapp.</p>
+                        </div>
+                        <div id="loginframe_right">
+                            <button id="closeLogin" onclick="togglePopup()">&times;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add signin frame -->
+                <div id="signinframe">
+                    <div class="signinframe-content">
+                        <div id="signinframe_left">
+                            <h2 id="h2-signin">Sign in</h2>
+                            <form class="signin-form">
+                                <div class="form-group">
+                                    <input type="text" id="signin-username" placeholder="Username" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="signin-password" placeholder="Password" required>
+                                </div>
+
+                                <div class="remember-me">
+                                    <input type="checkbox" id="remember" name="remember">
+                                    <label for="remember">Remember me</label>
+                                </div>
+                                <button type="submit" class="signin-submit-button">Sign in</button>
+                            </form>
+                            <p class="back-to-login">Need an account? <button id="backToOptions">Go back</button></p>
+                        </div>
+                        <div id="signinframe_right">
+                            <button id="closeSignin">&times;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add register frame -->
+                <div id="registerframe">
+                    <div class="registerframe-content">
+                        <div id="registerframe_left">
+                            <h2 id="create-account">Create Your Account</h2>
+                            <form id="registration-form" class="form-container">
+                                <div class="form-group">
+                                    <input type="text" id="username" placeholder="Username" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="password" id="password" placeholder="Password" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="avatar" class="instruction">Profile Picture</label>
+                                    <div class="profile-upload-area">
+                                        <input type="file" id="avatar" name="profile_pic" accept="image/*">
+                                        <label for="avatar" class="upload-btn">Choose Picture</label>
+                                        <div class="profile-pic-preview" id="avatar-preview"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group account-type">
+                                    <label class="instruction">Account Type:</label>
+                                    <div class="radio-group">
+                                        <input type="radio" id="user" name="accountType" value="user" checked>
+                                        <label for="user" class="instruction">User</label>
+                                        <input type="radio" id="business-owner" name="accountType" value="business-owner">
+                                        <label for="business-owner" class="instruction">Business Owner</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea id="description" placeholder="Short description (optional)"></textarea>
+                                </div>
+
+                                <button type="submit" class="register-button">Create Account</button>
+                            </form>
+
+                            <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
+                        </div>
+                        <div id="registerframe_right">
+                            <button id="closeRegister">&times;</button>
+                        </div>
+                    </div>
+                </div>
         <div id="createRestoFrame">
             <div class="createResto-header">
                 <h2>Edit Restaurant</h2>
@@ -641,7 +734,7 @@
                 }
             }
         </script>
-        <script src='../Controllers/directoryScript.js'></script>
+        <script src='../Controllers/directoryScript.js' type="module"></script>
         <script src='../Controllers/Restaurants/updateResto.js'></script>
         <script src='../Controllers/Restaurants/deleteResto.js'></script>
         <script src='../Controllers/Reviews/addReview.js'></script>
@@ -731,6 +824,120 @@
                 }
             }
         </script>
-        <script type="module" src="/Controllers/directoryScript.js"></script>  
+
+        <script src="../Controllers/utils/authManager.js" type="module"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Check if user is logged in and update UI
+                const currentUserString = localStorage.getItem('currentUser');
+                if (currentUserString) {
+                    try {
+                        const currentUser = JSON.parse(currentUserString);
+                        if (currentUser && currentUser.userId) {
+                            // Update the login button to show USER PROFILE
+                            const loginBtn = document.getElementById('loginButton');
+                            if (loginBtn) {
+                                loginBtn.textContent = 'USER PROFILE';
+                                loginBtn.onclick = function(e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    toggleUserDropdown(this);
+                                };
+                            }
+                        }
+                    } catch (e) {
+                        console.error("Error parsing user data:", e);
+                    }
+                }
+            });
+        </script>
+
+        <script>
+            // Toggle login popup function
+            function togglePopup() {
+                const loginFrame = document.getElementById('loginframe');
+                const backdrop = document.getElementById('backdrop');
+                
+                if (loginFrame && backdrop) {
+                    if (loginFrame.style.display === 'block') {
+                        loginFrame.style.display = 'none';
+                        backdrop.style.display = 'none';
+                        document.body.style.pointerEvents = 'auto';
+                    } else {
+                        loginFrame.style.display = 'block';
+                        backdrop.style.display = 'block';
+                        document.body.style.pointerEvents = 'none';
+                        loginFrame.style.pointerEvents = 'auto';
+                        backdrop.style.pointerEvents = 'auto';
+                    }
+                }
+            }
+
+            // Add event listeners for login functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                // Register button in login frame
+                const registerBtn = document.getElementById('register');
+                if (registerBtn) {
+                    registerBtn.addEventListener('click', function() {
+                        document.getElementById('loginframe').style.display = 'none';
+                        document.getElementById('registerframe').style.display = 'block';
+                        document.body.style.pointerEvents = 'none';
+                        document.getElementById('registerframe').style.pointerEvents = 'auto';
+                        document.getElementById('backdrop').style.pointerEvents = 'auto';
+                    });
+                }
+                
+                // Back to login button
+                const backToLoginBtn = document.getElementById('backToLogin');
+                if (backToLoginBtn) {
+                    backToLoginBtn.addEventListener('click', function() {
+                        document.getElementById('registerframe').style.display = 'none';
+                        document.getElementById('loginframe').style.display = 'block';
+                    });
+                }
+                
+                // Signin button
+                const signinBtn = document.querySelector('.signin-button');
+                if (signinBtn) {
+                    signinBtn.addEventListener('click', function() {
+                        document.getElementById('loginframe').style.display = 'none';
+                        document.getElementById('signinframe').style.display = 'block';
+                        document.body.style.pointerEvents = 'none';
+                        document.getElementById('signinframe').style.pointerEvents = 'auto';
+                        document.getElementById('backdrop').style.pointerEvents = 'auto';
+                    });
+                }
+                
+                // Back to options button
+                const backToOptionsBtn = document.getElementById('backToOptions');
+                if (backToOptionsBtn) {
+                    backToOptionsBtn.addEventListener('click', function() {
+                        document.getElementById('signinframe').style.display = 'none';
+                        document.getElementById('loginframe').style.display = 'block';
+                    });
+                }
+                
+                // Close signin button
+                const closeSigninBtn = document.getElementById('closeSignin');
+                if (closeSigninBtn) {
+                    closeSigninBtn.addEventListener('click', function() {
+                        document.getElementById('signinframe').style.display = 'none';
+                        document.getElementById('backdrop').style.display = 'none';
+                        document.body.style.pointerEvents = 'auto';
+                    });
+                }
+
+                // Close register button
+                const closeRegisterBtn = document.getElementById('closeRegister');
+                if (closeRegisterBtn) {
+                    closeRegisterBtn.addEventListener('click', function() {
+                        document.getElementById('registerframe').style.display = 'none';
+                        document.getElementById('backdrop').style.display = 'none';
+                        document.body.style.pointerEvents = 'auto';
+                    });
+                }
+            });
+        </script>
+
     </body>
 </html>
