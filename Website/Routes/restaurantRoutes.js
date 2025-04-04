@@ -112,15 +112,19 @@ router.get('/:id', async (req, res) => {
     
 
     // Render restaurant page
+    // In the GET /:id route (around line 50-120)
+
+    // Render restaurant page
     res.render('restaurant', {
+      title: `${restaurant.resto_name} | LaSapp`,
       restaurant: {
         id: restaurant.resto_id,
         name: restaurant.resto_name,
         location: restaurant.resto_address,
         image: imagePath,
         address: restaurant.resto_address,
-        opening_time: restaurant.opening_time, // Add this line
-        closing_time: restaurant.closing_time, // Add this line
+        opening_time: restaurant.opening_time,
+        closing_time: restaurant.closing_time,
         phone: restaurant.resto_phone,
         email: restaurant.resto_email,
         payment: restaurant.resto_payment,
@@ -128,7 +132,11 @@ router.get('/:id', async (req, res) => {
         cuisine: restaurant.cuisine_id,
         userType: userType
       },
-      reviews: reviews
+      reviews: reviews,
+      user: {
+        userId: req.session.userId,
+        userType: req.session.userType
+      }
     });
   } catch (err) {
     console.error(err);
@@ -329,12 +337,32 @@ router.put('/api/submitupdate', async (req, res) => {
 });
 
 // Delete (archive) restaurant
+// Delete (archive) restaurant
 router.delete('/:id', async (req, res) => {
   try {
     const restaurantId = parseInt(req.params.id, 10);
     
     if (isNaN(restaurantId)) {
       return res.status(400).json({ success: false, message: 'Invalid restaurant ID' });
+    }
+    
+    // First find all reviews for this restaurant to get their IDs
+    const restaurantReviews = await Review.find({ resto_id: restaurantId });
+    const reviewIds = restaurantReviews.map(review => review.review_id);
+    
+    // Archive all reviews for this restaurant
+    await Review.updateMany(
+      { resto_id: restaurantId },
+      { isAlive: false }
+    );
+    
+    // Archive all replies for these reviews
+    if (reviewIds.length > 0) {
+      const { Reply } = require('../Models/lasappDB');
+      await Reply.updateMany(
+        { review_id: { $in: reviewIds } },
+        { isAlive: false }
+      );
     }
     
     // Soft delete by setting isAlive to false

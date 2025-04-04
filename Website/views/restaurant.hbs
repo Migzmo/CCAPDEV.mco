@@ -381,8 +381,10 @@
                                         Anonymous
                                     </span>
                                 {{/if}}
-                                <button class="edit-review" data-id="{{this.review_id}}" onclick="openEditReview({{this.review_id}})">✏️</button>
-                                <button class="delete-review" data-id="{{this.review_id}}">🗑️</button>
+                                {{#if (or (eq ../user.userId this.account_id.acc_id) (eq ../user.userType "admin"))}}
+                                    <button class="edit-review" data-id="{{this.review_id}}" onclick="openEditReview({{this.review_id}})">✏️</button>
+                                    <button class="delete-review" data-id="{{this.review_id}}">🗑️</button>
+                                {{/if}}
                             </h2>
                             
                             <!-- Add star rating visualization (display actual rating when available) -->

@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const bcrypt = require('bcrypt');
-const { Account, Review, Restaurant } = require('../Models/lasappDB');
+const { Account, Review, Restaurant, Reply } = require('../Models/lasappDB');
 
 // API route handler for retrieving user data
 // Important: This route must come before the HTML route handler
@@ -181,23 +181,50 @@ router.post('/delete-account', async (req, res) => {
       });
     }
     
-    // Update account status
+    // Before deactivating account, archive all of the user's content
+    
+    // Archive user's reviews
+    await Review.updateMany(
+      { account_id: parsedUserId },
+      { isAlive: false }
+    );
+    
+    // Get all reviews to find their IDs (for cascading to replies)
+    const userReviews = await Review.find({ account_id: parsedUserId });
+    const reviewIds = userReviews.map(review => review.review_id);
+    
+    // Archive all replies associated with the user's reviews
+    if (reviewIds.length > 0) {
+      await Reply.updateMany(
+        { review_id: { $in: reviewIds } },
+        { isAlive: false }
+      );
+    }
+    
+    // Archive user's replies (direct replies to other reviews)
+    await Reply.updateMany(
+      { account_id: parsedUserId },
+      { isAlive: false }
+    );
+    
+    // Deactivate the account
     account.isAlive = false;
     await account.save();
     
-    // Set content type explicitly
-    res.setHeader('Content-Type', 'application/json');
+    // Clear user session if the deleted account is the current user
+    if (req.session.userId === parsedUserId) {
+      req.session.destroy();
+    }
     
-    // Return proper JSON response
-    return res.json({
+    res.status(200).json({
       success: true,
-      message: 'Account deleted successfully'
+      message: 'Account deactivated successfully'
     });
   } catch (error) {
-    console.error('Account deletion error:', error);
+    console.error('Error deactivating account:', error);
     res.status(500).json({
       success: false,
-      message: 'Error deleting account',
+      message: 'Failed to deactivate account',
       error: error.message
     });
   }

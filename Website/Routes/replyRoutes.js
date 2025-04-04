@@ -26,8 +26,9 @@ router.get('/:reviewId', async (req, res) => {
       // Format replies for the client
       const formattedReplies = allReplies.map(reply => {
         // Check if current user can delete this reply
+        // Add null check for account_id to prevent TypeError
         const canDelete = req.session.userId && (
-          req.session.userId === reply.account_id.acc_id || 
+          (reply.account_id && reply.account_id.acc_id && req.session.userId === reply.account_id.acc_id) || 
           req.session.userType === 'admin'
         );
         
@@ -55,7 +56,8 @@ router.get('/:reviewId', async (req, res) => {
         return {
           reply_id: reply.reply_id,
           review_id: reply.review_id,
-          account_id: reply.account_id,
+          // Ensure account_id is properly handled even if null
+          account_id: reply.account_id || null,
           content: reply.content,
           parent_id: reply.parent_id,
           created_at: created_at,
@@ -195,8 +197,13 @@ router.put('/archive', isAuthenticatedApi, async (req, res) => {
     
     const replyId = parseInt(reply_id, 10);
     
-    // Find the reply
-    const reply = await Reply.findOne({ reply_id: replyId });
+    // Find the reply with populated account info
+    const reply = await Reply.findOne({ reply_id: replyId }).populate({
+      path: 'account_id',
+      localField: 'account_id',
+      foreignField: 'acc_id',
+      model: 'Account'
+    });
     
     if (!reply) {
       return res.status(404).json({ 
@@ -205,8 +212,8 @@ router.put('/archive', isAuthenticatedApi, async (req, res) => {
       });
     }
     
-    // Check if user has permission to delete
-    if (reply.account_id !== req.session.userId && req.session.userType !== 'admin') {
+    // Check if user has permission to delete (fix the comparison)
+    if ((!reply.account_id || reply.account_id.acc_id !== req.session.userId) && req.session.userType !== 'admin') {
       return res.status(403).json({
         success: false,
         message: "You don't have permission to delete this reply"

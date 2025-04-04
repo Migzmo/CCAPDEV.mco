@@ -70,6 +70,10 @@ hbs.registerHelper('formatTime', function(dateTime) {
     return `${hours}:${minutesStr} ${ampm}`;
 }); // Fixed closing syntax
 
+hbs.registerHelper('or', function() {
+    return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+  });
+
 // Setup middleware functions
 const setupMiddleware = (app) => {
     // Basic Express middleware

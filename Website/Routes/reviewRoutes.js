@@ -105,6 +105,7 @@ router.put('/edit', async (req, res) => {
 });
 
 // Archive (soft delete) a review
+// Archive (soft delete) a review
 router.put('/archivereview', async (req, res) => {
   const reviewID = req.body.review_id;
   console.log("Received Archive Review Request:", reviewID);
@@ -118,6 +119,13 @@ router.put('/archivereview', async (req, res) => {
     if (!updatedReview) {
       return res.status(404).json({ message: "Review not found." });
     }
+    
+    // Also archive all replies associated with this review (cascade deletion)
+    const { Reply } = require('../Models/lasappDB');
+    await Reply.updateMany(
+      { review_id: reviewID },
+      { isAlive: false }
+    );
     
     res.status(200).json({ 
       message: "Review archived successfully.", 

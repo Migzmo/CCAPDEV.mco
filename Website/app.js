@@ -52,59 +52,77 @@ let impErr4 = false;
 mongoose.connect('mongodb://localhost/lasappDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(async () => {
+  }).then(async () => {
     console.log('Connected to MongoDB');
     
     try {
       // Initialize our Models early to use them in imports
       const { Account, Cuisine, Restaurant, Review } = require("./Models/lasappDB");
       
-      // Import Accounts
-      const accountsPath = path.join(__dirname, 'Models/Accounts/accountsDB-Data.json');
-      if (fs.existsSync(accountsPath)) {
-        const accountData = JSON.parse(fs.readFileSync(accountsPath, 'utf8'));
-        await Account.deleteMany({});
-        await Account.insertMany(accountData);
-        console.log('Account data imported successfully');
+      // Check if any accounts exist already
+      const accountsCount = await Account.countDocuments({});
+      
+      // Only import initial account data if the collection is empty
+      if (accountsCount === 0) {
+        const accountsPath = path.join(__dirname, 'Models/Accounts/accountsDB-Data.json');
+        if (fs.existsSync(accountsPath)) {
+          const accountData = JSON.parse(fs.readFileSync(accountsPath, 'utf8'));
+          await Account.insertMany(accountData);
+          console.log('Initial account data imported successfully');
+        } else {
+          impErr1 = true;
+          console.log('Account data file not found at: ' + accountsPath);
+        }
       } else {
-        impErr1 = true;
-        console.log('Account data file not found at: ' + accountsPath);
+        console.log(`Database already has ${accountsCount} accounts, skipping import`);
       }
       
-      // Import Cuisines
-      const cuisinesPath = path.join(__dirname, 'Models/Cuisines/cuisinesDB-Data.json');
-      if (fs.existsSync(cuisinesPath)) {
-        const cuisineData = JSON.parse(fs.readFileSync(cuisinesPath, 'utf8'));
-        await Cuisine.deleteMany({});
-        await Cuisine.insertMany(cuisineData);
-        console.log('Cuisine data imported successfully');
+      // Check if any cuisines exist already
+      const cuisineCount = await Cuisine.countDocuments({});
+      if (cuisineCount === 0) {
+        const cuisinesPath = path.join(__dirname, 'Models/Cuisines/cuisinesDB-Data.json');
+        if (fs.existsSync(cuisinesPath)) {
+          const cuisineData = JSON.parse(fs.readFileSync(cuisinesPath, 'utf8'));
+          await Cuisine.insertMany(cuisineData);
+          console.log('Initial cuisine data imported successfully');
+        } else {
+          impErr2 = true;
+          console.log('Cuisine data file not found at: ' + cuisinesPath);
+        }
       } else {
-        impErr2 = true;
-        console.log('Cuisine data file not found at: ' + cuisinesPath);
+        console.log(`Database already has ${cuisineCount} cuisines, skipping import`);
       }
       
-      // Import Restaurants
-      const restaurantsPath = path.join(__dirname, 'Models/Restaurants/restaurantsDB-Data.json');
-      if (fs.existsSync(restaurantsPath)) {
-        const restaurantData = JSON.parse(fs.readFileSync(restaurantsPath, 'utf8'));
-        await Restaurant.deleteMany({});
-        await Restaurant.insertMany(restaurantData);
-        console.log('Restaurant data imported successfully');
+      // Check if any restaurants exist already
+      const restaurantCount = await Restaurant.countDocuments({});
+      if (restaurantCount === 0) {
+        const restaurantsPath = path.join(__dirname, 'Models/Restaurants/restaurantsDB-Data.json');
+        if (fs.existsSync(restaurantsPath)) {
+          const restaurantData = JSON.parse(fs.readFileSync(restaurantsPath, 'utf8'));
+          await Restaurant.insertMany(restaurantData);
+          console.log('Initial restaurant data imported successfully');
+        } else {
+          impErr3 = true;
+          console.log('Restaurant data file not found at: ' + restaurantsPath);
+        }
       } else {
-        impErr3 = true;
-        console.log('Restaurant data file not found at: ' + restaurantsPath);
+        console.log(`Database already has ${restaurantCount} restaurants, skipping import`);
       }
       
-      // Import Reviews
-      const reviewsPath = path.join(__dirname, 'Models/Reviews/reviewsDB-Data.json');
-      if (fs.existsSync(reviewsPath)) {
-        const reviewData = JSON.parse(fs.readFileSync(reviewsPath, 'utf8'));
-        await Review.deleteMany({});
-        await Review.insertMany(reviewData);
-        console.log('Review data imported successfully');
+      // Check if any reviews exist already
+      const reviewCount = await Review.countDocuments({});
+      if (reviewCount === 0) {
+        const reviewsPath = path.join(__dirname, 'Models/Reviews/reviewsDB-Data.json');
+        if (fs.existsSync(reviewsPath)) {
+          const reviewData = JSON.parse(fs.readFileSync(reviewsPath, 'utf8'));
+          await Review.insertMany(reviewData);
+          console.log('Initial review data imported successfully');
+        } else {
+          impErr4 = true;
+          console.log('Review data file not found at: ' + reviewsPath);
+        }
       } else {
-        impErr4 = true;
-        console.log('Review data file not found at: ' + reviewsPath);
+        console.log(`Database already has ${reviewCount} reviews, skipping import`);
       }
       
       if (impErr1 && impErr2 && impErr3 && impErr4) {
