@@ -114,9 +114,15 @@ router.get('/:id', async (req, res) => {
     // Render restaurant page
     // In the GET /:id route (around line 50-120)
 
+    console.log("Session debug:", {
+      directUserType: req.session.userType,
+      sessionUser: req.session.user,
+      userId: req.session.userId,
+      restaurantOwnerId: restaurant.resto_owner_id
+    });
+
     // Render restaurant page
     res.render('restaurant', {
-      title: `${restaurant.resto_name} | LaSapp`,
       restaurant: {
         id: restaurant.resto_id,
         name: restaurant.resto_name,
@@ -130,12 +136,12 @@ router.get('/:id', async (req, res) => {
         payment: restaurant.resto_payment,
         perks: restaurant.resto_perks.split(', '),
         cuisine: restaurant.cuisine_id,
-        userType: userType
+        owner_id: Number(restaurant.resto_owner_id)
       },
       reviews: reviews,
       user: {
-        userId: req.session.userId,
-        userType: req.session.userType
+        userId: Number(req.session.userId), 
+        userType: req.session.userType || req.session.user?.accountType
       }
     });
   } catch (err) {
@@ -217,9 +223,9 @@ router.post('/create-resto',isAuthenticated, async (req, res) => {
       resto_perks: (req.body.perks || 'None').trim(),
       cuisine_id: (req.body.cuisine_id || '').trim(),
       resto_img: imagePath,
-      resto_owner_id: 0,
+      resto_owner_id: req.session.userId,
       isAlive: true
-    });    
+    });  
     
     await newRestaurant.save();
     res.status(201).json({
@@ -250,7 +256,22 @@ router.put('/api/submitupdate', async (req, res) => {
     
     const restaurantId = parseInt(req.body.resto_id, 10);
 
-    // Check if restaurant with same name already exists (excluding the current restaurant)
+    // First find the restaurant to check ownership
+    const restaurant = await Restaurant.findOne({ resto_id: restaurantId });
+    
+    if (!restaurant) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+    
+    // Check if the current user is the owner
+    if (restaurant.resto_owner_id !== req.session.userId) {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'You do not have permission to edit this restaurant' 
+      });
+    }
+
+    // Continue with existing code for checking duplicates
     const existingRestaurant = await Restaurant.findOne({ 
       resto_name: req.body.name, 
       resto_id: { $ne: restaurantId },
@@ -314,7 +335,7 @@ router.put('/api/submitupdate', async (req, res) => {
     
     console.log("Mapped update data:", updateData);
     
-    const restaurant = await Restaurant.findOneAndUpdate(
+    restaurant = await Restaurant.findOneAndUpdate(
       { resto_id: restaurantId },
       { $set: updateData },
       { new: true }
@@ -337,13 +358,27 @@ router.put('/api/submitupdate', async (req, res) => {
 });
 
 // Delete (archive) restaurant
-// Delete (archive) restaurant
 router.delete('/:id', async (req, res) => {
   try {
     const restaurantId = parseInt(req.params.id, 10);
     
     if (isNaN(restaurantId)) {
       return res.status(400).json({ success: false, message: 'Invalid restaurant ID' });
+    }
+    
+    // First find the restaurant to check ownership
+    const restaurantToDelete = await Restaurant.findOne({ resto_id: restaurantId });
+    
+    if (!restaurantToDelete) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+    
+    // Check if the current user is the owner
+    if (restaurantToDelete.resto_owner_id !== req.session.userId) {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'You do not have permission to delete this restaurant' 
+      });
     }
     
     // First find all reviews for this restaurant to get their IDs
@@ -366,15 +401,11 @@ router.delete('/:id', async (req, res) => {
     }
     
     // Soft delete by setting isAlive to false
-    const restaurant = await Restaurant.findOneAndUpdate(
+    const updatedRestaurant = await Restaurant.findOneAndUpdate(
       { resto_id: restaurantId },
       { isAlive: false },
       { new: true }
     );
-    
-    if (!restaurant) {
-      return res.status(404).json({ success: false, message: 'Restaurant not found' });
-    }
     
     res.status(200).json({ 
       success: true, 
