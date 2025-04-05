@@ -360,10 +360,15 @@
         <div class="info">
                 <!-- Exit Button -->
                 <div class="buttons-container">
-                    {{#if (eq restaurant.userType "business-owner")}}
-                    <button class="oval-button-review delete-btn" onclick="toggleDeleteConfirm()">Delete</button>
-                    <button class="oval-button-review edit-btn" onclick="togglePopupCreateResto()">Edit</button>
+                    {{#if user}}
+                        {{#if (eq user.userType "business-owner")}}
+                            {{#if (eq user.userId restaurant.owner_id)}}
+                                <button class="oval-button-review delete-btn" onclick="toggleDeleteConfirm()">Delete</button>
+                                <button class="oval-button-review edit-btn" onclick="togglePopupCreateResto()">Edit</button>
+                            {{/if}}
+                        {{/if}}
                     {{/if}}
+                    
                     <a href="/">
                         <button class="oval-button-review">Back</button>
                     </a>

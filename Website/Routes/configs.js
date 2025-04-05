@@ -35,6 +35,14 @@ hbs.registerHelper('eq', function(a, b) {
     return a === b;
 });
 
+hbs.registerHelper('and', function() {
+    return Array.prototype.slice.call(arguments, 0, -1).every(Boolean);
+  });
+
+hbs.registerHelper('toString', function(value) {
+  return value ? value.toString() : '';
+});
+
 // Configure Handlebars helpers
 hbs.registerHelper('for', function(from, to, options) {
     let result = '';
