@@ -196,7 +196,7 @@ html, body {
     margin-top: 3%;
     background-color: #f9fef8;
     width: 100%;
-    height: 500px;
+    height: 650px;
     border-radius: 15px;
     padding-bottom: 2%;
     border: black solid 0.5px;
@@ -250,7 +250,7 @@ html, body {
 
 .scroll-div {
     width: 98.4%;
-    height: 360px;
+    height: 510px;
     overflow-y: auto; 
     padding: 10px;
 }

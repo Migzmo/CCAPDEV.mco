@@ -286,6 +286,14 @@ html, body {
     border-bottom: none;
 }
 
+.scroll-obj p u {
+    text-decoration: underline;
+}
+
+.rich-text-editor u {
+    text-decoration: underline !important;
+}
+
 .scroll-obj {
     margin: 15px 20px; /* Match horizontal padding of review1 */
     padding: 20px;
