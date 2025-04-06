@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const existingTextarea = document.getElementById('edit-review-content');
         if (!existingTextarea) return;
         
+        const existingToolbar = reviewContentContainer.querySelector('.rich-text-toolbar');
+        if (existingToolbar) {
+            existingToolbar.remove();
+        }
+        
         const editableDiv = document.createElement('div');
         editableDiv.id = 'edit-review-content-editor';
         editableDiv.className = 'rich-text-editor';
