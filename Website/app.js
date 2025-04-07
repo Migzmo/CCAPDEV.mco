@@ -140,10 +140,6 @@ const { globalErrorHandler, denyDatabaseAccess } = require('./Routes/errorHandle
 //This Section is responsible for routing and handling API endpoints
 
 // Basic routes - Fix the order of middleware mounting
-app.get('/', (req, res) => {
-  res.redirect('/restaurant');
-});
-
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -157,6 +153,11 @@ app.use(session({
     secure:process.env.NODE_ENV === 'production', // Use secure cookies in production
   }
 }));
+app.get('/', (req, res) => {
+  res.redirect('/restaurant');
+});
+
+
 let currentSessionId = null;
 app.use((req, res, next) => {
   if (req.session && req.session.userId) {

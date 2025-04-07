@@ -64,7 +64,7 @@ router.get('/:id', async function (req, res) {
     console.log(`Account ID: ${accountId}`);
     
     // Get user information from session if available
-    const currentUserId = req.session.user ? req.session.user.userId : null;
+    const currentUserId = req.session.user ? req.session.userId : null;
     const isLoggedIn = !!currentUserId;
     
     // Find the account

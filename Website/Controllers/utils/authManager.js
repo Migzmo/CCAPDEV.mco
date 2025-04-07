@@ -25,11 +25,7 @@ async function loginUser(credentials) {
         
         if (data.success) {
             // Store the user session info
-            localStorage.setItem('currentUser', JSON.stringify({
-                username: data.username,
-                userId: data.userId,
-                accountType: data.accountType
-            }));
+            
             window.location.reload();
             return { success: true, data };
             
