@@ -1,9 +1,15 @@
+/**
+ * Main JS file for review creation functions
+ * Includes rich text editor bonus for markup
+ */
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, looking for form");
     const form = document.forms['create-review'];
     
+    //default rating
     let selectedRating = 0;
     
+    //rich text and all of its stuff
     function createRichTextEditor() {
         const reviewContentContainer = document.getElementById('review-content').parentNode;
         const existingTextarea = document.getElementById('review-content');
@@ -26,10 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
         reviewContentContainer.replaceChild(editableDiv, existingTextarea);
         reviewContentContainer.appendChild(hiddenTextarea);
         
+        //toolbar for edits for applying styles
         const toolbarContainer = document.createElement('div');
         toolbarContainer.className = 'rich-text-toolbar';
         editableDiv.parentNode.insertBefore(toolbarContainer, editableDiv);
         
+        // all the available tootls
         const formattingOptions = [
             { name: 'bold', icon: '𝐁', title: 'Bold (Ctrl+B)' },
             { name: 'italic', icon: '𝐼', title: 'Italic (Ctrl+I)' },
@@ -50,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
+            //adding button listeners for functionality
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'format-btn';
@@ -65,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toolbarContainer.appendChild(button);
         });
         
+        // ++CSS styling for the toolbar and editor
         const style = document.createElement('style');
         style.textContent = `
             .rich-text-toolbar {
@@ -184,8 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Check if selection is already underlined
                             let parentElement = selection.anchorNode;
                             
-                            // If the parent is a text node, look at its parent
-                            if (parentElement.nodeType === 3) { // Text node
+                            if (parentElement.nodeType === 3) { 
                                 parentElement = parentElement.parentNode;
                             }
                             
@@ -193,19 +202,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (parentElement.tagName === 'U' || 
                                 (parentElement.parentNode && parentElement.parentNode.tagName === 'U')) {
                                 
-                                // Text is already underlined, so remove the underline
+                                // Iff text is already underlined, so remove the underline
                                 const underlineElement = parentElement.tagName === 'U' ? 
                                     parentElement : parentElement.parentNode;
-                                
-                                // Create a document fragment to hold the content
+
                                 const fragment = document.createDocumentFragment();
-                                
-                                // Move all child nodes from the <u> element to the fragment
+
                                 while (underlineElement.firstChild) {
                                     fragment.appendChild(underlineElement.firstChild);
                                 }
-                                
-                                // Replace the <u> element with the fragment
+
                                 underlineElement.parentNode.replaceChild(fragment, underlineElement);
                                 
                                 // Update the hidden textarea with the modified content
@@ -219,40 +225,32 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                     
-                    // Standard approach for normal cases - adding underline
                     document.execCommand('underline', false, null);
                     console.log('Applied underline formatting');
                     
-                    // Fallback for underline if execCommand doesn't work
                     if (selection.rangeCount > 0 && !document.queryCommandState('underline')) {
                         const range = selection.getRangeAt(0);
                         if (range.toString().trim()) {
-                            // If text is selected and not already underlined
                             const underlineElement = document.createElement('u');
                             range.surroundContents(underlineElement);
                         }
                     }
                     
-                    // Explicitly update the hidden textarea right after applying underline
                     const hiddenTextarea = document.getElementById('review-content');
                     hiddenTextarea.value = editor.innerHTML;
                     console.log("Saved underlined content:", hiddenTextarea.value);
                 } catch(e) {
                     console.error('Underline error:', e);
                     
-                    // Alternative fallback approach
                     const selection = window.getSelection();
                     if (selection.rangeCount > 0) {
                         const range = selection.getRangeAt(0);
                         if (range.toString().trim()) {
-                            // Check if we're trying to remove underline
                             const isUnderlined = document.queryCommandState('underline');
                             if (isUnderlined) {
-                                // Remove underline
                                 const selectedText = range.toString();
                                 document.execCommand('insertHTML', false, selectedText);
                             } else {
-                                // Add underline
                                 const selectedHtml = range.toString();
                                 document.execCommand('insertHTML', false, '<u>' + selectedHtml + '</u>');
                             }
@@ -270,6 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const url = prompt('Enter URL:', 'https://');
                 if (url) {
                     document.execCommand('createLink', false, url);
+
                     // Make links open in new tab
                     const links = editor.querySelectorAll('a');
                     links.forEach(link => {
@@ -280,15 +279,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 break;
         }
-        
-        // Update toolbar state after formatting
+
+        // Update toolbar state after applying formatting
         updateToolbarState();
         
         // Update hidden textarea with HTML content
         document.getElementById('review-content').value = editor.innerHTML;
     }
     
-    // Handle keyboard shortcuts
+    // Handle keyboard shortcuts + logs
     function handleShortcuts(e) {
         if (e.ctrlKey || e.metaKey) {
             switch (e.key.toLowerCase()) {
@@ -368,16 +367,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 resto_id: resto_id,
                 rating: selectedRating,
                 review: reviewContent,
-                isHtml: true // Flag to indicate content has HTML
+                isHtml: true 
             }; 
             
             console.log("Review data to be sent:", reviewData);
             
-            // Disable submit button
             const submitButton = form.querySelector('input[type="submit"]');
             if (submitButton) submitButton.disabled = true;
             
-            // Send data to server
             fetch('/api/reviews/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

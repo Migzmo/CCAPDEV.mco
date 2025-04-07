@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('perks', document.getElementById('perks').value.trim());
             formData.append('cuisine_id', document.getElementById('cuisine').value);
             
-            // Debug log what's being sent
+            // Debug log on what's being sent
             console.log("FormData being sent:");
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ': ' + (pair[0] === 'image' ? 'File data' : pair[1]));

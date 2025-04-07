@@ -5,11 +5,6 @@
 
 import { showProfilePicPreview } from '../utils/utils.js';
 
-/**
- * Fetch user profile data from the server
- * @param {number|string} userId - The user ID to fetch
- * @returns {Promise<Object>} - User data or error
- */
 async function fetchUserProfile(userId) {
     try {
         const response = await fetch(`/api/users/api/${userId}`);
@@ -24,11 +19,7 @@ async function fetchUserProfile(userId) {
     }
 }
 
-/**
- * Update user profile with the given form data
- * @param {FormData} formData - The form data to send
- * @returns {Promise<Object>} - Response from the server
- */
+//Update profile
 async function updateUserProfile(formData) {
     try {
         const response = await fetch('/api/users/update-profile', {
@@ -48,15 +39,13 @@ async function updateUserProfile(formData) {
     }
 }
 
-/**
- * Toggle the edit profile modal visibility
- */
+//visibility toggle
 function toggleEditProfileFrame() {
     const editProfileFrame = document.getElementById('editProfileFrame');
     const backdrop = document.getElementById('backdrop');
 
     if (editProfileFrame.style.display === 'none' || !editProfileFrame.style.display) {
-        // Get current user data to pre-populate the form
+        // Get current user data for form population
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
         if (!currentUser || !currentUser.userId) {
@@ -64,7 +53,6 @@ function toggleEditProfileFrame() {
             return;
         }
 
-        // Use the dedicated API endpoint with error handling
         fetch(`/api/users/api/${currentUser.userId}`)
             .then(response => {
                 if (!response.ok) {
@@ -72,7 +60,6 @@ function toggleEditProfileFrame() {
                     throw new Error(`Failed to fetch profile (status ${response.status})`);
                 }
                 
-                // Check the content type to ensure we're getting JSON
                 const contentType = response.headers.get('content-type');
                 if (!contentType || !contentType.includes('application/json')) {
                     console.error('Response is not JSON:', contentType);
@@ -86,16 +73,16 @@ function toggleEditProfileFrame() {
                 document.getElementById('edit-username').value = userData.acc_name || '';
                 document.getElementById('edit-bio').value = userData.acc_bio || '';
 
-                // Show profile picture if available
+                // display profile picture
                 const previewDiv = document.getElementById('profile-pic-preview');
                 if (userData.profile_pic) {
                     previewDiv.style.backgroundImage = `url('${userData.profile_pic}')`;
                 } else {
-                    // Use absolute path for default image
+                    // default image path
                     previewDiv.style.backgroundImage = `url('/views/images/profilePictures/default-profile.png')`;
                 }
 
-                // Display the form
+                // form display
                 editProfileFrame.style.display = 'block';
                 backdrop.style.display = 'block';
             })
@@ -109,9 +96,7 @@ function toggleEditProfileFrame() {
     }
 }
 
-/**
- * Set up profile picture preview functionality
- */
+// profile pic preview
 function setupProfilePicPreview() {
     const profilePicInput = document.getElementById('edit-profile-pic');
     const previewElement = document.getElementById('profile-pic-preview');
@@ -133,9 +118,6 @@ function setupProfilePicPreview() {
     }
 }
 
-/**
- * Initialize the profile update form submission handler
- */
 function setupProfileUpdateHandler() {
     const editProfileForm = document.getElementById('edit-profile-form');
 
@@ -152,7 +134,7 @@ function setupProfileUpdateHandler() {
             const formData = new FormData(this);
             formData.append('userId', currentUser.userId);
 
-            // Log form data for debugging
+            // debugging thing
             console.log('User ID being sent:', currentUser.userId);
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ': ' + pair[1]);

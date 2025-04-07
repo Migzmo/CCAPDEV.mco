@@ -64,15 +64,9 @@ function clearStaleUserData() {
 
 /**
  * Initialize event handlers for elements with inline onclick attributes
- * This replaces the inline handlers with proper event listeners
+ * + replaces the inline handlers with proper event listeners
  */
 function initializeInlineHandlers() {
-    // Replace login button onclick handler
-    /*const loginButton = document.getElementById('loginButton');
-    if (loginButton) {
-        loginButton.removeAttribute('onclick');
-        loginButton.addEventListener('click', togglePopup);
-    }*/
     
     // Replace close buttons onclick handlers
     const closeLoginBtn = document.getElementById('closeLogin');
@@ -339,8 +333,8 @@ function setupRegistrationProfilePicPreview() {
                 
                 reader.onload = function(e) {
                     previewElement.style.backgroundImage = `url('${e.target.result}')`;
-                    previewElement.removeAttribute('empty'); // Remove empty attribute if it exists
-                    previewElement.classList.remove('empty'); // Remove empty class if it exists
+                    previewElement.removeAttribute('empty'); 
+                    previewElement.classList.remove('empty'); 
                 };
                 
                 reader.readAsDataURL(this.files[0]);

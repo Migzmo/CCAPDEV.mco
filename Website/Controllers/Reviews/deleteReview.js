@@ -1,3 +1,7 @@
+/**
+ * Main file for review deletion
+ */
+
 document.addEventListener("DOMContentLoaded", function() {
     let currentReviewId = null;
     const deletePopup = document.getElementById("deleteReviewConfirmPopup");
@@ -9,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
         backdrop.style.display = show ? "block" : "none";
     }
     
-    // Add event listeners for delete buttons in reviews
+    // For adding event listeners for delete buttons in reviews
     document.querySelectorAll(".delete-review").forEach(button => {
         button.addEventListener("click", function() {
             currentReviewId = this.getAttribute("data-id");
@@ -17,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
     
-    // Close popup when clicking the X button
+    // Close popup upon clicking  X button
     document.getElementById("closeDeleteReviewConfirm").addEventListener("click", function() {
         toggleDeleteReviewPopup(false);
     });
@@ -42,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             if (response.ok) {
-                // Find and remove the review from the DOM
+                // Upon deletion, find and remove the review from the DOM
                 const reviewElement = document.querySelector(`.delete-review[data-id="${currentReviewId}"]`).closest(".scroll-obj");
                 reviewElement.remove();
                 toggleDeleteReviewPopup(false);

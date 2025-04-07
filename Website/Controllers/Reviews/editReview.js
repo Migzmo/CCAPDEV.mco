@@ -146,28 +146,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Check if we're directly in or under a <u> tag
                             if (parentElement.tagName === 'U' || 
                                 (parentElement.parentNode && parentElement.parentNode.tagName === 'U')) {
-                                
-                                // Text is already underlined, so remove the underline
                                 const underlineElement = parentElement.tagName === 'U' ? 
                                     parentElement : parentElement.parentNode;
-                                
-                                // Create a document fragment to hold the content
                                 const fragment = document.createDocumentFragment();
-                                
-                                // Move all child nodes from the <u> element to the fragment
                                 while (underlineElement.firstChild) {
                                     fragment.appendChild(underlineElement.firstChild);
                                 }
-                                
-                                // Replace the <u> element with the fragment
                                 underlineElement.parentNode.replaceChild(fragment, underlineElement);
-                                
-                                // Update the hidden textarea with the modified content
                                 const hiddenTextarea = document.getElementById('review-content');
                                 hiddenTextarea.value = editor.innerHTML;
                                 console.log("Removed underline, updated content:", hiddenTextarea.value);
-                                
-                                // Early return to avoid executing the standard execCommand
                                 return;
                             }
                         }
@@ -454,13 +442,13 @@ document.addEventListener('DOMContentLoaded', function() {
         star.addEventListener('click', function() {
             const value = parseInt(this.getAttribute('data-value'));
             
-            // Clear all stars first
+            // Before performing additional actions -> Clear all stars first
             editStars.forEach(s => {
                 s.classList.remove('active');
                 s.classList.remove('selected');
             });
             
-            // Then set active stars up to the clicked one
+            // Set active stars up to the clicked one
             editStars.forEach(s => {
                 if (parseInt(s.getAttribute('data-value')) <= value) {
                     s.classList.add('active');

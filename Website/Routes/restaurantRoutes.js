@@ -111,8 +111,6 @@ router.get('/:id', async (req, res) => {
     console.log("User type:", userType);
     
 
-    // Render restaurant page
-    // In the GET /:id route (around line 50-120)
 
     console.log("Session debug:", {
       directUserType: req.session.userType,

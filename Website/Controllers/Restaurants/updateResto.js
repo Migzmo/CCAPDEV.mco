@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('resto_id', resto_id);
             }
             
-            // Map form fields to what the server expects - TRIM ALL TEXT INPUTS
+            // Map form fields to what the server expects + TRIM ALL TEXT INPUTS
             formData.append('name', document.getElementById('resto-name').value.trim());
             formData.append('address', document.getElementById('address1').value.trim() + 
                 (document.getElementById('address2').value ? ', ' + document.getElementById('address2').value.trim() : ''));
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('perks', document.getElementById('perks').value.trim());
             formData.append('cuisine_id', document.getElementById('cuisine').value);
             
-            // Debug log what's being sent
+            // Debugging logg
             console.log("FormData being sent:");
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ': ' + (pair[0] === 'image' ? 'File data' : pair[1]));
@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('Restaurant Updated successfully!');
                 }
                 
-                // Close popup if needed
                 if (typeof togglePopupCreateResto === 'function') {
                     togglePopupCreateResto();
                 }

@@ -272,7 +272,7 @@ router.put('/edit', isAuthenticatedApi, async (req, res) => {
     
     // Update the reply
     reply.content = content;
-    reply.last_edited_at = new Date(); // Add this line to record edit time
+    reply.last_edited_at = new Date(); 
     await reply.save();
 
     res.status(200).json({
@@ -288,14 +288,14 @@ router.put('/edit', isAuthenticatedApi, async (req, res) => {
           hour: '2-digit',
           minute: '2-digit'
         }),
-        last_edited_at: new Date().toLocaleString('en-US', {  // Add this to return the edit time
+        last_edited_at: new Date().toLocaleString('en-US', {  
           year: 'numeric',
           month: 'short',
           day: 'numeric',
           hour: '2-digit',
           minute: '2-digit'
         }),
-        isEdited: true  // Add this flag
+        isEdited: true  
       }
     });
   } catch (error) {

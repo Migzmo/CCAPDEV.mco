@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   
-    // Fetch and render saved restaurants on page load (optional)
+    // Fetch and render saved restaurants on page load 
     fetchSavedRestaurants();
   });
   

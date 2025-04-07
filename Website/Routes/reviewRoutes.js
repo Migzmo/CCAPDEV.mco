@@ -72,7 +72,7 @@ router.put('/edit', async (req, res) => {
     const updateData = {
       rating: parseInt(rating, 10), 
       review: review,
-      last_edited_at: new Date() // Add this to track edit time
+      last_edited_at: new Date() 
     };
     
     console.log("Update data:", updateData);
@@ -104,7 +104,6 @@ router.put('/edit', async (req, res) => {
   }
 });
 
-// Archive (soft delete) a review
 // Archive (soft delete) a review
 router.put('/archivereview', async (req, res) => {
   const reviewID = req.body.review_id;

@@ -55,7 +55,7 @@ const replySchema = new mongoose.Schema({
   parent_id: { type: Number, ref: 'Reply', default: null },
   isAlive: { type: Boolean, default: true },
   created_at: { type: Date, default: Date.now },
-  last_edited_at: { type: Date, default: null }  // Add this line
+  last_edited_at: { type: Date, default: null }  
 });
 
 const Reply = mongoose.model('Reply', replySchema);

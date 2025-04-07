@@ -138,21 +138,21 @@ function toggleUserDropdown(userBtn) {
     const navbarHeight = navbar ? navbar.offsetHeight : 0;
 
     // Apply styles for positioning with overlap - align with button
-    menu.style.position = 'fixed'; // Use fixed positioning
-    menu.style.top = `${navbarHeight - 10}px`; // Create 10px overlap with navbar
+    menu.style.position = 'fixed'; 
+    menu.style.top = `${navbarHeight - 10}px`; 
     
     // Position from the left to align with button
     menu.style.left = `${rect.left}px`;
-    menu.style.width = `${rect.width}px`; // Match button width
+    menu.style.width = `${rect.width}px`; 
     
     // Styling
     menu.style.backgroundColor = '#FFFFFF';
     menu.style.border = '1px solid #DDF0DE';
-    menu.style.borderTop = '3px solid #2E7D32'; // Green top border for visual connection
+    menu.style.borderTop = '3px solid #2E7D32'; 
     menu.style.borderRadius = '5px';
     menu.style.padding = '10px';
     menu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
-    menu.style.zIndex = '10001'; // Make sure it's above navbar (which is 10000)
+    menu.style.zIndex = '10001'; 
 
     // Append to document
     document.body.appendChild(menu);
@@ -160,7 +160,7 @@ function toggleUserDropdown(userBtn) {
     // Add event listeners
     document.getElementById('editProfileBtn').addEventListener('click', function() {
         toggleEditProfileFrame();
-        menu.remove(); // Remove dropdown after clicking
+        menu.remove(); 
     });
 
     document.getElementById('logoutBtn').addEventListener('click', function() {

@@ -5,7 +5,7 @@ Developers:
 3. Karl Matthew Dela Cruz
 4. Jose Miguel Espinosa
 
-last edited: 14/03/2025 
+last edited: 04/07/2025
 */
 /****************************************************************************************************************************************************************************/
 //This Section is Responsible for initializing the Database and importing the sample data, as well as initializing all needed modules.
@@ -23,16 +23,13 @@ const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
-
-//const bcrypt = require('bcryptjs');
-
 // Import configuration and middleware setup
 const { 
   setupMiddleware, 
   setupDirectories, 
   isAuthenticated, 
   isAuthenticatedApi,
-  populateUserData  // Add this import
+  populateUserData  
 } = require('./Routes/configs');
 
 module.exports = app;
@@ -154,8 +151,8 @@ app.use(session({
   }),
   cookie: {
     maxAge: 24 * 60 * 60 * 1000,
-    secure: false, // Set to false until HTTPS is properly configured
-    sameSite: 'lax' // Add this for better security
+    secure: false, 
+    sameSite: 'lax' 
   }
 }));
 let currentSessionId = null;
@@ -167,7 +164,7 @@ app.use((req, res, next) => {
 });
 // Mount restaurant routes before user routes to avoid path conflicts
 app.use(populateUserData);
-app.use('/auth', authRoutes); // NOT protected by isAuthenticated
+app.use('/auth', authRoutes); 
 app.use('/restaurant',restaurantRoutes);
 
 app.use('/profile', userRoutes); // Mount user routes at /profile prefix
@@ -176,7 +173,6 @@ app.use('/profile', userRoutes); // Mount user routes at /profile prefix
 // Update position to be earlier in the code
 app.use('/api/likes', isAuthenticatedApi, likeRoutes);
 
-// 5. API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/likes', isAuthenticatedApi, likeRoutes);
 app.use('/api/users', isAuthenticatedApi, userRoutes);

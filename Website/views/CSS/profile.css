@@ -263,7 +263,6 @@ footer img{
     background-color: #66BB6A;
 }
 
-/* Add to profile.css */
 .profile-container {
     width: 90%;
     max-width: 1200px;
@@ -467,12 +466,11 @@ footer img{
     font-style: italic;
 }
 
-/* Add this to ensure danger zone looks consistent */
 .danger-zone {
     text-align: center;
     padding: 15px;
     margin-top: 30px;
-    border-top: 1px solid #d32f2f; /* Changed from #e0e0e0 to #d32f2f (red) */
+    border-top: 1px solid #d32f2f; 
 }
 
 .danger-zone h4 {
@@ -505,7 +503,6 @@ footer img{
     background-color: #b71c1c;
 }
 
-/* Add user dropdown styling for profile page */
 .user-dropdown {
     display: flex;
     flex-direction: column;
@@ -513,7 +510,7 @@ footer img{
     background-color: white;
     min-width: 150px;
     border: 1px solid #DDF0DE;
-    border-top: 3px solid #2E7D32; /* Green top border for visual connection */
+    border-top: 3px solid #2E7D32; 
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     padding: 10px;

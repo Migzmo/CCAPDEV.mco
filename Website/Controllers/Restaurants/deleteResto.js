@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
     const deleteButton = document.querySelector('.confirm-delete-btn');
     
     if (deleteButton) {
         deleteButton.addEventListener('click', function() {
             
             let restaurantId;
-            
-           
             const hiddenInput = document.getElementById('hidden-id');
             if (hiddenInput && hiddenInput.value) {
                 restaurantId = hiddenInput.value;

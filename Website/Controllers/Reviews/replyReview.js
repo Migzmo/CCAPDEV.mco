@@ -1,3 +1,6 @@
+/**
+ * THe file mainly responsible for handling reply review functionality
+ */
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded, initializing reply review functionality');
     
@@ -96,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function applyFormatting(format, editor) {
         editor.focus();
         
-        // Use execCommand for formatting
         switch(format) {
             case 'bold':
                 document.execCommand('bold', false, null);
@@ -842,7 +844,7 @@ function createRichTextEditor(textarea) {
 function applyFormatting(format, editor) {
     editor.focus();
     
-    // Use execCommand for formatting
+    // execCommand for formatting
     switch(format) {
         case 'bold':
             document.execCommand('bold', false, null);
