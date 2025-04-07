@@ -35,6 +35,7 @@ const {
   populateUserData  // Add this import
 } = require('./Routes/configs');
 
+module.exports = app;
 // Set up directories and middleware
 setupDirectories();
 setupMiddleware(app);
