@@ -353,8 +353,9 @@
     </div>
 
     <div class="resto-box-wrappers">
-    {{#if currentUser}}
-    {{#if (eq userType "business-owner")}}
+
+    {{#if user}}
+    {{#if (eq user.userType "business-owner")}}
     <div class="restaurants">
         <a href="#" onclick="togglePopupCreateResto()">
             <div>
@@ -365,6 +366,7 @@
     </div>
     {{/if}}
     {{/if}}
+
     {{#each restaurants}}
     <div class="restaurants" id="resto-{{resto_id}}" data-category="{{cuisine_id}}">
         <a href="/restaurant/{{resto_id}}">
