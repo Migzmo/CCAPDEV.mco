@@ -153,8 +153,9 @@ app.use(session({
     collection: 'sessions'
   }),
   cookie: {
-    maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
-    secure:process.env.NODE_ENV === 'production', // Use secure cookies in production
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: false, // Set to false until HTTPS is properly configured
+    sameSite: 'lax' // Add this for better security
   }
 }));
 let currentSessionId = null;

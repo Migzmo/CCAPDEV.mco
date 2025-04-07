@@ -391,5 +391,34 @@
     <script type="module" src='../Controllers/directoryScript.js'></script>
     <script type="module" src='../Controllers/Restaurants/addRestaurant.js'></script>
     <script type="module" src="../Controllers/Cuisines/filter.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Try to get user data from localStorage
+  try {
+    const userData = localStorage.getItem('currentUser');
+    if (userData) {
+      const user = JSON.parse(userData);
+      // Check if user is a business owner
+      if (user && user.accountType === 'business-owner') {
+        // Find the add restaurant container and make it visible
+        const addRestoContainer = document.querySelector('.restaurants a[href="#"][onclick="togglePopupCreateResto()"]');
+        if (addRestoContainer) {
+          addRestoContainer.closest('.restaurants').style.display = 'block';
+        }
+        
+        // Also check for any specific add restaurant buttons
+        const addRestoButtons = document.querySelectorAll('.add-restaurant-button');
+        addRestoButtons.forEach(button => {
+          button.style.display = 'block';
+        });
+      }
+    }
+  } catch (e) {
+    console.error('Error parsing user data:', e);
+  }
+});
+</script>
+
 </body>
 </html>
