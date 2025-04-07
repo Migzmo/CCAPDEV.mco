@@ -6,6 +6,8 @@ Developers:
 4. Jose Miguel Espinosa
 
 last edited: 14/03/2025 
+To be done:
+di ko alam HAHAHHAHAHA
 */
 /****************************************************************************************************************************************************************************/
 //This Section is Responsible for initializing the Database and importing the sample data, as well as initializing all needed modules.
@@ -22,9 +24,6 @@ const app = express();
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-
-const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI;
 
 //const bcrypt = require('bcryptjs');
 
@@ -44,39 +43,14 @@ setupMiddleware(app);
 
 app.use(express.static('views'));
 
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'fallback_secret_do_not_use_in_production',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: MONGODB_URI,
-    collection: 'sessions'
-  }),
-  cookie: {
-    httpOnly: false,
-    maxAge: 24 * 60 * 60 * 1000,
-    path: '/'
-  }
-}));
-
-app.use((req, res, next) => {
-  if (req.session && req.session.userId) {
-    console.log('Active session found:', { id: req.session.id, userId: req.session.userId });
-  }
-  next();
-});
-
-app.use(populateUserData);
-app.get('/', (req, res) => {
-  res.redirect('/restaurant');
-});
-
+//For importing sample data to MONGO DB
 let impErr1 = false;
 let impErr2 = false;
 let impErr3 = false;
 let impErr4 = false;
 require('dotenv').config();
-
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/lasappDB';
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -160,13 +134,7 @@ const reviewRoutes = require('./Routes/reviewRoutes');
 const likeRoutes = require('./Routes/likeRoutes');
 const replyRoutes = require('./Routes/replyRoutes');
 
-const {
-  syncSessionData,
-} = require('./Routes/configs');
-
-// Apply this middleware
-app.use(syncSessionData);
-
+// Import Error Handlers
 const { globalErrorHandler, denyDatabaseAccess } = require('./Routes/errorHandlers');
 
 /****************************************************************************************************************************************************************************/
@@ -178,7 +146,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'fallback_secret_do_not_use_in_production',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
@@ -186,15 +154,14 @@ app.use(session({
     collection: 'sessions'
   }),
   cookie: {
-    maxAge: 24 * 60 * 60 * 1000,
-    path: '/'
+    maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
+    secure:process.env.NODE_ENV === 'production', // Use secure cookies in production
   }
 }));
 let currentSessionId = null;
 app.use((req, res, next) => {
   if (req.session && req.session.userId) {
     currentSessionId = req.session.id;
-    console.log('Active session found:', { id: req.session.id, userId: req.session.userId });
   }
   next();
 });

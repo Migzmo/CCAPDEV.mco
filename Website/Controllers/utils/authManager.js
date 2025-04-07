@@ -88,39 +88,6 @@ function checkUserLoggedIn() {
     return false;
 }
 
-async function checkAuthStatus() {
-    const localUser = JSON.parse(localStorage.getItem('currentUser'));
-    
-    // If we have a local user, verify with server
-    if (localUser) {
-      try {
-        const response = await fetch('/auth/verify');
-        
-        if (!response.ok) {
-          // Server says we're not logged in, clear localStorage
-          console.warn('Session verification failed - clearing local storage');
-          localStorage.removeItem('currentUser');
-          resetLoginButton();
-          return null;
-        }
-        
-        const data = await response.json();
-        if (data.authenticated) {
-          updateUIAfterLogin();
-          return data.user;
-        }
-      } catch (error) {
-        console.error('Auth verification failed:', error);
-        // On network error, fall back to local data
-        return localUser;
-      }
-    }
-    
-    // No local user data
-    resetLoginButton();
-    return null;
-  }
-
 /**
  * Reset the login button to its default state
  */
@@ -234,9 +201,8 @@ function toggleUserDropdown(userBtn) {
 // Export functions
 export { 
     loginUser, 
-  updateUIAfterLogin, 
-  checkUserLoggedIn,
-  checkAuthStatus,   
-  resetLoginButton, 
-  toggleUserDropdown 
+    updateUIAfterLogin, 
+    checkUserLoggedIn, 
+    resetLoginButton, 
+    toggleUserDropdown 
 };
