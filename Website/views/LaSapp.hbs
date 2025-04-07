@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LaSapp</title>
+<link rel="icon" href="views/images/assets/logo.png" type="image/png">
+<link rel="stylesheet" href="views/CSS/directory.css">
+<link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Baloo+Thambi+2:wght@400..800&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Lexend:wght@100..900&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Top Ribbon -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">LaSapp</a>
+        </div>
+        <ul class="dashboard">
+            <li><a href="/about.html">ABOUT</a></li>
+            <li><button onclick="togglePopup()" id="loginButton">LOGIN</button></li>
+        </ul>
+    </nav>
+
+    <div id="loginframe">
+        <div class="loginframe-content">
+            <div id="loginframe_left">
+                <h2>Log in or sign up now!</h2>
+                <div class="button-container">
+                    <button class="signin-button"><span id="mail-logo"></span>Continue with Account</button>
+                </div>
+                <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
+                <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="https://www.dlsu.edu.ph/wp-content/uploads/pdf/osa/student-handbook.pdf" target="_blank">DLSU Student Handbook</a> and/or Privacy Policy of LaSapp.</p>
+            </div>
+            <div id="loginframe_right">
+                <button id="closeLogin" onclick="togglePopup()">&times</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="signinframe">
+        <div class="signinframe-content">
+            <div id="signinframe_left">
+                <h2 id="h2-signin">Sign in</h2>
+                <form class="signin-form">
+                    <div class="form-group">
+                        <input type="text" id="signin-username" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signin-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="signin-submit-button">Sign in</button>
+                </form>
+                <p class="back-to-login">Need an account? <button id="backToOptions">Go back</button></p>
+            </div>
+            <div id="signinframe_right">
+                <button id="closeSignin">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerframe">
+        <div class="registerframe-content">
+            <div id="registerframe_left">
+                <h2 id="create-account">Create Your Account</h2>
+                <form id="registration-form" class="form-container">
+                    <div class="form-group">
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+
+                    <div class = "form-group">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="avatar" class="instruction">Profile Picture</label>
+                        <div class="profile-upload-area">
+                            <input type="file" id="avatar" name="profile_pic" accept="image/*">
+                            <label for="avatar" class="upload-btn">Choose Picture</label>
+                            <div class="profile-pic-preview" id="avatar-preview"></div>
+                        </div>
+                    </div>
+
+                    <div class = "form-group account-type">
+                        <label class="instruction">Account Type:</label>
+                        <div class="radio-group">
+                            <input type="radio" id="user" name="accountType" value="user" checked>
+                            <label for="user" class="instruction">User</label>
+                            <input type="radio" id="business-owner" name="accountType" value="business-owner">
+                            <label for="business-owner" class="instruction">Business Owner</label>
+                        </div>
+                    </div>
+
+                    <div class = "form-group">
+                        <textarea id="description" placeholder="Short description (optional)"></textarea>
+                    </div>
+
+                    <button type="submit" class="register-button">Create Account</button>
+                </form>
+
+                <p class="back-to-login">Already have an account? <button id="backToLogin">Log in</button></p>
+            </div>
+            <div id="registerframe_right">
+                <button id="closeRegister">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="editProfileFrame" style="display: none;">
+        <div class="editProfile-content">
+            <div id="editProfile_left">
+                <h2 id="edit-profile-title">Edit Your Profile</h2>
+                <form id="edit-profile-form" enctype="multipart/form-data">
+                    <input type="hidden" name="userId" value="{{account.id}}">
+                    <div class="form-group">
+                        <label for="edit-username" class="instruction">Name</label>
+                        <input type="text" id="edit-username" name="username" placeholder="Your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-password" class="instruction">Password</label>
+                        <input type="password" id="edit-password" name="password" placeholder="Change your password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-bio" class="instruction">Bio</label>
+                        <textarea id="edit-bio" name="bio" placeholder="Tell us about yourself"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-profile-pic" class="instruction">Profile Picture</label>
+                        <div class="profile-upload-area">
+                            <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*">
+                            <label for="edit-profile-pic" class="upload-btn">Choose Picture</label>
+                            <div id="profile-pic-preview"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group danger-zone">
+                        <h4>Danger Zone</h4>
+                        <p>Deleting your account will remove all your data from our system.</p>
+                        <button type="button" id="delete-account-btn" class="delete-account-button">Delete Account</button>
+                    </div>
+
+                    <div class="button-section">
+                        <div class="input-box button">
+                            <input type="submit" value="Save Changes">
+                        </div>
+                        <div class="input-box button secondary">
+                            <input type="button" value="Cancel" onclick="toggleEditProfileFrame()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="editProfile_right"></div>
+            <button id="closeEditProfile" onclick="toggleEditProfileFrame()">&times;</button>
+        </div>
+    </div>
+   
+    <div id="backdrop"></div>
+    <div id="createRestoFrame">
+        <div class="createResto-header">
+            <h2>Add Restaurant</h2>
+        </div>
+        <div class="createResto-content">
+            <div class="wrapper">
+                <form name="restoForm" action="/create-resto" method="post" enctype="multipart/form-data">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4>Basic Information</h4>
+                        <div class="input-box">
+                            <label for="resto-name">Restaurant Name</label>
+                            <input type="text" id="resto-name" placeholder="Enter restaurant name" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Address Section -->
+                    <div class="form-section">
+                        <h4>Location</h4>
+                        <div class="input-box">
+                            <label for="address1">Address Line 1</label>
+                            <input type="text" id="address1" placeholder="Street address" required>
+                        </div>
+                        <div class="input-box">
+                            <label for="address2">Address Line 2</label>
+                            <input type="text" id="address2" placeholder="Building, floor, etc. (optional)">
+                        </div>
+                    </div>
+                    
+                    <!-- Operating Hours -->
+                    <div class="form-section">
+                        <h4>Operating Hours</h4>
+                        <div class="input-box time-input">
+                            <label for="opening-time">Opening Time</label>
+                            <input type="time" id="opening-time" required>
+                        </div>
+                        <div class="input-box time-input">
+                            <label for="closing-time">Closing Time</label>
+                            <input type="time" id="closing-time" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div class="form-section">
+                        <h4>Contact Information</h4>
+                        <div class="input-box">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="Phone number" required>
+                        </div>
+                        <div class="input-box">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Email address" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information -->
+                    <div class="form-section">
+                        <h4>Additional Information</h4>
+                        <div class="input-box">
+                            <label for="payment">Payment Methods</label>
+                            <input type="text" id="payment" placeholder="Cash, Credit Card, GCash, etc." required>
+                        </div>
+                        <div class="input-box">
+                            <label for="perks">Perks</label>
+                            <input type="text" id="perks" placeholder="Wi-Fi, Parking, etc." required>
+                        </div>
+                        <div class="input-box">
+                            <label for="cuisine">Cuisine</label>
+                            <select id="cuisine" name="cuisine" required>
+                                <option value="">Select a cuisine type</option>
+                                <option value="American">American</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Cafe">Cafe</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="Fastfood">Fastfood</option>
+                                <option value="Filipino">Filipino</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Korean">Korean</option>
+                                <option value="Mexican">Mexican</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4>Reference Image</h4>
+                        <div class="input-box image-upload">
+                            <label for="restaurant-images">Upload Reference Photo</label>
+                            <input type="file" name="image" id="restaurant-image">
+                        </div>
+                    </div>
+
+
+                    <!-- Button Section stays inside the scrollable area but will be styled to stand out -->
+                    <div class="button-section">
+                        <div class="input-box button">
+                            <input type="submit" value="Add Restaurant">
+                        </div>
+                        <div class="input-box button secondary">
+                            <input type="button" value="Cancel" onclick="togglePopupCreateResto()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+       
+
+            <button id="closeCreateResto" onclick="togglePopupCreateResto()">&times</button>
+        </div>
+    </div>
+    
+    
+
+    <div class="container">
+        <div>
+            <img class="my_cover" src="views/images/assets/foodflag.jpg" alt="Description of Image">
+        </div>
+        <form>
+            <div class = "searchbar">
+                <!-- Search icon -->
+                <div class="material-symbols-outlined search-icon search">search
+                    
+                </div>
+                
+                <!-- Search input field -->
+                <input class="searchbar search" type="text" placeholder="Looking for something?">   
+                
+            <span></span>
+            </div>  
+        </form>
+    </div>
+
+    <div class="categories" id="slider">
+        <div class="category-container">
+            <div class="category-row1">
+                <button class="category-btn" data-category="All">
+                    <img src="../views/images/assets/select-all.png" alt="All">
+                    <div class="category-name"><h3>All</h3></div>
+                </button>
+                <button class="category-btn" data-category="American">
+                    <img src="views/images/assets/Category - American.png" alt="American">
+                    <div class="category-name"><h3>American</h3></div>
+                </button>
+                <button class="category-btn" data-category="Asian">
+                    <img src="views/images/assets/Category - Asian.png" alt="Asian">
+                    <div class="category-name"><h3>Asian</h3></div>
+                </button>
+                <button class="category-btn" data-category="Cafe">
+                    <img src="views/images/assets/Category - Cafe.png" alt="Cafe">
+                    <div class="category-name"><h3>Cafe</h3></div>
+                </button>
+                <button class="category-btn" data-category="Chinese">
+                    <img src="views/images/assets/Category - Chinese.png" alt="Chinese">
+                    <div class="category-name"><h3>Chinese</h3></div>
+                </button>
+                <button class="category-btn" data-category="Fastfood">
+                    <img src="views/images/assets/Category - Fastfood.png" alt="Fastfood">
+                    <div class="category-name"><h3>Fastfood</h3></div>
+                </button>
+                <button class="category-btn" data-category="Filipino">
+                    <img src="views/images/assets/Category - Filipino.png" alt="Filipino">
+                    <div class="category-name"><h3>Filipino</h3></div>
+                </button>
+                <button class="category-btn" data-category="Japanese">
+                    <img src="views/images/assets/Category - Japanese.png" alt="Japanese">
+                    <div class="category-name"><h3>Japanese</h3></div>
+                </button>
+                <button class="category-btn" data-category="Korean">
+                    <img src="views/images/assets/Category - Korean.png" alt="Korean">
+                    <div class="category-name"><h3>Korean</h3></div>
+                </button>
+                <button class="category-btn" data-category="Mexican">
+                    <img src="views/images/assets/Category - Mexican.png" alt="Mexican">
+                    <div class="category-name"><h3>Mexican</h3></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="resto-box-wrappers">
+    {{#if currentUser}}
+    {{#if (eq userType "business-owner")}}
+    <div class="restaurants">
+        <a href="#" onclick="togglePopupCreateResto()">
+            <div>
+                <img class="add-resto" src="views/images/assets/Misc - Add Resto Icon.png">
+                <button id="" style="display: none;"></button>  
+            </div>
+        </a>
+    </div>
+    {{/if}}
+    {{/if}}
+    {{#each restaurants}}
+    <div class="restaurants" id="resto-{{resto_id}}" data-category="{{cuisine_id}}">
+        <a href="/restaurant/{{resto_id}}">
+            <img class="resto-img" src="{{resto_img}}">
+            <div class="filler"></div>
+            <div class="resto-text">
+                <h2 class="resto-title">{{resto_name}}</h2>
+                <h3 class="resto-category">{{cuisine_id}}</h3>
+            </div>
+        </a>
+    </div>
+    {{/each}}
+</div>
+
+<div id="deleteAccountConfirm">
+        <h3>Delete Account?</h3>
+        <p>This action cannot be undone. Your account will be permanently deactivated.</p>
+        <div class="confirm-buttons">
+            <button id="cancelDeleteAccount">Cancel</button>
+            <button id="confirmDeleteAccount">Yes, Delete Account</button>
+        </div>
+    </div>
+
+    <script type="module" src='../Controllers/directoryScript.js'></script>
+    <script type="module" src='../Controllers/Restaurants/addRestaurant.js'></script>
+    <script type="module" src="../Controllers/Cuisines/filter.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+[
+  {
+    "acc_id": 0,
+    "acc_name": "Jose Miguel Espinosa",
+    "acc_username": "@jm_espnosa74",
+    "acc_bio": "",
+    "saved_restos": [],
+    "saved_reviews": [0],
+    "profile_pic": "/views/images/profilePictures/jm_profile_pic.jpg",
+    "isAlive": true,
+    "acc_type": "user",
+    "acc_password": "$2b$10$PuMAmnfFxLZme2Kcx82OJu4nXtEhMEAnwEXgp5PYWTG8vxK8Bxgfi"
+  },
+  {
+    "acc_id": 1,
+    "acc_name": "Karl Matthew Dela Cruz",
+    "acc_username": "@kmdc",
+    "acc_bio": "I love backend",
+    "saved_restos": [],
+    "saved_reviews": [1],
+    "profile_pic": "/views/images/profilePictures/matthew_profile_pic.png",
+    "isAlive": true,
+    "acc_type":"business-owner",
+    "acc_password": "$2b$10$PuMAmnfFxLZme2Kcx82OJu4nXtEhMEAnwEXgp5PYWTG8vxK8Bxgfi"
+  },
+  {
+    "acc_id": 2,
+    "acc_name": "Jane Smith",
+    "acc_username": "@janesmith",
+    "acc_bio": "Business owner and foodie",
+    "saved_restos": [2, 4],
+    "saved_reviews": [1, 3, 5],
+    "profile_pic": "/views/images/profilePictures/jane-smith.webp",
+    "isAlive": true,
+    "acc_type": "business-owner",
+    "acc_password": "$2b$10$28vRy77F4bkuVSB9RsMEg.wJOWdrthZ7/lmnY2Rdxa72rC36CTBBy"
+  },
+  {
+    "acc_id": 3,
+    "acc_name": "Mike Johnson",
+    "acc_username": "@mikej",
+    "acc_bio": "Culinary arts student",
+    "saved_restos": [1, 5],
+    "saved_reviews": [3],
+    "profile_pic": "/views/images/profilePictures/mike-johnson.jpeg",
+    "isAlive": true,
+    "acc_type": "user",
+    "acc_password": "$2b$10$28vRy77F4bkuVSB9RsMEg.wJOWdrthZ7/lmnY2Rdxa72rC36CTBBy"
+  },
+  {
+    "acc_id": 4,
+    "acc_name": "Sarah Williams",
+    "acc_username": "@sarahw",
+    "acc_bio": "Coffee shop owner",
+    "saved_restos": [3],
+    "saved_reviews": [2],
+    "profile_pic": "/views/images/profilePictures/sarah.jpeg",
+    "isAlive": true,
+    "acc_type": "business-owner",
+    "acc_password": "$2b$10$28vRy77F4bkuVSB9RsMEg.wJOWdrthZ7/lmnY2Rdxa72rC36CTBBy"
+  }
+]
+

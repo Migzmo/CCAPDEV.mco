@@ -1,0 +1,592 @@
+.navbar {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fdfbe8; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 40px;
+    align-items: center;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar-container{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.logo{
+    font-family: 'Baloo';
+    font-size: 50px;
+    color: #2E7D32;
+}
+
+.navbar img{
+    border-radius: 15px;
+    border: black solid;
+}
+
+/* Navigation Links */
+.options{
+    margin-left: auto;
+    margin-right: 7%;
+}
+.navbar ul {
+    font-family: 'Baloo';
+    font-size: 20px;
+    list-style: none;
+    display: flex;
+    gap: 40px;
+
+}
+
+.navbar a {
+    list-style: none;
+    text-decoration: none;
+    color:#2E7D32;
+}
+
+.navbar a:hover{
+    color: #087c2fca;
+    text-decoration: underline;
+}
+
+.info{
+    margin-top: 8%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+/* Footer */
+footer{
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    background-color: #fdfbe8;
+    padding: 10px 40px;
+}
+
+footer img{
+    margin: 1%;
+    border: black solid;
+    border-radius: 15px;
+}
+
+.profile_header {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.profile_header img{
+    position: relative;
+    top: 100px;
+    border-radius: 50%;
+    width: 13%;
+    height: 13%;
+    border: 1px solid;
+}
+
+.profile_header h1, h4, p {
+    position: relative;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 400;
+    left: 15%;
+}
+
+.profile_header h1 {
+    bottom: 82px;
+}
+
+.profile_header button {
+    position: relative;
+    left: 39%;
+    bottom: 215px;
+}
+
+/* CSS */
+.button-4 {
+  appearance: none;
+  background-color: #FAFBFC;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292E;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 6px 16px;
+  position: relative;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+  right: 40px;
+}
+
+.button-4:hover {
+  background-color: #F3F4F6;
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+.button-4:disabled {
+  background-color: #FAFBFC;
+  border-color: rgba(27, 31, 35, 0.15);
+  color: #959DA5;
+  cursor: default;
+}
+
+.button-4:active {
+  background-color: #EDEFF2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transition: none 0s;
+}
+
+.button-4:focus {
+  outline: 1px transparent;
+}
+
+.button-4:before {
+  display: none;
+}
+
+.button-4:-webkit-details-marker {
+  display: none;
+}
+
+
+.profile_header h4 {
+    bottom: 105px;
+    color: rgb(115,113,113); 
+}
+
+.profile_header p {
+    bottom: 110px;
+}
+
+.reviews {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 130px;
+}
+
+.reviews h2 {
+    position: relative;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 400;
+    right: 600px;
+}
+
+
+.reviews p1 {
+    position: relative;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    color: rgb(115,113,113); 
+    top: 30px;
+    right: 136px;
+}
+
+.reviews img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid rgb(0, 0, 0);
+}
+
+.profile-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.edit-profile-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #5EB762;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.edit-profile-button:hover {
+    background-color: #4CAF50;
+}
+
+.back-to-profile-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #81C784;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.back-to-profile-button:hover {
+    background-color: #66BB6A;
+}
+
+/* Add to profile.css */
+.profile-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 100px auto 40px;
+    font-family: 'Lexend', sans-serif;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #81C784;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-details h2 {
+    color: #2E7D32;
+    margin: 0 0 5px 0;
+    font-family: 'Baloo', sans-serif;
+    font-size: 32px;
+}
+
+.profile-details .username {
+    color: #757575;
+    margin: 0;
+    font-size: 16px;
+}
+
+.profile-bio {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.profile-bio h3 {
+    color: #2E7D32;
+    font-family: 'Lexend', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 0;
+}
+
+.profile-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #f8fff8;
+    border: 1px solid #81C784;
+    color: #2E7D32;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    background-color: #81C784;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Review cards styling */
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.review-card {
+    background-color: #f8fff8;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.restaurant-link {
+    color: #2E7D32;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.restaurant-link:hover {
+    color: #1B5E20;
+    text-decoration: underline;
+}
+
+.review-rating {
+    color: #FFD700;
+    font-size: 18px;
+    letter-spacing: -1px;
+}
+
+.review-text {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+.review-date {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 12px;
+    color: #757575;
+    font-style: italic;
+}
+
+/* Saved restaurants styling */
+.saved-restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.saved-restaurant-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.saved-restaurant-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.saved-restaurant-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.saved-restaurant-info {
+    padding: 12px;
+    background-color: white;
+}
+
+.saved-restaurant-info h3 {
+    margin: 0 0 5px 0;
+    color: #2E7D32;
+    font-size: 16px;
+}
+
+.saved-restaurant-info p {
+    margin: 0;
+    color: #757575;
+    font-size: 14px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #757575;
+    font-style: italic;
+}
+
+/* Add this to ensure danger zone looks consistent */
+.danger-zone {
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+    border-top: 1px solid #d32f2f; /* Changed from #e0e0e0 to #d32f2f (red) */
+}
+
+.danger-zone h4 {
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+.danger-zone p {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.delete-account-button {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: 'Lexend', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-account-button:hover {
+    background-color: #b71c1c;
+}
+
+/* Add user dropdown styling for profile page */
+.user-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    min-width: 150px;
+    border: 1px solid #DDF0DE;
+    border-top: 3px solid #2E7D32; /* Green top border for visual connection */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 10px;
+    z-index: 10001;
+    margin-top: 5px;
+}
+   
+.user-dropdown a {
+    font-family: 'Lexend', sans-serif;
+    color: #000000;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+}
+
+.user-dropdown a:hover {
+    background-color: #DDF0DE;
+}
+
+#editProfileFrame .danger-zone,
+.editProfile-content .danger-zone,
+#edit-profile-form .danger-zone {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 30px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-top: 1px solid #d32f2f !important; 
+}
+
+#editProfileFrame .danger-zone h4,
+.editProfile-content .danger-zone h4,
+#edit-profile-form .danger-zone h4 {
+    text-align: center !important;
+    width: 100% !important;
+    position: static !important;
+    left: auto !important;
+    margin: 0 0 10px 0 !important;
+}
+
+#editProfileFrame .danger-zone p,
+.editProfile-content .danger-zone p,
+#edit-profile-form .danger-zone p {
+    text-align: center !important;
+    width: 100% !important;
+    position: static !important;
+    left: auto !important;
+    margin: 0 0 15px 0 !important;
+}
+
+#editProfileFrame .delete-account-button,
+.editProfile-content .delete-account-button,
+#edit-profile-form .delete-account-button {
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+.review-body p u {
+    text-decoration: underline !important;
+}
+
+.review-body p b, .review-body p strong {
+    font-weight: bold !important;
+}
+
+.review-body p i, .review-body p em {
+    font-style: italic !important;
+}
+
+.review-body p a {
+    text-decoration: underline;
+}

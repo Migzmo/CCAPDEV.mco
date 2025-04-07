@@ -1,0 +1,1760 @@
+* {
+    text-decoration: none;
+}
+html, body {
+    margin: 0;
+    background-color: #FDFDFD;
+}
+
+.navbar {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fdfbe8; 
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between;
+    padding: 10px 40px;
+    align-items: center;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+}
+
+.navbar-container{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.logo{
+    font-family: 'Baloo';
+    font-size: 50px;
+    color: #2E7D32;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.navbar img{
+    border-radius: 15px;
+    border: black solid;
+}
+
+/* Navigation Links */
+.options{
+    margin-left: auto;
+    margin-right: 4%;
+}
+
+.navbar ul {
+    font-family: 'Baloo';
+    font-size: 20px;
+    list-style: none;
+    display: flex;
+    gap: 180px; /* Reduced gap between items */
+    margin-right: 30px;
+    justify-content: flex-end; /* Push items to the right */
+}
+
+.navbar a {
+    list-style: none;
+    text-decoration: none;
+    font-weight: bold;
+    color:#2E7D32;
+    text-transform: uppercase;
+}
+
+.navbar a:hover{
+    color: #087c2fca;
+    text-decoration: underline;
+}
+
+.info{
+    margin-top: 4%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.oval-button-review {
+    background-color: black; 
+    color: white;
+    font-size: 18px;
+    font-family: 'Baloo', sans-serif;
+    padding: 10px 28px; 
+    border-radius: 50px; 
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-left: 0; 
+}
+
+.edit-review-main {
+    position: absolute;
+    right: 60px;
+}
+
+.oval-button-review:hover {
+    background-color: #087c2fca;
+} 
+
+.classheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: 100%;
+    margin-top: 0%;
+}
+
+#heart{
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer; 
+}
+
+.head-container{
+    display: flex;
+    align-items: center;
+    font-weight: bolder;
+    width: 100%;
+    gap: 10%;
+}
+
+.classheader h1{
+    font-family: 'baloo';
+    color: #2E7D32;
+    padding-top: 5px;
+    font-size: 300%;
+    padding-left: 1%;
+}
+
+.classheader p{
+    padding-top: 14px;
+    font-size: 210%;
+    font-family: 'baloo';
+    margin-left: auto;
+    margin-right: 0%;
+}
+
+.main{
+    align-items: center;
+}
+
+.main {
+    display: flex;
+    align-items: center; 
+    gap: 20px;
+    font-family: 'baloo bhai 2';
+    height: 600px; 
+    padding-bottom: 3%;
+    border-bottom: 3px solid rgb(202, 204, 206);
+}
+
+.information{
+    margin-right: 5%;
+    height: auto;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 400;
+}
+
+.information h2{
+    font-weight: 400;
+}
+
+.information li {
+    font-size: 20px;
+}
+
+.main img {
+    margin-top: -1%;
+    height: 100%; 
+    width: 55%;
+    border-radius: 15px;
+    border: black solid;
+}
+
+.main h1, .main h2, .main p {
+    margin: 0; 
+    padding: 0; 
+    display: flex;
+    align-items: center; 
+    height: 100%; 
+}
+
+.main h1 {
+    color: #2E7D32;
+    font-size: 30px; 
+}
+
+.main h2 {
+    margin-bottom: 0;
+    font-size: 25px;
+}
+
+.main p {
+    font-size: 20px;
+    margin-top: -1%;
+    margin-bottom: 1%;
+    margin-left: 10%;
+    margin-right: 1%;
+    color: #555;
+}
+
+.reviews{
+    margin-top: 3%;
+    background-color: #f9fef8;
+    width: 100%;
+    height: 700px;
+    border-radius: 20px;
+    padding-bottom: 2%;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Prevent content from spilling out */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.review1 {
+    display: flex;          
+    align-items: center;    
+    justify-content: space-between; 
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #f0f7ee;
+    border-radius: 20px 20px 0 0;
+    border-bottom: 2px solid #e0e9dd;
+    box-sizing: border-box; /* Include padding in width calculation */        
+}
+
+.reviews h1 {
+    margin: 0;
+    padding: 0;
+    color: #2E7D32;
+    font-family: 'Lexend';
+    font-size: 36px;
+    font-weight: bold;
+    display: block;
+    background-color: transparent;
+    border-radius: 0;
+    border-bottom: none;
+}
+
+.reviews h2{
+    padding-top: 0%;
+    margin-left: 5%;
+    font-family: 'Baloo Bhai 2';
+    display: flex;
+    gap: 10px;
+}
+
+.reviews h2:hover{
+    color: #3b6024;
+    text-decoration: underline;
+}
+
+.reviews p{
+    margin-left: 5%;
+    margin-top: -2%;
+    margin-right: 5%;
+    font-family: 'baloo bhai 2';
+    border-bottom: 1px solid rgb(202, 204, 206); 
+    padding-bottom: 2%;
+}
+
+.reviews img {
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    align-items: center;
+}
+
+/*Scrollable segment for reviews*/
+.scroll-div {
+    width: 100%;
+    height: 600px;
+    overflow-y: auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.scroll-obj p {
+    margin: 0;
+    padding: 5px 0 10px 0; /* Remove left padding */
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    border-bottom: none;
+}
+
+.scroll-obj p u {
+    text-decoration: underline;
+}
+
+.rich-text-editor u {
+    text-decoration: underline !important;
+}
+
+.scroll-obj {
+    margin: 15px 20px; /* Match horizontal padding of review1 */
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.scroll-obj:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.scroll-obj h2{
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    padding-left: 0; /* Remove any left padding */
+    margin-left: 0;  /* Remove any left margin */
+}
+
+/* Improved profile image */
+.scroll-obj .profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e8f5e9;
+    margin-right: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Add rating stars visualization (placeholder for future implementation) */
+.review-rating {
+    margin-bottom: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-left: 0; /* Align stars to the left */
+    padding-left: 0; /* Remove any left padding */
+    white-space: nowrap;
+    letter-spacing: -2px; /* Adjust if needed to make stars closer together */
+}
+
+/* User link styling */
+.scroll-div a {
+    text-decoration: none;
+    color: #2E7D32;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    padding-left: 0; /* Remove any left padding */
+    margin-left: 0;  /* Remove any left margin */
+}
+
+.scroll-div a:hover {
+    color: #1b5e20;
+}
+
+/* Improved button styling */
+.button-3 {
+    appearance: none;
+    background-color: #2ea44f;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 10px 20px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+
+
+.review-date {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #888;
+    text-align: right;
+    font-style: italic;
+}
+
+.like{
+    text-align: right;
+}
+
+/* Footer */
+footer{
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    background-color: #fdfbe8;
+    padding: 10px 40px;
+}
+
+#footerLogo{
+    margin: 1%;
+    border: black solid;
+    border-radius: 15px;
+}
+
+.footerIcon{
+    margin-left: auto;
+    margin-right: 3%;
+}
+
+#footerFacebook{
+    margin-right: 15px;
+    border-radius: 10px;
+}
+.review-popup-container{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    
+  }
+#footerFacebook:hover{
+    transform: scale(1.2);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#footerIG{
+    border-radius: 10px;
+}
+
+#footerIG:hover{
+    transform: scale(1.2);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#logoImg:hover {
+    transform: scale(1.1); 
+    transition: 0.5s;
+    border-radius: 50%;
+}
+
+/* CSS */
+.button-3 {
+  appearance: none;
+  background-color: #2ea44f;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  right: 30px;
+}
+
+.button-3:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.button-3:hover {
+  background-color: #2c974b;
+}
+
+.button-3:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.button-3:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.button-3:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+.review-box{
+ 
+    position:relative;
+    width: 1000px;
+    height: 500px;
+    background: #F0F4FF;
+    border-radius: 50px;
+    margin-top:33%;
+
+}
+
+.review-box p{
+    font-family: 'Baloo';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 46px;
+    color: #000000;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+.review-box h3{
+    font-family: 'Baloo';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 46px;
+    color: #000000;
+    margin-left: 5%;
+    
+}
+
+.review-area textarea{
+    position: relative;
+    width: 95%;
+    height: 200px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left:20px;
+    
+}
+.review-button{
+    float: right;
+    margin-right: 3%;
+}
+.popover-button{
+    margin-left:100 px;
+}
+.scroll-div a{
+    text-decoration: none;
+    color: #2E7D32;
+}  
+
+    
+/* CSS */
+.review-button {
+  appearance: none;
+  background-color: #2ea44f;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  top: 10px;
+  right: 10px;
+}
+
+.reviews > div:nth-child(3) {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.button-3:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.button-3:hover {
+  background-color: #2c974b;
+}
+
+.button-3:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.button-3:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.button-3:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+#clip {
+    position: relative;
+    left: 40px;
+    top: 10px;
+    border-radius: 0%;
+    width: 30px;
+    height: 30px;
+}
+
+.review1 p {
+    font-size: 30px;
+}
+
+.btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 60px;
+}
+
+.heart {
+    color: gray; 
+    transition: color 0.3s ease;
+}
+
+.heart.liked {
+    color: red; 
+}
+
+/* BUTTONS STUFF FOR EDIT DELETE */
+.buttons-container {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: flex-end; 
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;  
+}
+
+/* Make sure buttons have consistent styling */
+.buttons-container button {
+    margin: 0; 
+}
+
+/* Fix for the button inside an anchor tag */
+.buttons-container a {
+    display: inline-block;  
+    margin: 0;
+    padding: 0;
+}
+
+.edit-btn {
+    background-color: #2196F3;
+}
+
+.edit-btn:hover {
+    background-color: #0b7dda;
+}
+
+.delete-btn {
+    background-color: #f44336;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* CSS FOR FORMS*/ 
+
+.wrapper {
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #CDDECB; 
+}
+
+/* Custom scrollbar styling */
+.wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+    background: #81C784;
+    border-radius: 4px;
+}
+
+.wrapper::-webkit-scrollbar-thumb:hover {
+    background: #5EB762;
+}
+
+/* Fix input box positioning */
+.wrapper form .input-box {
+    margin-left: 0; 
+    padding: 0 20px; 
+}
+
+/* Form section styling */
+.form-section {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-section h4 {
+    font-family: 'Lexend', sans-serif;
+    color: black;
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+/* Fix button section to appear at the bottom */
+.button-section {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.input-box.button input {
+    background: #5EB762;
+    width: 100%;
+}
+
+.input-box.button.secondary input {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.input-box.button input:hover {
+    background: #4CAF50;
+}
+
+.input-box.button.secondary input:hover {
+    background: #bdbdbd;
+}
+
+/* Adjust form input width */
+form .input-box input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Form input styling - make fields bigger */
+.wrapper form .input-box input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 45px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 12px;
+    color: black; 
+}
+
+
+.wrapper form .input-box label {
+    display: block;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 8px;
+    margin-top: 5px;
+}
+
+/* Adjust time inputs specifically */
+.wrapper form .input-box.time-input input {
+    height: 45px;
+}
+
+/* Add more spacing between form sections */
+.form-section {
+    margin-bottom: 25px;
+}
+
+/* Make submit and cancel buttons larger */
+.button-section .input-box.button input,
+.button-section .input-box.button.secondary input {
+    height: 50px;
+    font-size: 18px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+/* Make form section headings larger */
+.form-section h4 {
+    font-family: 'Lexend', sans-serif;
+    color: black;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    font-size: 20px; 
+    font-weight: 600; 
+}
+
+/* Ensure placeholder text is a lighter shade but still readable */
+.wrapper form .input-box input::placeholder {
+    color: #757575;
+}
+
+/* Style for single image upload */
+
+.input-box.image-upload input[type="file"] {
+    padding: 10px;
+    border: 1px dashed #81C784;
+    border-radius: 8px;
+    background-color: #f8fff8;
+    cursor: pointer;
+}
+
+#backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#createRestoFrame {
+    display: none;
+    position: fixed;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 80%;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 40px;
+    overflow: hidden; 
+}
+
+.createResto-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: #CDDECB;
+    border: none;
+    height: calc(100% - 50px); 
+    position: relative;
+    overflow: hidden;
+}
+
+
+#closeCreateResto {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px; 
+    color: black; 
+    cursor: pointer;
+}
+
+.createResto-header {
+    height: 50px;
+    background: #FFFFFF;
+    text-align: center;
+    border-bottom: 1px solid black; 
+}
+
+.createResto-header h2 {
+    position: relative;
+    top: 10px;
+    font-family: 'Lexend', sans-serif;
+}
+
+/* DELETE RESTO CSS*/
+
+#deleteConfirmPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.deleteConfirm-header {
+    background-color: #f44336;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.deleteConfirm-header h2 {
+    margin: 0;
+    font-family: 'Lexend', sans-serif;
+    font-size: 24px;
+}
+
+.deleteConfirm-body {
+    padding: 25px;
+    text-align: center;
+    font-family: 'Lexend', sans-serif;
+}
+
+.deleteConfirm-body p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.warning-text {
+    color: #f44336;
+    font-weight: bold;
+    font-size: 14px !important;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.cancel-delete-btn, .confirm-delete-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cancel-delete-btn {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.cancel-delete-btn:hover {
+    background-color: #bdbdbd;
+}
+
+.confirm-delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+#closeDeleteConfirm {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* CSS FOR REVIEWS*/
+
+#reviewModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reviewModal-header {
+    height: 50px;
+    background: #FFFFFF;
+    text-align: center;
+    border-bottom: 1px solid black;
+    display: flex;         
+    justify-content: center; 
+    align-items: center;    
+}
+
+.reviewModal-header h2 {
+    margin: 0;
+    font-family: 'Lexend', sans-serif;
+    position: static;      
+}
+
+.reviewModal-content {
+    background-color: #CDDECB;
+    position: relative;
+    height: calc(100% - 50px);
+}
+
+#closeReviewModal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: black;
+    cursor: pointer;
+}
+
+.rating-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.rating-container label {
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    margin-right: 15px;
+}
+
+.star-rating {
+    display: inline-flex;
+    margin-right: 15px;
+}
+
+.star {
+    color: black;         
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star:hover,
+.star.active,
+.star.selected {
+    color: #FFD700;
+}
+
+.star.active,
+.star.selected {
+    color: #FFD700;
+}
+
+
+#rating-text {
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    color: #555;
+}
+
+.input-box textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    font-size: 16px;
+    font-family: 'Lexend', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+/* Make the submit button right-aligned */
+.reviewModal-content .button-section {
+    justify-content: flex-end;
+}
+
+.delete-review{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-review:hover{
+    color: darkred;
+}
+
+/* Edit Review */
+#editReviewModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#closeEditReviewModal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: black;
+    cursor: pointer;
+}
+
+/* Delete Review */
+#deleteReviewConfirmPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+#closeDeleteReviewConfirm {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Make sure the parent has relative positioning */
+.deleteConfirm-header {
+    position: relative;
+}
+
+.rating-number {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Dropdown styling for cuisine selector */
+.wrapper form .input-box select {
+    width: 100%;
+    box-sizing: border-box;
+    height: 45px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: 'Lexend', sans-serif;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 12px;
+    color: black;
+    background-color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px;
+}
+
+.wrapper form .input-box select:hover {
+    border-color: #81C784;
+}
+
+.wrapper form .input-box select:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.wrapper form .input-box select option {
+    font-family: 'Lexend', sans-serif;
+    color: black;
+    background-color: white;
+}
+
+/* Reply System - Complete Styling */
+.review-replies {
+    margin-top: 18px;
+    padding-left: 25px;
+    border-left: 3px solid #e0e0e0;
+}
+
+.reply-item {
+    margin: 15px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.reply-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.reply-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    position: relative;
+    width: 100%;
+}
+
+.profile-pic-small {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e8f5e9;
+    margin-right: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.reply-header a, 
+.reply-header span {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #2E7D32;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.reply-header a:hover {
+    color: #1b5e20;
+}
+
+.reply-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.reply-item p {
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.delete-reply:hover {
+    color: #d32f2f;
+}
+
+.reply-toggle-btn {
+    background: none;
+    border: none;
+    color: #4a7c59;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+    margin-top: 0; /* Remove top margin since it's in a flex container */
+}
+
+.reply-toggle-btn:hover {
+    background-color: rgba(74, 124, 89, 0.1);
+    color: #2E7D32;
+}
+
+.reply-to-reply-btn {
+    background: none;
+    border: none;
+    color: #4a7c59;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.reply-to-reply-btn:hover {
+    background-color: rgba(74, 124, 89, 0.1);
+    color: #2E7D32;
+}
+
+.reply-form-container,
+.reply-to-reply-form-container {
+    margin-top: 12px;
+    padding: 15px;
+    background-color: #f8fff8;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.reply-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-height: 80px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    margin-bottom: 12px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.reply-form textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.reply-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.submit-reply-btn, 
+.cancel-reply-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.submit-reply-btn {
+    background-color: #5EB762;
+    color: white;
+}
+
+.submit-reply-btn:hover {
+    background-color: #4CAF50;
+}
+
+.cancel-reply-btn {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.cancel-reply-btn:hover {
+    background-color: #bdbdbd;
+}
+
+.reply-children {
+    margin-left: 25px;
+    padding-left: 15px;
+    border-left: 2px solid #e8f5e9;
+    margin-top: 10px;
+}
+
+
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .review-replies {
+        padding-left: 15px;
+    }
+    
+    .reply-children {
+        margin-left: 15px;
+        padding-left: 10px;
+    }
+    
+    .reply-item {
+        padding: 12px;
+    }
+    
+    .profile-pic-small {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Move reply date to header and make it green */
+.reply-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    position: relative;
+    width: 100%;
+    flex-wrap: wrap; /* Allow content to wrap if needed */
+}
+
+/* Reposition delete button and add spacing */
+.delete-reply {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+    transition: color 0.2s;
+    margin-right: 5px;
+}
+
+/* Style the reply date */
+.reply-date {
+    font-size: 14px;
+    color: #999;
+    font-style: italic;
+    margin-left: auto; /* Push the date to the right */
+    display: block; /* Match the review-date display */
+    margin-top: 8px; /* Add some spacing similar to review-date */
+    text-align: right; /* Align to the right like review-date */
+}
+
+/* Keep the reply actions layout clean */
+.reply-actions {
+    display: flex;
+    justify-content: space-between; /* Changed from flex-start to match review layout */
+    align-items: center;
+    margin-top: 10px;
+    width: 100%; /* Ensure full width like reviews */
+}
+
+/* EXTRA STUFF FOR EDIT REVIEW*/
+
+/* Edit button styling to match delete button */
+.edit-review {
+    position: absolute;
+    top: 9px; 
+    right: 50px; /* Position to the left of the delete button */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #444;
+    font-size: 24px; /* Slightly larger than the reply edit button */
+    transition: color 0.2s;
+    padding: 0;
+    margin: 0;
+}
+
+.edit-review:hover {
+    color: #4CAF50; /* Green on hover to match reply edit */
+}
+
+/* Adjust spacing for the buttons */
+.delete-review, .edit-review {
+    margin-left: 8px;
+}
+
+/* Edit reply button styling */
+.edit-reply {
+    position: absolute;
+    top: 0;
+    right: 30px; /* Adjust this value as needed to create enough space */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.edit-reply:hover {
+    color: #4CAF50;
+}
+
+.edit-reply-form-container {
+    margin-top: 12px;
+    padding: 15px;
+    background-color: #f8fff8;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.edit-reply-content {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-height: 80px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    margin-bottom: 12px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.edit-reply-content:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.submit-edit-reply-btn, 
+.cancel-edit-reply-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.submit-edit-reply-btn {
+    background-color: #5EB762;
+    color: white;
+}
+
+.submit-edit-reply-btn:hover {
+    background-color: #4CAF50;
+}
+
+.cancel-edit-reply-btn {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.cancel-edit-reply-btn:hover {
+    background-color: #bdbdbd;
+}
+
+/* Delete Reply Confirmation Dialog */
+#deleteReplyConfirmPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+#closeDeleteReplyConfirm {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Login and user profile button styling */
+.dashboard li button {
+    font-family: 'Baloo';
+    font-weight: bold;
+    color: #2E7D32;
+    font-size: 20px;
+    margin-right: 30px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.dashboard li button:hover {
+    color: #087c2fca;
+    text-decoration: underline;
+}
+
+/* User dropdown styling */
+.user-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    min-width: 150px;
+    border: 1px solid #DDF0DE;
+    border-top: 3px solid #2E7D32; /* Green top border for visual connection */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 10px;
+    z-index: 10001;
+    margin-top: 5px;
+    position: fixed;
+}
+   
+.user-dropdown a {
+    font-family: 'Lexend', sans-serif;
+    color: #000000;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+}
+
+.user-dropdown a:hover {
+    background-color: #DDF0DE;
+}
+
+/* Fix backdrop and login modals z-index */
+#backdrop {
+    z-index: 999 !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+#loginframe, #signinframe, #registerframe {
+    z-index: 1000 !important;
+}
+
+/* Ensure proper pointer events for modals */
+body.modal-open {
+    pointer-events: none;
+}
+
+#loginframe, #signinframe, #registerframe, #backdrop {
+    pointer-events: auto !important;
+}
+
+/* Add this at the end of your file */
+#deleteAccountConfirm {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    z-index: 1001;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    text-align: center;
+    font-family: 'Lexend', sans-serif;
+}
+
+#deleteAccountConfirm h3 {
+    margin-top: 0;
+    color: #d32f2f;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#deleteAccountConfirm p {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+#deleteAccountConfirm .confirm-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+#deleteAccountConfirm button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#cancelDeleteAccount {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+#cancelDeleteAccount:hover {
+    background-color: #bdbdbd;
+}
+
+#confirmDeleteAccount {
+    background-color: #d32f2f;
+    color: white;
+}
+
+#confirmDeleteAccount:hover {
+    background-color: #b71c1c;
+}
+
+/* Fix profile picture preview for edit profile */
+#profile-pic-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #81C784;
+    background-color: #f0f0f0;
+    background-size: cover;
+    background-position: center;
+    margin: 10px 0;
+    display: inline-block;
+}
+
+#loginButton {
+    font-family: 'Baloo';
+    font-weight: bold;
+    color: #2E7D32;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+#loginButton:hover {
+    color: #087c2fca;
+    text-decoration: underline;
+}
