@@ -47,8 +47,10 @@ let impErr1 = false;
 let impErr2 = false;
 let impErr3 = false;
 let impErr4 = false;
-
-mongoose.connect('mongodb://localhost/lasappDB', {
+require('dotenv').config();
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/lasappDB';
+mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   }).then(async () => {
@@ -143,15 +145,16 @@ app.get('/', (req, res) => {
 });
 
 app.use(session({
-  secret: 'lasapp_key',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: 'mongodb://localhost/lasappDB',
+    mongoUrl: MONGODB_URI,
     collection: 'sessions'
   }),
   cookie: {
     maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
+    secure:process.env.NODE_ENV === 'production', // Use secure cookies in production
   }
 }));
 let currentSessionId = null;
@@ -185,8 +188,8 @@ app.use('/database', denyDatabaseAccess);
 app.use(globalErrorHandler);
 
 // Start server
-app.listen(3000, function () {
-    console.log('Node server is running on http://localhost:3000');
+app.listen(PORT, function () {
+    console.log('Node server is running on ${PORT}'); 
 });
 
 console.log('Registered routes:');
