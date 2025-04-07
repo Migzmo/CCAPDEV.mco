@@ -198,4 +198,16 @@ router.get('/logout', (req, res) => {
   console.log("Session destroyed successfully");  // Debug log
 });
 
+router.get('/verify', (req, res) => {
+  if (req.session && req.session.userId) {
+    return res.status(200).json({
+      authenticated: true,
+      user: req.session.user
+    });
+  }
+  return res.status(401).json({
+    authenticated: false
+  });
+});
+
 module.exports = router;

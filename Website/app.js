@@ -74,8 +74,8 @@ let impErr2 = false;
 let impErr3 = false;
 let impErr4 = false;
 require('dotenv').config();
-const PORT = auth.env.PORT || 3000;
-const MONGODB_URI = auth.env.MONGODB_URI || 'mongodb://localhost/lasappDB';
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI;
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -159,7 +159,13 @@ const reviewRoutes = require('./Routes/reviewRoutes');
 const likeRoutes = require('./Routes/likeRoutes');
 const replyRoutes = require('./Routes/replyRoutes');
 
-// Import Error Handlers
+const {
+  syncSessionData,
+} = require('./Routes/configs');
+
+// Apply this middleware
+app.use(syncSessionData);
+
 const { globalErrorHandler, denyDatabaseAccess } = require('./Routes/errorHandlers');
 
 /****************************************************************************************************************************************************************************/
@@ -171,7 +177,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(session({
-  secret: auth.env.SESSION_SECRET || 'fallback_secret_do_not_use_in_production',
+  secret: process.env.SESSION_SECRET || 'fallback_secret_do_not_use_in_production',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
