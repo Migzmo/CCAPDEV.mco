@@ -22,10 +22,10 @@ const path = require('path');
 const app = express();
 //for sessions
 
-
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
+const index = require('/opt/render/project/src/website/index.js');
 
 
 // Import configuration and middleware setup
