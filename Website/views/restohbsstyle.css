@@ -70,7 +70,7 @@ html, body {
 }
 
 .info{
-    margin-top: 8%;
+    margin-top: 4%;
     margin-left: 5%;
     margin-right: 5%;
 }
@@ -123,13 +123,13 @@ html, body {
     font-family: 'baloo';
     color: #2E7D32;
     padding-top: 5px;
-    font-size: 50px;
+    font-size: 300%;
     padding-left: 1%;
 }
 
 .classheader p{
     padding-top: 14px;
-    font-size: 170%;
+    font-size: 210%;
     font-family: 'baloo';
     margin-left: auto;
     margin-right: 0%;
