@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
         message: 'Invalid username or password'
       });
     }
-    
+    console.log("Account found:", account);  // Debug log
     // Set up session data with user information
     req.session.userId = parseInt(account.acc_id, 10);
     req.session.user = {

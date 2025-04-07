@@ -124,17 +124,20 @@ mongoose.connect(MONGODB_URI, {
   .catch(err => console.error('Connection error:', err));
 
 
-  app.use(session({
-    secret: process.env.SESSION_SECRET,
+    app.use(session({
+    secret: process.env.SESSION_SECRET || 'fallback-secret-for-dev-only',
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: MONGODB_URI,
-      collection: 'sessions'
+      collection: 'sessions',
+      touchAfter: 24 * 3600 // Only update session once per day unless changed
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
-      secure:process.env.NODE_ENV === 'production', // Use secure cookies in production
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      sameSite: 'lax', // Helps with CSRF protection
+      path: '/' // Ensure cookies work across your entire site
     }
   }));
 // Initialize our Models
@@ -171,7 +174,8 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   console.log('Session ID:', req.session.id);
-  console.log('User ID in session:', req.session.userId);
+  console.log('User ID in session:', req.session.user.userId);
+  console.log('Current Session ID:', req.session.user.accountType);
   next();
 });
 // Mount restaurant routes before user routes to avoid path conflicts
