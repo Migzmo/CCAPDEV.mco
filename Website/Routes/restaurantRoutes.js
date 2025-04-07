@@ -28,11 +28,6 @@ const { isAuthenticated, isAuthenticatedApi } = require('./configs');
       
       console.log("Successfully found restaurants:", formattedRestaurants);
       
-      console.log("Session debug for resto:", {
-        directUserType: req.session.userType,
-        sessionUser: req.session.user,
-        userId: req.session.userId
-      });
       res.render('LaSapp', { 
         restaurants: formattedRestaurants, 
         user: {
