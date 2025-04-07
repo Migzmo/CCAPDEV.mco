@@ -18,6 +18,8 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const app = express();
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/lasappDB';
 //for sessions
 
 const session = require('express-session');
@@ -48,8 +50,7 @@ let impErr2 = false;
 let impErr3 = false;
 let impErr4 = false;
 require('dotenv').config();
-const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/lasappDB';
+
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -122,6 +123,20 @@ mongoose.connect(MONGODB_URI, {
   })
   .catch(err => console.error('Connection error:', err));
 
+
+  app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: MONGODB_URI,
+      collection: 'sessions'
+    }),
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
+      secure:process.env.NODE_ENV === 'production', // Use secure cookies in production
+    }
+  }));
 // Initialize our Models
 const { Account, Restaurant, Review } = require("./Models/lasappDB");
 
@@ -140,19 +155,7 @@ const { globalErrorHandler, denyDatabaseAccess } = require('./Routes/errorHandle
 //This Section is responsible for routing and handling API endpoints
 
 // Basic routes - Fix the order of middleware mounting
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: MONGODB_URI,
-    collection: 'sessions'
-  }),
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
-    secure:process.env.NODE_ENV === 'production', // Use secure cookies in production
-  }
-}));
+
 app.get('/', (req, res) => {
   res.redirect('/restaurant');
 });
@@ -163,6 +166,12 @@ app.use((req, res, next) => {
   if (req.session && req.session.userId) {
     currentSessionId = req.session.id;
   }
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log('Session ID:', req.session.id);
+  console.log('User ID in session:', req.session.userId);
   next();
 });
 // Mount restaurant routes before user routes to avoid path conflicts
