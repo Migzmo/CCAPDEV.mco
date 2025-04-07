@@ -2,9 +2,9 @@
   "name": "lasapp",
   "version": "1.0.0",
   "description": "Restaurant directory web application",
-  "main": "app.js",
+  "main": "Website/app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node Website/app.js"
   },
   "dependencies": {
     "express": "^4.18.2",
