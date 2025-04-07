@@ -40,8 +40,8 @@ module.exports = app;
 setupDirectories();
 setupMiddleware(app);
 
-app.use(express.static('Views'));
-
+app.use(express.static('views'));
+app.use('/Views', express.static(path.join(__dirname, 'views'))); 
 //For importing sample data to MONGO DB
 let impErr1 = false;
 let impErr2 = false;
