@@ -57,7 +57,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
     
     try {
       // Initialize our Models early to use them in imports
-      const { Account, Cuisine, Restaurant, Review } = require("./Models/lasappDB");
+      const { Account, Restaurant, Review } = require("./Models/lasappDB");
       
       // Check if any accounts exist already
       const accountsCount = await Account.countDocuments({});
@@ -75,22 +75,6 @@ mongoose.connect('mongodb://localhost/lasappDB', {
         }
       } else {
         console.log(`Database already has ${accountsCount} accounts, skipping import`);
-      }
-      
-      // Check if any cuisines exist already
-      const cuisineCount = await Cuisine.countDocuments({});
-      if (cuisineCount === 0) {
-        const cuisinesPath = path.join(__dirname, 'Models/Cuisines/cuisinesDB-Data.json');
-        if (fs.existsSync(cuisinesPath)) {
-          const cuisineData = JSON.parse(fs.readFileSync(cuisinesPath, 'utf8'));
-          await Cuisine.insertMany(cuisineData);
-          console.log('Initial cuisine data imported successfully');
-        } else {
-          impErr2 = true;
-          console.log('Cuisine data file not found at: ' + cuisinesPath);
-        }
-      } else {
-        console.log(`Database already has ${cuisineCount} cuisines, skipping import`);
       }
       
       // Check if any restaurants exist already
@@ -138,7 +122,7 @@ mongoose.connect('mongodb://localhost/lasappDB', {
   .catch(err => console.error('Connection error:', err));
 
 // Initialize our Models
-const { Account, Cuisine, Restaurant, Review } = require("./Models/lasappDB");
+const { Account, Restaurant, Review } = require("./Models/lasappDB");
 
 // Import Routes
 const authRoutes = require('./Routes/authRoutes');
