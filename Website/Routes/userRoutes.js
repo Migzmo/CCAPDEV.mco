@@ -85,7 +85,7 @@ router.get('/:id', async function (req, res) {
     }).exec();
     
     console.log(`Found ${userReviews.length} reviews for user ${accountId}`);
-    
+
     // Format reviews for the template
     const formattedReviews = userReviews.map(review => ({
       id: review.review_id,

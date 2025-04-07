@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - {{account.name}}</title>
-    <link rel="icon" href="/Views/images/assets/logo.png" type="image/png">
+    <link rel="icon" href="views/images/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="/Views/css/profile.css">
     <link rel="stylesheet" href="/Views/css/directory.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
@@ -235,6 +235,27 @@
             text-align: center;
             width: 70%;
         }
+
+        .review-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .review-body {
+            width: 100%;
+            overflow-wrap: break-word; /* Modern property for same purpose */
+        }
+
+        .review-body p {
+            margin: 10px 0;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            max-width: 80%; /* Ensure text doesn't overflow */
+        }
+
     </style>
 </head>
 <body>
