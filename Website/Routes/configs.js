@@ -8,6 +8,14 @@ const fileUpload = require('express-fileupload');
 const fs = require('fs');
 const hbs = require('hbs');
 
+const syncSessionData = (req, res, next) => {
+    if (req.session && req.session.user) {
+      res.setHeader('X-User-Auth-Status', 'authenticated');
+      res.setHeader('X-User-Id', req.session.userId);
+    }
+    next();
+  };
+
 const isAuthenticated = (req, res, next) => {
     if (req.session && req.session.userId) {
         return next();
@@ -126,5 +134,6 @@ module.exports = {
     setupDirectories,
     isAuthenticated,
     isAuthenticatedApi,
-    populateUserData
+    populateUserData,
+    syncSessionData
 };
