@@ -271,19 +271,21 @@ router.put('/api/submitupdate', async (req, res) => {
       });
     }
 
-    // Continue with existing code for checking duplicates
-    const existingRestaurant = await Restaurant.findOne({ 
-      resto_name: req.body.name, 
-      resto_id: { $ne: restaurantId },
-      isAlive: true 
-    });
-    
-    if (existingRestaurant) {
-      return res.status(409).json({ 
-        success: false, 
-        message: 'A restaurant with this name already exists',
-        error: 'duplicate_name'
+    // Check for name duplicates only if name was changed
+    if (req.body.name && req.body.name !== restaurant.resto_name) {
+      const existingRestaurant = await Restaurant.findOne({ 
+        resto_name: req.body.name, 
+        resto_id: { $ne: restaurantId },
+        isAlive: true 
       });
+      
+      if (existingRestaurant) {
+        return res.status(409).json({ 
+          success: false, 
+          message: 'A restaurant with this name already exists',
+          error: 'duplicate_name'
+        });
+      }
     }
 
     // Convert time strings to Date objects
@@ -301,15 +303,15 @@ router.put('/api/submitupdate', async (req, res) => {
     
     // Create properly mapped update object that matches your schema
     const updateData = {
-      resto_name: (req.body.name || '').trim(),
-      resto_address: (req.body.address || '').trim(),
+      resto_name: (req.body.name || restaurant.resto_name).trim(),
+      resto_address: (req.body.address || restaurant.resto_address).trim(),
       opening_time: openingDate,
       closing_time: closingDate,
-      resto_phone: (req.body.phoneNumber || '').trim(),
-      resto_email: (req.body.email || '').trim(),
-      resto_payment: (req.body.payment || '').trim(),
-      resto_perks: (req.body.perks || '').trim(),
-      cuisine_id: (req.body.cuisine_id || '').trim()
+      resto_phone: (req.body.phoneNumber || restaurant.resto_phone).trim(),
+      resto_email: (req.body.email || restaurant.resto_email).trim(),
+      resto_payment: (req.body.payment || restaurant.resto_payment).trim(),
+      resto_perks: (req.body.perks || restaurant.resto_perks).trim(),
+      cuisine_id: (req.body.cuisine_id || restaurant.cuisine_id).trim()
     };
     
     // Handle image upload if present
@@ -333,22 +335,60 @@ router.put('/api/submitupdate', async (req, res) => {
       }
     }
     
+    // Check if any data has actually changed
+    let hasChanges = false;
+    
+    // Compare each field to see if anything changed
+    if (updateData.resto_name !== restaurant.resto_name ||
+        updateData.resto_address !== restaurant.resto_address ||
+        updateData.resto_phone !== restaurant.resto_phone ||
+        updateData.resto_email !== restaurant.resto_email ||
+        updateData.resto_payment !== restaurant.resto_payment ||
+        updateData.resto_perks !== restaurant.resto_perks ||
+        updateData.cuisine_id !== restaurant.cuisine_id ||
+        updateData.resto_img) {
+      hasChanges = true;
+    }
+    
+    // Special handling for time comparison
+    let oldOpenHour = restaurant.opening_time.getHours();
+    let oldOpenMinute = restaurant.opening_time.getMinutes();
+    let oldCloseHour = restaurant.closing_time.getHours();
+    let oldCloseMinute = restaurant.closing_time.getMinutes();
+    
+    if (parseInt(openHours) !== oldOpenHour || 
+        parseInt(openMinutes) !== oldOpenMinute || 
+        parseInt(closeHours) !== oldCloseHour || 
+        parseInt(closeMinutes) !== oldCloseMinute) {
+      hasChanges = true;
+    }
+    
+    if (!hasChanges) {
+      // No changes detected, but let's treat this as a success
+      return res.status(200).json({
+        success: true,
+        message: 'no changes detected',
+        restaurant,
+        resto_id: restaurantId
+      });
+    }
+    
     console.log("Mapped update data:", updateData);
     
-    restaurant = await Restaurant.findOneAndUpdate(
+    const updatedRestaurant = await Restaurant.findOneAndUpdate(
       { resto_id: restaurantId },
       { $set: updateData },
       { new: true }
     );
     
-    if (!restaurant) {
+    if (!updatedRestaurant) {
       return res.status(404).json({ success: false, message: 'Restaurant not found' });
     }
     
     res.status(200).json({
       success: true,
       message: 'Restaurant updated successfully',
-      restaurant,
+      restaurant: updatedRestaurant,
       resto_id: restaurantId
     }); 
   } catch (error) {
