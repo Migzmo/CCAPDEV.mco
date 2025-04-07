@@ -23,6 +23,8 @@ const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 //const bcrypt = require('bcryptjs');
 
@@ -74,8 +76,7 @@ let impErr2 = false;
 let impErr3 = false;
 let impErr4 = false;
 require('dotenv').config();
-const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI;
+
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true

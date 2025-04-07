@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
     checkReviewsContent();
     
     initializeInlineHandlers();
+
+    const user = await checkAuthStatus();
 });
 
 function clearStaleUserData() {
