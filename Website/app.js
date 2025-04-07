@@ -6,8 +6,6 @@ Developers:
 4. Jose Miguel Espinosa
 
 last edited: 14/03/2025 
-To be done:
-di ko alam HAHAHHAHAHA
 */
 /****************************************************************************************************************************************************************************/
 //This Section is Responsible for initializing the Database and importing the sample data, as well as initializing all needed modules.
@@ -24,6 +22,7 @@ const app = express();
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+
 
 //const bcrypt = require('bcryptjs');
 

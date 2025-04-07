@@ -22,19 +22,9 @@ const { isAuthenticated, isAuthenticatedApi } = require('./configs');
         }
         return restaurant;
       });
-  
-      // Make sure to pass the user type correctly
-      const userType = req.session.user?.accountType || null;
-      
+      const userType =  req.session.user?.accountType || null;
       console.log("Successfully found restaurants:", formattedRestaurants);
-      
-      res.render('LaSapp', { 
-        restaurants: formattedRestaurants, 
-        user: {
-          userId: req.session.userId,
-          userType: userType
-        }
-      });
+      res.render('LaSapp', { restaurants: formattedRestaurants, userType:userType  });
       
     } catch (err) {
       console.error('Error fetching restaurants:', err);
