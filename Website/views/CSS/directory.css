@@ -1303,13 +1303,11 @@ font-family: 'Lexend', sans-serif;
     background: #bdbdbd;
 }
 
-/* Adjust form input width */
 form .input-box input {
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Form input styling - make fields bigger */
 .wrapper form .input-box input {
     width: 100%;
     box-sizing: border-box;

@@ -5,11 +5,6 @@
 
 import { resetLoginButton } from '../utils/authManager.js';
 
-/**
- * Delete a user account using the API
- * @param {string|number} userId - The user ID to delete
- * @returns {Promise<Object>} - Response from the server
- */
 async function deleteUserAccount(userId) {
     try {
         const response = await fetch('/api/users/delete-account', {
@@ -36,7 +31,7 @@ async function deleteUserAccount(userId) {
 }
 
 /**
- * Show the delete account confirmation dialog
+ * delete account's confirmation dialog
  */
 function showDeleteConfirmation() {
     const deleteConfirmDialog = document.getElementById('deleteAccountConfirm');
@@ -51,9 +46,8 @@ function showDeleteConfirmation() {
     }
 }
 
-/**
- * Hide the delete account confirmation dialog
- */
+
+// Hides the delete account confirmation dialog
 function hideDeleteConfirmation() {
     const deleteConfirmDialog = document.getElementById('deleteAccountConfirm');
     const backdrop = document.getElementById('backdrop');
@@ -67,9 +61,7 @@ function hideDeleteConfirmation() {
     }
 }
 
-/**
- * Confirm and process account deletion
- */
+//confirm + process account deletion
 async function confirmDeleteAccount() {
     try {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -84,18 +76,17 @@ async function confirmDeleteAccount() {
             // Clear user data from localStorage
             localStorage.removeItem('currentUser');
             
-            // Hide all modals
+            // Hide modals
             hideDeleteConfirmation();
             document.getElementById('editProfileFrame').style.display = 'none';
             document.getElementById('backdrop').style.display = 'none';
 
-            // Reset login button
+            // account delete -> reset login button
             resetLoginButton();
 
-            // Show success message
             alert('Your account has been deleted successfully.');
 
-            // Redirect to home page
+            // Redirect to home page after accoutn deletion
             window.location.href = '/';
         } else {
             throw new Error(result.error || 'Failed to delete account');
@@ -106,17 +97,14 @@ async function confirmDeleteAccount() {
     }
 }
 
-/**
- * Set up account deletion event handlers
- */
+// event handlers for account deletion
 function setupDeleteAccountHandlers() {
-    // Set up delete account button handler
     const deleteAccountBtn = document.getElementById('delete-account-btn');
     if (deleteAccountBtn) {
         deleteAccountBtn.addEventListener('click', showDeleteConfirmation);
     }
 
-    // Set up confirmation dialog handlers
+    // Confirmation dialog handlers
     const confirmDeleteBtn = document.getElementById('confirmDeleteAccount');
     const cancelDeleteBtn = document.getElementById('cancelDeleteAccount');
 

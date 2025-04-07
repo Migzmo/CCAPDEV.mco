@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-    width: 90%; /* Increased width to fit horizontal members */
+    width: 90%; 
     height: auto;
     margin: 20px auto;
     padding: 20px;

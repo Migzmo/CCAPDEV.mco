@@ -51,9 +51,9 @@ html, body {
     font-size: 20px;
     list-style: none;
     display: flex;
-    gap: 180px; /* Reduced gap between items */
+    gap: 180px; 
     margin-right: 30px;
-    justify-content: flex-end; /* Push items to the right */
+    justify-content: flex-end; 
 }
 
 .navbar a {
@@ -208,8 +208,8 @@ html, body {
     padding-bottom: 2%;
     border: none;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    overflow: hidden; /* Prevent content from spilling out */
-    box-sizing: border-box; /* Include padding in width calculation */
+    overflow: hidden; 
+    box-sizing: border-box; 
 }
 
 .review1 {
@@ -221,7 +221,7 @@ html, body {
     background-color: #f0f7ee;
     border-radius: 20px 20px 0 0;
     border-bottom: 2px solid #e0e9dd;
-    box-sizing: border-box; /* Include padding in width calculation */        
+    box-sizing: border-box;      
 }
 
 .reviews h1 {
@@ -267,7 +267,7 @@ html, body {
     align-items: center;
 }
 
-/*Scrollable segment for reviews*/
+/* Scrollable segment for reviews */
 .scroll-div {
     width: 100%;
     height: 600px;
@@ -278,7 +278,7 @@ html, body {
 
 .scroll-obj p {
     margin: 0;
-    padding: 5px 0 10px 0; /* Remove left padding */
+    padding: 5px 0 10px 0; 
     font-family: 'Lexend', sans-serif;
     font-size: 16px;
     line-height: 1.5;
@@ -295,7 +295,7 @@ html, body {
 }
 
 .scroll-obj {
-    margin: 15px 20px; /* Match horizontal padding of review1 */
+    margin: 15px 20px; 
     padding: 20px;
     background: white;
     border-radius: 12px;
@@ -318,8 +318,8 @@ html, body {
     font-family: 'Lexend', sans-serif;
     font-weight: 600;
     font-size: 18px;
-    padding-left: 0; /* Remove any left padding */
-    margin-left: 0;  /* Remove any left margin */
+    padding-left: 0; 
+    margin-left: 0;  
 }
 
 /* Improved profile image */
@@ -333,15 +333,15 @@ html, body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Add rating stars visualization (placeholder for future implementation) */
+/* Add rating stars visualization */
 .review-rating {
     margin-bottom: 10px;
     color: #FFD700;
     font-size: 18px;
-    margin-left: 0; /* Align stars to the left */
-    padding-left: 0; /* Remove any left padding */
+    margin-left: 0; 
+    padding-left: 0; 
     white-space: nowrap;
-    letter-spacing: -2px; /* Adjust if needed to make stars closer together */
+    letter-spacing: -2px; 
 }
 
 /* User link styling */
@@ -351,8 +351,8 @@ html, body {
     transition: color 0.2s;
     display: flex;
     align-items: center;
-    padding-left: 0; /* Remove any left padding */
-    margin-left: 0;  /* Remove any left margin */
+    padding-left: 0; 
+    margin-left: 0; 
 }
 
 .scroll-div a:hover {
@@ -452,7 +452,6 @@ footer{
     border-radius: 50%;
 }
 
-/* CSS */
 .button-3 {
   appearance: none;
   background-color: #2ea44f;
@@ -662,12 +661,10 @@ footer{
     width: 100%;  
 }
 
-/* Make sure buttons have consistent styling */
 .buttons-container button {
     margin: 0; 
 }
 
-/* Fix for the button inside an anchor tag */
 .buttons-container a {
     display: inline-block;  
     margin: 0;
@@ -720,7 +717,6 @@ footer{
     background: #5EB762;
 }
 
-/* Fix input box positioning */
 .wrapper form .input-box {
     margin-left: 0; 
     padding: 0 20px; 
@@ -739,7 +735,6 @@ footer{
     padding-left: 20px;
 }
 
-/* Fix button section to appear at the bottom */
 .button-section {
     margin-top: 25px;
     margin-bottom: 25px;
@@ -769,13 +764,11 @@ footer{
     background: #bdbdbd;
 }
 
-/* Adjust form input width */
 form .input-box input {
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Form input styling - make fields bigger */
 .wrapper form .input-box input {
     width: 100%;
     box-sizing: border-box;
@@ -799,17 +792,14 @@ form .input-box input {
     margin-top: 5px;
 }
 
-/* Adjust time inputs specifically */
 .wrapper form .input-box.time-input input {
     height: 45px;
 }
 
-/* Add more spacing between form sections */
 .form-section {
     margin-bottom: 25px;
 }
 
-/* Make submit and cancel buttons larger */
 .button-section .input-box.button input,
 .button-section .input-box.button.secondary input {
     height: 50px;
@@ -819,7 +809,6 @@ form .input-box input {
     border-radius: 8px;
 }
 
-/* Make form section headings larger */
 .form-section h4 {
     font-family: 'Lexend', sans-serif;
     color: black;
@@ -829,13 +818,11 @@ form .input-box input {
     font-weight: 600; 
 }
 
-/* Ensure placeholder text is a lighter shade but still readable */
 .wrapper form .input-box input::placeholder {
     color: #757575;
 }
 
 /* Style for single image upload */
-
 .input-box.image-upload input[type="file"] {
     padding: 10px;
     border: 1px dashed #81C784;
@@ -1102,7 +1089,6 @@ form .input-box input {
     resize: vertical;
 }
 
-/* Make the submit button right-aligned */
 .reviewModal-content .button-section {
     justify-content: flex-end;
 }
@@ -1173,7 +1159,6 @@ form .input-box input {
     cursor: pointer;
 }
 
-/* Make sure the parent has relative positioning */
 .deleteConfirm-header {
     position: relative;
 }
@@ -1184,7 +1169,6 @@ form .input-box input {
     color: #555;
 }
 
-/* Dropdown styling for cuisine selector */
 .wrapper form .input-box select {
     width: 100%;
     box-sizing: border-box;
@@ -1307,7 +1291,7 @@ form .input-box input {
     padding: 8px 12px;
     border-radius: 4px;
     transition: background-color 0.2s, color 0.2s;
-    margin-top: 0; /* Remove top margin since it's in a flex container */
+    margin-top: 0; 
 }
 
 .reply-toggle-btn:hover {
@@ -1428,17 +1412,15 @@ form .input-box input {
     }
 }
 
-/* Move reply date to header and make it green */
 .reply-header {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
     position: relative;
     width: 100%;
-    flex-wrap: wrap; /* Allow content to wrap if needed */
+    flex-wrap: wrap; 
 }
 
-/* Reposition delete button and add spacing */
 .delete-reply {
     position: absolute;
     top: 0;
@@ -1452,48 +1434,44 @@ form .input-box input {
     margin-right: 5px;
 }
 
-/* Style the reply date */
 .reply-date {
     font-size: 14px;
     color: #999;
     font-style: italic;
-    margin-left: auto; /* Push the date to the right */
-    display: block; /* Match the review-date display */
-    margin-top: 8px; /* Add some spacing similar to review-date */
-    text-align: right; /* Align to the right like review-date */
+    margin-left: auto; 
+    display: block; 
+    margin-top: 8px; 
+    text-align: right; 
 }
 
-/* Keep the reply actions layout clean */
 .reply-actions {
     display: flex;
-    justify-content: space-between; /* Changed from flex-start to match review layout */
+    justify-content: space-between; 
     align-items: center;
     margin-top: 10px;
-    width: 100%; /* Ensure full width like reviews */
+    width: 100%; 
 }
 
 /* EXTRA STUFF FOR EDIT REVIEW*/
 
-/* Edit button styling to match delete button */
 .edit-review {
     position: absolute;
     top: 9px; 
-    right: 50px; /* Position to the left of the delete button */
+    right: 50px; 
     background: none;
     border: none;
     cursor: pointer;
     color: #444;
-    font-size: 24px; /* Slightly larger than the reply edit button */
+    font-size: 24px; 
     transition: color 0.2s;
     padding: 0;
     margin: 0;
 }
 
 .edit-review:hover {
-    color: #4CAF50; /* Green on hover to match reply edit */
+    color: #4CAF50; 
 }
 
-/* Adjust spacing for the buttons */
 .delete-review, .edit-review {
     margin-left: 8px;
 }
@@ -1502,7 +1480,7 @@ form .input-box input {
 .edit-reply {
     position: absolute;
     top: 0;
-    right: 30px; /* Adjust this value as needed to create enough space */
+    right: 30px; 
     background: none;
     border: none;
     cursor: pointer;
@@ -1625,7 +1603,7 @@ form .input-box input {
     background-color: white;
     min-width: 150px;
     border: 1px solid #DDF0DE;
-    border-top: 3px solid #2E7D32; /* Green top border for visual connection */
+    border-top: 3px solid #2E7D32; 
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     padding: 10px;
@@ -1648,7 +1626,6 @@ form .input-box input {
     background-color: #DDF0DE;
 }
 
-/* Fix backdrop and login modals z-index */
 #backdrop {
     z-index: 999 !important;
     background-color: rgba(0, 0, 0, 0.5) !important;
@@ -1658,7 +1635,6 @@ form .input-box input {
     z-index: 1000 !important;
 }
 
-/* Ensure proper pointer events for modals */
 body.modal-open {
     pointer-events: none;
 }
@@ -1667,7 +1643,6 @@ body.modal-open {
     pointer-events: auto !important;
 }
 
-/* Add this at the end of your file */
 #deleteAccountConfirm {
     display: none;
     position: fixed;
@@ -1729,7 +1704,6 @@ body.modal-open {
     background-color: #b71c1c;
 }
 
-/* Fix profile picture preview for edit profile */
 #profile-pic-preview {
     width: 80px;
     height: 80px;

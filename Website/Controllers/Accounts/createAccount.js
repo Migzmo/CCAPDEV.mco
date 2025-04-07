@@ -1,28 +1,26 @@
 /**
- * Account Creation Module
- * Handles user registration and profile setup
+ * ACCOUNT CREATION
+ * This file handles the process from forms to session info, and such.
+ * It then exports the necessary modules
  */
 
 import { updateUIAfterLogin } from '../utils/authManager.js';
 
-/**
- * Handle the user registration form submission
- * @param {Event} event - Form submission event
- */
+//handleRegistration
 async function handleRegistration(event) {
     event.preventDefault();
     console.log('Registration form submitted');
     
-    // Create a FormData object to properly handle file uploads
+    // formData prep
     const formData = new FormData();
     
-    // Add text data to FormData
+    // textfields
     formData.append('username', document.getElementById('username').value);
     formData.append('password', document.getElementById('password').value);
     formData.append('accountType', document.querySelector('input[name="accountType"]:checked').value);
     formData.append('description', document.getElementById('description').value);
     
-    // Add the profile picture file if one was selected
+    // profile pic
     const avatarInput = document.getElementById('avatar');
     if (avatarInput && avatarInput.files && avatarInput.files[0]) {
         formData.append('profile_pic', avatarInput.files[0]);
@@ -31,7 +29,7 @@ async function handleRegistration(event) {
     const result = await registerUser(formData);
     
     if (result.success) {
-        // Store the user session info
+        // Store user session info
         localStorage.setItem('currentUser', JSON.stringify({
             username: result.data.username,
             userId: result.data.userId,
@@ -53,23 +51,19 @@ async function handleRegistration(event) {
 
         alert('Account created successfully!');
         
-        // Reload the page to reflect changes
+        // Reload page to reflect changes
         window.location.href = '/';
     } else {
         alert(`Registration failed: Account Already Exists`);
     }
 }
 
-/**
- * Register a new user
- * @param {FormData} formData - Form data for registration including file uploads
- * @returns {Promise<Object>} - Response from the server
- */
+// registerUser func
 async function registerUser(formData) {
     try {
         console.log('Sending registration data with FormData');
         
-        // Log form data for debugging (optional)
+        // debugging
         for (let pair of formData.entries()) {
             console.log(pair[0] + ': ' + (pair[0] === 'profile_pic' ? 'File data' : pair[1]));
         }
@@ -81,11 +75,10 @@ async function registerUser(formData) {
 
         console.log('Registration response status:', response.status);
         
-        // Log raw response for debugging
+        // for debugging
         const responseText = await response.text();
         console.log('Registration response text:', responseText);
         
-        // Parse the response as JSON (if possible)
         let data;
         try {
             data = JSON.parse(responseText);
