@@ -37,7 +37,7 @@ const {
   populateUserData  // Add this import
 } = require('./Routes/configs');
 
-module.exports = app;
+
 // Set up directories and middleware
 setupDirectories();
 setupMiddleware(app);
@@ -277,3 +277,4 @@ app.post('/api/restaurants/unlike', async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to unlike restaurant', error: error.message });
   }
 });
+module.exports = app;
