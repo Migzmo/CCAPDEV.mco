@@ -71,4 +71,4 @@ LaSapp was developed as part of an academic project by the following members:
 - Karl Matthew Dela Cruz  
 - Jose Miguel Espinosa  
 - Adler Clarence Strebel
-CCAPDEV S16 T2 '24-'25
+- CCAPDEV S16 T2 '24-'25
