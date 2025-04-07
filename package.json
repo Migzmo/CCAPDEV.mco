@@ -2,7 +2,7 @@
   "name": "ccapdev.mco",
   "version": "1.0.0",
   "description": "LaSapp is a web application that provides a directory of restaurants. Users can view restaurant information, leave reviews, and navigate through different restaurant pages.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
