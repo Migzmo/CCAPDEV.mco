@@ -154,13 +154,15 @@ app.use(session({
   }),
   cookie: {
     maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
-    secure:process.env.NODE_ENV === 'production', // Use secure cookies in production
+    secure:process.env.NODE_ENV === 'production',
+    sameSite: 'lax'
   }
 }));
 let currentSessionId = null;
 app.use((req, res, next) => {
   if (req.session && req.session.userId) {
     currentSessionId = req.session.id;
+    console.log('Active session found:', { id: req.session.id, userId: req.session.userId });
   }
   next();
 });
