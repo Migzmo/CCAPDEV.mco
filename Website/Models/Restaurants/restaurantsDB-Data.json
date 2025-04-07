@@ -73,5 +73,50 @@
       "resto_owner_id": 2,
       "cuisine_id": "Cafe",
       "isAlive": true
+    },
+    {
+      "resto_id": 7,
+      "resto_name": "ZUS Coffee - UMall",
+      "resto_address": "University Mall, Taft Avenue, Manila",
+      "opening_time": "2023-01-01T08:00:00.000Z",
+      "closing_time": "2023-01-01T22:00:00.000Z",
+      "resto_phone": "+63 2 1234 5678",
+      "resto_email": "zuscoffee@gmail.com",
+      "resto_payment": "Cash, Credit Card, GCash",
+      "resto_perks": "Free Wi-Fi, Cozy Ambiance, Student Discounts",
+      "resto_img": "/Views/images/restaurantPictures/zus-coffee.jpeg",
+      "resto_owner_id": 1,
+      "cuisine_id": "Cafe",
+      "isAlive": true
+    },
+    {
+      "resto_id": 8,
+      "resto_name": "Starbucks - University Mall",
+      "resto_address": "G/F University Mall, 1200 Taft Avenue, Manila",
+      "opening_time": "2023-01-01T07:00:00.000Z",
+      "closing_time": "2023-01-01T22:00:00.000Z",
+      "resto_phone": "+63 2 8892 5792",
+      "resto_email": "starbucks.taft@example.com",
+      "resto_payment": "Cash, Credit Card, Debit Card, Starbucks Card",
+      "resto_perks": "Free Wi-Fi, Study Areas, Loyalty Program, Mobile Order",
+      "resto_img": "/Views/images/restaurantPictures/starbucks-taft.jpeg",
+      "resto_owner_id": 1,
+      "cuisine_id": "Cafe",
+      "isAlive": true
+    },
+    {
+      "resto_id": 9,
+      "resto_name": "Jollibee - Taft Avenue",
+      "resto_address": "2387 Taft Avenue, Malate, Manila",
+      "opening_time": "2023-01-01T06:00:00.000Z",
+      "closing_time": "2023-01-01T22:00:00.000Z",
+      "resto_phone": "+63 2 8887 7000",
+      "resto_email": "customerservice@jollibee.com.ph",
+      "resto_payment": "Cash, Credit Card, GCash, PayMaya",
+      "resto_perks": "Drive-Thru, Delivery, Student Discount, Value Meals",
+      "resto_img": "/Views/images/restaurantPictures/jollibee-taft.jpg",
+      "resto_owner_id": 4,
+      "cuisine_id": "Fast Food",
+      "isAlive": true
     }
 ]
