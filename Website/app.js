@@ -52,11 +52,11 @@ let impErr4 = false;
 require('dotenv').config();
 
 mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }).then(async () => {
-    console.log('Connected to MongoDB');
-    
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(async () => {
+  console.log('Connected to MongoDB');    
     try {
       // Initialize our Models early to use them in imports
       const { Account, Restaurant, Review } = require("./Models/lasappDB");
@@ -174,8 +174,8 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   console.log('Session ID:', req.session.id);
-  console.log('User ID in session:', req.session.user.userId);
-  console.log('Current Session ID:', req.session.user.accountType);
+  console.log('User ID in session:', req.session.user);
+  
   next();
 });
 // Mount restaurant routes before user routes to avoid path conflicts

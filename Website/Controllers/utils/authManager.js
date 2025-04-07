@@ -66,24 +66,35 @@ function updateUIAfterLogin() {
 
 /**
  * Check if user is logged in and update UI accordingly
- * @returns {boolean} - Whether the user is logged in
+ * @returns {Promise<boolean>} - Whether the user is logged in
  */
-function checkUserLoggedIn() {
+async function checkUserLoggedIn() {
     const currentUserString = localStorage.getItem('currentUser');
     if (currentUserString) {
         try {
-            const currentUser = JSON.parse(currentUserString);
-            if (currentUser && currentUser.userId) {
-                // Valid user data exists
+            // Verify with the server that the session is still valid
+            const response = await fetch('/auth/verify-session');
+            const data = await response.json();
+            
+            if (data.success) {
+                // Session is valid
                 updateUIAfterLogin();
                 return true;
+            } else {
+                // Session is invalid, clear localStorage
+                localStorage.removeItem('currentUser');
+                resetLoginButton();
+                return false;
             }
         } catch (e) {
-            console.error("Error parsing user data:", e);
+            console.error("Error verifying session:", e);
+            // On error, assume user is still logged in to prevent disruption
+            updateUIAfterLogin();
+            return true;
         }
     }
     
-    // If we reach here, either there's no user data or it's invalid
+    // No local user data
     resetLoginButton();
     return false;
 }
@@ -197,6 +208,23 @@ function toggleUserDropdown(userBtn) {
         menu.style.width = `${updatedRect.width}px`;
     });
 }
+
+// Add this route
+router.get('/verify-session', (req, res) => {
+  if (req.session && req.session.userId) {
+    res.json({
+      success: true,
+      userId: req.session.userId,
+      username: req.session.user?.username || '',
+      accountType: req.session.user?.accountType || ''
+    });
+  } else {
+    res.json({
+      success: false,
+      message: 'No active session'
+    });
+  }
+});
 
 // Export functions
 export { 
