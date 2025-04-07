@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - {{account.name}}</title>
-    <link rel="icon" href="/Views/images/assets/logo.png" type="image/png">
+    <link rel="icon" href="views/images/assets/logo.png" type="image/png">
     <link rel="stylesheet" href="/Views/css/profile.css">
     <link rel="stylesheet" href="/Views/css/directory.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
@@ -235,6 +235,27 @@
             text-align: center;
             width: 70%;
         }
+
+        .review-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .review-body {
+            width: 100%;
+            overflow-wrap: break-word; /* Modern property for same purpose */
+        }
+
+        .review-body p {
+            margin: 10px 0;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            max-width: 80%; /* Ensure text doesn't overflow */
+        }
+
     </style>
 </head>
 <body>
@@ -287,7 +308,7 @@
                         </div>
                     </div>
                     <div class="review-body">
-                        <p>{{this.review}}</p>
+                        <p>{{{this.review}}}</p>
                     </div>
                 </div>
                 {{/each}}
@@ -334,7 +355,6 @@
                 <h2>Log in or sign up now!</h2>
                 <div class="button-container">
                     <button class="signin-button"><span id="mail-logo"></span>Continue with Account</button>
-                    <button class="login-button"><span id="google-logo"></span>Login with Gmail</button>
                 </div>
                 <p class="describe-register">New to LaSapp?<button id="register">Create account</button></p>
                 <p class="Description">By using LaSapp, you agree to follow the guidelines outlined in the <a href="https://www.dlsu.edu.ph/wp-content/uploads/pdf/osa/student-handbook.pdf" target="_blank">DLSU Student Handbook</a> and/or Privacy Policy of LaSapp.</p>
@@ -356,11 +376,6 @@
                     </div>
                     <div class="form-group">
                         <input type="password" id="signin-password" placeholder="Password" required>
-                    </div>
-
-                    <div class="remember-me">
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">Remember me</label>
                     </div>
                     <button type="submit" class="signin-submit-button">Sign in</button>
                 </form>

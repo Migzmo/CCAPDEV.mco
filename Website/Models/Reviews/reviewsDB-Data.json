@@ -1,46 +1,92 @@
 [
-    {
-        "review_id": 0,
-        "account_id": 0,
-        "resto_id": 2,
-        "rating": 5,
-        "review": "the birria was insane, honestly!",
-        "isAlive": true
-    },
-
-
-
-    {
-        "review_id": 1,
-        "account_id": 1,
-        "resto_id": 2,
-        "rating": 5,
-        "review": "Dynamic Review actually works?",
-        "isAlive": true
-    },
-
-    {
-        "review_id": 2,
-        "account_id": 1,
-        "resto_id": 2,
-        "rating": 5,
-        "review": "Will?",
-        "isAlive": true
-    },
-    {
-        "review_id": 3,
-        "account_id": 1,
-        "resto_id": 2,
-        "rating": 5,
-        "review": "This?",
-        "isAlive": true
-    },
-    {
-        "review_id": 4,
-        "account_id": 1,
-        "resto_id": 2,
-        "rating": 5,
-        "review": "Scroll?",
-        "isAlive": true
-    }
+  {
+    "review_id": 1,
+    "account_id": 0,
+    "resto_id": 6,
+    "rating": 5,
+    "review": "Cafe Verde has the <b>best</b> coffee I've ever tasted! The ambiance is perfect for studying, with plenty of outlets and fast Wi-Fi. Their avocado toast is a must-try for breakfast. <u>Highly recommended</u> for students looking for a quiet place to work.",
+    "isAlive": true,
+    "last_edited_at": null
+  },
+  {
+    "review_id": 2,
+    "account_id": 3,
+    "resto_id": 6,
+    "rating": 4,
+    "review": "Great place to relax and study! The coffee is excellent and they have student discounts which is nice for my budget. The only downside is it gets a bit crowded in the afternoons, so come early if you want a good spot.",
+    "isAlive": true,
+    "last_edited_at": null
+  },
+  {
+    "review_id": 3,
+    "account_id": 4,
+    "resto_id": 2,
+    "rating": 5,
+    "review": "As a fellow restaurant owner, I'm <i>incredibly impressed</i> with El Poco Cantina. Their attention to detail is outstanding, from the authentic salsa to the perfectly cooked tacos. The staff is knowledgeable and friendly. Will definitely be back!",
+    "isAlive": true,
+    "last_edited_at": null
+  },
+  {
+    "review_id": 4,
+    "account_id": 0,
+    "resto_id": 2,
+    "rating": 4,
+    "review": "El Poco Cantina serves authentic Mexican food that reminds me of my trip to Mexico City. The guacamole was fresh and flavorful, though I found the portions a bit small for the price. Their churros side dish is exceptional!",
+    "isAlive": true,
+    "last_edited_at": "2023-12-15T14:32:00.000Z"
+  },
+  {
+    "review_id": 5,
+    "account_id": 1,
+    "resto_id": 3,
+    "rating": 4,
+    "review": "Manila BBQ offers excellent Filipino cuisine at reasonable prices. The sisig and adobo are authentic and flavorful. Service was a bit slow during the lunch rush, but the quality of food makes up for the wait. <ul><li>Great sisig</li><li>Authentic adobo</li><li>Reasonable prices</li></ul>",
+    "isAlive": true,
+    "last_edited_at": null
+  },
+  {
+    "review_id": 6,
+    "account_id": 2,
+    "resto_id": 3,
+    "rating": 3,
+    "review": "As the owner of multiple restaurants, I have high standards, and Manila BBQ mostly delivers. The food is good with authentic Filipino flavors, but the service needs improvement. Wait times can be long during peak hours.",
+    "isAlive": true,
+    "last_edited_at": null
+  },
+  {
+    "review_id": 7,
+    "account_id": 3,
+    "resto_id": 4,
+    "rating": 5,
+    "review": "Seoul Kitchen is a hidden gem! Their bibimbap is absolutely delicious and the kimchi is made in-house. As a culinary student, I appreciate their attention to authentic techniques. The banchan (side dishes) are generous and varied.",
+    "isAlive": true,
+    "last_edited_at": null
+  },
+  {
+    "review_id": 8,
+    "account_id": 4,
+    "resto_id": 4,
+    "rating": 4,
+    "review": "Great Korean food at reasonable prices. The bulgogi was tender and perfectly seasoned, and they don't hold back on the spice level if you ask for it authentic. <b>Bonus points</b> for the complimentary tea!",
+    "isAlive": true,
+    "last_edited_at": null
+  },
+  {
+    "review_id": 9,
+    "account_id": 1,
+    "resto_id": 5,
+    "rating": 5,
+    "review": "American Diner takes me back to my travels in the US! Their burgers are juicy and cooked to perfection, and the milkshakes are thick and creamy just as they should be. The all-day breakfast is a lifesaver for late risers like me!",
+    "isAlive": true,
+    "last_edited_at": null
+  },
+  {
+    "review_id": 10,
+    "account_id": 0,
+    "resto_id": 5,
+    "rating": 3,
+    "review": "Good American food but nothing exceptional. The burgers are decent and the fries are crispy. Service is friendly and quick. It's a solid option if you're craving American comfort food, but don't expect anything gourmet.",
+    "isAlive": true,
+    "last_edited_at": null
+  }
 ]

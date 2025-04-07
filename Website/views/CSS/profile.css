@@ -574,3 +574,19 @@ footer img{
     display: block !important;
     margin: 0 auto !important;
 }
+
+.review-body p u {
+    text-decoration: underline !important;
+}
+
+.review-body p b, .review-body p strong {
+    font-weight: bold !important;
+}
+
+.review-body p i, .review-body p em {
+    font-style: italic !important;
+}
+
+.review-body p a {
+    text-decoration: underline;
+}

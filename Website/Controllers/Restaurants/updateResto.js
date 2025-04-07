@@ -62,17 +62,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: formData 
             })
             .then(response => {
-                console.log("Response received:", response.status);
-                if (!response.ok) {
-                    return response.json().then(errorData => {
-                        throw new Error(JSON.stringify(errorData));
-                    });
-                }
-                return response.json();
+                console.log("Response received:", response.status, response.statusText);
+                console.log("Headers:", [...response.headers.entries()]);
+                
+                return response.json().then(data => {
+                    if (response.ok || data.success) {
+                        return data;
+                    }
+                    throw new Error(JSON.stringify(data));
+                });
             })
             .then(data => {
                 console.log("Success data:", data);
-                alert('Restaurant Updated successfully!');
+                // Display appropriate success message based on the response
+                if (data.message && data.message.includes('no changes detected')) {
+                    alert('No changes were detected. Restaurant remains unchanged.');
+                } else {
+                    alert('Restaurant Updated successfully!');
+                }
                 
                 // Close popup if needed
                 if (typeof togglePopupCreateResto === 'function') {
@@ -91,13 +98,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Try to parse the error message as JSON
                 try {
                     const errorData = JSON.parse(error.message);
+                    
+                    // If the error contains data indicating it was actually successful
+                    if (errorData.success === true || errorData.updated === true) {
+                        console.log("Despite error response, update appears successful");
+                        alert('Restaurant Updated successfully!');
+                        
+                        // Close popup if needed
+                        if (typeof togglePopupCreateResto === 'function') {
+                            togglePopupCreateResto();
+                        }
+                        
+                        // Get the ID from one of these sources
+                        const restaurantId = errorData.resto_id || errorData.restaurant?.resto_id || resto_id;
+                        
+                        // Redirect to restaurant page with proper ID
+                        window.location.href = `/restaurant/${restaurantId}`;
+                        return;
+                    }
+                    
+                    // Add more debugging to see what's coming back
+                    console.log("Full error data:", errorData);
+                    
                     if (errorData.error === 'duplicate_name') {
                         alert('Update failed: A restaurant with this name already exists. Please use a different name.');
+                    } else if (errorData.message && errorData.message.includes('no changes detected')) {
+                        // If the error is about no changes detected, still treat as success
+                        alert('No changes were detected. Restaurant remains unchanged.');
+                        togglePopupCreateResto();
+                        window.location.href = `/restaurant/${resto_id}`;
                     } else {
                         alert(`Failed to update restaurant: ${errorData.message || 'Please try again.'}`);
                     }
                 } catch (e) {
                     // If not JSON, show generic message
+                    console.error('Error:', error);
+                    console.log("Error name:", error.name);
+                    console.log("Error message:", error.message);
+
+                    console.error("Error parsing error message:", e);
                     alert('Failed to update restaurant. Please try again.');
                 }
             })

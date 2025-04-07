@@ -56,7 +56,7 @@ async function handleRegistration(event) {
         // Reload the page to reflect changes
         window.location.href = '/';
     } else {
-        alert(`Registration failed: ${result.error}`);
+        alert(`Registration failed: Account Already Exists`);
     }
 }
 

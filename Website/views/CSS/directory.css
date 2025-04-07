@@ -136,8 +136,8 @@ li a {
     flex-direction: row;
     width:80%;
     flex-wrap: wrap;
-    gap: 30px;
-    margin: 10px auto ;
+    gap: 25px;
+    margin: 10px auto;
 }
 
 .resto-img{
@@ -156,17 +156,16 @@ li a {
 }
 
 .restaurants{
-display:flex;
-flex-direction: column;
-position: relative;
-align-items: center;
-justify-content: center;
-margin:auto -25px;
-margin-left: 20px;
-width: 350.93px; 
-height: 429px;
-
-    
+    display:flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    margin:auto -20px;
+    margin-left: 20px;
+    width: 350.93px; 
+    height: 370px;
+    margin-bottom: 0;
 }
 
 .restaurants:hover{
@@ -174,14 +173,15 @@ height: 429px;
     transition: 0.5s;
 }
 .resto-text{
-position: relative;
-width: 300px;
-height: 100px;
-margin-top:-20px;
-background: #FFFFFF;
-border-radius: 25px;
-
+    position: relative;
+    width: 300px;
+    height: 100px;
+    margin-top:-20px;
+    background: #FFFFFF;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
+
 .filler{
 position: relative;
 width: 300px;
@@ -459,7 +459,7 @@ font-family: 'Lexend', sans-serif;
 }
 
 .signin-button, .login-button {
-    font-size: 16px;
+    font-size: 20px;
     font-family: 'Baloo';
     color: black;
     background-color: #81C784;

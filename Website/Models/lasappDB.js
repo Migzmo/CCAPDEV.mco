@@ -42,19 +42,9 @@ const accountSchema = new mongoose.Schema({
   isAlive: { type: Boolean, default: true },
   acc_type:{type:String, enum:['admin','user','business-owner'],default:'user'},
   acc_password:{type:String,required:true}
-  
 });
 
 const Account = mongoose.model('Account', accountSchema);
-
-// Cuisine Schema
-const cuisineSchema = new mongoose.Schema({
-  cuisine_id: { type: Number, unique: true, required: true },
-  cuisine_name: { type: String, required: true },
-  isAlive: { type: Boolean, default: true }
-});
-
-const Cuisine = mongoose.model('Cuisine', cuisineSchema);
 
 // Reply Schema
 const replySchema = new mongoose.Schema({
@@ -70,4 +60,4 @@ const replySchema = new mongoose.Schema({
 
 const Reply = mongoose.model('Reply', replySchema);
 
-module.exports = { Account, Cuisine, Restaurant, Review, Reply };
+module.exports = { Account, Restaurant, Review, Reply };
