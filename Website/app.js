@@ -42,14 +42,40 @@ setupMiddleware(app);
 
 app.use(express.static('views'));
 
-//For importing sample data to MONGO DB
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'fallback_secret_do_not_use_in_production',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: MONGODB_URI,
+    collection: 'sessions'
+  }),
+  cookie: {
+    httpOnly: false,
+    maxAge: 24 * 60 * 60 * 1000,
+    path: '/'
+  }
+}));
+
+app.use((req, res, next) => {
+  if (req.session && req.session.userId) {
+    console.log('Active session found:', { id: req.session.id, userId: req.session.userId });
+  }
+  next();
+});
+
+app.use(populateUserData);
+app.get('/', (req, res) => {
+  res.redirect('/restaurant');
+});
+
 let impErr1 = false;
 let impErr2 = false;
 let impErr3 = false;
 let impErr4 = false;
 require('dotenv').config();
-const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/lasappDB';
+const PORT = auth.env.PORT || 3000;
+const MONGODB_URI = auth.env.MONGODB_URI || 'mongodb://localhost/lasappDB';
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -145,7 +171,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: auth.env.SESSION_SECRET || 'fallback_secret_do_not_use_in_production',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
@@ -153,9 +179,8 @@ app.use(session({
     collection: 'sessions'
   }),
   cookie: {
-    maxAge: 24 * 60 * 60 * 1000, // 1 day for session expiry
-    secure:process.env.NODE_ENV === 'production',
-    sameSite: 'lax'
+    maxAge: 24 * 60 * 60 * 1000,
+    path: '/'
   }
 }));
 let currentSessionId = null;
