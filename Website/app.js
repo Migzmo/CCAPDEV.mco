@@ -25,8 +25,6 @@ const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
-const index = require('/opt/render/project/src/website/index.js');
-
 
 // Import configuration and middleware setup
 const { 
