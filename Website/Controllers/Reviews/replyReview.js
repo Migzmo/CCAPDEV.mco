@@ -940,7 +940,7 @@ function addReplyToUI(reviewId, reply, container) {
     if (reply.account_id) {
         replyHTML += `
             <a href="/profile/${reply.account_id.acc_id}">
-                <img src="${reply.account_id.profile_pic || '../Views/images/profilePictures/default-profile.png'}" 
+                <img src="${reply.account_id.profile_pic || '../views/images/profilePictures/default-profile.png'}" 
                      alt="Profile" class="profile-pic-small" 
                      onerror="this.src='/images/profilePictures/default-profile.png'"> 
                 ${reply.account_id.acc_name}
@@ -949,7 +949,7 @@ function addReplyToUI(reviewId, reply, container) {
     } else {
         replyHTML += `
             <span>
-                <img src="../Views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
+                <img src="../views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
                 Anonymous
             </span>
         `;

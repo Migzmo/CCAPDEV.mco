@@ -92,7 +92,7 @@ function toggleEditProfileFrame() {
                     previewDiv.style.backgroundImage = `url('${userData.profile_pic}')`;
                 } else {
                     // Use absolute path for default image
-                    previewDiv.style.backgroundImage = `url('/Views/images/profilePictures/default-profile.png')`;
+                    previewDiv.style.backgroundImage = `url('/views/images/profilePictures/default-profile.png')`;
                 }
 
                 // Display the form

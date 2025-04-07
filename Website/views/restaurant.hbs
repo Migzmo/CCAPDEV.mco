@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>LaSapp</title>
         <link rel="icon" href="views/images/assets/logo.png" type="image/png">
-        <link rel="stylesheet" href="/Views/css/directory.css"/>
+        <link rel="stylesheet" href="/views/css/directory.css"/>
         <link rel="stylesheet" href="/views/restohbsstyle.css"/>
         <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
-        <img src="../Views/images/assets/logo.png" id="logoImg" alt="logo" height="70" width="70">
+        <img src="../views/images/assets/logo.png" id="logoImg" alt="logo" height="70" width="70">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Noto+Color+Emoji&family=Noto+Emoji:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
             <!-- First Header -->
             <div class="navbar-container">
                 <a href="/" id = "logoImg">
-                <img src="../Views/images/assets/logo.png" alt="Logo" width="70" height="70">
+                <img src="../views/images/assets/logo.png" alt="Logo" width="70" height="70">
                 </a>
                     <div class="logo">LaSapp</div>
                 
@@ -533,7 +533,7 @@
                                     </a>
                                 {{else}}
                                     <span>
-                                        <img src="../Views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic"> 
+                                        <img src="../views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic"> 
                                         Anonymous
                                     </span>
                                 {{/if}}
@@ -578,7 +578,7 @@
                                                     </a>
                                                 {{else}}
                                                     <span>
-                                                        <img src="../Views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
+                                                        <img src="../views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
                                                         Anonymous
                                                     </span>
                                                 {{/if}}
@@ -632,7 +632,7 @@
                                                                     </a>
                                                                 {{else}}
                                                                     <span>
-                                                                        <img src="../Views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
+                                                                        <img src="../views/images/profilePictures/default-profile.png" alt="Profile" class="profile-pic-small">
                                                                         Anonymous
                                                                     </span>
                                                                 {{/if}}
@@ -701,15 +701,15 @@
 
         <!-- Footer -->
         <footer>
-            <img src="../Views/images/assets/logo.png" id="footerLogo" alt="logo" height="70" width="70">
+            <img src="../views/images/assets/logo.png" id="footerLogo" alt="logo" height="70" width="70">
             <div class="logo">LaSapp</div>
 
             <div class="footerIcon">
                 <a href="https://www.facebook.com" target="_blank">
-                    <img src="../Views/images/assets/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
+                    <img src="../views/images/assets/facebook.png" id="footerFacebook" alt="Facebook" width="30" height="30">
                 </a>
                 <a href="https://www.instagram.com" target="_blank">
-                    <img src="../Views/images/assets/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
+                    <img src="../views/images/assets/instagram.png" id="footerIG" alt="Instagram" width="30" height="30">
                 </a>
             </div>
         </footer>
@@ -823,7 +823,7 @@
                 const profileImages = document.querySelectorAll('.profile-pic');
                 profileImages.forEach(img => {
                     img.onerror = function() {
-                        this.src = '../Views/images/profilePictures/default-profile.png';
+                        this.src = '../views/images/profilePictures/default-profile.png';
                     };
                 });
 

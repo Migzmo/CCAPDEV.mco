@@ -9,7 +9,7 @@
       "resto_email": "el_poco_cantina@gmail.com",
       "resto_payment": "Cash, Visa, Mastercard",
       "resto_perks": "Good Food, Great Ambiance",
-      "resto_img": "../Views/images/restaurantPictures/elpococantina.png",
+      "resto_img": "../views/images/restaurantPictures/elpococantina.png",
       "resto_owner_id":0,
       "cuisine_id": "Mexican",
       "isAlive": true
@@ -24,7 +24,7 @@
       "resto_email": "manilabbq@example.com",
       "resto_payment": "Cash, GCash",
       "resto_perks": "Student Discount, Live Music",
-      "resto_img": "/Views/images/restaurantPictures/manila-bbq.jpg",
+      "resto_img": "/views/images/restaurantPictures/manila-bbq.jpg",
       "resto_owner_id": 2,
       "cuisine_id": "Filipino",
       "isAlive": true
@@ -39,7 +39,7 @@
       "resto_email": "seoulkitchen@example.com",
       "resto_payment": "Cash, Credit Card, GCash, PayMaya",
       "resto_perks": "Wi-Fi, Parking, Group Dining",
-      "resto_img": "/Views/images/restaurantPictures/seoul-kitchen.jpg",
+      "resto_img": "/views/images/restaurantPictures/seoul-kitchen.jpg",
       "resto_owner_id": 4,
       "cuisine_id": "Asian",
       "isAlive": true
@@ -54,7 +54,7 @@
       "resto_email": "americandiner@example.com",
       "resto_payment": "Cash, Credit Card",
       "resto_perks": "Wi-Fi, All-Day Breakfast, Parking",
-      "resto_img": "/Views/images/restaurantPictures/american-diner.png",
+      "resto_img": "/views/images/restaurantPictures/american-diner.png",
       "resto_owner_id": 2,
       "cuisine_id": "American",
       "isAlive": true
@@ -69,7 +69,7 @@
       "resto_email": "cafeverde@example.com",
       "resto_payment": "Cash, Credit Card, GCash",
       "resto_perks": "Wi-Fi, Student Discount, Parking",
-      "resto_img": "/Views/images/restaurantPictures/cafe-verde.jpg",
+      "resto_img": "/views/images/restaurantPictures/cafe-verde.jpg",
       "resto_owner_id": 2,
       "cuisine_id": "Cafe",
       "isAlive": true
@@ -84,7 +84,7 @@
       "resto_email": "zuscoffee@gmail.com",
       "resto_payment": "Cash, Credit Card, GCash",
       "resto_perks": "Free Wi-Fi, Cozy Ambiance, Student Discounts",
-      "resto_img": "/Views/images/restaurantPictures/zus-coffee.jpeg",
+      "resto_img": "/views/images/restaurantPictures/zus-coffee.jpeg",
       "resto_owner_id": 1,
       "cuisine_id": "Cafe",
       "isAlive": true
@@ -99,7 +99,7 @@
       "resto_email": "starbucks.taft@example.com",
       "resto_payment": "Cash, Credit Card, Debit Card, Starbucks Card",
       "resto_perks": "Free Wi-Fi, Study Areas, Loyalty Program, Mobile Order",
-      "resto_img": "/Views/images/restaurantPictures/starbucks-taft.jpeg",
+      "resto_img": "/views/images/restaurantPictures/starbucks-taft.jpeg",
       "resto_owner_id": 1,
       "cuisine_id": "Cafe",
       "isAlive": true
@@ -114,7 +114,7 @@
       "resto_email": "customerservice@jollibee.com.ph",
       "resto_payment": "Cash, Credit Card, GCash, PayMaya",
       "resto_perks": "Drive-Thru, Delivery, Student Discount, Value Meals",
-      "resto_img": "/Views/images/restaurantPictures/jollibee-taft.jpg",
+      "resto_img": "/views/images/restaurantPictures/jollibee-taft.jpg",
       "resto_owner_id": 4,
       "cuisine_id": "Fastfood",
       "isAlive": true

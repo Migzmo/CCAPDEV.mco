@@ -174,21 +174,21 @@ router.post('/create-resto',isAuthenticated, async (req, res) => {
     const newRestoId = highestRestaurant ? highestRestaurant.resto_id + 1 : 1;
     
     // Default image path - use absolute path
-    let imagePath = '/Views/images/restaurantPictures/default-restaurant.png';
+    let imagePath = '/views/images/restaurantPictures/default-restaurant.png';
     
     if (req.files && req.files.image) {
       const image = req.files.image;
       const fileName = `restaurant_${newRestoId}_${Date.now()}${path.extname(image.name)}`;
       
       // Create destination path
-      const filePath = path.join(__dirname, '../Views/images/restaurantPictures', fileName);
+      const filePath = path.join(__dirname, '../views/images/restaurantPictures', fileName);
       
       try {
         // Move the uploaded file to the destination
         await image.mv(filePath);
         
         // Set the image path as absolute path for the new restaurant
-        imagePath = `/Views/images/restaurantPictures/${fileName}`;
+        imagePath = `/views/images/restaurantPictures/${fileName}`;
         console.log("Image path set to:", imagePath);
         
       } catch (imageError) {
@@ -320,13 +320,13 @@ router.put('/api/submitupdate', async (req, res) => {
       const fileName = `restaurant_${restaurantId}_${Date.now()}${path.extname(image.name)}`;
       
       // Create destination path
-      const filePath = path.join(__dirname, '../Views/images/restaurantPictures', fileName);
+      const filePath = path.join(__dirname, '../views/images/restaurantPictures', fileName);
       
       try {
         await image.mv(filePath);
         
         // Set the image path for database update using absolute path
-        updateData.resto_img = `/Views/images/restaurantPictures/${fileName}`;
+        updateData.resto_img = `/views/images/restaurantPictures/${fileName}`;
         console.log("Image updated to:", updateData.resto_img);
         
       } catch (imageError) {

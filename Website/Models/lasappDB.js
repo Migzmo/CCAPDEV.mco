@@ -38,7 +38,7 @@ const accountSchema = new mongoose.Schema({
   acc_bio: { type: String },
   saved_restos: [{ type: Number, ref: 'Restaurant',default: [] }], // Simple array of IDs
   saved_reviews: [{ type: Number, ref: 'Review',default: [] }],
-  profile_pic: { type: String, default: '../Views/images/profilePictures/default-profile.png' },
+  profile_pic: { type: String, default: '../views/images/profilePictures/default-profile.png' },
   isAlive: { type: Boolean, default: true },
   acc_type:{type:String, enum:['admin','user','business-owner'],default:'user'},
   acc_password:{type:String,required:true}

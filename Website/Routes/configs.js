@@ -89,7 +89,7 @@ const setupMiddleware = (app) => {
     app.use(express.urlencoded({ extended: true }));
     
     // Serve static files - order matters for proper resolution
-    app.use('/Views', express.static(path.join(__dirname, '../Views'))); // Serve Views directory directly
+    app.use('/views', express.static(path.join(__dirname, '../views'))); // Serve Views directory directly
     app.use(express.static(path.join(__dirname, '..'))); // Serve from project root
     app.use(express.static(path.join(__dirname, '../public')));
     
@@ -102,20 +102,20 @@ const setupMiddleware = (app) => {
     
     // Set view engine and views directory
     app.set('view engine', 'hbs');
-    app.set('views', path.join(__dirname, '../Views'));
+    app.set('views', path.join(__dirname, '../views'));
     
     // Log that views path is set
-    console.log('Views directory set to:', path.join(__dirname, '../Views'));
+    console.log('Views directory set to:', path.join(__dirname, '../views'));
 };
 
 // Create directories if they don't exist
 const setupDirectories = () => {
-    const imagesDir = path.join(__dirname, '../Views/images/restaurantPictures');
+    const imagesDir = path.join(__dirname, '../views/images/restaurantPictures');
     if (!fs.existsSync(imagesDir)) {
         fs.mkdirSync(imagesDir, { recursive: true });
     }
     
-    const profilesDir = path.join(__dirname, '../Views/images/profilePictures');
+    const profilesDir = path.join(__dirname, '../views/images/profilePictures');
     if (!fs.existsSync(profilesDir)) { 
         fs.mkdirSync(profilesDir, { recursive: true }); 
     }

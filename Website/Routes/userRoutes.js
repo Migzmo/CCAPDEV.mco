@@ -113,7 +113,7 @@ router.get('/:id', async function (req, res) {
         resto_id: resto.resto_id,
         resto_name: resto.resto_name,
         cuisine_id: resto.cuisine_id,
-        image: resto.resto_img || '/Views/images/restaurantPictures/default-restaurant.png'
+        image: resto.resto_img || '/views/images/restaurantPictures/default-restaurant.png'
       }));
     }
     
@@ -125,7 +125,7 @@ router.get('/:id', async function (req, res) {
         name: account.acc_name,
         username: account.acc_username,
         bio: account.acc_bio,
-        profile_pic: account.profile_pic || '/Views/images/profilePictures/default-profile.png'
+        profile_pic: account.profile_pic || '/views/images/profilePictures/default-profile.png'
       },
       isOwnProfile: isOwnProfile,
       isLoggedIn: isLoggedIn,
@@ -254,10 +254,10 @@ router.post('/update-profile', async (req, res) => {
     if (req.files && req.files.profile_pic) {
       const profilePic = req.files.profile_pic;
       const fileName = `profile_${userId}_${Date.now()}${path.extname(profilePic.name)}`;
-      const uploadPath = path.join(__dirname, '../Views/images/profilePictures', fileName);
+      const uploadPath = path.join(__dirname, '../views/images/profilePictures', fileName);
       
       await profilePic.mv(uploadPath);
-      account.profile_pic = `/Views/images/profilePictures/${fileName}`;
+      account.profile_pic = `/views/images/profilePictures/${fileName}`;
     }
 
     // Save the updated account

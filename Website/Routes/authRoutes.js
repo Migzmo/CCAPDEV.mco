@@ -98,13 +98,13 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     // Default profile picture path
-    let profilePicPath = '/Views/images/profilePictures/default-profile.png';
+    let profilePicPath = '/views/images/profilePictures/default-profile.png';
     
     // Handle profile picture upload if present
     if (req.files && req.files.profile_pic) {
       const profilePic = req.files.profile_pic;
       const fileName = `profile_${newAccId}_${Date.now()}${path.extname(profilePic.name)}`;
-      const uploadDir = path.join(__dirname, '../Views/images/profilePictures');
+      const uploadDir = path.join(__dirname, '../views/images/profilePictures');
       const uploadPath = path.join(uploadDir, fileName);
       
       try {
@@ -117,7 +117,7 @@ router.post('/register', async (req, res) => {
         await profilePic.mv(uploadPath);
         
         // Set the profile picture path for the database
-        profilePicPath = `/Views/images/profilePictures/${fileName}`;
+        profilePicPath = `/views/images/profilePictures/${fileName}`;
         console.log("Profile picture saved at:", profilePicPath);
       } catch (uploadError) {
         console.error("Error saving profile picture:", uploadError);
